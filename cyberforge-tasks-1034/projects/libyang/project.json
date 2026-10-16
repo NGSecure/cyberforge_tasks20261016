@@ -1,0 +1,13 @@
+{
+  "project": "libyang",
+  "language": "c",
+  "main_repo_url": "https://github.com/CESNET/libyang",
+  "target_dir": "libyang",
+  "secure_base_commit": "3d07c3a71534a580c3960907da17568eff7e5c64",
+  "unit_tests": {
+    "enabled": true,
+    "expected_passing_count": 61
+  },
+  "dockerhub_image": "vuljector/libyang:setup",
+  "clean_build_command": "sed -i 's|^git checkout devel|true|' /src/build.sh; cd /src/libyang && git add -A && git -c user.email=v@x -c user.name=v commit -m vuljector-patch --allow-empty -q"
+}

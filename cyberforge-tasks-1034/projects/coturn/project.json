@@ -1,0 +1,12 @@
+{
+  "project": "coturn",
+  "language": "c",
+  "main_repo_url": "https://github.com/coturn/coturn",
+  "target_dir": "coturn",
+  "secure_base_commit": "ba571ad79547460db7868542ef9532f07661d1c7",
+  "unit_tests": {
+    "enabled": true,
+    "expected_passing_count": 16
+  },
+  "dockerhub_image": "vuljector/coturn:setup"
+}
