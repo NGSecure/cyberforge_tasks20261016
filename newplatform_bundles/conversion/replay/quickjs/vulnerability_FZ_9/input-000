@@ -1,0 +1,1 @@
+print("ĀāĂăĄ".isWellFormed());

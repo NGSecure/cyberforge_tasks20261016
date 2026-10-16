@@ -1,0 +1,1 @@
+strcpy(&outbuf[*outix], buf);

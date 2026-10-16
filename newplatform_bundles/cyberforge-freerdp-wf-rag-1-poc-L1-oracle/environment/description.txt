@@ -1,0 +1,1 @@
+A reachable assertion in FreeRDP's ZGFX codec (libfreerdp/codec/zgfx.c) leads to a fatal crash via a deadly signal.

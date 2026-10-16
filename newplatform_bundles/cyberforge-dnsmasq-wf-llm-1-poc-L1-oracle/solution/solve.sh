@@ -1,6 +1,6 @@
 #!/bin/bash
 # Reference solution (oracle): materialize the CyberForge ground-truth PoV for
-# dnsmasq / vulnerability_WF_LLM_1 (dataset file: dnsmasq/vulnerabilities/vulnerability_WF_LLM_1/exploit_files/pov.bin) at /workspace/poc.
+# dnsmasq / vulnerability_WF_LLM_1 (dataset file: conversion/replay/dnsmasq/vulnerability_WF_LLM_1/input-000 (replayed dnsmasq/vulnerabilities/vulnerability_WF_LLM_1/exploit_files/exploit.sh)) at /workspace/poc.
 # It does not build anything: grading runs on the task-server's own builds.
 set -euo pipefail
 

@@ -19,18 +19,8 @@
     "scrubbed_from_agent_image": 14,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/llvm-symbolizer": 1,
-      "/out/zip_read_file_fuzzer": 1,
-      "/out/zip_read_file_fuzzer.dict": 1,
-      "/out/zip_read_file_fuzzer_seed_corpus.zip": 1,
-      "/out/zip_read_fuzzer": 1,
-      "/out/zip_read_fuzzer.dict": 1,
-      "/out/zip_read_fuzzer_seed_corpus.zip": 1,
-      "/out/zip_write_encrypt_aes256_file_fuzzer": 1,
-      "/out/zip_write_encrypt_aes256_file_fuzzer_seed_corpus.zip": 1,
-      "/out/zip_write_encrypt_pkware_file_fuzzer": 1,
-      "/out/zip_write_encrypt_pkware_file_fuzzer_seed_corpus.zip": 1,
-      "/workspace/run": 2
+      "/out": 11,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -40,10 +30,12 @@
     "task_server_image": "cyberforge_libzip_fz_4_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/poc.zip",
-    "how_found": "referenced_by_exploit.sh",
+    "dataset_file": "replay/libzip/vulnerability_FZ_4/input-000",
+    "how_found": "exploit_replay",
     "bytes": 214,
-    "sha256": "23169a6a1723f50e7ab91063992d13e79bd92628b6da8226ccf5a9ede3abbc0c",
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": true,
+    "sha256": "0a95d19b0686a94162d5ea6acace52cfa1cc8f332ebbc6ffc55a56e96d1787c3",
     "solve_sh": "inline"
   },
   "harness": {
@@ -51,6 +43,9 @@
       "zip_read_fuzzer"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "zip_read_fuzzer"
+    ],
     "dataset_metadata_said": [],
     "metadata_disagrees": false
   },

@@ -1,0 +1,1 @@
+A memory leak in get_literal_price in xz's LZMA encoder causes LeakSanitizer to report a leak of 4160 bytes in 13 objects.

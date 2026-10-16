@@ -15,9 +15,11 @@ description: >
 ## Pipeline
 
 ```
-python3 -I classify.py       <inner_root> records.json              # tier A/B/C per task
-python3 -I scan_snapshots.py records.json snapshot_scan/            # base-image snapshot inventory
-python3 -I convert.py        <inner_root> records.json <out_dir>    # one bundle per tier-A task
+python3 -I replay_exploits.py <inner_root> replay/                   # what each exploit.sh really feeds its harness
+python3 -I classify.py        <inner_root> records.json              # tier A/B/C per task
+python3 -I scan_snapshots.py  records.json snapshot_scan/            # base-image snapshot inventory
+python3 -I classify.py        <inner_root> records.json              # again: checks harness names vs the snapshot's /out
+python3 -I convert.py         <inner_root> records.json <out_dir>    # one bundle per tier-A task
 python3 -I validate.py       <out_dir>                              # static checks, no Docker
 bash <out_dir>/<bundle>/build.sh     # public network: build both images + 3 blocking self-checks
 bash <out_dir>/<bundle>/push.sh      # upload network: push + backfill task.toml [environment]
@@ -27,7 +29,8 @@ bash <out_dir>/<bundle>/push.sh      # upload network: push + backfill task.toml
 is deterministic; re-running `convert.py` rewrites the bundles byte-for-byte
 (the auth token is derived from the bundle name and the injected diff).
 `scan_snapshots.py` keeps existing results (delete a file to rescan it); it needs
-Docker Hub (anonymous: ~100 manifest requests per hour).
+Docker Hub (anonymous: ~100 manifest requests per hour). `replay_exploits.py` needs
+Docker and keeps existing results too.
 
 ## What a CyberForge task is
 
@@ -51,7 +54,9 @@ the injected build and not on the clean build.
   which the dataset restores before each build: `rm -rf /src && tar xf
   /opt/src_snapshot.tar -C /`), unit-test scripts under /workspace, caches. So:
   - every build stage first restores /src from that tarball (some build.sh scripts
-    patch the tree and cannot run twice; flex fails otherwise);
+    patch the tree and cannot run twice; flex fails otherwise). The task-server keeps
+    /work, the snapshot's secure build state, so its builds are incremental exactly
+    as in the dataset (a from-scratch ICU build runs the injected, crashing data tools);
   - the agent image deletes every file the commit layers added
     (`build/snapshot_residue.txt`, from `scan_snapshots.py`) except system state
     (/etc, /var, packages under /usr, /root/.gitconfig) — that removes the secure
@@ -63,6 +68,12 @@ the injected build and not on the clean build.
 - **compile needs FUZZING_LANGUAGE** (helper.py normally passes it; from
   `setup/project.yaml`) and must run from the image WORKDIR (build.sh uses relative
   paths). Both images set the env; the instruction tells the agent `cd <WORKDIR> && compile`.
+- **Ground truth = what the exploit really ran.** The dataset's `pov.bin`
+  ("harvested_from_reference_exploit") is often a different file: many exploit.sh
+  scripts build their payload inline (icu WF_LLM_0: 10 KB `en_US@collation=AAA…`,
+  pov.bin is an unrelated 2.6 MB file). `replay_exploits.py` runs each exploit.sh in a
+  no-network container where every `/out/<name>` is a stub that records its file
+  argument; a captured input outranks pov.bin (fuzz crash artifacts still come first).
 - **Judge = the dataset's own harness invocation**: `/out/<fuzzer> <poc>`, with the
   ASAN_OPTIONS exploit.sh used. Leak detection is on only when the injected bug is a
   leak: many harnesses leak on benign inputs, and with LSan on everywhere a correct
@@ -74,12 +85,14 @@ the injected build and not on the clean build.
 ## Tiers (classify.py)
 
 - **A → bundle**: crash evidence (sanitizer report, or crash_report.json for fuzz
-  artifacts), a concrete non-empty PoV file, the harness exploit.sh really runs, and
-  the recorded report satisfies exploit.sh's own grep (when it greps).
+  artifacts), a concrete non-empty PoV (fuzz crash artifact > replayed exploit input >
+  pov.bin and other dataset files), the harness exploit.sh really runs (and that the
+  dataset's own compile put in /out), and — unless the PoV comes from the replay — the
+  recorded report satisfies exploit.sh's own grep (when it greps).
 - **B → needs another bundle type**: custom driver programs, exploits that run a
   project CLI/test binary instead of the fuzz harness, behavioral/output-diff oracles.
-- **C → insufficient ground truth**: crash input never saved, payload only inline,
-  empty/no-crash report, OOM/timeout, empty PoV, report contradicts exploit.sh.
+- **C → insufficient ground truth**: crash input never saved and not recoverable by
+  replay, empty/no-crash report, OOM/timeout, empty PoV, report contradicts exploit.sh.
 
 ## build.sh self-checks (blocking)
 

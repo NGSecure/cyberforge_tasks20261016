@@ -11,10 +11,12 @@
     "task_server_image": "cyberforge_guetzli_wf_llm_1_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/pov.bin",
-    "how_found": "hints.successful_seed",
-    "bytes": 12,
-    "sha256": "c22917d19a6656769f72fb7090d6590cb857aa735ef9e646a4ef15d78e7d2317",
+    "dataset_file": "replay/guetzli/vulnerability_WF_LLM_1/input-000",
+    "how_found": "exploit_replay",
+    "bytes": 13,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": null,
+    "sha256": "8b6988c777f360dd42f402bd852133418374d5f8bfd53aad5fcda9813f85d7ab",
     "solve_sh": "inline"
   },
   "harness": {
@@ -22,6 +24,7 @@
       "guetzli_fuzzer"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": null,
     "dataset_metadata_said": [
       "guetzli_fuzzer"
     ],

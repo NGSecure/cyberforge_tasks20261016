@@ -19,16 +19,10 @@
     "scrubbed_from_agent_image": 13,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/cgif_file_fuzzer": 1,
-      "/out/cgif_file_fuzzer_seed_corpus.zip": 1,
-      "/out/cgif_fuzzer": 1,
-      "/out/cgif_fuzzer_seed_corpus.zip": 1,
-      "/out/cgif_rgb_fuzzer": 1,
-      "/out/cgif_rgb_fuzzer_seed_corpus.zip": 1,
-      "/out/llvm-symbolizer": 1,
+      "/out": 7,
       "/work/include": 1,
       "/work/lib": 2,
-      "/workspace/run": 2
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -38,9 +32,11 @@
     "task_server_image": "cyberforge_cgif_wf_rag_0_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/crash_poc.bin",
-    "how_found": "named_file",
+    "dataset_file": "replay/cgif/vulnerability_WF_RAG_0/input-000",
+    "how_found": "exploit_replay",
     "bytes": 20,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": true,
     "sha256": "b954e36e1e8ed3846ab478d4d722c21f6e1e205650d87d15bd80b64a1014c6e4",
     "solve_sh": "inline"
   },
@@ -49,6 +45,9 @@
       "cgif_fuzzer"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "cgif_fuzzer"
+    ],
     "dataset_metadata_said": [],
     "metadata_disagrees": false
   },

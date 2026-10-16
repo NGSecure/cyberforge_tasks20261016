@@ -19,16 +19,8 @@
     "scrubbed_from_agent_image": 12,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/json_array_fuzzer": 1,
-      "/out/json_array_fuzzer.dict": 1,
-      "/out/json_object_fuzzer": 1,
-      "/out/json_object_fuzzer.dict": 1,
-      "/out/json_pointer_fuzzer": 1,
-      "/out/json_pointer_fuzzer.dict": 1,
-      "/out/llvm-symbolizer": 1,
-      "/out/tokener_parse_ex_fuzzer": 1,
-      "/out/tokener_parse_ex_fuzzer.dict": 1,
-      "/workspace/run": 2
+      "/out": 9,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -38,10 +30,12 @@
     "task_server_image": "cyberforge_json_c_wf_rag_4_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/pov.bin",
-    "how_found": "hints.successful_seed",
-    "bytes": 5,
-    "sha256": "089abf29a622fa3d5c1da272069728827654d039e3b5bcab4877ba5fcaba1925",
+    "dataset_file": "replay/json-c/vulnerability_WF_RAG_4/input-000",
+    "how_found": "exploit_replay",
+    "bytes": 6,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": true,
+    "sha256": "66767ed0afc003251f6637ff2da782a3982eed0b7086e03bfa1604953e9faca0",
     "solve_sh": "inline"
   },
   "harness": {
@@ -49,6 +43,9 @@
       "tokener_parse_ex_fuzzer"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "tokener_parse_ex_fuzzer"
+    ],
     "dataset_metadata_said": [
       "tokener_parse_ex_fuzzer",
       "tokener_parse_ex_fuzzer"

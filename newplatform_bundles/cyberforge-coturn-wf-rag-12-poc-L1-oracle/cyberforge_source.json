@@ -19,13 +19,8 @@
     "scrubbed_from_agent_image": 28,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/FuzzStun": 1,
-      "/out/FuzzStunClient": 1,
-      "/out/FuzzStunClient_seed_corpus.zip": 1,
-      "/out/FuzzStun_seed_corpus.zip": 1,
-      "/out/lib": 20,
-      "/out/llvm-symbolizer": 1,
-      "/workspace/run": 2
+      "/out": 25,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -35,9 +30,11 @@
     "task_server_image": "cyberforge_coturn_wf_rag_12_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/pov.bin",
-    "how_found": "hints.successful_seed",
+    "dataset_file": "replay/coturn/vulnerability_WF_RAG_12/input-000",
+    "how_found": "exploit_replay",
     "bytes": 76,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": true,
     "sha256": "94f8b7dc77eb0f9f281f4a5fbd485b8a2126680edf2c1185b1dc7e58ca035979",
     "solve_sh": "inline"
   },
@@ -46,6 +43,9 @@
       "FuzzStunClient"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "FuzzStunClient"
+    ],
     "dataset_metadata_said": [
       "FuzzStunClient",
       "FuzzStunClient"

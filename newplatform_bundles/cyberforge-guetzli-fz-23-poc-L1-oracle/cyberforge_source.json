@@ -14,6 +14,8 @@
     "dataset_file": "exploit_files/fuzz_results/vulnerable/crash-fbf752a80514495dbf3463591ac960ef14a689b1",
     "how_found": "fuzz_crash_artifact",
     "bytes": 388,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": null,
     "sha256": "e17da8fef4cb7356e73fedb2717bc98f29ec2ba2ac575c2b3d494311e1fe1bac",
     "solve_sh": "inline"
   },
@@ -22,6 +24,7 @@
       "guetzli_fuzzer"
     ],
     "how_found": "crash_report.json",
+    "built_by_dataset_snapshot_compile": null,
     "dataset_metadata_said": [
       "guetzli_fuzzer"
     ],

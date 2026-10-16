@@ -24,11 +24,9 @@
     "scrubbed_from_agent_image": 224,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/llvm-symbolizer": 1,
-      "/out/njs_process_script_fuzzer": 1,
-      "/out/njs_process_script_fuzzer_seed_corpus.zip": 1,
+      "/out": 3,
       "/usr/local": 218,
-      "/workspace/run": 2
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -38,9 +36,11 @@
     "task_server_image": "cyberforge_njs_fz_0_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/poc.txt",
-    "how_found": "referenced_by_exploit.sh",
+    "dataset_file": "replay/njs/vulnerability_FZ_0/input-000",
+    "how_found": "exploit_replay",
     "bytes": 58,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": true,
     "sha256": "0e9bd0961870c6699c01aee13c694962349310bd17a7d44f9ddb93b2357a5bc5",
     "solve_sh": "inline"
   },
@@ -49,6 +49,9 @@
       "njs_process_script_fuzzer"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "njs_process_script_fuzzer"
+    ],
     "dataset_metadata_said": [],
     "metadata_disagrees": false
   },

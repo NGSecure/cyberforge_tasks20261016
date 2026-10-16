@@ -34,14 +34,9 @@
     "scrubbed_from_agent_image": 24,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/fuzz_cfg_parser": 1,
-      "/out/fuzz_h1_parse": 1,
-      "/out/fuzz_h1_parse.dict": 1,
-      "/out/fuzz_h1_parse_seed_corpus.zip": 1,
-      "/out/fuzz_hpack_decode": 1,
-      "/out/llvm-symbolizer": 1,
+      "/out": 6,
       "/work/h1_seeds": 15,
-      "/workspace/run": 2
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -51,9 +46,11 @@
     "task_server_image": "cyberforge_haproxy_wf_rag_0_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/pov.bin",
-    "how_found": "hints.successful_seed",
+    "dataset_file": "replay/haproxy/vulnerability_WF_RAG_0/input-000",
+    "how_found": "exploit_replay",
     "bytes": 4055,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": null,
     "sha256": "cbfaded6fbe31bff028c5d635eb2cf336f16132b318332b430f7bfd063f44a0f",
     "solve_sh": "inline"
   },
@@ -62,6 +59,9 @@
       "fuzz_hpack_decode"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "fuzz_hpack_decode"
+    ],
     "dataset_metadata_said": [
       "fuzz_hpack_decode",
       "fuzz_hpack_decode"

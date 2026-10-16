@@ -1,0 +1,5 @@
+if ((data = (l_uint32 *)pixdata_malloc(4LL * wpl * height)) == NULL) {
+return (PIX *)ERROR_PTR("requested bytes >= 2^31", __func__, NULL);
+L_ERROR("fuzzer requested height > 20K; refused\n", __func__);
+L_ERROR("fuzzer requested width > 20K; refused\n", __func__);
+L_ERROR("fuzzer requested > 64 MB; refused\n", __func__);

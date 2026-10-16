@@ -19,38 +19,8 @@
     "scrubbed_from_agent_image": 34,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/flb-it-fuzz-aws_credentials_fuzzer_OSSFUZZ": 1,
-      "/out/flb-it-fuzz-aws_util_fuzzer_OSSFUZZ": 1,
-      "/out/flb-it-fuzz-base64_fuzzer_OSSFUZZ": 1,
-      "/out/flb-it-fuzz-cmetrics_decode_fuzz_OSSFUZZ": 1,
-      "/out/flb-it-fuzz-cmetrics_decode_prometheus_OSSFUZZ": 1,
-      "/out/flb-it-fuzz-config_fuzzer_OSSFUZZ": 1,
-      "/out/flb-it-fuzz-config_map_fuzzer_OSSFUZZ": 1,
-      "/out/flb-it-fuzz-config_random_fuzzer_OSSFUZZ": 1,
-      "/out/flb-it-fuzz-config_yaml_fuzzer_OSSFUZZ": 1,
-      "/out/flb-it-fuzz-config_yaml_fuzzer_OSSFUZZ_seed_corpus.zip": 1,
-      "/out/flb-it-fuzz-ctrace_fuzzer_OSSFUZZ": 1,
-      "/out/flb-it-fuzz-engine_fuzzer_OSSFUZZ": 1,
-      "/out/flb-it-fuzz-filter_stdout_fuzzer_OSSFUZZ": 1,
-      "/out/flb-it-fuzz-flb_json_fuzzer_OSSFUZZ": 1,
-      "/out/flb-it-fuzz-flb_mp_fuzzer_OSSFUZZ": 1,
-      "/out/flb-it-fuzz-fstore_fuzzer_OSSFUZZ": 1,
-      "/out/flb-it-fuzz-http_fuzzer_OSSFUZZ": 1,
-      "/out/flb-it-fuzz-input_fuzzer_OSSFUZZ": 1,
-      "/out/flb-it-fuzz-msgpack_parse_fuzzer_OSSFUZZ": 1,
-      "/out/flb-it-fuzz-msgpack_to_gelf_fuzzer_OSSFUZZ": 1,
-      "/out/flb-it-fuzz-multiline_fuzzer_OSSFUZZ": 1,
-      "/out/flb-it-fuzz-pack_json_state_fuzzer_OSSFUZZ": 1,
-      "/out/flb-it-fuzz-parse_json_fuzzer_OSSFUZZ": 1,
-      "/out/flb-it-fuzz-parse_logfmt_fuzzer_OSSFUZZ": 1,
-      "/out/flb-it-fuzz-parse_ltsv_fuzzer_OSSFUZZ": 1,
-      "/out/flb-it-fuzz-parser_fuzzer_OSSFUZZ": 1,
-      "/out/flb-it-fuzz-record_ac_fuzzer_OSSFUZZ": 1,
-      "/out/flb-it-fuzz-signv4_fuzzer_OSSFUZZ": 1,
-      "/out/flb-it-fuzz-strp_fuzzer_OSSFUZZ": 1,
-      "/out/flb-it-fuzz-utils_fuzzer_OSSFUZZ": 1,
-      "/out/llvm-symbolizer": 1,
-      "/workspace/run": 2
+      "/out": 31,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -63,6 +33,8 @@
     "dataset_file": "exploit_files/reauthor_poc_FZ_4.bin",
     "how_found": "single_input_file",
     "bytes": 1039,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": null,
     "sha256": "041acbf0e20525bb0b717159feeacda79200f22f164cb72f9e722af057ad16a3",
     "solve_sh": "inline"
   },
@@ -71,6 +43,9 @@
       "flb-it-fuzz-parser_fuzzer_OSSFUZZ"
     ],
     "how_found": "metadata (fuzz_poc.py)",
+    "built_by_dataset_snapshot_compile": [
+      "flb-it-fuzz-parser_fuzzer_OSSFUZZ"
+    ],
     "dataset_metadata_said": [
       "flb-it-fuzz-parser_fuzzer_OSSFUZZ"
     ],

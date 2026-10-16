@@ -20,19 +20,10 @@
     "scrubbed_by_location": {
       "/ccache/cache": 2760,
       "/opt/src_snapshot.tar": 1,
-      "/out/core_fuzzer": 1,
-      "/out/filestorage_read_file_fuzzer": 1,
-      "/out/filestorage_read_filename_fuzzer": 1,
-      "/out/filestorage_read_string_fuzzer": 1,
-      "/out/generateusergallerycollage_fuzzer": 1,
-      "/out/imdecode_fuzzer": 1,
-      "/out/imencode_fuzzer": 1,
-      "/out/imread_fuzzer": 1,
-      "/out/llvm-symbolizer": 1,
-      "/out/readnetfromtensorflow_fuzzer": 1,
+      "/out": 10,
       "/work/build-address": 3627,
       "/work/install-address": 431,
-      "/workspace/run": 2
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -45,6 +36,8 @@
     "dataset_file": "exploit_files/fuzz_results/vulnerable/crash-de5385c247e2db057f4d2e55d203ec5b4908762f",
     "how_found": "fuzz_crash_artifact",
     "bytes": 65,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": null,
     "sha256": "5763899365255c429b0e4b7a125e4e7c568b5bc027a72b9759de890dba9d97ce",
     "solve_sh": "inline"
   },
@@ -53,6 +46,9 @@
       "readnetfromtensorflow_fuzzer"
     ],
     "how_found": "crash_report.json",
+    "built_by_dataset_snapshot_compile": [
+      "readnetfromtensorflow_fuzzer"
+    ],
     "dataset_metadata_said": [
       "readnetfromtensorflow_fuzzer",
       "readnetfromtensorflow_fuzzer",

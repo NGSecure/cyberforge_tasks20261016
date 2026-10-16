@@ -1,0 +1,68 @@
+{
+  "bundle": "cyberforge-freerdp-wf-rag-1-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/freerdp/vulnerabilities/vulnerability_WF_RAG_1",
+  "base_image": "vuljector/freerdp:setup@sha256:544d13556c04412da65f14e12833cfb001258b4f50750874f9afa1b9b795572d",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-04-18T17:22:04.366184141Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T15:56:38.588440105Z",
+        "created_by": "sleep infinity",
+        "bytes": 546037503
+      }
+    ],
+    "post_setup_files": 7907,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 5409,
+    "scrubbed_from_agent_image": 2496,
+    "scrubbed_by_location": {
+      "/ccache/cache": 2472,
+      "/opt/src_snapshot.tar": 1,
+      "/out": 8,
+      "/root": 13,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 0,
+  "image_tags": {
+    "docker_image": "cyberforge_freerdp_wf_rag_1_main:v0.0.1",
+    "task_server_image": "cyberforge_freerdp_wf_rag_1_task_server:v0.0.1"
+  },
+  "ground_truth": {
+    "dataset_file": "replay/freerdp/vulnerability_WF_RAG_1/input-000",
+    "how_found": "exploit_replay",
+    "bytes": 4,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": null,
+    "sha256": "054edec1d0211f624fed0cbca9d4f9400b0e491c43742af2c5b0abebf0c990d8",
+    "solve_sh": "inline"
+  },
+  "harness": {
+    "candidates": [
+      "TestFuzzCodecs"
+    ],
+    "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "TestFuzzCodecs"
+    ],
+    "dataset_metadata_said": [],
+    "metadata_disagrees": false
+  },
+  "trigger_evidence": {
+    "signal": "signal",
+    "detail": "deadly-signal",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": null
+  },
+  "asan_options_from_exploit": "detect_leaks=0:abort_on_error=1",
+  "cwe_id": "CWE-617",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "29bd64ce08b212e485e38d99d515fc3ba537a2d7"
+}

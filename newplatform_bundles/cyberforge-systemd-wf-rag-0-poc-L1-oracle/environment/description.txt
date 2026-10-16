@@ -1,0 +1,1 @@
+Systemd's lldp_neighbor_parse in lldp-neighbor.c has a heap-buffer-overflow that can corrupt memory with a crafted LLDP packet.

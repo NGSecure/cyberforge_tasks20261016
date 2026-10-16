@@ -19,51 +19,9 @@
     "scrubbed_from_agent_image": 5747,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/break_iterator_fuzzer": 1,
-      "/out/calendar_fuzzer": 1,
-      "/out/collator_compare_fuzzer": 1,
-      "/out/collator_compare_fuzzer_seed_corpus.zip": 1,
-      "/out/collator_rulebased_fuzzer": 1,
-      "/out/collator_rulebased_fuzzer_seed_corpus.zip": 1,
-      "/out/converter_fuzzer": 1,
-      "/out/date_format_fuzzer": 1,
-      "/out/date_time_pattern_generator_fuzzer": 1,
-      "/out/decimal_format_symbols_fuzzer": 1,
-      "/out/dtfmtsym_fuzzer": 1,
-      "/out/list_format_fuzzer": 1,
-      "/out/llvm-symbolizer": 1,
-      "/out/locale_fuzzer": 1,
-      "/out/locale_morph_fuzzer": 1,
-      "/out/locale_morph_fuzzer_seed_corpus.zip": 1,
-      "/out/message_formatter_fuzzer": 1,
-      "/out/normalizer2_fuzzer": 1,
-      "/out/number_format_fuzzer": 1,
-      "/out/number_formatter_fuzzer": 1,
-      "/out/plurrule_fuzzer": 1,
-      "/out/relative_date_time_formatter_fuzzer": 1,
-      "/out/rule_based_break_iterator_fuzzer": 1,
-      "/out/time_zone_names_fuzzer": 1,
-      "/out/timezone_create_fuzzer": 1,
-      "/out/ubidi_fuzzer": 1,
-      "/out/ucasemap_fuzzer": 1,
-      "/out/uloc_canonicalize_fuzzer": 1,
-      "/out/uloc_canonicalize_fuzzer_seed_corpus.zip": 1,
-      "/out/uloc_for_language_tag_fuzzer": 1,
-      "/out/uloc_for_language_tag_fuzzer_seed_corpus.zip": 1,
-      "/out/uloc_get_name_fuzzer": 1,
-      "/out/uloc_get_name_fuzzer_seed_corpus.zip": 1,
-      "/out/uloc_is_right_to_left_fuzzer": 1,
-      "/out/uloc_is_right_to_left_fuzzer_seed_corpus.zip": 1,
-      "/out/uloc_open_keywords_fuzzer": 1,
-      "/out/uloc_open_keywords_fuzzer_seed_corpus.zip": 1,
-      "/out/unicode_string_codepage_create_fuzzer": 1,
-      "/out/unicodeset_fuzzer": 1,
-      "/out/uprop_fuzzer": 1,
-      "/out/uregex_match_fuzzer": 1,
-      "/out/uregex_open_fuzzer": 1,
-      "/out/uregex_open_fuzzer.dict": 1,
+      "/out": 43,
       "/work/icu": 5701,
-      "/workspace/run": 2
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -73,17 +31,22 @@
     "task_server_image": "cyberforge_icu_wf_llm_0_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/pov.bin",
-    "how_found": "hints.successful_seed",
-    "bytes": 2600002,
-    "sha256": "a827aeba8d1ffeab2e0af0395f7a8a167d2d93ed0300c26bcd5efc5b24b29b13",
-    "solve_sh": "fetch /solve"
+    "dataset_file": "replay/icu/vulnerability_WF_LLM_0/input-000",
+    "how_found": "exploit_replay",
+    "bytes": 10017,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": true,
+    "sha256": "6d34e9a3faac95ae36fe732c3e372b7ac706a797980e46cda9faba4306aa8844",
+    "solve_sh": "inline"
   },
   "harness": {
     "candidates": [
       "locale_fuzzer"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "locale_fuzzer"
+    ],
     "dataset_metadata_said": [
       "locale_fuzzer",
       "locale_fuzzer"

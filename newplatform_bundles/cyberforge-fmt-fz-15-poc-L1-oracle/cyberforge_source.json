@@ -19,14 +19,8 @@
     "scrubbed_from_agent_image": 10,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/chrono-duration-fuzzer": 1,
-      "/out/chrono-timepoint-fuzzer": 1,
-      "/out/float-fuzzer": 1,
-      "/out/llvm-symbolizer": 1,
-      "/out/named-arg-fuzzer": 1,
-      "/out/one-arg-fuzzer": 1,
-      "/out/two-args-fuzzer": 1,
-      "/workspace/run": 2
+      "/out": 7,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -39,6 +33,8 @@
     "dataset_file": "exploit_files/fuzz_results/vulnerable/crash-e9956462e03db47a7228f1a0023d4c5da8176392",
     "how_found": "fuzz_crash_artifact",
     "bytes": 29,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": null,
     "sha256": "0d9b957dffd84ecfdfcea262726866e6bc3da01759e9d57be725e661c802901a",
     "solve_sh": "inline"
   },
@@ -47,6 +43,9 @@
       "named-arg-fuzzer"
     ],
     "how_found": "crash_report.json",
+    "built_by_dataset_snapshot_compile": [
+      "named-arg-fuzzer"
+    ],
     "dataset_metadata_said": [
       "named-arg-fuzzer",
       "named-arg-fuzzer",

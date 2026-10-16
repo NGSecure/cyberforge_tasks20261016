@@ -19,29 +19,11 @@
     "scrubbed_from_agent_image": 2597,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/fuzzshark_ip": 1,
-      "/out/fuzzshark_ip.options": 1,
-      "/out/fuzzshark_ip_proto-ospf": 1,
-      "/out/fuzzshark_ip_proto-ospf.options": 1,
-      "/out/fuzzshark_ip_proto-ospf_seed_corpus.zip": 1,
-      "/out/fuzzshark_ip_proto-udp": 1,
-      "/out/fuzzshark_ip_proto-udp.options": 1,
-      "/out/fuzzshark_media_type-json": 1,
-      "/out/fuzzshark_media_type-json.options": 1,
-      "/out/fuzzshark_media_type-json_seed_corpus.zip": 1,
-      "/out/fuzzshark_tcp_port-bgp": 1,
-      "/out/fuzzshark_tcp_port-bgp.options": 1,
-      "/out/fuzzshark_tcp_port-bgp_seed_corpus.zip": 1,
-      "/out/fuzzshark_udp_port-dhcp": 1,
-      "/out/fuzzshark_udp_port-dhcp.options": 1,
-      "/out/fuzzshark_udp_port-dns": 1,
-      "/out/fuzzshark_udp_port-dns.options": 1,
-      "/out/fuzzshark_udp_port-dns_seed_corpus.zip": 1,
-      "/out/llvm-symbolizer": 1,
+      "/out": 19,
       "/usr/local": 179,
       "/work/build": 2332,
       "/work/samples": 64,
-      "/workspace/run": 2
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -51,10 +33,12 @@
     "task_server_image": "cyberforge_wireshark_wf_rag_0_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/pov.bin",
-    "how_found": "hints.successful_seed",
-    "bytes": 50,
-    "sha256": "0125ccb6d96732ab51ce73d6800db8732d22d144890f2345b65017a0c0b4a160",
+    "dataset_file": "replay/wireshark/vulnerability_WF_RAG_0/input-000",
+    "how_found": "exploit_replay",
+    "bytes": 40,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": true,
+    "sha256": "a1e9e9bb27e2604c905e292c9a605765af3c501311fdde210f8dfd1fc8e73dbf",
     "solve_sh": "inline"
   },
   "harness": {
@@ -62,6 +46,9 @@
       "fuzzshark_ip"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "fuzzshark_ip"
+    ],
     "dataset_metadata_said": [
       "fuzzshark_ip",
       "fuzzshark_ip"

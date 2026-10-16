@@ -1,6 +1,6 @@
 #!/bin/bash
 # Reference solution (oracle): materialize the CyberForge ground-truth PoV for
-# fmt / vulnerability_FZ_13 (dataset file: fmt/vulnerabilities/vulnerability_FZ_13/exploit_files/pov.bin) at /workspace/poc.
+# fmt / vulnerability_FZ_13 (dataset file: conversion/replay/fmt/vulnerability_FZ_13/input-000 (replayed fmt/vulnerabilities/vulnerability_FZ_13/exploit_files/exploit.sh)) at /workspace/poc.
 # It does not build anything: grading runs on the task-server's own builds.
 set -euo pipefail
 

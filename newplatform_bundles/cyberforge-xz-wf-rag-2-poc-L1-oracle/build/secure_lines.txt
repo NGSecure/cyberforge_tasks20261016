@@ -1,0 +1,1 @@
+coder->index_hash = lzma_index_hash_init(coder->index_hash, allocator);

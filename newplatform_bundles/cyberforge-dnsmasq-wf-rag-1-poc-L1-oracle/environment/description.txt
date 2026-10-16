@@ -1,0 +1,1 @@
+A heap-buffer-overflow in dnsmasq's util.c allows memory corruption via a crafted input.

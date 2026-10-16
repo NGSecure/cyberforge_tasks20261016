@@ -20,29 +20,8 @@
     "scrubbed_by_location": {
       "/ccache/cache": 700,
       "/opt/src_snapshot.tar": 1,
-      "/out/assimp_fuzzer": 1,
-      "/out/assimp_fuzzer.dict": 1,
-      "/out/assimp_fuzzer_collada": 1,
-      "/out/assimp_fuzzer_collada.dict": 1,
-      "/out/assimp_fuzzer_collada_seed_corpus.zip": 1,
-      "/out/assimp_fuzzer_fbx": 1,
-      "/out/assimp_fuzzer_fbx.dict": 1,
-      "/out/assimp_fuzzer_fbx_seed_corpus.zip": 1,
-      "/out/assimp_fuzzer_glb": 1,
-      "/out/assimp_fuzzer_glb.dict": 1,
-      "/out/assimp_fuzzer_glb_seed_corpus.zip": 1,
-      "/out/assimp_fuzzer_gltf": 1,
-      "/out/assimp_fuzzer_gltf.dict": 1,
-      "/out/assimp_fuzzer_gltf_seed_corpus.zip": 1,
-      "/out/assimp_fuzzer_obj": 1,
-      "/out/assimp_fuzzer_obj.dict": 1,
-      "/out/assimp_fuzzer_obj_seed_corpus.zip": 1,
-      "/out/assimp_fuzzer_seed_corpus.zip": 1,
-      "/out/assimp_fuzzer_stl": 1,
-      "/out/assimp_fuzzer_stl.dict": 1,
-      "/out/assimp_fuzzer_stl_seed_corpus.zip": 1,
-      "/out/llvm-symbolizer": 1,
-      "/workspace/run": 2
+      "/out": 22,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -52,9 +31,11 @@
     "task_server_image": "cyberforge_assimp_fz_8_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/poc.ply",
-    "how_found": "referenced_by_exploit.sh",
+    "dataset_file": "replay/assimp/vulnerability_FZ_8/input-000",
+    "how_found": "exploit_replay",
     "bytes": 106,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": true,
     "sha256": "bfb923d2c48bd8c8103813a66b52b03c582a609cab6e986db4c794891ec99f24",
     "solve_sh": "inline"
   },
@@ -64,6 +45,9 @@
       "assimp"
     ],
     "how_found": "exploit.sh (fallback candidates)",
+    "built_by_dataset_snapshot_compile": [
+      "assimp_fuzzer"
+    ],
     "dataset_metadata_said": [],
     "metadata_disagrees": false
   },

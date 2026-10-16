@@ -39,9 +39,8 @@
     "scrubbed_from_agent_image": 5,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/data_context_fuzzer": 1,
-      "/out/llvm-symbolizer": 1,
-      "/workspace/run": 2
+      "/out": 2,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -54,6 +53,8 @@
     "dataset_file": "exploit_files/pov.bin",
     "how_found": "hints.successful_seed",
     "bytes": 1,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": null,
     "sha256": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
     "solve_sh": "inline"
   },
@@ -62,6 +63,9 @@
       "data_context_fuzzer"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "data_context_fuzzer"
+    ],
     "dataset_metadata_said": [
       "data_context_fuzzer",
       "data_context_fuzzer"

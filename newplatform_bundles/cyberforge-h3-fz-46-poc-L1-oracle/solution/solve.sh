@@ -1,14 +1,29 @@
 #!/bin/bash
 # Reference solution (oracle): materialize the CyberForge ground-truth PoV for
-# h3 / vulnerability_FZ_46 (dataset file: h3/vulnerabilities/vulnerability_FZ_46/exploit_files/poc.bin) at /workspace/poc.
+# h3 / vulnerability_FZ_46 (dataset file: conversion/replay/h3/vulnerability_FZ_46/input-000 (replayed h3/vulnerabilities/vulnerability_FZ_46/exploit_files/exploit.sh)) at /workspace/poc.
 # It does not build anything: grading runs on the task-server's own builds.
 set -euo pipefail
 
 mkdir -p /workspace
 base64 -d > /workspace/poc <<'B64'
-dmVyc2lvbiBodHRwczovL2dpdC1sZnMuZ2l0aHViLmNvbS9zcGVjL3YxCm9pZCBzaGEyNTY6ZjRm
-NGVhYTU1MTA3MWU1MTU2ZDE1MGU2ZDg3MGVmY2Q1ZDY0YjgxY2Q5ODg1MDczZTNkMzA2MGZhZGU1
-ZTQ3MApzaXplIDEwMjQK
+fFOh2b7MHXRZ8rsE71iMc/mNfIH/4aQ8IUrW86Q0XpNdd/KS4HHEhGDFWQ1Wgj4iiQVwjkLV1b/2
+meprvDQzTA2eu3Esb6PfYqh0Lsjs4e+dEFCAszXFDfcE/lEmmUoM8VqzPLCADZ8JvYmsWfzojISJ
+bcnoihUuiwhO2l/U/+KqhCryfF8//tarDsGfVsVuFO1BT2u88S+pAUP229hqQPaN9VvFCfjfdVNg
+PfvmU8ep+SaJSKsWFPAfhdLeVexuTca1rTo/uFXohWKHeSzUyOBGyYk0WZgfsTwB5tfP6puSvJU/
+C5KHzGYMUhcZoFSGGp1MqmkE4XTW3IS1gqtLXkrpUxYn7PGyFwXyHQN6jnE4Ntp8zMc2tUfL0a01
+KaIff7RmmE0c10enymza2bWZdcsNrMkHdXCfy3U6NZBApiEYWHQeWIQ79xJkGCCdexXMMu5MDhdL
+cQ0rTO4ZHCv14Am4aDDg1U9zZed3DzFx/QFNY5+29loGBzBz3V7dpZDLnGuOhLxMD8Zf9HxpsFg/
+eURuXPXev1jnuTjk4NCiC332WgjfnFwz6Nilz08+SV3pu0aSmZ7M9PV3Ka9FjMg3ZImwCV5qUgKq
+24V7sC2AFlphr4BgjjgmZPlRXirjpGCJs8M1dAFkccw4iu7WJvazGiCJYoL7I1oRUf3FOYchDfxX
+jkNBkEqVCdpjfUuaT6T6qGH0XUeFud9YR/4ET8fQtRQJp99T1EP2V2hpFnG140VtyrCYi/15qoNv
+9GDPZB9ejahBPEIvUX7eH4yNG1RzUX20MUGyZzz2Ijl4k8BHvnQb1zi/A6/K/cf9gbRaBnoJcux1
+5OmA0yta5rK9M0fKwTG8+ju7TwjkRztJljXtVi5tWc/zgobq8vc/xPoxfIchDa2/5N4BEFy5a328
+0VUJwcHBKMIye330rH53YFAOL2n1tTNBbQhbXZnKiYZlTVbE30ffaSnMiTqU4g+LrkIbbrmsSq+m
+h8Mbn50RVEWCsQvaLZFu5Xj9V+EtM5wd7p90m/spRlPFnBsLEEWpkDFZPqM8Shf96yCiLPsNIrl6
+A4ANFO29EkM7N2+fjvlxU5o14TQAGSBJ5q3dkzIoo6HzCcrSa4iMyM1c/oSHWqihEZsAg2vqma2k
+fTo945s2XBlZ09krWNU31Lonp69DLhLWvkG6TS0K2/BZv64AbySkIOOouw4y/c6ePtzdbfhPByRa
+jfy6NicsPqt60Korl9EoSdtqyVm/0Kwihjg6H9EXASqvmAyN0nd+rGPQsW8i1XzUrCfbb+sa8huG
+sEklHuzgrMz986mAsdF35R10Quos2XR2S+QdFr8wNfUse5c9z0nqk+ANz8nU9RtPPjSggVnE+A==
 B64
 
 echo "wrote $(wc -c < /workspace/poc) bytes to /workspace/poc"

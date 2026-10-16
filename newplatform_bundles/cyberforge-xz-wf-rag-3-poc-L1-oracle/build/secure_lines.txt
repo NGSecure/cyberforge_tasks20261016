@@ -1,0 +1,1 @@
+= offset + match_bit + (symbol >> 8);

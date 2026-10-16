@@ -1,0 +1,1 @@
+A heap-buffer-overflow in hunspell's suggestmgr.cxx was triggered by an incorrect size calculation (CWE-193), leading to out-of-bounds memory access.

@@ -19,11 +19,8 @@
     "scrubbed_from_agent_image": 7,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/compress_fuzzer": 1,
-      "/out/decompress_fuzzer": 1,
-      "/out/decompress_fuzzer_seed_corpus.zip": 1,
-      "/out/llvm-symbolizer": 1,
-      "/workspace/run": 2
+      "/out": 4,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -33,10 +30,12 @@
     "task_server_image": "cyberforge_c_blosc_fz_0_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/poc.txt",
-    "how_found": "referenced_by_exploit.sh",
+    "dataset_file": "replay/c-blosc/vulnerability_FZ_0/input-000",
+    "how_found": "exploit_replay",
     "bytes": 1024,
-    "sha256": "ca7cddefde33d97e341443225e77c8cf03c60d4ad6e98b589437e06a4378fcc7",
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": true,
+    "sha256": "c2b3634cb9a911de677557d834073f0dc947134191df37de6be9ab591390369b",
     "solve_sh": "inline"
   },
   "harness": {
@@ -44,6 +43,9 @@
       "compress_fuzzer"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "compress_fuzzer"
+    ],
     "dataset_metadata_said": [],
     "metadata_disagrees": false
   },

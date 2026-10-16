@@ -24,13 +24,8 @@
     "scrubbed_from_agent_image": 11,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/gtp_message_fuzz": 1,
-      "/out/gtp_message_fuzz_seed_corpus.zip": 1,
-      "/out/lib": 3,
-      "/out/llvm-symbolizer": 1,
-      "/out/nas_message_fuzz": 1,
-      "/out/nas_message_fuzz_seed_corpus.zip": 1,
-      "/workspace/run": 2
+      "/out": 8,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -43,6 +38,8 @@
     "dataset_file": "exploit_files/fuzz_results/vulnerable/crash-32093f43eec122a3de3dfc5cf960a3b624692bf5",
     "how_found": "fuzz_crash_artifact",
     "bytes": 562,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": null,
     "sha256": "66f6c495cc03e542d2b73d4a5d710db7706c35475e0c6b33cf195d2debe95146",
     "solve_sh": "inline"
   },
@@ -51,6 +48,9 @@
       "gtp_message_fuzz"
     ],
     "how_found": "crash_report.json",
+    "built_by_dataset_snapshot_compile": [
+      "gtp_message_fuzz"
+    ],
     "dataset_metadata_said": [
       "gtp_message_fuzz",
       "gtp_message_fuzz",

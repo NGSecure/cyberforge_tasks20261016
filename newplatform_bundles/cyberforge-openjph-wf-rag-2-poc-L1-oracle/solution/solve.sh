@@ -1,6 +1,6 @@
 #!/bin/bash
 # Reference solution (oracle): fetch the CyberForge ground-truth PoV for
-# openjph / vulnerability_WF_RAG_2 (dataset file: openjph/vulnerabilities/vulnerability_WF_RAG_2/exploit_files/trigger_qcd.j2c, 674100 bytes — too
+# openjph / vulnerability_WF_RAG_2 (dataset file: conversion/replay/openjph/vulnerability_WF_RAG_2/input-000 (replayed openjph/vulnerabilities/vulnerability_WF_RAG_2/exploit_files/exploit.sh), 674100 bytes — too
 # large to inline) from the task-server and write it to /workspace/poc.
 set -euo pipefail
 

@@ -1,0 +1,1 @@
+An invalid pointer dereference in pupnp's ixml parser (ixml/src/ixmlparser.c) can lead to crashes or code execution when parsing malformed XML.

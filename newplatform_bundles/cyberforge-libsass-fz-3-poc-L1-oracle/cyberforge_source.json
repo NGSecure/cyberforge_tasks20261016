@@ -39,9 +39,8 @@
     "scrubbed_from_agent_image": 5,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/data_context_fuzzer": 1,
-      "/out/llvm-symbolizer": 1,
-      "/workspace/run": 2
+      "/out": 2,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -51,9 +50,11 @@
     "task_server_image": "cyberforge_libsass_fz_3_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/crash_poc.bin",
-    "how_found": "named_file",
+    "dataset_file": "replay/libsass/vulnerability_FZ_3/input-000",
+    "how_found": "exploit_replay",
     "bytes": 6,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": true,
     "sha256": "d1c45455844ac0dc279758647e43c68e486dd7a6f4dfd4e315d2739977c52b6a",
     "solve_sh": "inline"
   },
@@ -62,6 +63,9 @@
       "data_context_fuzzer"
     ],
     "how_found": "run.out (vuln_fuzzer rename)",
+    "built_by_dataset_snapshot_compile": [
+      "data_context_fuzzer"
+    ],
     "dataset_metadata_said": [],
     "metadata_disagrees": false
   },

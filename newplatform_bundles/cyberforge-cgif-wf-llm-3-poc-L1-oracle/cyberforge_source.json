@@ -19,16 +19,10 @@
     "scrubbed_from_agent_image": 13,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/cgif_file_fuzzer": 1,
-      "/out/cgif_file_fuzzer_seed_corpus.zip": 1,
-      "/out/cgif_fuzzer": 1,
-      "/out/cgif_fuzzer_seed_corpus.zip": 1,
-      "/out/cgif_rgb_fuzzer": 1,
-      "/out/cgif_rgb_fuzzer_seed_corpus.zip": 1,
-      "/out/llvm-symbolizer": 1,
+      "/out": 7,
       "/work/include": 1,
       "/work/lib": 2,
-      "/workspace/run": 2
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -38,10 +32,12 @@
     "task_server_image": "cyberforge_cgif_wf_llm_3_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/pov.bin",
-    "how_found": "hints.successful_seed",
-    "bytes": 795,
-    "sha256": "82b11816e37d24d44a8fcbb26987cc1ff640e0fa1126b9c7058150a70e6b18da",
+    "dataset_file": "replay/cgif/vulnerability_WF_LLM_3/input-000",
+    "how_found": "exploit_replay",
+    "bytes": 1560,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": true,
+    "sha256": "352e8099e4c03eb0f18bde71b77aa4563f96b792dcf6a4f7f0be2c3383050595",
     "solve_sh": "inline"
   },
   "harness": {
@@ -49,6 +45,9 @@
       "cgif_file_fuzzer"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "cgif_file_fuzzer"
+    ],
     "dataset_metadata_said": [
       "cgif_file_fuzzer",
       "cgif_file_fuzzer"

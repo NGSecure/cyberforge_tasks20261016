@@ -19,19 +19,9 @@
     "scrubbed_from_agent_image": 204,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/hb-raster-fuzzer": 1,
-      "/out/hb-raster-fuzzer_seed_corpus.zip": 1,
-      "/out/hb-repacker-fuzzer": 1,
-      "/out/hb-repacker-fuzzer_seed_corpus.zip": 1,
-      "/out/hb-shape-fuzzer": 1,
-      "/out/hb-shape-fuzzer_seed_corpus.zip": 1,
-      "/out/hb-subset-fuzzer": 1,
-      "/out/hb-subset-fuzzer_seed_corpus.zip": 1,
-      "/out/hb-vector-fuzzer": 1,
-      "/out/hb-vector-fuzzer_seed_corpus.zip": 1,
-      "/out/llvm-symbolizer": 1,
+      "/out": 11,
       "/work/build": 190,
-      "/workspace/run": 2
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -44,6 +34,8 @@
     "dataset_file": "exploit_files/fuzz_results/vulnerable/crash-30b62af02c2fff01ea4ac7aacfd08c6a7993c5a7",
     "how_found": "fuzz_crash_artifact",
     "bytes": 5999,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": null,
     "sha256": "7fa86c97894a3f90aed62714d3396e8b4641448802821305dd022c226b8da03c",
     "solve_sh": "inline"
   },
@@ -52,6 +44,9 @@
       "hb-shape-fuzzer"
     ],
     "how_found": "crash_report.json",
+    "built_by_dataset_snapshot_compile": [
+      "hb-shape-fuzzer"
+    ],
     "dataset_metadata_said": [
       "hb-shape-fuzzer"
     ],

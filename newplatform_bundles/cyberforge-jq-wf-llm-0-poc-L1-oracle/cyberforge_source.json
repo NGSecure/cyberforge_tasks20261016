@@ -24,17 +24,8 @@
     "scrubbed_from_agent_image": 13,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/jq_fuzz_compile": 1,
-      "/out/jq_fuzz_execute": 1,
-      "/out/jq_fuzz_execute.dict": 1,
-      "/out/jq_fuzz_execute_seed_corpus.zip": 1,
-      "/out/jq_fuzz_fixed": 1,
-      "/out/jq_fuzz_load_file": 1,
-      "/out/jq_fuzz_parse": 1,
-      "/out/jq_fuzz_parse_extended": 1,
-      "/out/jq_fuzz_parse_stream": 1,
-      "/out/llvm-symbolizer": 1,
-      "/workspace/run": 2
+      "/out": 10,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -44,9 +35,11 @@
     "task_server_image": "cyberforge_jq_wf_llm_0_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/pov.bin",
-    "how_found": "hints.successful_seed",
+    "dataset_file": "replay/jq/vulnerability_WF_LLM_0/input-000",
+    "how_found": "exploit_replay",
     "bytes": 5,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": null,
     "sha256": "8b008a869a82d570e797b49bc0093c94a1ecbda1235eaf3deb2d1cec349b5788",
     "solve_sh": "inline"
   },
@@ -55,6 +48,9 @@
       "jq_fuzz_compile"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "jq_fuzz_compile"
+    ],
     "dataset_metadata_said": [
       "jq_fuzz_compile",
       "jq_fuzz_compile"

@@ -19,16 +19,10 @@
     "scrubbed_from_agent_image": 13,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/cgif_file_fuzzer": 1,
-      "/out/cgif_file_fuzzer_seed_corpus.zip": 1,
-      "/out/cgif_fuzzer": 1,
-      "/out/cgif_fuzzer_seed_corpus.zip": 1,
-      "/out/cgif_rgb_fuzzer": 1,
-      "/out/cgif_rgb_fuzzer_seed_corpus.zip": 1,
-      "/out/llvm-symbolizer": 1,
+      "/out": 7,
       "/work/include": 1,
       "/work/lib": 2,
-      "/workspace/run": 2
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -41,6 +35,8 @@
     "dataset_file": "exploit_files/fuzz_results/vulnerable/crash-c5a0025e2aa77c0364b41702973c16c1a90f6406",
     "how_found": "fuzz_crash_artifact",
     "bytes": 4096,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": null,
     "sha256": "66c86967ecec19e3509b79766b7d33293d1b941b00f027c0539fd02d6f5d9b89",
     "solve_sh": "inline"
   },
@@ -49,6 +45,9 @@
       "cgif_fuzzer"
     ],
     "how_found": "crash_report.json",
+    "built_by_dataset_snapshot_compile": [
+      "cgif_fuzzer"
+    ],
     "dataset_metadata_said": [
       "cgif_fuzzer",
       "cgif_fuzzer",

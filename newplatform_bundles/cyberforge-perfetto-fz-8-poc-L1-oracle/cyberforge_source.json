@@ -19,22 +19,9 @@
     "scrubbed_from_agent_image": 3827,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/buffered_frame_deserializer_fuzzer": 1,
-      "/out/cpu_reader_fuzzer": 1,
-      "/out/end_to_end_shared_memory_fuzzer": 1,
-      "/out/llvm-symbolizer": 1,
-      "/out/packet_stream_validator_fuzzer": 1,
-      "/out/producer_socket_fuzzer": 1,
-      "/out/protozero_bytecode_parser_fuzzer": 1,
-      "/out/protozero_decoder_fuzzer": 1,
-      "/out/protozero_message_filter_fuzzer": 1,
-      "/out/shared_ring_buffer_fuzzer": 1,
-      "/out/shared_ring_buffer_write_fuzzer": 1,
-      "/out/src": 196,
-      "/out/trace_processor_fuzzer": 1,
-      "/out/unwinding_fuzzer": 1,
+      "/out": 209,
       "/work/build": 3615,
-      "/workspace/run": 2
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -47,6 +34,8 @@
     "dataset_file": "exploit_files/fuzz_results/vulnerable/crash-ba823d07d87c5c71ad127568396b38690712416d",
     "how_found": "fuzz_crash_artifact",
     "bytes": 12,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": null,
     "sha256": "1bf696b2c09561e3c3a67a2ee54ea860c0ef9be41258d635640dda7508466c2c",
     "solve_sh": "inline"
   },
@@ -55,6 +44,9 @@
       "trace_processor_fuzzer"
     ],
     "how_found": "crash_report.json",
+    "built_by_dataset_snapshot_compile": [
+      "trace_processor_fuzzer"
+    ],
     "dataset_metadata_said": [
       "trace_processor_fuzzer"
     ],

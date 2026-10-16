@@ -1,0 +1,1 @@
+In cJSON.c, the parse_array function does not properly validate crafted input, leading to a segmentation violation.

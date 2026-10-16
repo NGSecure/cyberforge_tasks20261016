@@ -19,44 +19,8 @@
     "scrubbed_from_agent_image": 40,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/cmsIT8_load_fuzzer": 1,
-      "/out/cmsIT8_load_fuzzer.options": 1,
-      "/out/cmsIT8_load_fuzzer_seed_corpus.zip": 1,
-      "/out/cms_cgats_fuzzer": 1,
-      "/out/cms_cie_cam02_fuzzer": 1,
-      "/out/cms_devicelink_fuzzer": 1,
-      "/out/cms_dict_fuzzer": 1,
-      "/out/cms_gdb_fuzzer": 1,
-      "/out/cms_md5_fuzzer": 1,
-      "/out/cms_md5_fuzzer.dict": 1,
-      "/out/cms_md5_fuzzer_seed_corpus.zip": 1,
-      "/out/cms_overwrite_transform_fuzzer": 1,
-      "/out/cms_overwrite_transform_fuzzer.options": 1,
-      "/out/cms_overwrite_transform_fuzzer_seed_corpus.zip": 1,
-      "/out/cms_postscript_fuzzer": 1,
-      "/out/cms_postscript_fuzzer.dict": 1,
-      "/out/cms_postscript_fuzzer_seed_corpus.zip": 1,
-      "/out/cms_profile_fuzzer": 1,
-      "/out/cms_profile_fuzzer.dict": 1,
-      "/out/cms_profile_fuzzer_seed_corpus.zip": 1,
-      "/out/cms_transform_all_fuzzer": 1,
-      "/out/cms_transform_all_fuzzer.dict": 1,
-      "/out/cms_transform_all_fuzzer_seed_corpus.zip": 1,
-      "/out/cms_transform_extended_fuzzer": 1,
-      "/out/cms_transform_extended_fuzzer.dict": 1,
-      "/out/cms_transform_extended_fuzzer_seed_corpus.zip": 1,
-      "/out/cms_transform_fuzzer": 1,
-      "/out/cms_transform_fuzzer.options": 1,
-      "/out/cms_transform_fuzzer_seed_corpus.zip": 1,
-      "/out/cms_universal_transform_fuzzer": 1,
-      "/out/cms_universal_transform_fuzzer.dict": 1,
-      "/out/cms_universal_transform_fuzzer_seed_corpus.zip": 1,
-      "/out/cms_virtual_profile_fuzzer": 1,
-      "/out/cms_virtual_profile_fuzzer.dict": 1,
-      "/out/cms_virtual_profile_fuzzer_seed_corpus.zip": 1,
-      "/out/icc.dict": 1,
-      "/out/llvm-symbolizer": 1,
-      "/workspace/run": 2
+      "/out": 37,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -66,10 +30,12 @@
     "task_server_image": "cyberforge_lcms_wf_rag_0_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/pov.bin",
-    "how_found": "hints.successful_seed",
-    "bytes": 16,
-    "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+    "dataset_file": "replay/lcms/vulnerability_WF_RAG_0/input-000",
+    "how_found": "exploit_replay",
+    "bytes": 25244,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": true,
+    "sha256": "ec70d06dee97e2609e76a2cd4b75d474906e1075bc8c3102aee4f61d7791b1fc",
     "solve_sh": "inline"
   },
   "harness": {
@@ -77,6 +43,9 @@
       "cms_transform_fuzzer"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "cms_transform_fuzzer"
+    ],
     "dataset_metadata_said": [
       "cms_transform_fuzzer",
       "cms_transform_fuzzer"

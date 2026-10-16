@@ -13,14 +13,16 @@
 FROM --platform=linux/amd64 vuljector/pcapplusplus:setup@sha256:144f004d5b66872e02416b8b86fec7ffaa6d421db5e727624606f8a65f35033a AS base
 # OSS-Fuzz's helper.py normally passes these to `compile`; without FUZZING_LANGUAGE it aborts.
 ENV FUZZING_LANGUAGE=c++ PROJECT_NAME=pcapplusplus
-# Start every build from the pristine /src the dataset restores before its own builds
-# (/opt/src_snapshot.tar; the image's /src carries an earlier compile, and some
-# build.sh scripts patch the tree, so they cannot run twice) and an empty $WORK.
+# Exactly as the dataset does before its own builds: restore the pristine /src from
+# /opt/src_snapshot.tar (the image's /src carries an earlier compile, and some build.sh
+# scripts patch the tree, so they cannot run twice) and keep $WORK, the snapshot's
+# secure build state. Builds are therefore incremental, as in the dataset: e.g. ICU
+# would otherwise regenerate its data with the (crashing) injected tools.
 # The snapshot is normally already at secure_base_commit; only move it if not (a
 # forced checkout would also undo setup steps that edited tracked files).
 RUN set -eux; \
     if [ -f /opt/src_snapshot.tar ]; then cd / && rm -rf /src && tar -xf /opt/src_snapshot.tar -C /; fi; \
-    rm -rf /work/* /out/*; \
+    rm -rf /out/*; \
     cd /src/PcapPlusPlus; \
     if git rev-parse --git-dir >/dev/null 2>&1; then \
       if [ "$(git rev-parse HEAD)" != "c3cc787829b794b84c6a63734d324c1c487cb696" ]; then \

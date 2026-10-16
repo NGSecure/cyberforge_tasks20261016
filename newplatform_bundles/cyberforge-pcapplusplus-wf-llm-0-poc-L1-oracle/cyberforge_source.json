@@ -20,30 +20,8 @@
     "scrubbed_by_location": {
       "/ccache/cache": 541,
       "/opt/src_snapshot.tar": 1,
-      "/out/FuzzTarget": 1,
-      "/out/FuzzTarget.options": 1,
-      "/out/FuzzTargetNg": 1,
-      "/out/FuzzTargetNg.options": 1,
-      "/out/FuzzTargetNg_seed_corpus.zip": 1,
-      "/out/FuzzTargetSnoop": 1,
-      "/out/FuzzTargetSnoop.options": 1,
-      "/out/FuzzTargetSnoop_seed_corpus.zip": 1,
-      "/out/FuzzTarget_seed_corpus.zip": 1,
-      "/out/FuzzWriter": 1,
-      "/out/FuzzWriter.options": 1,
-      "/out/FuzzWriterNg": 1,
-      "/out/FuzzWriterNg.options": 1,
-      "/out/FuzzWriterNg_seed_corpus.zip": 1,
-      "/out/FuzzWriter_seed_corpus.zip": 1,
-      "/out/libc.so.6": 1,
-      "/out/libdl.so.2": 1,
-      "/out/libgcc_s.so.1": 1,
-      "/out/libm.so.6": 1,
-      "/out/libpthread.so.0": 1,
-      "/out/libresolv.so.2": 1,
-      "/out/librt.so.1": 1,
-      "/out/llvm-symbolizer": 1,
-      "/workspace/run": 2
+      "/out": 23,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -53,9 +31,11 @@
     "task_server_image": "cyberforge_pcapplusplus_wf_llm_0_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/payload.bin",
-    "how_found": "referenced_by_exploit.sh",
+    "dataset_file": "replay/pcapplusplus/vulnerability_WF_LLM_0/input-000",
+    "how_found": "exploit_replay",
     "bytes": 16424,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": true,
     "sha256": "99208a05b9d7ec576f1954d0a4f7d79cb74699d45da09505b64c6633a0391b73",
     "solve_sh": "inline"
   },
@@ -64,6 +44,9 @@
       "FuzzTargetSnoop"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "FuzzTargetSnoop"
+    ],
     "dataset_metadata_said": [],
     "metadata_disagrees": false
   },

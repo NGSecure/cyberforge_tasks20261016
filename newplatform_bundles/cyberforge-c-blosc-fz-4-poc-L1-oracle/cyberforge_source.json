@@ -19,11 +19,8 @@
     "scrubbed_from_agent_image": 7,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/compress_fuzzer": 1,
-      "/out/decompress_fuzzer": 1,
-      "/out/decompress_fuzzer_seed_corpus.zip": 1,
-      "/out/llvm-symbolizer": 1,
-      "/workspace/run": 2
+      "/out": 4,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -36,6 +33,8 @@
     "dataset_file": "exploit_files/fuzz_results/vulnerable/crash-e0336162b76de6fdc2242af08551f46e8ebc6006",
     "how_found": "fuzz_crash_artifact",
     "bytes": 3569,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": null,
     "sha256": "a700d612e582e4027292370442d91841dce8c6586669882b103fa24b8402a648",
     "solve_sh": "inline"
   },
@@ -44,6 +43,9 @@
       "decompress_fuzzer"
     ],
     "how_found": "crash_report.json",
+    "built_by_dataset_snapshot_compile": [
+      "decompress_fuzzer"
+    ],
     "dataset_metadata_said": [
       "decompress_fuzzer"
     ],

@@ -1,0 +1,2 @@
+WLog_ERR(TAG, "Input size short: SrcSize %" PRIu32 " < 4", SrcSize);
+const BYTE* SrcEnd = &pSrcData[SrcSize];

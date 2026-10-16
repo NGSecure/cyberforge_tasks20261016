@@ -20,19 +20,10 @@
     "scrubbed_by_location": {
       "/ccache/cache": 2760,
       "/opt/src_snapshot.tar": 1,
-      "/out/core_fuzzer": 1,
-      "/out/filestorage_read_file_fuzzer": 1,
-      "/out/filestorage_read_filename_fuzzer": 1,
-      "/out/filestorage_read_string_fuzzer": 1,
-      "/out/generateusergallerycollage_fuzzer": 1,
-      "/out/imdecode_fuzzer": 1,
-      "/out/imencode_fuzzer": 1,
-      "/out/imread_fuzzer": 1,
-      "/out/llvm-symbolizer": 1,
-      "/out/readnetfromtensorflow_fuzzer": 1,
+      "/out": 10,
       "/work/build-address": 3627,
       "/work/install-address": 431,
-      "/workspace/run": 2
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -42,17 +33,22 @@
     "task_server_image": "cyberforge_opencv_fz_4_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/poc.bin",
-    "how_found": "referenced_by_exploit.sh",
-    "bytes": 132,
-    "sha256": "d24673d3b38024386a621a3a3facd971b1e53e2e61ed9ac6f9164da97ab156c2",
-    "solve_sh": "inline"
+    "dataset_file": "replay/opencv/vulnerability_FZ_4/input-000",
+    "how_found": "exploit_replay",
+    "bytes": 2097152,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": true,
+    "sha256": "ee93899df5d53c7784a0225810de4083b6d3c90f7aa7fa073357c82a523d1661",
+    "solve_sh": "fetch /solve"
   },
   "harness": {
     "candidates": [
       "readnetfromtensorflow_fuzzer"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "readnetfromtensorflow_fuzzer"
+    ],
     "dataset_metadata_said": [],
     "metadata_disagrees": false
   },

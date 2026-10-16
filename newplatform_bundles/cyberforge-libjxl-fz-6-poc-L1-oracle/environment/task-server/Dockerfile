@@ -13,14 +13,16 @@
 FROM --platform=linux/amd64 vuljector/libjxl:setup@sha256:72245f6cc0170432fafc28e7a60e89f2a16ee1215ce9e6d07516f6322d87674a AS base
 # OSS-Fuzz's helper.py normally passes these to `compile`; without FUZZING_LANGUAGE it aborts.
 ENV FUZZING_LANGUAGE=c++ PROJECT_NAME=libjxl
-# Start every build from the pristine /src the dataset restores before its own builds
-# (/opt/src_snapshot.tar; the image's /src carries an earlier compile, and some
-# build.sh scripts patch the tree, so they cannot run twice) and an empty $WORK.
+# Exactly as the dataset does before its own builds: restore the pristine /src from
+# /opt/src_snapshot.tar (the image's /src carries an earlier compile, and some build.sh
+# scripts patch the tree, so they cannot run twice) and keep $WORK, the snapshot's
+# secure build state. Builds are therefore incremental, as in the dataset: e.g. ICU
+# would otherwise regenerate its data with the (crashing) injected tools.
 # The snapshot is normally already at secure_base_commit; only move it if not (a
 # forced checkout would also undo setup steps that edited tracked files).
 RUN set -eux; \
     if [ -f /opt/src_snapshot.tar ]; then cd / && rm -rf /src && tar -xf /opt/src_snapshot.tar -C /; fi; \
-    rm -rf /work/* /out/*; \
+    rm -rf /out/*; \
     cd /src/libjxl; \
     if git rev-parse --git-dir >/dev/null 2>&1; then \
       if [ "$(git rev-parse HEAD)" != "fea2365a03d62597b869786bf7ba1083a9675d88" ]; then \

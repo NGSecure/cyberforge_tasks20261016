@@ -19,15 +19,8 @@
     "scrubbed_from_agent_image": 11,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/fuzz_compile": 1,
-      "/out/fuzz_compile.dict": 1,
-      "/out/fuzz_compile_seed_corpus.zip": 1,
-      "/out/fuzz_eval": 1,
-      "/out/fuzz_eval.dict": 1,
-      "/out/fuzz_eval_seed_corpus.zip": 1,
-      "/out/fuzz_regexp": 1,
-      "/out/llvm-symbolizer": 1,
-      "/workspace/run": 2
+      "/out": 8,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -37,9 +30,11 @@
     "task_server_image": "cyberforge_quickjs_fz_18_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/poc.js",
-    "how_found": "referenced_by_exploit.sh",
+    "dataset_file": "replay/quickjs/vulnerability_FZ_18/input-000",
+    "how_found": "exploit_replay",
     "bytes": 73,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": true,
     "sha256": "a9e44a03efaae5d9e04f4fca8c056af3db2e355be7d727021b68e917957071c5",
     "solve_sh": "inline"
   },
@@ -48,6 +43,9 @@
       "fuzz_compile"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "fuzz_compile"
+    ],
     "dataset_metadata_said": [],
     "metadata_disagrees": false
   },

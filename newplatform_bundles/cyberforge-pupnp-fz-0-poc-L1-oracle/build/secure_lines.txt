@@ -1,0 +1,1 @@
+if (pItem->element != NULL) {

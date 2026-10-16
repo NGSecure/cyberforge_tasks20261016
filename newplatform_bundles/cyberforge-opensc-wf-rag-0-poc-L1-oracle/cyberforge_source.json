@@ -19,32 +19,8 @@
     "scrubbed_from_agent_image": 28,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/fuzz_asn1_print": 1,
-      "/out/fuzz_asn1_sig_value": 1,
-      "/out/fuzz_card": 1,
-      "/out/fuzz_card_seed_corpus.zip": 1,
-      "/out/fuzz_piv_tool": 1,
-      "/out/fuzz_piv_tool_seed_corpus.zip": 1,
-      "/out/fuzz_pkcs11": 1,
-      "/out/fuzz_pkcs11_seed_corpus.zip": 1,
-      "/out/fuzz_pkcs11_uri": 1,
-      "/out/fuzz_pkcs11_uri_seed_corpus.zip": 1,
-      "/out/fuzz_pkcs15_crypt": 1,
-      "/out/fuzz_pkcs15_crypt_seed_corpus.zip": 1,
-      "/out/fuzz_pkcs15_decode": 1,
-      "/out/fuzz_pkcs15_decode_seed_corpus.zip": 1,
-      "/out/fuzz_pkcs15_encode": 1,
-      "/out/fuzz_pkcs15_encode_seed_corpus.zip": 1,
-      "/out/fuzz_pkcs15_reader": 1,
-      "/out/fuzz_pkcs15_reader_seed_corpus.zip": 1,
-      "/out/fuzz_pkcs15_tool": 1,
-      "/out/fuzz_pkcs15_tool_seed_corpus.zip": 1,
-      "/out/fuzz_pkcs15init": 1,
-      "/out/fuzz_pkcs15init_seed_corpus.zip": 1,
-      "/out/fuzz_scconf_parse_string": 1,
-      "/out/fuzz_scconf_parse_string_seed_corpus.zip": 1,
-      "/out/llvm-symbolizer": 1,
-      "/workspace/run": 2
+      "/out": 25,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -54,10 +30,12 @@
     "task_server_image": "cyberforge_opensc_wf_rag_0_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/pov.bin",
-    "how_found": "hints.successful_seed",
-    "bytes": 1,
-    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "dataset_file": "replay/opensc/vulnerability_WF_RAG_0/input-000",
+    "how_found": "exploit_replay",
+    "bytes": 1472,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": true,
+    "sha256": "5ba507164ab7a72b4aea8e8de3c6d295094837dc40f8bf4a4be2666fdd855079",
     "solve_sh": "inline"
   },
   "harness": {
@@ -65,6 +43,9 @@
       "fuzz_pkcs15_decode"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "fuzz_pkcs15_decode"
+    ],
     "dataset_metadata_said": [
       "fuzz_pkcs15_decode",
       "fuzz_pkcs15_decode"

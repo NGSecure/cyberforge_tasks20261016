@@ -13,14 +13,16 @@
 FROM --platform=linux/amd64 vuljector/libxslt:setup@sha256:203a2e2922e07ffced36b6d2367e91ffc892ea1640f31cfd220c876e047cce54 AS base
 # OSS-Fuzz's helper.py normally passes these to `compile`; without FUZZING_LANGUAGE it aborts.
 ENV FUZZING_LANGUAGE=c++ PROJECT_NAME=libxslt
-# Start every build from the pristine /src the dataset restores before its own builds
-# (/opt/src_snapshot.tar; the image's /src carries an earlier compile, and some
-# build.sh scripts patch the tree, so they cannot run twice) and an empty $WORK.
+# Exactly as the dataset does before its own builds: restore the pristine /src from
+# /opt/src_snapshot.tar (the image's /src carries an earlier compile, and some build.sh
+# scripts patch the tree, so they cannot run twice) and keep $WORK, the snapshot's
+# secure build state. Builds are therefore incremental, as in the dataset: e.g. ICU
+# would otherwise regenerate its data with the (crashing) injected tools.
 # The snapshot is normally already at secure_base_commit; only move it if not (a
 # forced checkout would also undo setup steps that edited tracked files).
 RUN set -eux; \
     if [ -f /opt/src_snapshot.tar ]; then cd / && rm -rf /src && tar -xf /opt/src_snapshot.tar -C /; fi; \
-    rm -rf /work/* /out/*; \
+    rm -rf /out/*; \
     cd /src/libxslt; \
     if git rev-parse --git-dir >/dev/null 2>&1; then \
       if [ "$(git rev-parse HEAD)" != "35323d6a15f6e63c9919ddbc0abe64c90a0dd88a" ]; then \

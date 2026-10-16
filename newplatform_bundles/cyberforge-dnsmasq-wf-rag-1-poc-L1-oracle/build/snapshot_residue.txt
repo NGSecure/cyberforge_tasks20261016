@@ -1,0 +1,7 @@
+/opt/src_snapshot.tar
+/out/fuzz_util
+/out/llvm-symbolizer
+/workspace/run/unit_tests/dnsmasq_stubs.c
+/workspace/run/unit_tests/parse_results.py
+/workspace/run/unit_tests/test.sh
+/workspace/run/unit_tests/test_dnsmasq.c

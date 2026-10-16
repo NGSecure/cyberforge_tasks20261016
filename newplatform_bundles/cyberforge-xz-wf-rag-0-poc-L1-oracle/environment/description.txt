@@ -1,0 +1,1 @@
+A heap-buffer-overflow in lzma_end in xz's common.c causes an out-of-bounds read during multi-threaded stream decoding.

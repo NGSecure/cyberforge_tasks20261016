@@ -19,11 +19,8 @@
     "scrubbed_from_agent_image": 7,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/compress_fuzzer": 1,
-      "/out/decompress_fuzzer": 1,
-      "/out/decompress_fuzzer_seed_corpus.zip": 1,
-      "/out/llvm-symbolizer": 1,
-      "/workspace/run": 2
+      "/out": 4,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -33,9 +30,11 @@
     "task_server_image": "cyberforge_c_blosc_wf_rag_2_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/pov.bin",
-    "how_found": "hints.successful_seed",
+    "dataset_file": "replay/c-blosc/vulnerability_WF_RAG_2/input-000",
+    "how_found": "exploit_replay",
     "bytes": 128,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": true,
     "sha256": "4b2d136bc3af8a55d09653e56640e52c4c1e3a64170fd50ca1af7849c9fa95f1",
     "solve_sh": "inline"
   },
@@ -44,6 +43,9 @@
       "compress_fuzzer"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "compress_fuzzer"
+    ],
     "dataset_metadata_said": [
       "compress_fuzzer",
       "compress_fuzzer"

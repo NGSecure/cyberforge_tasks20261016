@@ -1,6 +1,6 @@
 #!/bin/bash
 # Reference solution (oracle): materialize the CyberForge ground-truth PoV for
-# espeak-ng / vulnerability_FZ_1 (dataset file: espeak-ng/vulnerabilities/vulnerability_FZ_1/exploit_files/poc.ssml) at /workspace/poc.
+# espeak-ng / vulnerability_FZ_1 (dataset file: conversion/replay/espeak-ng/vulnerability_FZ_1/input-000 (replayed espeak-ng/vulnerabilities/vulnerability_FZ_1/exploit_files/exploit.sh)) at /workspace/poc.
 # It does not build anything: grading runs on the task-server's own builds.
 set -euo pipefail
 

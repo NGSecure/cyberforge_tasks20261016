@@ -1,0 +1,1 @@
+A heap-buffer-overflow in Brotli's ReadSimpleHuffmanSymbols in c/dec/decode.c arises from insufficient validation of Huffman symbol data, allowing crafted input to cause out-of-bounds access.

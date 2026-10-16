@@ -1,0 +1,1 @@
+In libdwarf, _dwarf_error_string in dwarf_error.c dereferences a NULL pointer, causing a segmentation violation when dwarf_init_b reports an error.

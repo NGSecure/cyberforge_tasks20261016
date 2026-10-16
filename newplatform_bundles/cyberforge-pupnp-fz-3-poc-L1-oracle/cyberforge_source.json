@@ -19,10 +19,8 @@
     "scrubbed_from_agent_image": 6,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/FuzzIxml": 1,
-      "/out/FuzzIxml_seed_corpus.zip": 1,
-      "/out/llvm-symbolizer": 1,
-      "/workspace/run": 2
+      "/out": 3,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -32,9 +30,11 @@
     "task_server_image": "cyberforge_pupnp_fz_3_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/poc.txt",
-    "how_found": "referenced_by_exploit.sh",
+    "dataset_file": "replay/pupnp/vulnerability_FZ_3/input-000",
+    "how_found": "exploit_replay",
     "bytes": 16,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": true,
     "sha256": "999efb563b0f3037bfaa12a8f565dbfca313e6035d55c4738f5dfade5730c3d4",
     "solve_sh": "inline"
   },
@@ -43,6 +43,9 @@
       "FuzzIxml"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "FuzzIxml"
+    ],
     "dataset_metadata_said": [],
     "metadata_disagrees": false
   },

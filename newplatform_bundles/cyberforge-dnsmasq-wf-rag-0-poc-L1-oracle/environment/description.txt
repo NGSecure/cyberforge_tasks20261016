@@ -1,0 +1,1 @@
+An out-of-bounds write in parse_hex() in dnsmasq's util.c leads to heap buffer overflow when processing crafted input.

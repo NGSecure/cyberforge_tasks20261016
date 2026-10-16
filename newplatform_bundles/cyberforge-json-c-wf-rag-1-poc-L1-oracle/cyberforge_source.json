@@ -19,16 +19,8 @@
     "scrubbed_from_agent_image": 12,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/json_array_fuzzer": 1,
-      "/out/json_array_fuzzer.dict": 1,
-      "/out/json_object_fuzzer": 1,
-      "/out/json_object_fuzzer.dict": 1,
-      "/out/json_pointer_fuzzer": 1,
-      "/out/json_pointer_fuzzer.dict": 1,
-      "/out/llvm-symbolizer": 1,
-      "/out/tokener_parse_ex_fuzzer": 1,
-      "/out/tokener_parse_ex_fuzzer.dict": 1,
-      "/workspace/run": 2
+      "/out": 9,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -41,6 +33,8 @@
     "dataset_file": "exploit_files/pov.bin",
     "how_found": "hints.successful_seed",
     "bytes": 4,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": true,
     "sha256": "9d6e1348aeb90babe55c9baa622945864c7279cfc4650c6bd3fadf5b99d33c0d",
     "solve_sh": "inline"
   },
@@ -49,6 +43,9 @@
       "json_pointer_fuzzer"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "json_pointer_fuzzer"
+    ],
     "dataset_metadata_said": [
       "LLVMFuzzerTestOneInput",
       "LLVMFuzzerTestOneInput"

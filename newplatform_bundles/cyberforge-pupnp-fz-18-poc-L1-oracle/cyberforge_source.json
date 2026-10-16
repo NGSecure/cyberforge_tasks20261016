@@ -19,10 +19,8 @@
     "scrubbed_from_agent_image": 6,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/FuzzIxml": 1,
-      "/out/FuzzIxml_seed_corpus.zip": 1,
-      "/out/llvm-symbolizer": 1,
-      "/workspace/run": 2
+      "/out": 3,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -35,6 +33,8 @@
     "dataset_file": "exploit_files/fuzz_results/vulnerable/crash-f32a9c29304ae0fc3a8c88946aa2c7aff4678580",
     "how_found": "fuzz_crash_artifact",
     "bytes": 24,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": null,
     "sha256": "a3bd9bda9ffcddb1186f9f0e122aac788c37ee2e4dca25d673fdc4c36066e56b",
     "solve_sh": "inline"
   },
@@ -43,6 +43,9 @@
       "FuzzIxml"
     ],
     "how_found": "crash_report.json",
+    "built_by_dataset_snapshot_compile": [
+      "FuzzIxml"
+    ],
     "dataset_metadata_said": [
       "FuzzIxml"
     ],

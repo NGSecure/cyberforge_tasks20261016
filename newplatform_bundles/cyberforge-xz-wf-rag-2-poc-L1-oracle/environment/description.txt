@@ -1,0 +1,1 @@
+In xz, a heap-buffer-overflow read in stream_decoder_reset (src/liblzma/common/stream_decoder_mt.c) leads to a crash when processing a crafted multi-threaded stream.

@@ -19,19 +19,8 @@
     "scrubbed_from_agent_image": 15,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/binpolicy-fuzzer": 1,
-      "/out/binpolicy-fuzzer_seed_corpus.zip": 1,
-      "/out/checkpolicy-fuzzer": 1,
-      "/out/checkpolicy-fuzzer.dict": 1,
-      "/out/checkpolicy-fuzzer_seed_corpus.zip": 1,
-      "/out/llvm-symbolizer": 1,
-      "/out/secilc-fuzzer": 1,
-      "/out/secilc-fuzzer_seed_corpus.zip": 1,
-      "/out/selabel_file_compiled-fuzzer": 1,
-      "/out/selabel_file_compiled-fuzzer_seed_corpus.zip": 1,
-      "/out/selabel_file_text-fuzzer": 1,
-      "/out/selabel_file_text-fuzzer_seed_corpus.zip": 1,
-      "/workspace/run": 2
+      "/out": 12,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -41,10 +30,12 @@
     "task_server_image": "cyberforge_selinux_wf_rag_2_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/pov.bin",
-    "how_found": "hints.successful_seed",
-    "bytes": 26,
-    "sha256": "1d5fba0593c14a3c655cb1a41123c92e6ce4b8deb8fe842616bd7e8a173790be",
+    "dataset_file": "replay/selinux/vulnerability_WF_RAG_2/input-000",
+    "how_found": "exploit_replay",
+    "bytes": 31,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": true,
+    "sha256": "9eded75007781f763fcaca5c49067d2c3044f84141339a92a576c14f5b5de359",
     "solve_sh": "inline"
   },
   "harness": {
@@ -52,6 +43,9 @@
       "secilc-fuzzer"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "secilc-fuzzer"
+    ],
     "dataset_metadata_said": [
       "secilc-fuzzer",
       "secilc-fuzzer"

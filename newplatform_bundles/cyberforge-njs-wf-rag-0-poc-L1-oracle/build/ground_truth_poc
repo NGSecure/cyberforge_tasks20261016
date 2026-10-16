@@ -1,1 +1,5 @@
-(function(){var obj={};for(var i=0;i<100000;i++){obj['p'+i]=i};for(var k in obj){}})();
+async function trigger() {
+  await Promise.resolve();
+  throw new Error("UAF");
+}
+trigger();

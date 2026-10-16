@@ -118,6 +118,8 @@ def check(bd):
         if lines[-1] != "" or any(not x.strip() for x in lines[:-1]):
             errs.append(f + " must be newline-terminated with no blank lines")
     residue = open(os.path.join(bd, "build/snapshot_residue.txt"), encoding="utf-8").read().splitlines()
+    if src["harness"].get("built_by_dataset_snapshot_compile") == []:
+        errs.append("no harness candidate exists in the base image's own compile (/out)")
     snap = src.get("base_image_snapshot")
     if (snap or {}).get("scrubbed_from_agent_image", 0) != len(residue):
         errs.append("snapshot_residue.txt length != cyberforge_source.json")

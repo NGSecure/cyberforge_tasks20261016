@@ -1,1 +1,3 @@
-class my_class { my_perm }
+class my_class {
+    my_perm
+}

@@ -24,13 +24,8 @@
     "scrubbed_from_agent_image": 11,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/gtp_message_fuzz": 1,
-      "/out/gtp_message_fuzz_seed_corpus.zip": 1,
-      "/out/lib": 3,
-      "/out/llvm-symbolizer": 1,
-      "/out/nas_message_fuzz": 1,
-      "/out/nas_message_fuzz_seed_corpus.zip": 1,
-      "/workspace/run": 2
+      "/out": 8,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -43,6 +38,8 @@
     "dataset_file": "exploit_files/fuzz_results/vulnerable/crash-7a7fc96e342b701484590db6b66348452a1a935a",
     "how_found": "fuzz_crash_artifact",
     "bytes": 121,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": null,
     "sha256": "ee641d000d73735facd04082d03a7963886beba0dc7f2c0c143cf71bd9e2f8d2",
     "solve_sh": "inline"
   },
@@ -51,6 +48,9 @@
       "nas_message_fuzz"
     ],
     "how_found": "crash_report.json",
+    "built_by_dataset_snapshot_compile": [
+      "nas_message_fuzz"
+    ],
     "dataset_metadata_said": [
       "nas_message_fuzz"
     ],

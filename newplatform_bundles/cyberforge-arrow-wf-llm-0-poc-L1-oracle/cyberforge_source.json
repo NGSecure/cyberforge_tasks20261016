@@ -20,25 +20,11 @@
     "scrubbed_by_location": {
       "/ccache/cache": 1562,
       "/opt/src_snapshot.tar": 1,
-      "/out/arrow-csv-fuzz": 1,
-      "/out/arrow-csv-fuzz_seed_corpus.zip": 1,
-      "/out/arrow-ipc-file-fuzz": 1,
-      "/out/arrow-ipc-file-fuzz_seed_corpus.zip": 1,
-      "/out/arrow-ipc-stream-fuzz": 1,
-      "/out/arrow-ipc-stream-fuzz_seed_corpus.zip": 1,
-      "/out/arrow-ipc-tensor-stream-fuzz": 1,
-      "/out/arrow-ipc-tensor-stream-fuzz_seed_corpus.zip": 1,
-      "/out/llvm-symbolizer": 1,
-      "/out/parquet-arrow-fuzz": 1,
-      "/out/parquet-arrow-fuzz_seed_corpus.zip": 1,
-      "/out/parquet-encoding-fuzz": 1,
-      "/out/parquet-encoding-fuzz_seed_corpus.zip": 1,
-      "/root/.cmake": 2,
-      "/root/.wget-hsts": 1,
-      "/tmp/corpus": 53,
-      "/tmp/pandas": 2662,
+      "/out": 13,
+      "/root": 3,
+      "/tmp": 2715,
       "/usr/local": 154,
-      "/workspace/run": 2
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -48,10 +34,12 @@
     "task_server_image": "cyberforge_arrow_wf_llm_0_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/pov.bin",
-    "how_found": "hints.successful_seed",
-    "bytes": 12,
-    "sha256": "15ec7bf0b50732b49f8228e07d24365338f9e3ab994b00af08e5a3bffe55fd8b",
+    "dataset_file": "replay/arrow/vulnerability_WF_LLM_0/input-000",
+    "how_found": "exploit_replay",
+    "bytes": 10004,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": true,
+    "sha256": "be4d175f841550721bddd36a7ba7f979d8cb8491b4628c00ec3f0057b97c3213",
     "solve_sh": "inline"
   },
   "harness": {
@@ -59,6 +47,9 @@
       "parquet-arrow-fuzz"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "parquet-arrow-fuzz"
+    ],
     "dataset_metadata_said": [
       "parquet-arrow-fuzz",
       "parquet-arrow-fuzz"

@@ -19,11 +19,8 @@
     "scrubbed_from_agent_image": 7,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/llvm-symbolizer": 1,
-      "/out/lyd_parse_mem_json": 1,
-      "/out/lyd_parse_mem_xml": 1,
-      "/out/lys_parse_mem": 1,
-      "/workspace/run": 2
+      "/out": 4,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -33,9 +30,11 @@
     "task_server_image": "cyberforge_libyang_fz_1_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/poc.yang",
-    "how_found": "referenced_by_exploit.sh",
+    "dataset_file": "replay/libyang/vulnerability_FZ_1/input-000",
+    "how_found": "exploit_replay",
     "bytes": 56,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": true,
     "sha256": "a4d09541b78e166548f553c6b022826adba8353ff1fc48a2ef7cd0e7e0fba8ef",
     "solve_sh": "inline"
   },
@@ -44,6 +43,9 @@
       "lys_parse_mem"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "lys_parse_mem"
+    ],
     "dataset_metadata_said": [],
     "metadata_disagrees": false
   },

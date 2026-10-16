@@ -19,11 +19,8 @@
     "scrubbed_from_agent_image": 7,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/llvm-symbolizer": 1,
-      "/out/ucl_add_string_fuzzer": 1,
-      "/out/ucl_add_string_fuzzer.o": 1,
-      "/out/ucl_add_string_fuzzer.options": 1,
-      "/workspace/run": 2
+      "/out": 4,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -33,9 +30,11 @@
     "task_server_image": "cyberforge_libucl_wf_llm_0_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/payload.bin",
-    "how_found": "referenced_by_exploit.sh",
+    "dataset_file": "replay/libucl/vulnerability_WF_LLM_0/input-000",
+    "how_found": "exploit_replay",
     "bytes": 207,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": null,
     "sha256": "826f43ed4e299d8d4d8496915911bfe41fad2da30497b02a3a7a92e546c05dd4",
     "solve_sh": "inline"
   },
@@ -44,6 +43,9 @@
       "ucl_add_string_fuzzer"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "ucl_add_string_fuzzer"
+    ],
     "dataset_metadata_said": [],
     "metadata_disagrees": false
   },

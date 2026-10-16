@@ -19,9 +19,8 @@
     "scrubbed_from_agent_image": 5,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/hts_open_fuzzer": 1,
-      "/out/llvm-symbolizer": 1,
-      "/workspace/run": 2
+      "/out": 2,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -34,6 +33,8 @@
     "dataset_file": "exploit_files/pov.bin",
     "how_found": "hints.successful_seed",
     "bytes": 20,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": null,
     "sha256": "43e376761b9eee1f83af202748aefe5b4a162610442db37be3291c635a6f75f0",
     "solve_sh": "inline"
   },
@@ -42,6 +43,9 @@
       "hts_open_fuzzer"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "hts_open_fuzzer"
+    ],
     "dataset_metadata_said": [
       "hts_open_fuzzer",
       "hts_open_fuzzer"

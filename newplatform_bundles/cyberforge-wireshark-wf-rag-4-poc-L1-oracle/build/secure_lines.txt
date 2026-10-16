@@ -1,0 +1,1 @@
+memset(&edt->pi, 0, sizeof(edt->pi));

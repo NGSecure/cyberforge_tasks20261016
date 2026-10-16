@@ -24,11 +24,9 @@
     "scrubbed_from_agent_image": 224,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/llvm-symbolizer": 1,
-      "/out/njs_process_script_fuzzer": 1,
-      "/out/njs_process_script_fuzzer_seed_corpus.zip": 1,
+      "/out": 3,
       "/usr/local": 218,
-      "/workspace/run": 2
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -38,10 +36,12 @@
     "task_server_image": "cyberforge_njs_wf_rag_1_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/pov.bin",
-    "how_found": "hints.successful_seed",
-    "bytes": 87,
-    "sha256": "03345122db1ecaa20f58ca0d16a8f164e1270fd02bf411286adf0984c728097a",
+    "dataset_file": "replay/njs/vulnerability_WF_RAG_1/input-000",
+    "how_found": "exploit_replay",
+    "bytes": 176,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": null,
+    "sha256": "f18f96c3fd1c5b01ab5771aa3988e2876355a1084011c5c884d798570c4deb03",
     "solve_sh": "inline"
   },
   "harness": {
@@ -49,6 +49,9 @@
       "njs_process_script_fuzzer"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "njs_process_script_fuzzer"
+    ],
     "dataset_metadata_said": [
       "njs_process_script_fuzzer",
       "njs_process_script_fuzzer"

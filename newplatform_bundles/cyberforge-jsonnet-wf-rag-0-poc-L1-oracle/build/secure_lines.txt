@@ -1,0 +1,1 @@
+char *r = jsonnet_realloc(vm, nullptr, v.length() + 1);

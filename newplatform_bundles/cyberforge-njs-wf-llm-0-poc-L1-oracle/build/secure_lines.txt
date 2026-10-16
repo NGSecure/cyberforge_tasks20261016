@@ -1,0 +1,1 @@
+while (*fmt != '\0' && buf < end) {

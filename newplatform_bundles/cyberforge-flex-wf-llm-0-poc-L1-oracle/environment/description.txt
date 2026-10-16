@@ -1,0 +1,1 @@
+In flex's add_action function in src/misc.c, an unchecked return value from an array reallocation leads to a memory leak.

@@ -1,0 +1,1 @@
+(unsigned char *)buffer_string_prepare_copy(t,i+(used-i)*3+1);

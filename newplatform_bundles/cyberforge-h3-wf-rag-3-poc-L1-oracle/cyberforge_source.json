@@ -19,32 +19,8 @@
     "scrubbed_from_agent_image": 28,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/fuzzerCellArea": 1,
-      "/out/fuzzerCellProperties": 1,
-      "/out/fuzzerCellToChildPos": 1,
-      "/out/fuzzerCellToLatLng": 1,
-      "/out/fuzzerCellsToLinkedMultiPolygon": 1,
-      "/out/fuzzerCellsToMultiPolygon": 1,
-      "/out/fuzzerCompact": 1,
-      "/out/fuzzerConstructCell": 1,
-      "/out/fuzzerDirectedEdge": 1,
-      "/out/fuzzerDistances": 1,
-      "/out/fuzzerEdgeLength": 1,
-      "/out/fuzzerGridDisk": 1,
-      "/out/fuzzerHierarchy": 1,
-      "/out/fuzzerIndexIO": 1,
-      "/out/fuzzerInternalAlgos": 1,
-      "/out/fuzzerInternalCoordIjk": 1,
-      "/out/fuzzerLatLngToCell": 1,
-      "/out/fuzzerLocalIj": 1,
-      "/out/fuzzerPolygonToCells": 1,
-      "/out/fuzzerPolygonToCellsExperimental": 1,
-      "/out/fuzzerPolygonToCellsExperimentalNoHoles": 1,
-      "/out/fuzzerPolygonToCellsNoHoles": 1,
-      "/out/fuzzerResolutions": 1,
-      "/out/fuzzerVertexes": 1,
-      "/out/llvm-symbolizer": 1,
-      "/workspace/run": 2
+      "/out": 25,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -54,9 +30,11 @@
     "task_server_image": "cyberforge_h3_wf_rag_3_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/pov.bin",
-    "how_found": "hints.successful_seed",
+    "dataset_file": "replay/h3/vulnerability_WF_RAG_3/input-000",
+    "how_found": "exploit_replay",
     "bytes": 8,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": true,
     "sha256": "220dde27afee4d537cac96d85d6546f825153b90e828931b74e103807541bc42",
     "solve_sh": "inline"
   },
@@ -65,6 +43,9 @@
       "fuzzerPolygonToCellsNoHoles"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "fuzzerPolygonToCellsNoHoles"
+    ],
     "dataset_metadata_said": [
       "fuzzerPolygonToCellsNoHoles",
       "fuzzerPolygonToCellsNoHoles"

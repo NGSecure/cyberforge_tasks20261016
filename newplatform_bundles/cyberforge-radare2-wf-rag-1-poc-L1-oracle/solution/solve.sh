@@ -1,6 +1,6 @@
 #!/bin/bash
 # Reference solution (oracle): materialize the CyberForge ground-truth PoV for
-# radare2 / vulnerability_WF_RAG_1 (dataset file: radare2/vulnerabilities/vulnerability_WF_RAG_1/exploit_files/pov.bin) at /workspace/poc.
+# radare2 / vulnerability_WF_RAG_1 (dataset file: conversion/replay/radare2/vulnerability_WF_RAG_1/input-000 (replayed radare2/vulnerabilities/vulnerability_WF_RAG_1/exploit_files/exploit.sh)) at /workspace/poc.
 # It does not build anything: grading runs on the task-server's own builds.
 set -euo pipefail
 

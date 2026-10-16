@@ -1,0 +1,1 @@
+simdjson's src/to_chars.cpp contains an incorrect integer calculation (CWE-193) in numeric formatting that can lead to buffer overruns.

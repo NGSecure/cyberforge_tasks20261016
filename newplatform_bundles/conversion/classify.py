@@ -7,17 +7,22 @@ Tier B  needs a different bundle type: the PoV is a custom program/script, drive
         project CLI/test binary instead of a harness, or the oracle is a
         behavioral divergence (no sanitizer crash by nature).
 Tier C  insufficient ground truth: empty report, no saved PoC, harness ambiguous,
-        or a timeout/OOM signal the exit-code judge cannot score.
+        a timeout/OOM signal the exit-code judge cannot score, or a recorded report
+        that does not satisfy exploit.sh's own trigger check.
 
 Harness resolution trusts what the exploit actually executes (literal /out/<x> or a
 FUZZER="x" ... /out/${FUZZER} indirection) and crash_report.json for libFuzzer
 crash artifacts. hints/manifest/contract selected_fuzzer are a last resort only and
-are frequently wrong, so disagreements are recorded.
+are frequently wrong, so disagreements are recorded. When snapshot_scan/ (from
+scan_snapshots.py) is present next to this script, a harness name must also be one
+the dataset's own compile of the base image put in /out.
 
 Usage: python3 -I classify.py <inner_root> <out_records.json>
+       (run it again after scan_snapshots.py so the /out check applies)
 """
 import csv
 import glob
+import hashlib
 import json
 import os
 import re
@@ -132,6 +137,48 @@ def report_satisfies_exploit(es, report):
     return False
 
 
+SCAN_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "snapshot_scan")
+REPLAY_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "replay")
+
+
+def replayed(rel, dataset_files):
+    """The input exploit.sh fed its harness when replayed with stub harnesses
+    (replay_exploits.py), as a path relative to this script's dir, plus replay.json.
+    One distinct input: that one. Several (e.g. a warm-up run first): only one that is
+    byte-identical to a dataset file; otherwise None (ambiguous)."""
+    d = os.path.join(REPLAY_DIR, *rel.split("/vulnerabilities/"))
+    info = jl(os.path.join(d, "replay.json"))
+    inputs = [i for i in info.get("inputs") or [] if os.path.isfile(os.path.join(d, i["file"]))]
+    pick = None
+    if len(inputs) == 1:
+        pick = inputs[0]
+    elif inputs:
+        known = set()
+        for f in dataset_files:
+            try:
+                known.add(hashlib.sha256(open(f, "rb").read()).hexdigest())
+            except OSError:
+                pass
+        hits = [i for i in inputs if i["sha256"] in known]
+        pick = hits[0] if len(hits) == 1 else None
+    if pick:
+        return os.path.relpath(os.path.join(d, pick["file"]), os.path.dirname(REPLAY_DIR)), info
+    return None, info
+
+
+def snapshot_out(project):
+    """Names in /out after the dataset's own compile (from scan_snapshots.py), or None."""
+    f = os.path.join(SCAN_DIR, project + ".json")
+    if not os.path.isfile(f):
+        return None
+    return {x[len("/out/"):] for x in json.load(open(f, encoding="utf-8"))["post_setup_files"]
+            if x.startswith("/out/")}
+
+
+def poc_path(vd, poc, poc_src):
+    return os.path.join(os.path.dirname(REPLAY_DIR), poc) if poc_src == "exploit_replay" else os.path.join(vd, poc)
+
+
 def asan_options_of(es):
     m = re.search(r"\bASAN_OPTIONS=([\"']?)([^\s\"']+)\1", es)
     return m.group(2) if m else ""
@@ -167,6 +214,9 @@ for r in rows:
     custom = []
     if re.search(r"\b(gcc|g\+\+|clang\+\+|clang|cc)\b[^\n]*\s-o\s", es):
         custom.append("exploit.sh compiles code")
+    code = "\n".join(l for l in es.splitlines() if not l.strip().startswith("#"))
+    if re.search(r"(\)|[\w\"'])[ \t]*&[ \t]*$", code, re.M):
+        custom.append("exploit races a background process (not a single-input PoV)")
     for f in top_files:
         b = os.path.basename(f)
         if b in ("driver", "attack.sh", "attack") or b.endswith((".c", ".cc", ".cpp")):
@@ -178,6 +228,10 @@ for r in rows:
     arts = sorted(glob.glob(os.path.join(ef, "fuzz_results", "vulnerable", "crash-*")))
     if arts:
         poc, poc_src = os.path.relpath(arts[0], vd), "fuzz_crash_artifact"
+    rp, rinfo = replayed(r["path"], [os.path.join(vd, f) for f in ef_files])
+    if not poc and rp:
+        # what the exploit really ran; the harvested pov.bin is often something else
+        poc, poc_src = rp, "exploit_replay"
     if not poc:
         rel = hints.get("successful_seed_relative_path") or ""
         if rel and os.path.isfile(os.path.join(vd, rel)):
@@ -224,6 +278,17 @@ for r in rows:
         fuzzer, fuzzer_src = meta_fz[0], "metadata (fuzz_poc.py)"
     mismatch = bool(fuzzer and meta_fz and fuzzer not in meta_fz)
 
+    # A name exploit.sh runs from /out that the dataset's own compile of this image never
+    # put in /out (snapshot_scan/) is the project's CLI/test binary, not a fuzz harness.
+    # Without a scan: "/out/X if present, else the repo's X" (jq, qjs) means the same.
+    outs = snapshot_out(p)
+    if ex_h and outs is not None and not any(n in outs for n in ex_h):
+        custom.append("exploit runs a binary the OSS-Fuzz build does not put in /out (CLI/test/custom harness)")
+    elif ex_h and outs is None:
+        for n in ex_h:
+            if re.search(r"(\$\{?REPO\w*\}?|/src/[\w.+-]+)/%s\b" % re.escape(n), es):
+                custom.append("exploit drives a project CLI/test binary, not the fuzz harness")
+                break
     if not custom and not ex_h and not uses_renamed and "fuzz_poc.py" not in es:
         if re.search(r"(^|[\s;|&(\"'=])(/src/\S+|\./[\w.\-+]+|\$\{?\w*(BIN|BINARY)\w*\}?)", es, re.M) \
                 or (hints.get("selected_fuzzer") or "") == "main":
@@ -244,9 +309,9 @@ for r in rows:
                              if crep else "no concrete PoC file (payload only inline / missing)")
     elif not fuzzer:
         tier, reason = "C", note or "fuzz harness not identifiable"
-    elif os.path.getsize(os.path.join(vd, poc)) == 0:
+    elif os.path.getsize(poc_path(vd, poc, poc_src)) == 0:
         tier, reason = "C", "ground-truth PoC file is empty (pov.bin harvest failure or degenerate empty-input trigger)"
-    elif sig_src == "sanitizer_report.txt" and report_ok is False:
+    elif sig_src == "sanitizer_report.txt" and report_ok is False and poc_src != "exploit_replay":
         tier, reason = "C", ("sanitizer report does not show what exploit.sh checks for "
                              "(recorded run did not trigger; ground truth unverified)")
     else:
@@ -260,6 +325,8 @@ for r in rows:
         "signal": sig, "signal_detail": sig_detail, "signal_src": sig_src,
         "report_matches_exploit_check": report_ok,
         "poc": poc, "poc_src": poc_src, "fuzzer": fuzzer, "fuzzer_src": fuzzer_src,
+        "replay_captured": len(rinfo.get("captured") or []),
+        "replay_distinct_inputs": len(rinfo.get("inputs") or []),
         "fuzzer_candidates": ex_h if len(ex_h) > 1 else ([fuzzer] if fuzzer else []),
         "fuzzer_metadata": meta_fz, "fuzzer_mismatch": mismatch,
         "asan_options": asan_options_of(es),

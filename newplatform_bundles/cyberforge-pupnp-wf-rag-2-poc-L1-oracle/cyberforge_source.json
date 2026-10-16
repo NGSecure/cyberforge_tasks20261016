@@ -19,10 +19,8 @@
     "scrubbed_from_agent_image": 6,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/FuzzIxml": 1,
-      "/out/FuzzIxml_seed_corpus.zip": 1,
-      "/out/llvm-symbolizer": 1,
-      "/workspace/run": 2
+      "/out": 3,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -32,9 +30,11 @@
     "task_server_image": "cyberforge_pupnp_wf_rag_2_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/pov.bin",
-    "how_found": "hints.successful_seed",
+    "dataset_file": "replay/pupnp/vulnerability_WF_RAG_2/input-000",
+    "how_found": "exploit_replay",
     "bytes": 144,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": true,
     "sha256": "9448f5d145192ea4d3791d1eeeafb4b725e72a1df1c5808b4a575f0f996527e5",
     "solve_sh": "inline"
   },
@@ -43,6 +43,9 @@
       "FuzzIxml"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "FuzzIxml"
+    ],
     "dataset_metadata_said": [
       "FuzzIxml",
       "FuzzIxml"

@@ -19,20 +19,8 @@
     "scrubbed_from_agent_image": 16,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/fuzz_decode_alone": 1,
-      "/out/fuzz_decode_alone.options": 1,
-      "/out/fuzz_decode_alone_seed_corpus.zip": 1,
-      "/out/fuzz_decode_stream": 1,
-      "/out/fuzz_decode_stream.options": 1,
-      "/out/fuzz_decode_stream_mt": 1,
-      "/out/fuzz_decode_stream_mt.options": 1,
-      "/out/fuzz_decode_stream_seed_corpus.zip": 1,
-      "/out/fuzz_encode_stream": 1,
-      "/out/fuzz_encode_stream.options": 1,
-      "/out/fuzz_lzma.dict": 1,
-      "/out/fuzz_xz.dict": 1,
-      "/out/llvm-symbolizer": 1,
-      "/workspace/run": 2
+      "/out": 13,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -42,10 +30,12 @@
     "task_server_image": "cyberforge_xz_wf_rag_5_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/pov.bin",
-    "how_found": "hints.successful_seed",
-    "bytes": 8,
-    "sha256": "792e27e920b7be4e35645b8f96a4b91e4a6b887f26ad3333511bf7acd3f51233",
+    "dataset_file": "replay/xz/vulnerability_WF_RAG_5/input-000",
+    "how_found": "exploit_replay",
+    "bytes": 14,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": true,
+    "sha256": "e548495cbcb9c52579784b4235c635b3ed0a20c3fe139888d33ed93e3368191c",
     "solve_sh": "inline"
   },
   "harness": {
@@ -53,6 +43,9 @@
       "fuzz_decode_alone"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "fuzz_decode_alone"
+    ],
     "dataset_metadata_said": [
       "fuzz_decode_alone",
       "fuzz_decode_alone"

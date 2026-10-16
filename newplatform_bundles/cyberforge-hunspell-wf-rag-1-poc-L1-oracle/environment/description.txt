@@ -1,0 +1,1 @@
+A heap-buffer-overflow in hunspell's SuggestMgr::commoncharacterpositions (suggestmgr.cxx) allows an out-of-bounds read via crafted input.

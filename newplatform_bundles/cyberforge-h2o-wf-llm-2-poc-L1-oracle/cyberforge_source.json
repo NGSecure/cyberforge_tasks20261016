@@ -35,21 +35,8 @@
     "scrubbed_by_location": {
       "/ccache/cache": 924,
       "/opt/src_snapshot.tar": 1,
-      "/out/h2o-fuzzer-http1": 1,
-      "/out/h2o-fuzzer-http1.options": 1,
-      "/out/h2o-fuzzer-http1_seed_corpus.zip": 1,
-      "/out/h2o-fuzzer-http2": 1,
-      "/out/h2o-fuzzer-http2.options": 1,
-      "/out/h2o-fuzzer-http2_seed_corpus.zip": 1,
-      "/out/h2o-fuzzer-http3": 1,
-      "/out/h2o-fuzzer-http3.options": 1,
-      "/out/h2o-fuzzer-http3_seed_corpus.zip": 1,
-      "/out/h2o-fuzzer-url": 1,
-      "/out/h2o-fuzzer-url.options": 1,
-      "/out/h2o-fuzzer-url_seed_corpus.zip": 1,
-      "/out/http.dict": 1,
-      "/out/llvm-symbolizer": 1,
-      "/workspace/run": 2
+      "/out": 14,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -62,6 +49,8 @@
     "dataset_file": "exploit_files/pov.bin",
     "how_found": "hints.successful_seed",
     "bytes": 10,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": null,
     "sha256": "365da402f160f47222a2f061a87f43b165fa3daad476acbc1eb70fc84fc1c338",
     "solve_sh": "inline"
   },
@@ -70,6 +59,9 @@
       "h2o-fuzzer-http1"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "h2o-fuzzer-http1"
+    ],
     "dataset_metadata_said": [
       "h2o-fuzzer-http1",
       "h2o-fuzzer-http1"

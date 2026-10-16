@@ -19,9 +19,8 @@
     "scrubbed_from_agent_image": 5,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/decoder_fuzzer": 1,
-      "/out/llvm-symbolizer": 1,
-      "/workspace/run": 2
+      "/out": 2,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -31,10 +30,12 @@
     "task_server_image": "cyberforge_openh264_wf_rag_1_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/pov.bin",
-    "how_found": "hints.successful_seed",
-    "bytes": 9,
-    "sha256": "85ea39efee4077194989c24c83c5742448c8dd0ab71553d3e9603742e69cd219",
+    "dataset_file": "replay/openh264/vulnerability_WF_RAG_1/input-000",
+    "how_found": "exploit_replay",
+    "bytes": 888,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": true,
+    "sha256": "bf016e483c00d8a224f6bc7633d1e9d3209267211a7b014f77216b690ee62149",
     "solve_sh": "inline"
   },
   "harness": {
@@ -42,6 +43,9 @@
       "decoder_fuzzer"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "decoder_fuzzer"
+    ],
     "dataset_metadata_said": [
       "decoder_fuzzer",
       "decoder_fuzzer"

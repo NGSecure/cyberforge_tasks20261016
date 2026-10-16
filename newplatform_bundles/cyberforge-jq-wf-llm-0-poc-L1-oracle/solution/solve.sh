@@ -1,6 +1,6 @@
 #!/bin/bash
 # Reference solution (oracle): materialize the CyberForge ground-truth PoV for
-# jq / vulnerability_WF_LLM_0 (dataset file: jq/vulnerabilities/vulnerability_WF_LLM_0/exploit_files/pov.bin) at /workspace/poc.
+# jq / vulnerability_WF_LLM_0 (dataset file: conversion/replay/jq/vulnerability_WF_LLM_0/input-000 (replayed jq/vulnerabilities/vulnerability_WF_LLM_0/exploit_files/exploit.sh)) at /workspace/poc.
 # It does not build anything: grading runs on the task-server's own builds.
 set -euo pipefail
 

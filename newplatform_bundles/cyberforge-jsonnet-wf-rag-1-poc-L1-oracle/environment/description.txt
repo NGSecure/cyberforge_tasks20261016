@@ -1,0 +1,1 @@
+A null pointer dereference in the static_analysis function of jsonnet causes a segmentation violation.

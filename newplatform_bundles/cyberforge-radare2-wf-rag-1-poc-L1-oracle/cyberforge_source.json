@@ -20,13 +20,9 @@
     "scrubbed_by_location": {
       "/ccache/cache": 1837,
       "/opt/src_snapshot.tar": 1,
-      "/out/ia_fuzz": 1,
-      "/out/ia_fuzz.options": 1,
-      "/out/ia_fuzz_seed_corpus.zip": 1,
-      "/out/llvm-symbolizer": 1,
-      "/out/r2-static": 869,
-      "/tmp/.cc.txt": 1,
-      "/workspace/run": 2
+      "/out": 873,
+      "/tmp": 1,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -36,9 +32,11 @@
     "task_server_image": "cyberforge_radare2_wf_rag_1_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/pov.bin",
-    "how_found": "hints.successful_seed",
+    "dataset_file": "replay/radare2/vulnerability_WF_RAG_1/input-000",
+    "how_found": "exploit_replay",
     "bytes": 1,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": null,
     "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
     "solve_sh": "inline"
   },
@@ -47,6 +45,9 @@
       "ia_fuzz"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "ia_fuzz"
+    ],
     "dataset_metadata_said": [
       "ia_fuzz",
       "ia_fuzz"

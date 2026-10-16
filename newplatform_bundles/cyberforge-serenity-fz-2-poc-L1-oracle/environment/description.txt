@@ -1,0 +1,1 @@
+A post-buffer operation (CWE-130) in Meta/Lagom/Fuzzers/FuzzJsonParser.cpp can lead to out-of-bounds memory access when parsing crafted JSON input.

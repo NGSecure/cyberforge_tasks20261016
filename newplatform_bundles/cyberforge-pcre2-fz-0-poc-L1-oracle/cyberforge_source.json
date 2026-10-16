@@ -19,29 +19,8 @@
     "scrubbed_from_agent_image": 25,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/llvm-symbolizer": 1,
-      "/out/pcre2_fuzzer": 1,
-      "/out/pcre2_fuzzer.dict": 1,
-      "/out/pcre2_fuzzer.options": 1,
-      "/out/pcre2_fuzzer_16": 1,
-      "/out/pcre2_fuzzer_16.dict": 1,
-      "/out/pcre2_fuzzer_16.options": 1,
-      "/out/pcre2_fuzzer_16_3l": 1,
-      "/out/pcre2_fuzzer_16_3l.options": 1,
-      "/out/pcre2_fuzzer_16_4l": 1,
-      "/out/pcre2_fuzzer_16_4l.options": 1,
-      "/out/pcre2_fuzzer_32": 1,
-      "/out/pcre2_fuzzer_32.dict": 1,
-      "/out/pcre2_fuzzer_32.options": 1,
-      "/out/pcre2_fuzzer_32_3l": 1,
-      "/out/pcre2_fuzzer_32_3l.options": 1,
-      "/out/pcre2_fuzzer_32_4l": 1,
-      "/out/pcre2_fuzzer_32_4l.options": 1,
-      "/out/pcre2_fuzzer_3l": 1,
-      "/out/pcre2_fuzzer_3l.options": 1,
-      "/out/pcre2_fuzzer_4l": 1,
-      "/out/pcre2_fuzzer_4l.options": 1,
-      "/workspace/run": 2
+      "/out": 22,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -51,9 +30,11 @@
     "task_server_image": "cyberforge_pcre2_fz_0_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/poc.txt",
-    "how_found": "referenced_by_exploit.sh",
+    "dataset_file": "replay/pcre2/vulnerability_FZ_0/input-000",
+    "how_found": "exploit_replay",
     "bytes": 11,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": true,
     "sha256": "ba2e07b0c51d60951a056154baf8ae59be6732968a58ea4327ab01ee407217af",
     "solve_sh": "inline"
   },
@@ -62,6 +43,9 @@
       "pcre2_fuzzer_3l"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "pcre2_fuzzer_3l"
+    ],
     "dataset_metadata_said": [],
     "metadata_disagrees": false
   },

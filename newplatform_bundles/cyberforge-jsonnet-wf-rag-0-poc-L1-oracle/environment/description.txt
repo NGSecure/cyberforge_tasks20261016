@@ -1,0 +1,1 @@
+In jsonnet, the from_string function performs an out-of-bounds heap write via memcpy when evaluating a snippet, leading to a heap-buffer-overflow.

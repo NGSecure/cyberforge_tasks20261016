@@ -11,9 +11,11 @@
     "task_server_image": "cyberforge_guetzli_fz_0_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/poc.bin",
-    "how_found": "referenced_by_exploit.sh",
+    "dataset_file": "replay/guetzli/vulnerability_FZ_0/input-002",
+    "how_found": "exploit_replay",
     "bytes": 5,
+    "exploit_replay_inputs": 3,
+    "dataset_report_matches_exploit_check": true,
     "sha256": "9c35c7199a23cb8bbe44c68559906ac30e0d0d2309d38d25ca8d36013270184e",
     "solve_sh": "inline"
   },
@@ -22,6 +24,7 @@
       "guetzli_fuzzer"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": null,
     "dataset_metadata_said": [],
     "metadata_disagrees": false
   },

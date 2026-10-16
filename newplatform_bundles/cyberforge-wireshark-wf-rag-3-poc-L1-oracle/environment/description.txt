@@ -1,0 +1,1 @@
+A stack buffer overflow in the JSON dissector's after_member function in Wireshark could lead to a crash via a crafted packet.

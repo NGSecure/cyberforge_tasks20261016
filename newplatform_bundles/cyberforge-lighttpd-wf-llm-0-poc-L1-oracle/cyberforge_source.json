@@ -1,0 +1,71 @@
+{
+  "bundle": "cyberforge-lighttpd-wf-llm-0-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/lighttpd/vulnerabilities/vulnerability_WF_LLM_0",
+  "base_image": "vuljector/lighttpd:setup@sha256:7988902205ef75f8f000913f84cbaf62e4d3479e9838145883b5318375537a72",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-05-11T01:42:12.76394532Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-11T01:44:54.603612745Z",
+        "created_by": "sleep infinity",
+        "bytes": 42934638
+      },
+      {
+        "created": "2026-05-11T01:51:18.223805655Z",
+        "created_by": "sleep infinity",
+        "bytes": 1208
+      }
+    ],
+    "post_setup_files": 599,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 592,
+    "scrubbed_from_agent_image": 5,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out": 2,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 1,
+  "image_tags": {
+    "docker_image": "cyberforge_lighttpd_wf_llm_0_main:v0.0.1",
+    "task_server_image": "cyberforge_lighttpd_wf_llm_0_task_server:v0.0.1"
+  },
+  "ground_truth": {
+    "dataset_file": "replay/lighttpd/vulnerability_WF_LLM_0/input-000",
+    "how_found": "exploit_replay",
+    "bytes": 104,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": null,
+    "sha256": "00f4c44391be31397fd83ed8a15cca9dd8e3cfe88fb3ebc8c051de2ec5e256fc",
+    "solve_sh": "inline"
+  },
+  "harness": {
+    "candidates": [
+      "fuzz_burl"
+    ],
+    "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "fuzz_burl"
+    ],
+    "dataset_metadata_said": [],
+    "metadata_disagrees": false
+  },
+  "trigger_evidence": {
+    "signal": "asan",
+    "detail": "heap-buffer-overflow",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": true
+  },
+  "asan_options_from_exploit": "halt_on_error=1:abort_on_error=1",
+  "cwe_id": "CWE-119",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "3651e9be9ee7d9afd04f9e7c956a40f3633656e1"
+}

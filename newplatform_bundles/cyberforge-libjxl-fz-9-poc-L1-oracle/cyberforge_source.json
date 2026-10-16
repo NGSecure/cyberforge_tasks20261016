@@ -19,21 +19,10 @@
     "scrubbed_from_agent_image": 3826,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/cjxl_fuzzer": 1,
-      "/out/color_encoding_fuzzer": 1,
-      "/out/decode_basic_info_fuzzer": 1,
-      "/out/djxl_fuzzer": 1,
-      "/out/djxl_fuzzer_seed_corpus.zip": 1,
-      "/out/fields_fuzzer": 1,
-      "/out/icc_codec_fuzzer": 1,
-      "/out/llvm-symbolizer": 1,
-      "/out/rans_fuzzer": 1,
-      "/out/set_from_bytes_fuzzer": 1,
-      "/out/streaming_fuzzer": 1,
-      "/out/transforms_fuzzer": 1,
+      "/out": 12,
       "/work/libjxl-corpus": 3480,
       "/work/libjxl-fuzzer": 331,
-      "/workspace/run": 2
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -46,6 +35,8 @@
     "dataset_file": "exploit_files/fuzz_results/vulnerable/crash-b6ff87981432819af54c842e1828c80b516f4b77",
     "how_found": "fuzz_crash_artifact",
     "bytes": 8192,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": null,
     "sha256": "c381d052c60e3e621bb4dc9376f0b158c30e365e6f70e5878ca830eebb29a700",
     "solve_sh": "inline"
   },
@@ -54,6 +45,9 @@
       "djxl_fuzzer"
     ],
     "how_found": "crash_report.json",
+    "built_by_dataset_snapshot_compile": [
+      "djxl_fuzzer"
+    ],
     "dataset_metadata_said": [
       "djxl_fuzzer"
     ],

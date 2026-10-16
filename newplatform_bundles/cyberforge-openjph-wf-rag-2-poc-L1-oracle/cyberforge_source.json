@@ -19,10 +19,8 @@
     "scrubbed_from_agent_image": 6,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/llvm-symbolizer": 1,
-      "/out/ojph_expand_fuzz_target": 1,
-      "/out/ojph_expand_fuzz_target_seed_corpus.zip": 1,
-      "/workspace/run": 2
+      "/out": 3,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -32,9 +30,11 @@
     "task_server_image": "cyberforge_openjph_wf_rag_2_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/trigger_qcd.j2c",
-    "how_found": "referenced_by_exploit.sh",
+    "dataset_file": "replay/openjph/vulnerability_WF_RAG_2/input-000",
+    "how_found": "exploit_replay",
     "bytes": 674100,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": true,
     "sha256": "270a44e4b9c83597afd38b6479dcf6b0509a0f9a4ccd56537710b70f5b6d67d6",
     "solve_sh": "fetch /solve"
   },
@@ -43,6 +43,9 @@
       "ojph_expand_fuzz_target"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "ojph_expand_fuzz_target"
+    ],
     "dataset_metadata_said": [],
     "metadata_disagrees": false
   },

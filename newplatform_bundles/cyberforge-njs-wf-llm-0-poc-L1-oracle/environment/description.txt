@@ -1,0 +1,1 @@
+Stack-buffer-overflow in njs_vsprintf function in njs_sprintf.c leads to out-of-bounds write via crafted input.

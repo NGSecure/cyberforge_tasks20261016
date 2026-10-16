@@ -1,0 +1,1 @@
+while (len + action_index >= action_size - 10 /* slop */ ) {

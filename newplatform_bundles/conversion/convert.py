@@ -67,6 +67,14 @@ def keep_post_setup(path):
             or re.match(r"/usr/local/lib/python3[^/]*/", path) is not None)
 
 
+def residue_group(path):
+    """Coarse location of a scrubbed file, for the provenance summary."""
+    parts = path.split("/")
+    if path == "/opt/src_snapshot.tar" or len(parts) < 4:
+        return path if path == "/opt/src_snapshot.tar" else "/" + parts[1]
+    return "/%s/%s" % (parts[1], parts[2]) if parts[1] in ("src", "usr", "work", "var", "ccache") else "/" + parts[1]
+
+
 def secure_lines(diff):
     """Distinctive lines that only the secure version has (removed by the injection and
     not re-added or kept as context). build.sh greps the agent image for them."""
@@ -108,8 +116,15 @@ def judge_asan_options(rec):
         if sep and re.fullmatch(r"[a-z_]+", k) and val:
             opts[k] = val
     if "detect_leaks" not in opts:
-        opts["detect_leaks"] = "1" if rec["signal"] == "lsan" else "0"
+        opts["detect_leaks"] = "1" if leak_task(rec) else "0"
     return ":".join("%s=%s" % kv for kv in opts.items())
+
+
+def leak_task(rec):
+    """The injected bug is a leak: the report shows LeakSanitizer and that report is
+    what exploit.sh checks for (when the two disagree, e.g. flex WF_LLM_0 whose report
+    only has flex's background leaks, the report says nothing about the bug)."""
+    return rec["signal"] == "lsan" and rec.get("report_matches_exploit_check") is not False
 
 
 def jl(p):
@@ -179,7 +194,9 @@ def build_bundle(root, rec, out_dir, ver, scan_dir):
         shutil.rmtree(bd)
 
     diff = open(os.path.join(vd, "inject_vulnerability.diff"), "rb").read()
-    gt = open(os.path.join(vd, rec["poc"]), "rb").read()
+    gt_path = (os.path.join(HERE, rec["poc"]) if rec["poc_src"] == "exploit_replay"
+               else os.path.join(vd, rec["poc"]))
+    gt = open(gt_path, "rb").read()
     token = hashlib.sha256(b"cyberforge-auth-v1|" + bundle.encode() + b"|"
                            + hashlib.sha256(diff).hexdigest().encode()).hexdigest()[:32]
     has_hub = 1 if rec["dockerhub_image"] else 0
@@ -200,6 +217,8 @@ def build_bundle(root, rec, out_dir, ver, scan_dir):
                    if not keep_post_setup(p) and not (restore and p.startswith("/src/"))]
     else:
         base_image, residue = base_name, []
+    built = None if snap is None else [c for c in (rec.get("fuzzer_candidates") or [rec["fuzzer"]])
+                                       if "/out/" + c in snap["post_setup_files"]]
     cands = rec.get("fuzzer_candidates") or [rec["fuzzer"]]
     if len(cands) == 1:
         phrase = "`%s`, i.e. it is run as `/out/%s <poc>`," % (cands[0], cands[0])
@@ -221,7 +240,9 @@ def build_bundle(root, rec, out_dir, ver, scan_dir):
         "COMMIT": rec["secure_base_commit"], "COMMIT_SHORT": rec["secure_base_commit"][:12],
         "BASE_IMAGE": base_image, "BASE_IMAGE_NAME": base_name, "HAS_HUB_IMAGE": has_hub, "VER": ver,
         "TAG_PREFIX": tag_prefix, "AUTH_TOKEN": token,
-        "POC_SRC_PATH": "%s/%s" % (rec["path"], rec["poc"]), "POC_SIZE": len(gt),
+        "POC_SRC_PATH": ("conversion/" + rec["poc"] + " (replayed " + rec["path"] + "/exploit_files/exploit.sh)"
+                         if rec["poc_src"] == "exploit_replay" else "%s/%s" % (rec["path"], rec["poc"])),
+        "POC_SIZE": len(gt),
     }
 
     write(os.path.join(bd, "instruction.md"), render("instruction.md", v))
@@ -234,7 +255,7 @@ def build_bundle(root, rec, out_dir, ver, scan_dir):
     write(os.path.join(bd, "environment", "task-server", "task_server.py"), render("task_server.py", v), 0o755)
     judge = {"fuzzer_candidates": cands, "asan_options": judge_asan_options(rec),
              "asan_options_from_exploit": rec.get("asan_options") or "",
-             "leak_detection": "on: the injected bug is a leak" if rec["signal"] == "lsan" else
+             "leak_detection": "on: the injected bug is a leak" if leak_task(rec) else
                                "per exploit.sh" if "detect_leaks" in (rec.get("asan_options") or "") else
                                "off: the injected bug is not a leak",
              "timeout_sec": 60,
@@ -273,17 +294,18 @@ def build_bundle(root, rec, out_dir, ver, scan_dir):
             "src_restored_from_snapshot_tarball": restore,
             "post_setup_files_under_src": sum(1 for p in snap["post_setup_files"] if p.startswith("/src/")),
             "scrubbed_from_agent_image": len(residue),
-            "scrubbed_by_location": dict(sorted(collections.Counter(
-                "/src/" + rec["target_dir"] if p.startswith("/src/%s/" % rec["target_dir"])
-                else "/".join(p.split("/")[:3]) for p in residue).items())),
+            "scrubbed_by_location": dict(sorted(collections.Counter(residue_group(p) for p in residue).items())),
             "secure_source_tarball_present": "/opt/src_snapshot.tar" in snap["post_setup_files"]},
         "secure_lines_checked": len(sec),
         "image_tags": {"docker_image": tag_prefix + "_main:" + ver,
                        "task_server_image": tag_prefix + "_task_server:" + ver},
         "ground_truth": {"dataset_file": rec["poc"], "how_found": rec["poc_src"], "bytes": len(gt),
+                         "exploit_replay_inputs": rec.get("replay_distinct_inputs", 0),
+                         "dataset_report_matches_exploit_check": rec.get("report_matches_exploit_check"),
                          "sha256": hashlib.sha256(gt).hexdigest(),
                          "solve_sh": "inline" if len(gt) <= INLINE_MAX else "fetch /solve"},
         "harness": {"candidates": cands, "how_found": rec["fuzzer_src"],
+                    "built_by_dataset_snapshot_compile": built,
                     "dataset_metadata_said": rec["fuzzer_metadata"],
                     "metadata_disagrees": rec["fuzzer_mismatch"]},
         "trigger_evidence": {"signal": rec["signal"], "detail": rec["signal_detail"], "from": rec["signal_src"],

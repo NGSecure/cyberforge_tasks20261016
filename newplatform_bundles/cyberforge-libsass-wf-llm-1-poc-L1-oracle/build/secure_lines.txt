@@ -1,0 +1,1 @@
+if (std::fclose(fd) != 0) {

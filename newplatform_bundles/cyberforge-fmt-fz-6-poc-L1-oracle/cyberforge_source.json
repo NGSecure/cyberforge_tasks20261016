@@ -19,14 +19,8 @@
     "scrubbed_from_agent_image": 10,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/chrono-duration-fuzzer": 1,
-      "/out/chrono-timepoint-fuzzer": 1,
-      "/out/float-fuzzer": 1,
-      "/out/llvm-symbolizer": 1,
-      "/out/named-arg-fuzzer": 1,
-      "/out/one-arg-fuzzer": 1,
-      "/out/two-args-fuzzer": 1,
-      "/workspace/run": 2
+      "/out": 7,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -39,6 +33,8 @@
     "dataset_file": "exploit_files/fuzz_results/vulnerable/crash-5a2c9169960734b6376ae492622b17b648f0e7b0",
     "how_found": "fuzz_crash_artifact",
     "bytes": 57,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": null,
     "sha256": "0554767280ce27a432bb091287e2516ff7d7ff53a69ed90b1b90bb243e4b5c70",
     "solve_sh": "inline"
   },
@@ -47,6 +43,9 @@
       "chrono-duration-fuzzer"
     ],
     "how_found": "crash_report.json",
+    "built_by_dataset_snapshot_compile": [
+      "chrono-duration-fuzzer"
+    ],
     "dataset_metadata_said": [
       "chrono-duration-fuzzer",
       "chrono-duration-fuzzer",

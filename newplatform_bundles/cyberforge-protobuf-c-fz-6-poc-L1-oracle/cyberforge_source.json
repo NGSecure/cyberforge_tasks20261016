@@ -19,10 +19,9 @@
     "scrubbed_from_agent_image": 13,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/llvm-symbolizer": 1,
-      "/out/unpack_fuzzer": 1,
+      "/out": 2,
       "/usr/local": 8,
-      "/workspace/run": 2
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -32,9 +31,11 @@
     "task_server_image": "cyberforge_protobuf_c_fz_6_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/poc.bin",
-    "how_found": "referenced_by_exploit.sh",
+    "dataset_file": "replay/protobuf-c/vulnerability_FZ_6/input-000",
+    "how_found": "exploit_replay",
     "bytes": 7,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": true,
     "sha256": "1e7eea1f042bfc50aae2f89681fbf348051c9b82cfc7ae87076b880bdfe84199",
     "solve_sh": "inline"
   },
@@ -43,6 +44,9 @@
       "unpack_fuzzer"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "unpack_fuzzer"
+    ],
     "dataset_metadata_said": [],
     "metadata_disagrees": false
   },

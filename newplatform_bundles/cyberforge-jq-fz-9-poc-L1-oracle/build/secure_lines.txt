@@ -1,1 +1,0 @@
-struct jv_parser* p = jv_mem_alloc(sizeof(struct jv_parser));

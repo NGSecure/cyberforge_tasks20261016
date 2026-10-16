@@ -19,34 +19,8 @@
     "scrubbed_from_agent_image": 30,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/fuzz_emu_arm64_arm": 1,
-      "/out/fuzz_emu_arm64_arm.options": 1,
-      "/out/fuzz_emu_arm64_armbe": 1,
-      "/out/fuzz_emu_arm64_armbe.options": 1,
-      "/out/fuzz_emu_arm_arm": 1,
-      "/out/fuzz_emu_arm_arm.options": 1,
-      "/out/fuzz_emu_arm_armbe": 1,
-      "/out/fuzz_emu_arm_armbe.options": 1,
-      "/out/fuzz_emu_arm_thumb": 1,
-      "/out/fuzz_emu_arm_thumb.options": 1,
-      "/out/fuzz_emu_m68k_be": 1,
-      "/out/fuzz_emu_m68k_be.options": 1,
-      "/out/fuzz_emu_mips_32be": 1,
-      "/out/fuzz_emu_mips_32be.options": 1,
-      "/out/fuzz_emu_mips_32le": 1,
-      "/out/fuzz_emu_mips_32le.options": 1,
-      "/out/fuzz_emu_s390x_be": 1,
-      "/out/fuzz_emu_s390x_be.options": 1,
-      "/out/fuzz_emu_sparc_32be": 1,
-      "/out/fuzz_emu_sparc_32be.options": 1,
-      "/out/fuzz_emu_x86_16": 1,
-      "/out/fuzz_emu_x86_16.options": 1,
-      "/out/fuzz_emu_x86_32": 1,
-      "/out/fuzz_emu_x86_32.options": 1,
-      "/out/fuzz_emu_x86_64": 1,
-      "/out/fuzz_emu_x86_64.options": 1,
-      "/out/llvm-symbolizer": 1,
-      "/workspace/run": 2
+      "/out": 27,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -59,6 +33,8 @@
     "dataset_file": "exploit_files/fuzz_results/vulnerable/crash-e79a5f39b228c2e0081ac53bdb2a4cb54715ad1f",
     "how_found": "fuzz_crash_artifact",
     "bytes": 24,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": null,
     "sha256": "fb27ae4e6955862982ceb2120b9d712c93cb9ef5ccfd8f06756c2670719ba043",
     "solve_sh": "inline"
   },
@@ -67,6 +43,9 @@
       "fuzz_emu_arm64_arm"
     ],
     "how_found": "crash_report.json",
+    "built_by_dataset_snapshot_compile": [
+      "fuzz_emu_arm64_arm"
+    ],
     "dataset_metadata_said": [
       "fuzz_emu_arm64_arm"
     ],

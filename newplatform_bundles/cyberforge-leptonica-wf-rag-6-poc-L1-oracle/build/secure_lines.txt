@@ -1,0 +1,1 @@
+static const l_int32  ExtraReservedColors = 25;  /* to avoid running out */

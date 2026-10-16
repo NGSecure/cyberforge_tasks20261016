@@ -19,14 +19,8 @@
     "scrubbed_from_agent_image": 10,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/llvm-symbolizer": 1,
-      "/out/xpath": 1,
-      "/out/xpath.dict": 1,
-      "/out/xpath_seed_corpus.zip": 1,
-      "/out/xslt": 1,
-      "/out/xslt.dict": 1,
-      "/out/xslt_seed_corpus.zip": 1,
-      "/workspace/run": 2
+      "/out": 7,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -36,9 +30,11 @@
     "task_server_image": "cyberforge_libxslt_wf_rag_0_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/pov.bin",
-    "how_found": "hints.successful_seed",
+    "dataset_file": "replay/libxslt/vulnerability_WF_RAG_0/input-000",
+    "how_found": "exploit_replay",
     "bytes": 51,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": null,
     "sha256": "b40fd763a2316a81e5487e4f54877f58914c334197aa3ccb40dd7ed23b5d7837",
     "solve_sh": "inline"
   },
@@ -47,6 +43,9 @@
       "xpath"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "xpath"
+    ],
     "dataset_metadata_said": [
       "xpath",
       "xpath"

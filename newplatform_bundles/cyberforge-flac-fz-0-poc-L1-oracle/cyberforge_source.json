@@ -19,23 +19,8 @@
     "scrubbed_from_agent_image": 19,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/fuzzer_decoder": 1,
-      "/out/fuzzer_decoder.dict": 1,
-      "/out/fuzzer_encoder": 1,
-      "/out/fuzzer_encoder.dict": 1,
-      "/out/fuzzer_encoder_v2": 1,
-      "/out/fuzzer_exo": 1,
-      "/out/fuzzer_metadata": 1,
-      "/out/fuzzer_reencoder": 1,
-      "/out/fuzzer_reencoder.dict": 1,
-      "/out/fuzzer_seek": 1,
-      "/out/fuzzer_seek_seed_corpus.zip": 1,
-      "/out/fuzzer_tool_flac": 1,
-      "/out/fuzzer_tool_flac.dict": 1,
-      "/out/fuzzer_tool_flac_seed_corpus.zip": 1,
-      "/out/fuzzer_tool_metaflac": 1,
-      "/out/llvm-symbolizer": 1,
-      "/workspace/run": 2
+      "/out": 16,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -45,10 +30,12 @@
     "task_server_image": "cyberforge_flac_fz_0_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/pov.bin",
-    "how_found": "named_file",
-    "bytes": 4,
-    "sha256": "918bd027f59087bef8e055f9b587b25486d58c606d8658d4ce7b1199274f6744",
+    "dataset_file": "replay/flac/vulnerability_FZ_0/input-000",
+    "how_found": "exploit_replay",
+    "bytes": 8,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": true,
+    "sha256": "3c9fd44eb6d50cc5ec10d7c85d44378e9880de65b028101036e3466d3961ae72",
     "solve_sh": "inline"
   },
   "harness": {
@@ -58,6 +45,11 @@
       "fuzzer_tool_metaflac"
     ],
     "how_found": "exploit.sh (fallback candidates)",
+    "built_by_dataset_snapshot_compile": [
+      "fuzzer_metadata",
+      "fuzzer_tool_flac",
+      "fuzzer_tool_metaflac"
+    ],
     "dataset_metadata_said": [],
     "metadata_disagrees": false
   },

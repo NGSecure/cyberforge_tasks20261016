@@ -24,13 +24,8 @@
     "scrubbed_from_agent_image": 11,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/gtp_message_fuzz": 1,
-      "/out/gtp_message_fuzz_seed_corpus.zip": 1,
-      "/out/lib": 3,
-      "/out/llvm-symbolizer": 1,
-      "/out/nas_message_fuzz": 1,
-      "/out/nas_message_fuzz_seed_corpus.zip": 1,
-      "/workspace/run": 2
+      "/out": 8,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -40,9 +35,11 @@
     "task_server_image": "cyberforge_open5gs_wf_rag_0_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/pov.bin",
-    "how_found": "hints.successful_seed",
+    "dataset_file": "replay/open5gs/vulnerability_WF_RAG_0/input-000",
+    "how_found": "exploit_replay",
     "bytes": 5,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": true,
     "sha256": "957b88b12730e646e0f33d3618b77dfa579e8231e3c59c7104be7165611c8027",
     "solve_sh": "inline"
   },
@@ -51,6 +48,9 @@
       "gtp_message_fuzz"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "gtp_message_fuzz"
+    ],
     "dataset_metadata_said": [
       "gtp_message_fuzz",
       "gtp_message_fuzz"

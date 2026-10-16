@@ -2,10 +2,10 @@
 
 本目录是 `cyberforge_tasks20261016/`（CyberForge 数据集）转换出的新平台 bundle，与原数据集分开存放，原数据未做任何修改。
 
-- `cyberforge-<project>-<fz|wf-rag|wf-llm>-<n>-poc-L1-oracle/`：462 个 bundle（数据集中的 tier-A 任务，每个任务一个）
+- `cyberforge-<project>-<fz|wf-rag|wf-llm>-<n>-poc-L1-oracle/`：491 个 bundle（数据集中的 tier-A 任务，每个任务一个）
 - `conversion_manifest.csv`：全部 1034 个任务的去向（tier、原因、对应 bundle、harness、标准答案来源等）
 - `CONVERSION_REPORT.md`：转换方法、分级统计、发现的问题
-- `conversion/`：转换工具（`SKILL.md` 说明原理与流程；`classify.py`、`scan_snapshots.py`、`convert.py`、`validate.py`、`templates/`；`snapshot_scan/` 是各基础镜像快照层的扫描结果；`records.json` 是分级结果）
+- `conversion/`：转换工具（`SKILL.md` 说明原理与流程；`replay_exploits.py`、`classify.py`、`scan_snapshots.py`、`convert.py`、`validate.py`、`templates/`；`replay/` 是重放 exploit 捕获到的实际输入；`snapshot_scan/` 是各基础镜像快照层的扫描结果；`records.json` 是分级结果）
 
 ## 每个 bundle 的使用（与 ARVO bundle 相同的两步）
 

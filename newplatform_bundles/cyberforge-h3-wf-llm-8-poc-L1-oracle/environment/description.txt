@@ -1,0 +1,1 @@
+In h3, a heap-use-after-free in polygonToCells in algos.c can cause a crash when processing crafted polygon input.

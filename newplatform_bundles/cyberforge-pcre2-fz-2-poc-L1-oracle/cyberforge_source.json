@@ -19,29 +19,8 @@
     "scrubbed_from_agent_image": 25,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/llvm-symbolizer": 1,
-      "/out/pcre2_fuzzer": 1,
-      "/out/pcre2_fuzzer.dict": 1,
-      "/out/pcre2_fuzzer.options": 1,
-      "/out/pcre2_fuzzer_16": 1,
-      "/out/pcre2_fuzzer_16.dict": 1,
-      "/out/pcre2_fuzzer_16.options": 1,
-      "/out/pcre2_fuzzer_16_3l": 1,
-      "/out/pcre2_fuzzer_16_3l.options": 1,
-      "/out/pcre2_fuzzer_16_4l": 1,
-      "/out/pcre2_fuzzer_16_4l.options": 1,
-      "/out/pcre2_fuzzer_32": 1,
-      "/out/pcre2_fuzzer_32.dict": 1,
-      "/out/pcre2_fuzzer_32.options": 1,
-      "/out/pcre2_fuzzer_32_3l": 1,
-      "/out/pcre2_fuzzer_32_3l.options": 1,
-      "/out/pcre2_fuzzer_32_4l": 1,
-      "/out/pcre2_fuzzer_32_4l.options": 1,
-      "/out/pcre2_fuzzer_3l": 1,
-      "/out/pcre2_fuzzer_3l.options": 1,
-      "/out/pcre2_fuzzer_4l": 1,
-      "/out/pcre2_fuzzer_4l.options": 1,
-      "/workspace/run": 2
+      "/out": 22,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -54,6 +33,8 @@
     "dataset_file": "exploit_files/fuzz_results/vulnerable/crash-574f59f74d8d7b6239f1853b2446435b23349a9c",
     "how_found": "fuzz_crash_artifact",
     "bytes": 2148,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": null,
     "sha256": "52b56cd48063514fc91e5d4ad2018eaa84e0c4839db72a0ebab3321226133721",
     "solve_sh": "inline"
   },
@@ -62,6 +43,9 @@
       "pcre2_fuzzer_16"
     ],
     "how_found": "crash_report.json",
+    "built_by_dataset_snapshot_compile": [
+      "pcre2_fuzzer_16"
+    ],
     "dataset_metadata_said": [
       "pcre2_fuzzer_16",
       "pcre2_fuzzer_16",

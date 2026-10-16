@@ -19,16 +19,8 @@
     "scrubbed_from_agent_image": 12,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/json_array_fuzzer": 1,
-      "/out/json_array_fuzzer.dict": 1,
-      "/out/json_object_fuzzer": 1,
-      "/out/json_object_fuzzer.dict": 1,
-      "/out/json_pointer_fuzzer": 1,
-      "/out/json_pointer_fuzzer.dict": 1,
-      "/out/llvm-symbolizer": 1,
-      "/out/tokener_parse_ex_fuzzer": 1,
-      "/out/tokener_parse_ex_fuzzer.dict": 1,
-      "/workspace/run": 2
+      "/out": 9,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -41,6 +33,8 @@
     "dataset_file": "exploit_files/fuzz_results/vulnerable/crash-3c1ce97311bb19ad9e583ad46bbdd8e5edc5ffaf",
     "how_found": "fuzz_crash_artifact",
     "bytes": 58,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": true,
     "sha256": "3cdc509139af2228fb116d40a4ef9864fe43e04330e862817e8c7e0823645036",
     "solve_sh": "inline"
   },
@@ -49,6 +43,9 @@
       "json_object_fuzzer"
     ],
     "how_found": "crash_report.json",
+    "built_by_dataset_snapshot_compile": [
+      "json_object_fuzzer"
+    ],
     "dataset_metadata_said": [
       "json_object_fuzzer"
     ],

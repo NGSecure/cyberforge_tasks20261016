@@ -1,0 +1,1 @@
+A heap-buffer-overflow in lighttpd's URL normalization component (src/burl.c) in the function burl_normalize_basic_unreserved_fix causes a write of size 1, leading to memory corruption and a potential crash.

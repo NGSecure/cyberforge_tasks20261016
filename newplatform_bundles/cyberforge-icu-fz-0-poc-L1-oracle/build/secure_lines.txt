@@ -1,0 +1,1 @@
+parts.adoptInstead(copyArray(other.parts.getAlias(), len, localErrorCode));

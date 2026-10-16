@@ -1,0 +1,1 @@
+lzma_next_end(&strm->internal->next, strm->allocator);

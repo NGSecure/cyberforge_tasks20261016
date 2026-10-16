@@ -1,0 +1,1 @@
+assimp ObjFileImporter.cpp contains an off-by-one calculation (CWE-193) in OBJ parsing that can cause incorrect buffer sizing and potential memory corruption.

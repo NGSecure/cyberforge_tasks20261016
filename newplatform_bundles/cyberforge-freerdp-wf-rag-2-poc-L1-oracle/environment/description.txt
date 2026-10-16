@@ -1,0 +1,1 @@
+A heap-buffer-overflow in FreeRDP's ncrush decompression arises from an integer underflow in get_dword, allowing a remote attacker to read out of bounds.

@@ -1,0 +1,1 @@
+A heap-buffer-overflow in libjxl's convolve_symmetric5.cc allows an attacker to trigger an out-of-bounds read when processing a crafted PNG image.

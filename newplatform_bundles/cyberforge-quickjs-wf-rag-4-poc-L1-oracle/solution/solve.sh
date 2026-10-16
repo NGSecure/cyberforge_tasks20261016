@@ -1,6 +1,6 @@
 #!/bin/bash
 # Reference solution (oracle): fetch the CyberForge ground-truth PoV for
-# quickjs / vulnerability_WF_RAG_4 (dataset file: quickjs/vulnerabilities/vulnerability_WF_RAG_4/exploit_files/pov.bin, 400002 bytes — too
+# quickjs / vulnerability_WF_RAG_4 (dataset file: conversion/replay/quickjs/vulnerability_WF_RAG_4/input-000 (replayed quickjs/vulnerabilities/vulnerability_WF_RAG_4/exploit_files/exploit.sh), 400002 bytes — too
 # large to inline) from the task-server and write it to /workspace/poc.
 set -euo pipefail
 

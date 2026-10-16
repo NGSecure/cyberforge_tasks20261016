@@ -1,0 +1,4 @@
+const float in_m1 = row[wrap_x(ix - 1, xsize)];
+const float in_m2 = row[wrap_x(ix - 2, xsize)];
+const float in_p1 = row[wrap_x(ix + 1, xsize)];
+const float in_p2 = row[wrap_x(ix + 2, xsize)];

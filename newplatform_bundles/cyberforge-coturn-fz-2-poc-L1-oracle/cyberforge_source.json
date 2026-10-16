@@ -19,13 +19,8 @@
     "scrubbed_from_agent_image": 28,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/FuzzStun": 1,
-      "/out/FuzzStunClient": 1,
-      "/out/FuzzStunClient_seed_corpus.zip": 1,
-      "/out/FuzzStun_seed_corpus.zip": 1,
-      "/out/lib": 20,
-      "/out/llvm-symbolizer": 1,
-      "/workspace/run": 2
+      "/out": 25,
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -35,10 +30,12 @@
     "task_server_image": "cyberforge_coturn_fz_2_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/poc.bin",
-    "how_found": "referenced_by_exploit.sh",
-    "bytes": 129,
-    "sha256": "e5451e696df261516ca8c30a1c60e2de29ff9e9096e2221f8bf7252ff5a29c2a",
+    "dataset_file": "replay/coturn/vulnerability_FZ_2/input-000",
+    "how_found": "exploit_replay",
+    "bytes": 2005,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": true,
+    "sha256": "6daf1cf60bdb5a28543eb401c32a2e6ab8a617adf80bced922fcff162eca770a",
     "solve_sh": "inline"
   },
   "harness": {
@@ -46,6 +43,9 @@
       "FuzzStun"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "FuzzStun"
+    ],
     "dataset_metadata_said": [],
     "metadata_disagrees": false
   },

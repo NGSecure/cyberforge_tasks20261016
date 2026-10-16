@@ -19,19 +19,9 @@
     "scrubbed_from_agent_image": 204,
     "scrubbed_by_location": {
       "/opt/src_snapshot.tar": 1,
-      "/out/hb-raster-fuzzer": 1,
-      "/out/hb-raster-fuzzer_seed_corpus.zip": 1,
-      "/out/hb-repacker-fuzzer": 1,
-      "/out/hb-repacker-fuzzer_seed_corpus.zip": 1,
-      "/out/hb-shape-fuzzer": 1,
-      "/out/hb-shape-fuzzer_seed_corpus.zip": 1,
-      "/out/hb-subset-fuzzer": 1,
-      "/out/hb-subset-fuzzer_seed_corpus.zip": 1,
-      "/out/hb-vector-fuzzer": 1,
-      "/out/hb-vector-fuzzer_seed_corpus.zip": 1,
-      "/out/llvm-symbolizer": 1,
+      "/out": 11,
       "/work/build": 190,
-      "/workspace/run": 2
+      "/workspace": 2
     },
     "secure_source_tarball_present": true
   },
@@ -41,10 +31,12 @@
     "task_server_image": "cyberforge_harfbuzz_fz_0_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/poc.bin",
-    "how_found": "referenced_by_exploit.sh",
-    "bytes": 128,
-    "sha256": "665ebf78fce8c612ba53e46a712334c7d8dca341041c06db61bbdfb1d39b5948",
+    "dataset_file": "replay/harfbuzz/vulnerability_FZ_0/input-000",
+    "how_found": "exploit_replay",
+    "bytes": 100,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": true,
+    "sha256": "264d0f80ae593339ccd9ef82852d05e9b948df2bd398e2be5ebacdb3d907607a",
     "solve_sh": "inline"
   },
   "harness": {
@@ -52,6 +44,9 @@
       "hb-shape-fuzzer"
     ],
     "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "hb-shape-fuzzer"
+    ],
     "dataset_metadata_said": [],
     "metadata_disagrees": false
   },

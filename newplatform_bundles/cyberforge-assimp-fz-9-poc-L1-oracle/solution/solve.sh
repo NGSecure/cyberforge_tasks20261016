@@ -1,6 +1,6 @@
 #!/bin/bash
 # Reference solution (oracle): fetch the CyberForge ground-truth PoV for
-# assimp / vulnerability_FZ_9 (dataset file: assimp/vulnerabilities/vulnerability_FZ_9/exploit_files/poc.dae, 725385 bytes — too
+# assimp / vulnerability_FZ_9 (dataset file: conversion/replay/assimp/vulnerability_FZ_9/input-000 (replayed assimp/vulnerabilities/vulnerability_FZ_9/exploit_files/exploit.sh), 725385 bytes — too
 # large to inline) from the task-server and write it to /workspace/poc.
 set -euo pipefail
 

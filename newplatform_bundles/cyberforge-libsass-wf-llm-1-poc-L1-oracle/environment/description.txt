@@ -1,0 +1,1 @@
+An unhandled error in read_file in libsass's src/file.cpp causes a failure when processing an input file.
