@@ -1,0 +1,1 @@
+A crafted ZIP archive triggers a stack-buffer-overflow in libzip's zip_read_fuzzer_common.h, allowing an out-of-bounds memory access.

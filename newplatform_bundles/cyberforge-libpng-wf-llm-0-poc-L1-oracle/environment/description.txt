@@ -1,0 +1,1 @@
+A segmentation violation in png_default_read_data in pngrio.c allows denial of service via a crafted PNG file.

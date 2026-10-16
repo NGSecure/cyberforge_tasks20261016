@@ -1,0 +1,1 @@
+if(pContext->pImageData[strPos + 1] >= initDictLen) {

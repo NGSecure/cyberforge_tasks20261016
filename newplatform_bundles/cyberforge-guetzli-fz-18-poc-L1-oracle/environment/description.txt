@@ -1,0 +1,1 @@
+guetzli processor.cc mishandles marker-byte validation, causing an incorrect calculation.

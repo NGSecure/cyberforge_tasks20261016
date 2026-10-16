@@ -1,0 +1,1 @@
+In BlueZ, the write_key_value function in src/textfile.c uses sprintf without proper bounds, causing a heap-buffer-overflow when formatting key-value data.

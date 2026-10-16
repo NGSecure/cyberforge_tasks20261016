@@ -1,0 +1,1 @@
+while (begin != end) *out++ = static_cast<T>(*begin++);

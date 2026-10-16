@@ -1,0 +1,1 @@
+A null pointer dereference in njs_function_frame_save within njs_function.c can trigger a segmentation violation when processing crafted input.

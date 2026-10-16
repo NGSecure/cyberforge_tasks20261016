@@ -1,0 +1,1 @@
+The POSIX shell parser in SerenityOS performs a post-buffer-length operation that can trigger an out-of-bounds string view access, causing a crash.

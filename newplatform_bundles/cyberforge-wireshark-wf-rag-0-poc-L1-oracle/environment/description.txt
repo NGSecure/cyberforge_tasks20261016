@@ -1,0 +1,1 @@
+A stack-buffer-overflow in Wireshark's IPv6 dissector (packet-ipv6.c) during dissect_ipv6 allows remote attackers to cause a denial of service via a crafted packet.

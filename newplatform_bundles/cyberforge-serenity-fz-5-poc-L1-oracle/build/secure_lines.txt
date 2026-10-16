@@ -1,0 +1,2 @@
+if (buffer.size() < table_record.offset + table_record.length)
+return Error::from_string_literal("Font file too small");

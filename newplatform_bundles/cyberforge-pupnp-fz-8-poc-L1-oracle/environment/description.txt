@@ -1,0 +1,1 @@
+pupnp's ixmlparser (ixml/src/ixmlparser.c) contains a post-buffer operation vulnerability (CWE-120) that can lead to memory corruption during XML parsing.

@@ -1,0 +1,1 @@
+strncpy(it8->FileStack[0]->FileName, cFileName, cmsMAX_PATH-1);

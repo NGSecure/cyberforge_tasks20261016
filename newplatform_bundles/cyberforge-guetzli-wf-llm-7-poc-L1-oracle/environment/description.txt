@@ -1,0 +1,1 @@
+A heap-buffer-overflow occurs in ProcessSOF in jpeg_data_reader.cc when parsing crafted JPEG data.

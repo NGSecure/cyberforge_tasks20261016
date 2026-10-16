@@ -1,0 +1,1 @@
+A post-buffer operation in fmt's include/fmt/format-inl.h (CWE-129) may cause out-of-bounds memory access when buffer indexes are computed incorrectly.

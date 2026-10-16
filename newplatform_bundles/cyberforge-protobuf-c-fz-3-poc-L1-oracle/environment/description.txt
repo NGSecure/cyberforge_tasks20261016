@@ -1,0 +1,1 @@
+A heap-buffer-overflow in protobuf-c.c occurs due to a missing bounds check after a buffer operation (CWE-129), allowing out-of-bounds access during message unpacking.

@@ -1,0 +1,10 @@
+/opt/src_snapshot.tar
+/out/cli-fuzzer
+/out/icmp6-fuzzer
+/out/ip6-fuzzer
+/out/llvm-symbolizer
+/out/mdns-fuzzer
+/out/radio-one-node-fuzzer
+/out/trel-fuzzer
+/workspace/run/unit_tests/parse_results.py
+/workspace/run/unit_tests/test.sh

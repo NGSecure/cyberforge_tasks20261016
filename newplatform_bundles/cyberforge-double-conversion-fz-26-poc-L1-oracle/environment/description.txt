@@ -1,0 +1,1 @@
+In double-conversion, an off-by-one calculation in bignum.cc causes an out-of-bounds vector index, triggering an assertion failure in Vector::operator[].

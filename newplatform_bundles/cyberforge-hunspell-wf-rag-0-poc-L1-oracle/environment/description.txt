@@ -1,0 +1,1 @@
+A heap-buffer-overflow in SuggestMgr::ngram in suggestmgr.cxx allows out-of-bounds write during suggestion generation.

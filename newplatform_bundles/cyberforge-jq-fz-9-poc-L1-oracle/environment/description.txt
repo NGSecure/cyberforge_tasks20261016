@@ -1,0 +1,1 @@
+jq's parser_init in src/jv_parse.c performs an out-of-bounds write of 4 bytes past a heap buffer, causing a heap-buffer-overflow.

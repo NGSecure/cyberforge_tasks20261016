@@ -1,0 +1,1 @@
+Heap-buffer-overflow in dbuf_insert in libregexp.c when parsing a regular expression via re_parse_term.

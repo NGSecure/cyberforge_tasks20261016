@@ -1,0 +1,1 @@
+A heap-buffer-overflow in Assimp's IQMImporter::InternReadFile allows remote attackers to cause an out-of-bounds read via a crafted IQM file.

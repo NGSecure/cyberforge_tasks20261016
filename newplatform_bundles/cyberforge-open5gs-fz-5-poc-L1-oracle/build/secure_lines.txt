@@ -1,0 +1,1 @@
+if (sizeof(*tracking_area_identity_list) < size) return -1;

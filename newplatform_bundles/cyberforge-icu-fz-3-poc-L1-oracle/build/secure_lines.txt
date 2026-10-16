@@ -1,0 +1,1 @@
+for (len = 0; *(pTag + len) && *(pTag + len) != SEP; len++);

@@ -1,0 +1,1 @@
+A null pointer dereference in OpenSSL's threads_pthread.c causes a segmentation violation when processing crafted input.

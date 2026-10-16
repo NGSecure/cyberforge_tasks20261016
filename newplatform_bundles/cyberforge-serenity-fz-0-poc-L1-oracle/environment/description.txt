@@ -1,0 +1,1 @@
+A post-buffer operation flaw in Serenity's LibIMAP (QuotedPrintable.cpp) can cause out-of-bounds memory access when processing quoted-printable data.

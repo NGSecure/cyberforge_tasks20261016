@@ -1,0 +1,1 @@
+for (size_t p = 0; p < rgb.size(); p += 3) {

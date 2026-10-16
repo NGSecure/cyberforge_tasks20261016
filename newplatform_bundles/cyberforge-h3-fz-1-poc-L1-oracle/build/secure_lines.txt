@@ -1,0 +1,1 @@
+if (direction == CENTER_DIGIT || direction >= INVALID_DIGIT ||

@@ -1,0 +1,5 @@
+status = srtp_stream_init_keys(&srtp->session_keys[i], p->keys[i],
+for (size_t i = 0; i < srtp->num_master_keys; i++) {
+if (p->num_master_keys > SRTP_MAX_NUM_MASTER_KEYS) {
+srtp->num_master_keys = p->num_master_keys;
+if (p->use_mki && p->mki_size == 0) {

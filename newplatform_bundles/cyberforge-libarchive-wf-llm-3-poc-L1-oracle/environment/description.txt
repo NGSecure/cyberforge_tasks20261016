@@ -1,0 +1,1 @@
+A double-free vulnerability in libarchive's gzip filter header parsing function peek_at_header allows denial of service via crafted archives.

@@ -1,0 +1,1 @@
+A heap-buffer-overflow in systemd's execute-serialize.c allows memory corruption via crafted serialized execution data.

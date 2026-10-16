@@ -1,0 +1,1 @@
+pNewBef = malloc(pConfig->fmtChan * MULU16(imageWidth, imageHeight));

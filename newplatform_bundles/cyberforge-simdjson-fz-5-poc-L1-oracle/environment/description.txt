@@ -1,0 +1,1 @@
+In simdjson, array::end() in include/simdjson/dom/array-inl.h improperly trusts the tape position, allowing a crafted JSON array to trigger an out-of-bounds access and an assertion failure.

@@ -1,0 +1,1 @@
+A heap-buffer-overflow in protobuf-c.c is caused by a CWE-193 calculation error during message unpacking, resulting in out-of-bounds access.

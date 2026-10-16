@@ -1,0 +1,1 @@
+A heap-buffer-overflow in lz_decoder_end in xz's lz_decoder.c allows a crafted input to trigger an out-of-bounds read.

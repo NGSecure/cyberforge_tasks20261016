@@ -1,0 +1,1 @@
+A heap-buffer-overflow in g_obex_packet_decode of bluez's gobex-packet.c allows out-of-bounds memory access via a crafted OBEX packet.

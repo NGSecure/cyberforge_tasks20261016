@@ -1,0 +1,1 @@
+A crafted XML file causes an out-of-bounds access in LibXML parser due to an invalid UTF-8 length check, resulting in a verification failure.

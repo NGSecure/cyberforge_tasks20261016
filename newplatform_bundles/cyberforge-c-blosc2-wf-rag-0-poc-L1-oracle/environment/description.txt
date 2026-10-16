@@ -1,0 +1,1 @@
+A heap-buffer-overflow in the blosc_c function in c-blosc2's blosc2.c can lead to memory corruption via a crafted chunk.

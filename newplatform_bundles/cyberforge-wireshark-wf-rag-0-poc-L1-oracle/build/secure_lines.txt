@@ -1,0 +1,2 @@
+if (!pinfo->flags.in_error_pkt && plen > reported_plen) {
+reported_plen = tvb_reported_length(tvb) - IPv6_HDR_SIZE;

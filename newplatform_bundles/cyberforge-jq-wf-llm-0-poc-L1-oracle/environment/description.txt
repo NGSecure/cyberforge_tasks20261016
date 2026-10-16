@@ -1,0 +1,1 @@
+A heap-buffer-overflow in jq's binop_mod function allows a crafted input to cause an out-of-bounds write.

@@ -1,0 +1,1 @@
+return type_error2(a, b, "cannot be divided (remainder) because the divisor is zero");

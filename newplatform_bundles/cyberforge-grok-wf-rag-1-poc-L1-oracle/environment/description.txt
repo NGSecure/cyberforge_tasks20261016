@@ -1,0 +1,1 @@
+A heap-buffer-overflow in grk::PacketIter::next_pcrlOPT in src/lib/core/t2/PacketIter.cpp may cause memory corruption when processing crafted packet PCRL options.

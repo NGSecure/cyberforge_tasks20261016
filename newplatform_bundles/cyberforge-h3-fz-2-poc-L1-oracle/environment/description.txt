@@ -1,0 +1,1 @@
+A null pointer dereference in linkedGeo.c during cells to linked multi-polygon conversion can cause a segmentation violation.

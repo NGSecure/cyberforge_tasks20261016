@@ -1,0 +1,1 @@
+if (buffer.size() < table_record.offset + table_record.length)

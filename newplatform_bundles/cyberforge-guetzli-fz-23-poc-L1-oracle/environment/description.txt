@@ -1,0 +1,1 @@
+Guetzli's jpeg_data_writer.cc has an integer underflow when validating JPEG marker bytes.

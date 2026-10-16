@@ -1,0 +1,1 @@
+AffixMgr::parse_file in hunspell leaks memory when parsing a crafted affix dictionary, enabling denial of service via resource exhaustion.

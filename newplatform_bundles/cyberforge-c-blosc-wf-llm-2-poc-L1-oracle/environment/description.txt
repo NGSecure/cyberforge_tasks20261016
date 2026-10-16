@@ -1,0 +1,1 @@
+A heap-buffer-overflow in blosc_c during a memcpy operation in blosc.c allows writing past the end of an allocated buffer.

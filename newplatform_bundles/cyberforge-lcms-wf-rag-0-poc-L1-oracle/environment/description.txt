@@ -1,0 +1,1 @@
+A heap-use-after-free in the cmsFreeNamedColorList function of lcms can be triggered when freeing a named color list, leading to a crash.

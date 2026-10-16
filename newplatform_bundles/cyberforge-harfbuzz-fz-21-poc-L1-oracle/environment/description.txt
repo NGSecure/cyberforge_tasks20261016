@@ -1,0 +1,1 @@
+A crafted font triggers an off-by-one calculation in HarfBuzz's LigatureSubstFormat1 handling, causing an out-of-bounds access during serialization.

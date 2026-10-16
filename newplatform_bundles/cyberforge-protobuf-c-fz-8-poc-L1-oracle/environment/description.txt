@@ -1,0 +1,1 @@
+An off-by-one calculation in protobuf-c.c leads to a heap-buffer-overflow when unpacking crafted protobuf data.

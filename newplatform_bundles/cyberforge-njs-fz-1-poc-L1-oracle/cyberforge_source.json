@@ -1,0 +1,69 @@
+{
+  "bundle": "cyberforge-njs-fz-1-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/njs/vulnerabilities/vulnerability_FZ_1",
+  "base_image": "vuljector/njs:setup@sha256:4b7d04c10ea2d413a4d729a96cea9b542f78c9a4cbe2878eb3cfbde2ca307e0c",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-05-10T20:45:59.183906818Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T20:49:13.033057586Z",
+        "created_by": "sleep infinity",
+        "bytes": 89025742
+      },
+      {
+        "created": "2026-05-11T01:06:26.8823498Z",
+        "created_by": "sleep infinity",
+        "bytes": 1097
+      }
+    ],
+    "post_setup_files": 577,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 351,
+    "scrubbed_from_agent_image": 224,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out/llvm-symbolizer": 1,
+      "/out/njs_process_script_fuzzer": 1,
+      "/out/njs_process_script_fuzzer_seed_corpus.zip": 1,
+      "/usr/local": 218,
+      "/workspace/run": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 1,
+  "image_tags": {
+    "docker_image": "cyberforge_njs_fz_1_main:v0.0.1",
+    "task_server_image": "cyberforge_njs_fz_1_task_server:v0.0.1"
+  },
+  "ground_truth": {
+    "dataset_file": "exploit_files/poc.js",
+    "how_found": "referenced_by_exploit.sh",
+    "bytes": 267,
+    "sha256": "d5773ebfba855b56e806ae240f142a7628b56e50612a3c48acde445ce7e767be",
+    "solve_sh": "inline"
+  },
+  "harness": {
+    "candidates": [
+      "njs_process_script_fuzzer"
+    ],
+    "how_found": "exploit.sh",
+    "dataset_metadata_said": [],
+    "metadata_disagrees": false
+  },
+  "trigger_evidence": {
+    "signal": "asan",
+    "detail": "SEGV",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": true
+  },
+  "asan_options_from_exploit": null,
+  "cwe_id": "CWE-125",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "0ffc96df7f341f6c5f6f70cb6207030b6afe0de3"
+}

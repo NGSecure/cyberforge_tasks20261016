@@ -1,0 +1,1 @@
+In h3's baseCells.c, a post-buffer out-of-bounds read during local IJ coordinate conversion can trigger an assertion failure in cellToLocalIjk.

@@ -1,0 +1,1 @@
+A heap-buffer-overflow in fmt's chrono formatting parser allows out-of-bounds reads when parsing malformed chrono format strings.

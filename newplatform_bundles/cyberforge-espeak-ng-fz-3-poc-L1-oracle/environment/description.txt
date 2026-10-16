@@ -1,0 +1,1 @@
+A stack-based buffer overflow in espeak-ng's SSML parsing code (src/libespeak-ng/ssml.c) can be triggered by crafted input, causing memory corruption.

@@ -1,0 +1,1 @@
+} while (it != end && (is_name_start(*it) || ('0' <= *it && *it <= '9')));

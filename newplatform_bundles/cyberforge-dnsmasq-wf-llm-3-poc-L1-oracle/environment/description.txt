@@ -1,0 +1,1 @@
+A heap-buffer-overflow in dnsmasq's check_name function in src/util.c allows an out-of-bounds read.

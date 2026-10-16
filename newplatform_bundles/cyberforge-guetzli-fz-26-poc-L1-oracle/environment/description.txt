@@ -1,0 +1,1 @@
+A heap-buffer-overflow in guetzli's jpeg_data_writer.cc can occur when processing JPEG data with an unexpected marker byte.

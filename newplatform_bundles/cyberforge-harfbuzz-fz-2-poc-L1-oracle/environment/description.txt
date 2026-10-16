@@ -1,0 +1,1 @@
+An incorrect buffer size calculation (CWE-193) in harfbuzz's hb-ot-layout-gsubgpos.hh can cause out-of-bounds memory access when processing OpenType layout tables.

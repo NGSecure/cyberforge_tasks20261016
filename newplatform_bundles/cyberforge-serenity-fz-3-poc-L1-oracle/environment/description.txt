@@ -1,0 +1,1 @@
+The SQL lexer in LibSQL's Lexer.cpp performs a post-buffer operation on a StringView, leading to an out-of-bounds read and assertion failure for crafted input.

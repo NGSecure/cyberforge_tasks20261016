@@ -1,0 +1,2 @@
+GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+while ((ret = zip_fread(f, buf, sizeof(buf))) > 0) {

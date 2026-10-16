@@ -1,0 +1,1 @@
+In cgif_raw_addframe, a heap-buffer-overflow in resetDict during LZW dictionary reset can be exploited via a crafted GIF file, resulting in an out-of-bounds write.

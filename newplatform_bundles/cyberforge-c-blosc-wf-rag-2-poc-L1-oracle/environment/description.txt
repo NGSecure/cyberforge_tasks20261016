@@ -1,0 +1,1 @@
+A heap-buffer-overflow in get_match_16 in blosclz.c allows out-of-bounds read during compression.

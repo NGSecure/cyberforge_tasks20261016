@@ -1,0 +1,75 @@
+{
+  "bundle": "cyberforge-selinux-wf-rag-2-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/selinux/vulnerabilities/vulnerability_WF_RAG_2",
+  "base_image": "vuljector/selinux:setup@sha256:11bc710732f9d3f0ff9a10c9704e4b19332607023312b39b4fc5faa0838064a7",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-04-17T14:06:42.456217579Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T17:02:35.860105069Z",
+        "created_by": "sleep infinity",
+        "bytes": 133719487
+      }
+    ],
+    "post_setup_files": 686,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 669,
+    "scrubbed_from_agent_image": 15,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out/binpolicy-fuzzer": 1,
+      "/out/binpolicy-fuzzer_seed_corpus.zip": 1,
+      "/out/checkpolicy-fuzzer": 1,
+      "/out/checkpolicy-fuzzer.dict": 1,
+      "/out/checkpolicy-fuzzer_seed_corpus.zip": 1,
+      "/out/llvm-symbolizer": 1,
+      "/out/secilc-fuzzer": 1,
+      "/out/secilc-fuzzer_seed_corpus.zip": 1,
+      "/out/selabel_file_compiled-fuzzer": 1,
+      "/out/selabel_file_compiled-fuzzer_seed_corpus.zip": 1,
+      "/out/selabel_file_text-fuzzer": 1,
+      "/out/selabel_file_text-fuzzer_seed_corpus.zip": 1,
+      "/workspace/run": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 0,
+  "image_tags": {
+    "docker_image": "cyberforge_selinux_wf_rag_2_main:v0.0.1",
+    "task_server_image": "cyberforge_selinux_wf_rag_2_task_server:v0.0.1"
+  },
+  "ground_truth": {
+    "dataset_file": "exploit_files/pov.bin",
+    "how_found": "hints.successful_seed",
+    "bytes": 26,
+    "sha256": "1d5fba0593c14a3c655cb1a41123c92e6ce4b8deb8fe842616bd7e8a173790be",
+    "solve_sh": "inline"
+  },
+  "harness": {
+    "candidates": [
+      "secilc-fuzzer"
+    ],
+    "how_found": "exploit.sh",
+    "dataset_metadata_said": [
+      "secilc-fuzzer",
+      "secilc-fuzzer"
+    ],
+    "metadata_disagrees": false
+  },
+  "trigger_evidence": {
+    "signal": "asan",
+    "detail": "heap-use-after-free",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": true
+  },
+  "asan_options_from_exploit": "halt_on_error=1:abort_on_error=1",
+  "cwe_id": "CWE-416",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "6be1ec3792c11040fd7a3ecb1135e54418eb0d57"
+}

@@ -1,0 +1,1 @@
+Out-of-bounds read in brotli platform.c can cause a segmentation violation.

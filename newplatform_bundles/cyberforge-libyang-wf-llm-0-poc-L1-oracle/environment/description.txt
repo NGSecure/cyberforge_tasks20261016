@@ -1,0 +1,1 @@
+A heap-buffer-overflow in libyang's dict.c causes an out-of-bounds write while parsing YANG data.

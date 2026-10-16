@@ -1,0 +1,1 @@
+A heap-buffer-overflow in Assimp's Base64::Decode function in code/Common/Base64.cpp allows a crafted GLTF file to trigger an out-of-bounds write.

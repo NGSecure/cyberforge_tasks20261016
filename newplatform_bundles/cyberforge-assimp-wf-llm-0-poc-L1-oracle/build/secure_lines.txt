@@ -1,0 +1,4 @@
+ASSIMP_LOG_WARN("AC3D: Invalid vertex reference");
+if ((*it2).first >= object.vertices.size()) {
+for (it2 = (*it).entries.begin(),
+end2 = (*it).entries.end();

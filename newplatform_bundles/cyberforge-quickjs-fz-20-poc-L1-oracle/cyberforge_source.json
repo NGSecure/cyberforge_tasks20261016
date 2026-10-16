@@ -1,0 +1,76 @@
+{
+  "bundle": "cyberforge-quickjs-fz-20-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/quickjs/vulnerabilities/vulnerability_FZ_20",
+  "base_image": "vuljector/quickjs:setup@sha256:50716922f4e19865a3e6a87415d6f5e9a70d7c2d5b5de6b4ed025a4ed490522a",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-04-15T18:31:43.316664812Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T17:02:55.42411512Z",
+        "created_by": "sleep infinity",
+        "bytes": 62747317
+      }
+    ],
+    "post_setup_files": 46,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 33,
+    "scrubbed_from_agent_image": 11,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out/fuzz_compile": 1,
+      "/out/fuzz_compile.dict": 1,
+      "/out/fuzz_compile_seed_corpus.zip": 1,
+      "/out/fuzz_eval": 1,
+      "/out/fuzz_eval.dict": 1,
+      "/out/fuzz_eval_seed_corpus.zip": 1,
+      "/out/fuzz_regexp": 1,
+      "/out/llvm-symbolizer": 1,
+      "/workspace/run": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 1,
+  "image_tags": {
+    "docker_image": "cyberforge_quickjs_fz_20_main:v0.0.1",
+    "task_server_image": "cyberforge_quickjs_fz_20_task_server:v0.0.1"
+  },
+  "ground_truth": {
+    "dataset_file": "exploit_files/fuzz_results/vulnerable/crash-922ff89870e7e831e5edc03cd9955e6e1f1173fd",
+    "how_found": "fuzz_crash_artifact",
+    "bytes": 1594,
+    "sha256": "ae13ee22a22a0dfadf2b3cfb59dde6c8faa38c309169b73ff84a233368166654",
+    "solve_sh": "inline"
+  },
+  "harness": {
+    "candidates": [
+      "fuzz_eval"
+    ],
+    "how_found": "crash_report.json",
+    "dataset_metadata_said": [
+      "fuzz_eval",
+      "fuzz_eval",
+      "fuzz_eval"
+    ],
+    "metadata_disagrees": false
+  },
+  "trigger_evidence": {
+    "signal": "asan",
+    "detail": "global-buffer-overflow",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": {
+      "unit_tests": "passed",
+      "exploit_on_vulnerable": "passed",
+      "exploit_on_secure": "passed"
+    }
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": true
+  },
+  "asan_options_from_exploit": null,
+  "cwe_id": "CWE-129",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "f1139494d18a2053630c5ed3384a42bb70db3c53"
+}

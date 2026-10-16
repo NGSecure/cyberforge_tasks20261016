@@ -1,0 +1,130 @@
+{
+  "bundle": "cyberforge-leptonica-wf-rag-1-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/leptonica/vulnerabilities/vulnerability_WF_RAG_1",
+  "base_image": "vuljector/leptonica:setup@sha256:afcf1c8e90dd5d9e4ddfe22173db98e083998d148c4e971b0c1b4b4a143e4627",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-04-17T18:33:54.388334864Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T16:18:02.693294514Z",
+        "created_by": "sleep infinity",
+        "bytes": 809305041
+      }
+    ],
+    "post_setup_files": 5456,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 4971,
+    "scrubbed_from_agent_image": 267,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out/adaptmap_fuzzer": 1,
+      "/out/adaptmap_fuzzer_seed_corpus.zip": 1,
+      "/out/affine_fuzzer": 1,
+      "/out/affine_fuzzer_seed_corpus.zip": 1,
+      "/out/barcode_fuzzer": 1,
+      "/out/barcode_fuzzer_seed_corpus.zip": 1,
+      "/out/baseline_fuzzer": 1,
+      "/out/baseline_fuzzer_seed_corpus.zip": 1,
+      "/out/bilateral_fuzzer": 1,
+      "/out/bilateral_fuzzer_seed_corpus.zip": 1,
+      "/out/bilinear_fuzzer": 1,
+      "/out/bilinear_fuzzer_seed_corpus.zip": 1,
+      "/out/binarize_fuzzer": 1,
+      "/out/binarize_fuzzer_seed_corpus.zip": 1,
+      "/out/blend_fuzzer": 1,
+      "/out/blend_fuzzer_seed_corpus.zip": 1,
+      "/out/boxfunc3_fuzzer": 1,
+      "/out/boxfunc4_fuzzer": 1,
+      "/out/boxfunc5_fuzzer": 1,
+      "/out/boxfunc_fuzzer": 1,
+      "/out/ccbord_fuzzer": 1,
+      "/out/ccthin_fuzzer": 1,
+      "/out/checkerboard_fuzzer": 1,
+      "/out/checkerboard_fuzzer_seed_corpus.zip": 1,
+      "/out/classapp_fuzzer": 1,
+      "/out/classapp_fuzzer_seed_corpus.zip": 1,
+      "/out/colorfill_fuzzer": 1,
+      "/out/colorquant_fuzzer": 1,
+      "/out/colorquant_fuzzer_seed_corpus.zip": 1,
+      "/out/compare_fuzzer": 1,
+      "/out/dewarp_fuzzer": 1,
+      "/out/dewarp_fuzzer_seed_corpus.zip": 1,
+      "/out/edge_fuzzer": 1,
+      "/out/enhance_fuzzer": 1,
+      "/out/enhance_fuzzer_seed_corpus.zip": 1,
+      "/out/fhmtgen_fuzzer": 1,
+      "/out/finditalic_fuzzer": 1,
+      "/out/flipdetect_fuzzer": 1,
+      "/out/fpix2_fuzzer": 1,
+      "/out/graphics_fuzzer": 1,
+      "/out/graymorph_fuzzer": 1,
+      "/out/grayquant_fuzzer": 1,
+      "/out/jpegiostub_fuzzer": 1,
+      "/out/kernel_fuzzer": 1,
+      "/out/llvm-symbolizer": 1,
+      "/out/mask_fuzzer": 1,
+      "/out/maze_fuzzer": 1,
+      "/out/morph_fuzzer": 1,
+      "/out/morphapp_fuzzer": 1,
+      "/out/pageseg_fuzzer": 1,
+      "/out/paintcmap_fuzzer": 1,
+      "/out/pix1_fuzzer": 1,
+      "/out/pix3_fuzzer": 1,
+      "/out/pix4_fuzzer": 1,
+      "/out/pix_orient_fuzzer": 1,
+      "/out/pix_orient_fuzzer_seed_corpus.zip": 1,
+      "/out/pix_rotate_shear_fuzzer": 1,
+      "/out/pix_rotate_shear_fuzzer_seed_corpus.zip": 1,
+      "/out/pixa_recog_fuzzer": 1,
+      "/out/pixa_recog_fuzzer_seed_corpus.zip": 1,
+      "/out/pixconv_fuzzer": 1,
+      "/out/pixconv_fuzzer_seed_corpus.zip": 1,
+      "/out/recog_basic_fuzzer": 1,
+      "/work/bin": 49,
+      "/work/include": 68,
+      "/work/lib": 49,
+      "/work/share": 35,
+      "/workspace/run": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 1,
+  "image_tags": {
+    "docker_image": "cyberforge_leptonica_wf_rag_1_main:v0.0.1",
+    "task_server_image": "cyberforge_leptonica_wf_rag_1_task_server:v0.0.1"
+  },
+  "ground_truth": {
+    "dataset_file": "exploit_files/pov.spix",
+    "how_found": "referenced_by_exploit.sh",
+    "bytes": 12028,
+    "sha256": "1241cd227158cb4555b33d7ff7d8d84e07c620587840ecc59920725f5b20aa36",
+    "solve_sh": "inline"
+  },
+  "harness": {
+    "candidates": [
+      "pix3_fuzzer"
+    ],
+    "how_found": "exploit.sh",
+    "dataset_metadata_said": [
+      "pix3_fuzzer",
+      "pix3_fuzzer"
+    ],
+    "metadata_disagrees": false
+  },
+  "trigger_evidence": {
+    "signal": "asan",
+    "detail": "heap-buffer-overflow",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": true
+  },
+  "asan_options_from_exploit": "detect_leaks=0:abort_on_error=1",
+  "cwe_id": "CWE-125",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "dc88c9538092d6d39359a67d3535fc60af1c1f29"
+}

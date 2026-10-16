@@ -1,0 +1,1 @@
+Removed length checks in serenity's Meta/Lagom/Fuzzers/FuzzLzmaRoundtrip.cpp allow a post-buffer operation (CWE-130) in the codec when processing LZMA roundtrip inputs.

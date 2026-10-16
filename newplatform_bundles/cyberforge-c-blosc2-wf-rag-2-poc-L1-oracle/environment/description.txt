@@ -1,0 +1,1 @@
+A heap-buffer-overflow in blosc2_schunk_append_buffer in schunk.c allows a crafted compressed frame to trigger memory corruption.

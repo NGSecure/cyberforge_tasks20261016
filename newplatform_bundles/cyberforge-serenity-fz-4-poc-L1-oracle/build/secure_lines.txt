@@ -1,0 +1,1 @@
+auto pattern = StringView(static_cast<unsigned char const*>(data), size);

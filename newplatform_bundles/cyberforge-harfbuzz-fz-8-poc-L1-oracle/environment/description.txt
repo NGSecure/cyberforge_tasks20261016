@@ -1,0 +1,1 @@
+HarfBuzz may read out of bounds in hb-ot-shape.cc during OpenType shaping.

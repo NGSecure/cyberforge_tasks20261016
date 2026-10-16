@@ -1,0 +1,1 @@
+In QuickJS, a heap-buffer-overflow write in string_buffer_end while parsing a string can result in out-of-bounds memory corruption.

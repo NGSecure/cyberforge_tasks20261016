@@ -1,0 +1,1 @@
+In htslib's hts_expr.c, the mul_expr function can trigger a floating-point exception (FPE) via crafted input, causing a denial of service.

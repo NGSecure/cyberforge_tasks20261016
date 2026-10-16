@@ -1,0 +1,1 @@
+A stack-buffer-overflow in the lineHexEstimate function of bbox.c in H3 permits out-of-bounds reads via a crafted polygon-to-cells call, causing a crash.

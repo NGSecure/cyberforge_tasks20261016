@@ -1,0 +1,1 @@
+The H3 library's coordijk.c has a global buffer overflow when converting polygon cells, leading to an out-of-bounds read.

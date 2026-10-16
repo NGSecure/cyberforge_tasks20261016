@@ -1,0 +1,1 @@
+libsrtp srtp/srtp.c can dereference an invalid pointer, leading to a crash.

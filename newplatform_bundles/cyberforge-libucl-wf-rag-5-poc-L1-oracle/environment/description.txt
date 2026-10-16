@@ -1,0 +1,1 @@
+A heap-buffer-overflow in libucl's ucl_skip_comments function allows remote attackers to cause a denial of service via crafted input.

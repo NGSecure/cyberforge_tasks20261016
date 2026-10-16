@@ -1,0 +1,1 @@
+A crafted GIF file can trigger a heap-buffer-overflow in cgif's raw decoding routine (src/cgif_raw.c), allowing remote attackers to cause a denial of service.

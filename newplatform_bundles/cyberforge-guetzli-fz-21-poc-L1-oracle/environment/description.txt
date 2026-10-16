@@ -1,0 +1,1 @@
+A stack buffer overflow in guetzli's output_image.cc can be triggered by malformed image input.

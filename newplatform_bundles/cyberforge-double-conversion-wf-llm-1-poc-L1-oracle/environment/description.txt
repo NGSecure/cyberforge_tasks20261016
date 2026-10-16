@@ -1,0 +1,1 @@
+A heap-buffer-overflow in ConsumeSubStringImpl in double-conversion's string-to-double.cc allows out-of-bounds read via crafted input.

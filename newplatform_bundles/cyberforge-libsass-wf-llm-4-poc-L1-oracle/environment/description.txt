@@ -1,0 +1,1 @@
+A memory leak in the libsass context destructor (src/context.cpp) fails to release file buffer allocations, causing resource exhaustion.

@@ -1,0 +1,1 @@
+Heap buffer overflow in cJSON.c's JSON parser allows out-of-bounds heap writes when a removed copy size constraint mishandles crafted JSON input.

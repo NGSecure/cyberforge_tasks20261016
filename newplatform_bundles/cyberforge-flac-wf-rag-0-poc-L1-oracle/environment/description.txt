@@ -1,0 +1,1 @@
+Double-free vulnerability in the free_options function in src/flac/main.c of FLAC can cause memory corruption and a crash via a crafted audio file.

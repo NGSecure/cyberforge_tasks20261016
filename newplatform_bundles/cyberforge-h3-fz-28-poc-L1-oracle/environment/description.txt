@@ -1,0 +1,1 @@
+An out-of-bounds read in linkedGeo.c can cause a segmentation violation when converting H3 cells to a linked multi-polygon.

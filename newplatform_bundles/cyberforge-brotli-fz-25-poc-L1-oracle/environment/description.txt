@@ -1,0 +1,1 @@
+A buffer over-read in Brotli's decompression routine c/dec/decode.c leads to a segmentation violation.

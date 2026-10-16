@@ -1,0 +1,1 @@
+sizeof(unicode_prop_ID_Continue1_index) / 3);

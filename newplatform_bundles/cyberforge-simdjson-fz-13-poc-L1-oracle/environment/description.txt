@@ -1,0 +1,1 @@
+A stack-buffer-overflow in the simdjson DOM element parsing inline code (element-inl.h) can be triggered by malformed JSON, leading to memory corruption.

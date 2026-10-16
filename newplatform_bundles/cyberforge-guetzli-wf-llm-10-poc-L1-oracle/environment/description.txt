@@ -1,0 +1,1 @@
+A heap-buffer-overflow in ProcessSOF of jpeg_data_reader.cc allows an out-of-bounds read when processing crafted JPEG data.

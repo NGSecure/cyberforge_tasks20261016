@@ -1,0 +1,1 @@
+In Assimp, the DXFLoader::ParsePolyLineVertex function in DXFLoader.cpp has a stack-buffer-overflow, which could allow a crafted DXF file to cause a crash.

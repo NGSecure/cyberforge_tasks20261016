@@ -1,0 +1,1 @@
+A null pointer dereference in json_pointer_result_get_recursive in json_pointer.c of json-c leads to a segmentation violation via a crafted JSON pointer.

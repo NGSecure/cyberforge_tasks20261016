@@ -1,0 +1,1 @@
+processor.cc performs an unsafe calculation while validating the marker byte, causing an integer overflow.

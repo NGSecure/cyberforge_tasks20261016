@@ -1,0 +1,1 @@
+VERIFY_LEN(3 * num_components);

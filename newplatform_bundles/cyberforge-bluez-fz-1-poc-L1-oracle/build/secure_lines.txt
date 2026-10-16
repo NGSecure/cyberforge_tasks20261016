@@ -1,0 +1,1 @@
+SDPERR("String too long to fit in packet");

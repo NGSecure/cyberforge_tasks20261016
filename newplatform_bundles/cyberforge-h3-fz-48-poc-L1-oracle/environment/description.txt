@@ -1,0 +1,1 @@
+In H3, the polygon to cells conversion in src/h3lib/lib/polygon.c reads past a heap buffer in bboxOverlapsBBox during cell boundary crossing checks, leading to a heap-buffer-overflow.

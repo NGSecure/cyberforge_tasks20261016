@@ -1,0 +1,1 @@
+H3's cellsToMultiPoly contains a heap-buffer-overflow, allowing crafted inputs to trigger an out-of-bounds read.

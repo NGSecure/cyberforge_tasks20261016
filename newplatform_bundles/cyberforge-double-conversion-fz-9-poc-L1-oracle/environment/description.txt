@@ -1,0 +1,1 @@
+An off-by-one iteration in double-conversion's Bignum::MultiplyByUInt32 can trigger a deadly signal when parsing crafted string input.

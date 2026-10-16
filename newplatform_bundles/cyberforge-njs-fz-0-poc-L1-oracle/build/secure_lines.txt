@@ -1,0 +1,1 @@
+p = njs_string_alloc(vm, retval, name.size + message.size + 2, length);

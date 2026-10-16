@@ -1,0 +1,1 @@
+memcpy(_dest, src, bsize_);

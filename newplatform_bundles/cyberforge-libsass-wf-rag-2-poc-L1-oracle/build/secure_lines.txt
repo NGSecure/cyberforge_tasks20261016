@@ -1,0 +1,1 @@
+size_t len = strlen(str) + 1;

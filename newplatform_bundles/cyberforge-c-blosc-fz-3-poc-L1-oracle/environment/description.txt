@@ -1,0 +1,1 @@
+In c-blosc's blosc/fastcopy.c, a CWE-193 calculation error can trigger a heap-buffer-overflow read.

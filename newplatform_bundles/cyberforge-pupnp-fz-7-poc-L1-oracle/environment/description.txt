@@ -1,0 +1,1 @@
+A post-buffer operation in pupnp's ixmlparser.c (ixml/src/ixmlparser.c) can cause a buffer overflow when parsing malformed XML, leading to memory corruption.

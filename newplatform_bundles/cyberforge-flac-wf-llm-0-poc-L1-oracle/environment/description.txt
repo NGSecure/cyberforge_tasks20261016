@@ -1,0 +1,1 @@
+A global-buffer-overflow in flac__strlcpy (src/flac/local_string_utils.c) allows an out-of-bounds write when copying strings.

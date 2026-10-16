@@ -1,0 +1,1 @@
+A buffer overflow in coturn's src/client/ns_turn_msg.c allows overwriting memory when handling malformed STUN messages, leading to possible crash or code execution.

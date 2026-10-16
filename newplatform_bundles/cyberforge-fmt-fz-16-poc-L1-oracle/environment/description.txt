@@ -1,0 +1,1 @@
+A post-buffer out-of-bounds access in fmt's include/fmt/base.h can lead to memory corruption when buffer boundaries are exceeded.

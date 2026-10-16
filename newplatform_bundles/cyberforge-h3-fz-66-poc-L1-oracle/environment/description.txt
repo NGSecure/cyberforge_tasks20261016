@@ -1,0 +1,1 @@
+H3's directedEdge.c has a stack-buffer-overflow causing an out-of-bounds read when processing edge data.

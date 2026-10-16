@@ -1,0 +1,1 @@
+double-conversion's DoubleStrtod in strtod.cc performs a post-buffer over-read, causing an assertion failure.

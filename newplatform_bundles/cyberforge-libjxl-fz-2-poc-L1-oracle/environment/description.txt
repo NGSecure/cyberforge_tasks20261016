@@ -1,0 +1,1 @@
+A heap-buffer-overflow in libjxl's enc_cluster.cc can trigger an out-of-bounds read when clustering is post-processed.

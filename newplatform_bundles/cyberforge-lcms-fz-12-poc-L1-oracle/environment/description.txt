@@ -1,0 +1,1 @@
+lcms parser in src/cmscgats.c has a stack-based buffer overflow when parsing IT8 data due to a weakened copy size constraint (removed_copy_size_constraint) that permits out-of-bounds write.

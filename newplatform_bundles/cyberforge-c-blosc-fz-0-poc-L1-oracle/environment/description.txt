@@ -1,0 +1,1 @@
+A post-buffer operation (CWE-120) in c-blosc's blosc/blosc.c can allow buffer overwrite leading to heap corruption or potential remote code execution when processing crafted compressed data.

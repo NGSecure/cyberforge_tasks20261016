@@ -1,0 +1,1 @@
+In Serenity's OpenType font parser, crafted font data can trigger an out-of-bounds buffer access via an inconsistent length parameter in Font.cpp.

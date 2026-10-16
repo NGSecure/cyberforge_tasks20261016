@@ -1,0 +1,1 @@
+A post-buffer-operation heap-buffer-overflow in libjxl's decode.cc allows crafted JPEG XL data to trigger memory corruption.

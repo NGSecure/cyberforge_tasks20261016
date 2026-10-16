@@ -1,0 +1,1 @@
+if (c->push<SubTable> ()->u.single.serialize (c, hb_zip (glyphs, substitutes)))

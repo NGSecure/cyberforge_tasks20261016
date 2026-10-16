@@ -1,0 +1,1 @@
+for (ng = cb->named_groups; ng < end; ng++)

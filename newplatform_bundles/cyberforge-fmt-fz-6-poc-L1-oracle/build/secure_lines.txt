@@ -1,0 +1,1 @@
+copy<Char>(begin, end, out);

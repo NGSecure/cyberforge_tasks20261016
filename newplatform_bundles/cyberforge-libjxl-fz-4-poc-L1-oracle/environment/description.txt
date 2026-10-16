@@ -1,0 +1,1 @@
+A stack-buffer-overflow in libjxl's ANS decoding code (lib/jxl/dec_ans.cc) can be triggered by crafted input due to a removed bounds check.

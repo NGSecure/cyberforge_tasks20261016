@@ -1,0 +1,1 @@
+A heap-buffer-overflow in pupnp's ixml parser allows remote attackers to read beyond a heap buffer via crafted XML input.

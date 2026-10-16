@@ -1,0 +1,4 @@
+if (!CRYPTO_THREAD_set_local_ex(CRYPTO_THREAD_LOCAL_RCU_KEY, lock->ctx, data)) {
+CRYPTO_THREAD_set_local_ex(CRYPTO_THREAD_LOCAL_RCU_KEY, lock->ctx, NULL);
+if (!ossl_init_thread_start(NULL, lock->ctx, ossl_rcu_free_local_data)) {
+data = OPENSSL_zalloc(sizeof(*data));

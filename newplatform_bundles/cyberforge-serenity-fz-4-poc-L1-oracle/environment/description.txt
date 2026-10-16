@@ -1,0 +1,1 @@
+In serenity, Meta/Lagom/Fuzzers/FuzzRegexPosixBasic.cpp contains a post-buffer write (CWE-130) that can corrupt memory when processing malformed regex input.

@@ -1,0 +1,1 @@
+kamailio's contact parser in parse_contact.c may dereference an invalid pointer while processing crafted contact data.

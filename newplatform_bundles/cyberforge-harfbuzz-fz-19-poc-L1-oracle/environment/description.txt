@@ -1,0 +1,1 @@
+HarfBuzz's GDEF table parser performs an out-of-bounds array access on malformed font data, leading to a segmentation violation.

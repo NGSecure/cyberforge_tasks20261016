@@ -1,0 +1,1 @@
+A stack-based buffer overflow in Open5GS's NAS EPS information element parser (ies.c) can be triggered by malformed input, leading to memory corruption.

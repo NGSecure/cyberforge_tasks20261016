@@ -1,0 +1,1 @@
+In fmt's format.h, an off-by-one calculation leads to a heap-buffer-overflow.

@@ -1,0 +1,1 @@
+(s->len << s->is_wide_char) + 1 - s->is_wide_char);

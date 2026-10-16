@@ -1,0 +1,1 @@
+A heap-buffer-overflow vulnerability in cJSON.c can be triggered by crafted JSON input, leading to a crash or potential memory corruption.

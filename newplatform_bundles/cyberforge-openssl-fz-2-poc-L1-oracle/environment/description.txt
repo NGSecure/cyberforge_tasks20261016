@@ -1,0 +1,1 @@
+A calculation error in OpenSSL's BIO library (crypto/bio/bio_lib.c) leads to a stack-buffer-overflow when processing crafted S/MIME data.

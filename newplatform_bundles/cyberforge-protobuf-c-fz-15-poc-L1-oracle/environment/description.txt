@@ -1,0 +1,1 @@
+A heap-buffer-overflow in protobuf-c.c occurs when parsing malformed input, due to a missing post-operation bounds check (CWE-129).

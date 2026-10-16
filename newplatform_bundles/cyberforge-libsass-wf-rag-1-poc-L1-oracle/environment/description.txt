@@ -1,0 +1,1 @@
+A heap-buffer-overflow in sass_alloc_memory in libsass's src/sass.cpp allows an out-of-bounds write via specially crafted input.

@@ -1,0 +1,1 @@
+An invalid pointer dereference in jq's src/execute.c can cause a crash.

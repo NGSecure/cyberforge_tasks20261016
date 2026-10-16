@@ -1,0 +1,1 @@
+A heap-buffer-overflow in FLAC's stream encoder write_bitbuffer_ allows an out-of-bounds write.

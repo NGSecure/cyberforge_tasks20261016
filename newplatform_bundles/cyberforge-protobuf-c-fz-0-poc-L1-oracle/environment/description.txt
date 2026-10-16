@@ -1,0 +1,1 @@
+A heap-buffer-overflow in protobuf-c's protobuf-c.c can be triggered by malformed protobuf data, potentially leading to memory corruption.

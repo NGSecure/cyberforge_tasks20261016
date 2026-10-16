@@ -1,0 +1,1 @@
+In libjxl, DecodeImagePNM in pnm.cc has a heap-buffer-overflow due to inadequate input validation, allowing a crafted PNM image to cause an out-of-bounds read via a large memcpy.

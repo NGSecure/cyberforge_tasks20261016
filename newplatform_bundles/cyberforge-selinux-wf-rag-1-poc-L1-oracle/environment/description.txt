@@ -1,0 +1,1 @@
+A heap-use-after-free in the SELinux CIL compiler's classpermissionset destruction logic causes an invalid read while freeing class permission lists.

@@ -1,0 +1,1 @@
+A post-buffer write in parse_object within cJSON.c triggers a segmentation violation when parsing crafted JSON input.

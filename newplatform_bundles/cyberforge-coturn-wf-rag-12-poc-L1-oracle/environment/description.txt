@@ -1,0 +1,1 @@
+A stack-buffer-overflow in coturn's is_http function in src/client/ns_turn_msg.c, triggered by an oversized strncpy write, can cause a crash.

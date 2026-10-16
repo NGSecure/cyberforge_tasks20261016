@@ -1,0 +1,1 @@
+A heap-buffer-overflow in guetzli's output_image.cc can occur when processing crafted image data.

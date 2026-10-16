@@ -1,0 +1,1 @@
+A heap-buffer-overflow in brotli's decoder (decode.c) can be triggered by malformed input during Huffman tree group decoding, resulting in memory corruption.

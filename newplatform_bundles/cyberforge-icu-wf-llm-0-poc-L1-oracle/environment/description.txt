@@ -1,0 +1,1 @@
+In ICU, CharString::append in charstr.cpp performs an out-of-bounds stack write via memcpy, causing a stack-buffer-overflow.

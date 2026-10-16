@@ -1,0 +1,1 @@
+A stack-buffer-overflow in ogs_vsnprintf in open5gs can be triggered via a crafted GTP message, causing a crash due to an out-of-bounds write.

@@ -1,0 +1,1 @@
+Kamailio's SIP parser in src/core/parser/parse_addr_spec.c contains an off-by-one iteration flaw that can cause a heap-buffer-overflow when parsing crafted address specifications.

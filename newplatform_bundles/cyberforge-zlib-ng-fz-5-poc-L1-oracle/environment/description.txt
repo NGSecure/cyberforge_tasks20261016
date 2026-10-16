@@ -1,0 +1,1 @@
+zlib-ng's adler32_p.h has an incorrect size calculation (CWE-193) that can cause off-by-one allocation and potential buffer overflow when computing Adler-32 checksums.

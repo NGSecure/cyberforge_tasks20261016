@@ -1,0 +1,1 @@
+An out-of-bounds read in double-conversion's strtod.cc can cause an assertion failure in DiyFp::Normalize(), leading to a crash.

@@ -1,0 +1,1 @@
+A heap-buffer-overflow in cellsToMultiPoly.c in H3 allows remote attackers to cause a denial of service or information leak via crafted input.

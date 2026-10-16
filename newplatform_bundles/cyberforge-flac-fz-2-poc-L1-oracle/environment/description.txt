@@ -1,0 +1,1 @@
+A heap-buffer-overflow in FLAC's decode.c results from an off-by-one calculation, allowing out-of-bounds access when processing crafted audio input.

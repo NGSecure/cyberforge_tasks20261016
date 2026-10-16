@@ -1,0 +1,1 @@
+while (h->htree_index < group->num_htrees) {

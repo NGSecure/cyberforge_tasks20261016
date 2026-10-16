@@ -1,0 +1,1 @@
+Use-after-free in r_anal_free in radare2's anal library causes a crash when processing a crafted binary.

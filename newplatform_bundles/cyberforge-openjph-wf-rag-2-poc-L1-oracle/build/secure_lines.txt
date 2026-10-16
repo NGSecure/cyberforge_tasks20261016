@@ -1,0 +1,1 @@
+if (num_subbands > 97 || Lqcd != 3 + 2 * num_subbands)

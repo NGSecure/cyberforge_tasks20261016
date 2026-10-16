@@ -1,0 +1,1 @@
+return baseCellData[baseCell].cwOffsetPent[0] == testFace ||

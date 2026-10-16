@@ -1,0 +1,2 @@
+if (BLOSCLZ_UNLIKELY((op) + 2 > (op_limit)))            \
+if (BLOSCLZ_UNLIKELY((op) + 2 > (op_limit)))          \

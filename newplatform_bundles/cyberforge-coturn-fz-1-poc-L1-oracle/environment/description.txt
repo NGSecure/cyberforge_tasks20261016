@@ -1,0 +1,1 @@
+coturn's ns_turn_msg.c contains a parser-state misuse that can trigger a heap-buffer-overflow (CWE-476 invalid pointer) when parsing crafted STUN binary attributes.

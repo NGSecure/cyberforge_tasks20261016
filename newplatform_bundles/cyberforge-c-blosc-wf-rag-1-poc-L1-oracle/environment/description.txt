@@ -1,0 +1,1 @@
+In c-blosc, the LITERAL macro in blosclz.c performs a 1-byte write past the end of a heap buffer during compression, causing a heap-buffer-overflow.

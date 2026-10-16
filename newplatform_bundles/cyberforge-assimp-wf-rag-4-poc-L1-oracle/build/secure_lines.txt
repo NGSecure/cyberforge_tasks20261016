@@ -1,0 +1,1 @@
+for (unsigned int m = t; m < face.mNumIndices; ++m) {

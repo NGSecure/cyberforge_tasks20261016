@@ -1,0 +1,1 @@
+A post-buffer operation in serenity's LibRegex RegexParser.cpp (CWE-130) can lead to out-of-bounds memory writes when parsing crafted regular expressions.

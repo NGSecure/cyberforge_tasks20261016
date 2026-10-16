@@ -1,0 +1,2 @@
+ucl_create_err(err, "error while parsing %s: at the end of chunk: %s",
+if (chunk->pos < chunk->end) {

@@ -1,0 +1,1 @@
+A stack-buffer-overflow in espeak-ng's ssml.c attrcopy_utf8 function can be triggered by malformed SSML input, causing a crash.

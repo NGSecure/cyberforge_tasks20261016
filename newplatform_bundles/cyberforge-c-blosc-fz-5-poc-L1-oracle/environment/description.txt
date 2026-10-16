@@ -1,0 +1,1 @@
+An out-of-bounds read in bitstream.h within c-blosc's bundled Zstandard can trigger a segmentation violation.

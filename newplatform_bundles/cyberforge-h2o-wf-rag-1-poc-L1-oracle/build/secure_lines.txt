@@ -1,0 +1,1 @@
+memset(stream, 0, offsetof(h2o_http2_stream_t, req));

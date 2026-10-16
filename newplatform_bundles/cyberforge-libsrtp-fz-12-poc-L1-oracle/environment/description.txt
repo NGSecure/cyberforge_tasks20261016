@@ -1,0 +1,1 @@
+libsrtp may read past the end of a buffer in srtp.c, allowing out-of-bounds memory access.

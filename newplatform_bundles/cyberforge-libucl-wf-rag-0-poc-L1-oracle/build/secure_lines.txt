@@ -1,0 +1,1 @@
+nobj = ucl_object_fromstring_common(begin, len, 0);

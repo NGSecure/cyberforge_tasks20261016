@@ -1,0 +1,1 @@
+Serenity LibIMAP Parser.cpp removes length restrictions when parsing model asset inputs, enabling post-buffer writes (CWE-130) via crafted IMAP input to the importer.

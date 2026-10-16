@@ -1,0 +1,1 @@
+A heap-buffer-overflow in brotli's decode.c during block switch distance decoding allows an out-of-bounds read.

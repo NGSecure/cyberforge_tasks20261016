@@ -1,0 +1,1 @@
+An integer underflow in DXFImporter::ParsePolyLineVertex in DXFLoader.cpp triggers a stack buffer overflow in Assimp.

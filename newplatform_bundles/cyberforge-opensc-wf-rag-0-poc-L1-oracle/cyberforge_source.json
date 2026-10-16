@@ -1,0 +1,88 @@
+{
+  "bundle": "cyberforge-opensc-wf-rag-0-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/opensc/vulnerabilities/vulnerability_WF_RAG_0",
+  "base_image": "vuljector/opensc:setup@sha256:b949ca62ce93b84a9b2a86d045409400cc6b65da6faa5e3affb8e0c7df31a74b",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-04-17T13:54:57.469332805Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T16:57:20.24766825Z",
+        "created_by": "sleep infinity",
+        "bytes": 409669140
+      }
+    ],
+    "post_setup_files": 1774,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 1550,
+    "scrubbed_from_agent_image": 28,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out/fuzz_asn1_print": 1,
+      "/out/fuzz_asn1_sig_value": 1,
+      "/out/fuzz_card": 1,
+      "/out/fuzz_card_seed_corpus.zip": 1,
+      "/out/fuzz_piv_tool": 1,
+      "/out/fuzz_piv_tool_seed_corpus.zip": 1,
+      "/out/fuzz_pkcs11": 1,
+      "/out/fuzz_pkcs11_seed_corpus.zip": 1,
+      "/out/fuzz_pkcs11_uri": 1,
+      "/out/fuzz_pkcs11_uri_seed_corpus.zip": 1,
+      "/out/fuzz_pkcs15_crypt": 1,
+      "/out/fuzz_pkcs15_crypt_seed_corpus.zip": 1,
+      "/out/fuzz_pkcs15_decode": 1,
+      "/out/fuzz_pkcs15_decode_seed_corpus.zip": 1,
+      "/out/fuzz_pkcs15_encode": 1,
+      "/out/fuzz_pkcs15_encode_seed_corpus.zip": 1,
+      "/out/fuzz_pkcs15_reader": 1,
+      "/out/fuzz_pkcs15_reader_seed_corpus.zip": 1,
+      "/out/fuzz_pkcs15_tool": 1,
+      "/out/fuzz_pkcs15_tool_seed_corpus.zip": 1,
+      "/out/fuzz_pkcs15init": 1,
+      "/out/fuzz_pkcs15init_seed_corpus.zip": 1,
+      "/out/fuzz_scconf_parse_string": 1,
+      "/out/fuzz_scconf_parse_string_seed_corpus.zip": 1,
+      "/out/llvm-symbolizer": 1,
+      "/workspace/run": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 0,
+  "image_tags": {
+    "docker_image": "cyberforge_opensc_wf_rag_0_main:v0.0.1",
+    "task_server_image": "cyberforge_opensc_wf_rag_0_task_server:v0.0.1"
+  },
+  "ground_truth": {
+    "dataset_file": "exploit_files/pov.bin",
+    "how_found": "hints.successful_seed",
+    "bytes": 1,
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "solve_sh": "inline"
+  },
+  "harness": {
+    "candidates": [
+      "fuzz_pkcs15_decode"
+    ],
+    "how_found": "exploit.sh",
+    "dataset_metadata_said": [
+      "fuzz_pkcs15_decode",
+      "fuzz_pkcs15_decode"
+    ],
+    "metadata_disagrees": false
+  },
+  "trigger_evidence": {
+    "signal": "lsan",
+    "detail": "detected",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": true
+  },
+  "asan_options_from_exploit": "detect_leaks=1:halt_on_error=1",
+  "cwe_id": "CWE-401",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "96e39e7e0631f1b52c938a32b6d0d4d703e49c89"
+}

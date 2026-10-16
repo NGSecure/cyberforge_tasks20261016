@@ -1,0 +1,1 @@
+if (code_points.done() || !s_name_start_characters.contains(*code_points)) {

@@ -1,0 +1,1 @@
+memcpy(&q[c][0], components_[c].quant(), kDCTBlockSize * sizeof(q[0][0]));

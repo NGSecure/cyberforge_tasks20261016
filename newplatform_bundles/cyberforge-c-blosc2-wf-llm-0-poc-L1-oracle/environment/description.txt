@@ -1,0 +1,1 @@
+A heap-buffer-overflow in frame_decompress_chunk of c-blosc2 allows a crafted compressed frame to write out of bounds during AVX2 unshuffle operations.

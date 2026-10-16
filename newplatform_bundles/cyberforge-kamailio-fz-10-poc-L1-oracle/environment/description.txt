@@ -1,0 +1,1 @@
+Kamailio's parser in src/core/parser/parse_via.c contains an off-by-one iteration that triggers a heap-based buffer overflow (CWE-193) when parsing Via headers, causing memory corruption.

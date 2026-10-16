@@ -1,0 +1,1 @@
+for (i = ctx->octets_in_buffer; i < 64; i++) {

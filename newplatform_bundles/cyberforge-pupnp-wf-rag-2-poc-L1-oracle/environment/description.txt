@@ -1,0 +1,1 @@
+A heap-buffer-overflow in pupnp's ixml_membuf_set_size function can be triggered via malformed XML input.

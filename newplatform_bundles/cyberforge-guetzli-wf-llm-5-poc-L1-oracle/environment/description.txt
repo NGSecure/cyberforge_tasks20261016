@@ -1,0 +1,1 @@
+A heap-buffer-overflow in ProcessCOM of jpeg_data_reader.cc can be triggered by a crafted JPEG comment segment.

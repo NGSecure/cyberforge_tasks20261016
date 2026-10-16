@@ -1,0 +1,2 @@
+if (unlikely(len > 1 && key[len - 1] == '/')) {
+clean_key = (char *) malloc(len);

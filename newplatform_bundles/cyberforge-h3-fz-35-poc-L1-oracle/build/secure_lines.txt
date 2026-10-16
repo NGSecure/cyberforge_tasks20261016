@@ -1,0 +1,1 @@
+if (baseCell < 0 || baseCell >= NUM_BASE_CELLS) {

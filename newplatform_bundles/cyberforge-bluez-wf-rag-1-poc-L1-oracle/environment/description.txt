@@ -1,0 +1,1 @@
+BlueZ sdp.c extract_int has a heap buffer overflow when parsing a crafted SDP PDU.

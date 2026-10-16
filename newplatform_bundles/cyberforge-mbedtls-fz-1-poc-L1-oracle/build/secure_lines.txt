@@ -1,0 +1,1 @@
+if ((curve_info = mbedtls_ecp_curve_info_from_tls_id(tls_id)) == NULL) {

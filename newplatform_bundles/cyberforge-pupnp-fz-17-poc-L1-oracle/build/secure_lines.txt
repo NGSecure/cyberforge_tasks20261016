@@ -1,0 +1,1 @@
+if (Parser_isCharInTable(c, Letter, (int)LETTERTABLESIZE)) {

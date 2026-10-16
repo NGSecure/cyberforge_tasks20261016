@@ -1,0 +1,1 @@
+HarfBuzz's GSUB substitution lookup handling contains a post-buffer operation flaw that causes an assertion failure in hb_serialize_context_t::pop_pack when processing a crafted font, resulting in a crash.

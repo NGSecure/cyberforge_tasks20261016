@@ -1,0 +1,1 @@
+while (size-- > 1 && (ret = BIO_read(bio, ptr, 1)) > 0)

@@ -1,0 +1,1 @@
+In libucl, ucl_maybe_parse_number in src/ucl_parser.c can trigger a stack-buffer-overflow while parsing a crafted numeric value, allowing a write past the end of a stack buffer.

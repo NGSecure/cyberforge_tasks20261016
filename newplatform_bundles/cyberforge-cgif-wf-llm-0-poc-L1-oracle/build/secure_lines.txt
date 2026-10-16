@@ -1,0 +1,1 @@
+pGIF->aFrames[0] = NULL; // avoid potential double free in cgif_close

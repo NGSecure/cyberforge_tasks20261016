@@ -1,0 +1,1 @@
+A post-buffer out-of-bounds read in algos.c in H3 may cause a segmentation violation during cell-to-linked-multipolygon conversion.

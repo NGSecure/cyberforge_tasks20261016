@@ -1,0 +1,1 @@
+An out-of-bounds read in ConsumeSubStringImpl in double-conversion/string-to-double.cc allows remote attackers to cause a denial of service via crafted input.

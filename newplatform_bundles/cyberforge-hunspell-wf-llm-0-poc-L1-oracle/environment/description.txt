@@ -1,0 +1,1 @@
+Hunspell's AffixMgr constructor leaks memory via parse_file when processing crafted affix dictionary files, allowing a denial of service.

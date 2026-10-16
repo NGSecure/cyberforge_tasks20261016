@@ -1,0 +1,1 @@
+while (((size_t)(input_end - input_buffer->content) < input_buffer->length) && (*input_end != '\"'))

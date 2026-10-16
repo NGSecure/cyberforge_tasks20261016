@@ -1,0 +1,1 @@
+Heap buffer overflow in _json_object_set_string_len in json_object.c allows out-of-bounds write via malformed input.

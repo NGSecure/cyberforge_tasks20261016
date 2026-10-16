@@ -1,0 +1,1 @@
+In pupnp, an invalid pointer in ixml/src/ixmlparser.c triggers a memory leak via strdup, leading to denial of service when parsing a crafted XML file.

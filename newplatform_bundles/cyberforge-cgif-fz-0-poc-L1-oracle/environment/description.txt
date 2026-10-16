@@ -1,0 +1,1 @@
+Heap-buffer-overflow in cgif parser (src/cgif.c) from a removed bounds check allows out-of-bounds writes during pixel comparison, leading to heap corruption.

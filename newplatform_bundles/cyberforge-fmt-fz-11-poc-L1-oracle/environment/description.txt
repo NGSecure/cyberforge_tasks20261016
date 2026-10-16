@@ -1,0 +1,1 @@
+Heap-buffer-overflow in fmt's parse_arg_id in include/fmt/base.h leads to an out-of-bounds read when parsing a specially crafted format string.

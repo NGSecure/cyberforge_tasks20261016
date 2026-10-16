@@ -1,0 +1,1 @@
+A global buffer overflow in Arrow's parquet decoder allows writing out of bounds during binary value append.

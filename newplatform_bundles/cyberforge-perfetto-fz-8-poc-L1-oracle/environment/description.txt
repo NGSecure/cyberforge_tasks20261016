@@ -1,0 +1,1 @@
+A heap-buffer-overflow occurs in Perfetto's track_event_tokenizer.cc from a flawed post-buffer length check, leading to out-of-bounds reads while parsing proto trace events.

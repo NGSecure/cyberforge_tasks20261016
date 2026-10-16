@@ -1,0 +1,1 @@
+uint32_t newflagssize = ((h_ + 3U) / 4U + 2U) * getFlagsStride();

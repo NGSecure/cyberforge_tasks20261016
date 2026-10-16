@@ -1,0 +1,2 @@
+return 0;    /* Non-compressible data */
+if ((ntbytes + neblock) > destsize) {

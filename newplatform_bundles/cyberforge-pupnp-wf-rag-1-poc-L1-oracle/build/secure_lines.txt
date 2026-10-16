@@ -1,0 +1,1 @@
+return_code = ixml_membuf_set_size(m, m->length + buf_len);

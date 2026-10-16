@@ -1,0 +1,1 @@
+A CWE-193 off-by-one flaw in libsrtp's SHA-1 update routine allows an out-of-bounds read, causing a stack buffer overflow during HMAC initialization.

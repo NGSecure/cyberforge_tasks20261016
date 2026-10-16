@@ -1,0 +1,1 @@
+An unhandled error in the Context destructor of libsass can trigger a crash during cleanup.

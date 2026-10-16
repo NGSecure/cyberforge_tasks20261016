@@ -1,0 +1,1 @@
+A heap-buffer-overflow in h3's cellsToMultiPoly.c allows crafted input to trigger out-of-bounds read during multi-polygon conversion.

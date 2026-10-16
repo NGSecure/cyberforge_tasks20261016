@@ -1,0 +1,1 @@
+MultiplyByUInt32(kFive1_to_12[remaining_exponent - 1]);

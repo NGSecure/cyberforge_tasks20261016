@@ -1,0 +1,1 @@
+A null pointer dereference in FLAC's metadata iterator handling in metadata_iterators.c causes a segmentation violation.

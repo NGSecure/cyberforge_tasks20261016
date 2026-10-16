@@ -1,0 +1,1 @@
+A heap-buffer-overflow in pupnp's ixml.c can be triggered via crafted XML input, leading to a read out-of-bounds memory access.

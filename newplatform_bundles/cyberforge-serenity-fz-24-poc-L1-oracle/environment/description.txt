@@ -1,0 +1,1 @@
+A heap-buffer-overflow in Serenity's PNG image loader occurs when a crafted PNG file triggers an improper post-buffer operation during parsing, leading to out-of-bounds memory access.

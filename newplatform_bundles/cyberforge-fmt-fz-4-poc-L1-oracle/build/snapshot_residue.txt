@@ -1,0 +1,10 @@
+/opt/src_snapshot.tar
+/out/chrono-duration-fuzzer
+/out/chrono-timepoint-fuzzer
+/out/float-fuzzer
+/out/llvm-symbolizer
+/out/named-arg-fuzzer
+/out/one-arg-fuzzer
+/out/two-args-fuzzer
+/workspace/run/unit_tests/parse_results.py
+/workspace/run/unit_tests/test.sh

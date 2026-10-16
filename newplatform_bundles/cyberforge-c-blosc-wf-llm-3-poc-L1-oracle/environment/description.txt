@@ -1,0 +1,1 @@
+A heap-buffer-overflow in c-blosc's blosc_internal_bitshuffle in shuffle.c allows an oversized memcpy write beyond the allocated buffer during a post-buffer operation.

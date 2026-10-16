@@ -1,0 +1,1 @@
+libsrtp's srtp_hmac_start performs an overlapping memcpy in hmac.c, causing a buffer overlap and undefined behavior.

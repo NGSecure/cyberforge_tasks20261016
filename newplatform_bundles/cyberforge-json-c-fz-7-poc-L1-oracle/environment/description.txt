@@ -1,0 +1,1 @@
+A buffer over-read in arraylist.c in json-c can cause a segmentation violation when processing crafted input.

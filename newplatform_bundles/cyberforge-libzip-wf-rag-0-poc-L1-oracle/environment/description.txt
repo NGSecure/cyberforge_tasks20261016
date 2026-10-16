@@ -1,0 +1,1 @@
+libzip's zip_discard function mishandles resource cleanup, potentially leaking memory or corrupting archive state.

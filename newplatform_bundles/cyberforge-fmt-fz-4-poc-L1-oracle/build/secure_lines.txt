@@ -1,0 +1,1 @@
+for (size_t i = 0, n = bigits_.size(); i < n; ++i) {

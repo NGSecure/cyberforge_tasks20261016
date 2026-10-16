@@ -1,0 +1,1 @@
+A segmentation violation in mbedtls library/ecp.c results from dereferencing an invalid pointer, causing a crash.

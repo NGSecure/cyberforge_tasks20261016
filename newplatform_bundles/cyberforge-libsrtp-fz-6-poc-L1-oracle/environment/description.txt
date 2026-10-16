@@ -1,0 +1,1 @@
+In libsrtp, an off-by-one calculation error in srtp/srtp.c leads to a heap-buffer-overflow write.

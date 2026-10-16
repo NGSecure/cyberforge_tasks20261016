@@ -1,0 +1,2 @@
+check = fread(data, 1, length, png_voidcast(FILE *, png_ptr->io_ptr));
+png_ptr->io_ptr = io_ptr;

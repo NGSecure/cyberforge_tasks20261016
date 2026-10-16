@@ -1,0 +1,1 @@
+open5gs lib/nas/eps/ies.c contains a post-buffer out-of-bounds access in ogs_nas_eps_decode_p_tmsi_signature when parsing malformed NAS EPS fields, leading to potential memory corruption.

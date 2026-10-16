@@ -1,0 +1,1 @@
+An assertion failure in cellToChildPos in h3Index.c triggers a crash due to a calculation error.

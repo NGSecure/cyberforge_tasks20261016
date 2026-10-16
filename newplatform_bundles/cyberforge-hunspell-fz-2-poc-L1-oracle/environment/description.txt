@@ -1,0 +1,1 @@
+A heap buffer overflow in hunspell's textparser.cxx can be triggered by crafted input, leading to a crash.

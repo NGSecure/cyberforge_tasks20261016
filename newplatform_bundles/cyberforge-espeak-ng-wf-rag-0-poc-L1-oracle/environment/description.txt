@@ -1,0 +1,1 @@
+A heap use-after-free in espeak-ng's DeleteTranslator in translate.c reads freed memory, leading to a crash.

@@ -1,0 +1,1 @@
+A stack buffer overflow in QuickJS's regexp parser occurs when parsing a group name containing a Unicode character due to an off-by-one calculation in unicode_to_utf8.

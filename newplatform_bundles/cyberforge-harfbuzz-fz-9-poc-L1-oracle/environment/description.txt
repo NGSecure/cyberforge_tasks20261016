@@ -1,0 +1,1 @@
+A CWE-193 off-by-one calculation in HarfBuzz's hb-bit-set.hh leads to a segmentation violation.

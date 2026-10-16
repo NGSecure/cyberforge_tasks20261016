@@ -1,0 +1,1 @@
+In hunspell, affixmgr.cxx's AffixMgr::parse_file leaks 65,936 bytes during affix dictionary parsing, allowing resource exhaustion via repeated calls.

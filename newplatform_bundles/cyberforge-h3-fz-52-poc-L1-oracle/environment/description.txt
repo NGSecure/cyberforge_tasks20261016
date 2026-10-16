@@ -1,0 +1,1 @@
+A heap-buffer-overflow in cellsToMultiPoly.c reads past the end of a buffer during conversion of H3 cells to multipolygons.

@@ -1,0 +1,1 @@
+A heap-buffer-overflow in json_tokener_parse_ex in json-c's json_tokener.c allows an out-of-bounds read via crafted input.

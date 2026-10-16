@@ -1,0 +1,7 @@
+/opt/src_snapshot.tar
+/out/cjson_read_fuzzer
+/out/cjson_read_fuzzer.dict
+/out/cjson_read_fuzzer_seed_corpus.zip
+/out/llvm-symbolizer
+/workspace/run/unit_tests/parse_results.py
+/workspace/run/unit_tests/test.sh

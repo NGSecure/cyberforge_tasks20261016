@@ -1,0 +1,1 @@
+A heap-buffer-overflow in OpenJPH's get_irrev_delta function while parsing a crafted code-stream causes a crash and potential denial of service.

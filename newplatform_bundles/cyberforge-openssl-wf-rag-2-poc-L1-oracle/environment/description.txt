@@ -1,0 +1,1 @@
+A stack-buffer-overflow in OpenSSL's addr_expand function in crypto/x509/v3_addr.c can occur due to an oversized memcpy write.

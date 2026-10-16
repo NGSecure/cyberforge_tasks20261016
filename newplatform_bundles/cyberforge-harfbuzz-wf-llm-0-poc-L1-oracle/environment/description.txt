@@ -1,0 +1,1 @@
+A crafted blob causes an out-of-bounds read in hb_blob_create_sub_blob in hb-blob.cc, leading to a segmentation violation.

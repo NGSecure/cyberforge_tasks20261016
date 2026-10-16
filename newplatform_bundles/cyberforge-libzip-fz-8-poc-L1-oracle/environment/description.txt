@@ -1,0 +1,1 @@
+libzip's lib/zip_source_buffer.c contains an off-by-one error in buffer length calculation (CWE-193) that can cause out-of-bounds access when handling input buffers.

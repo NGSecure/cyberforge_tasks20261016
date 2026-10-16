@@ -1,0 +1,1 @@
+A stack-based buffer overflow in the parse_array function of cJSON.c can cause a segmentation violation when processing crafted JSON input.

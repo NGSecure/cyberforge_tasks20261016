@@ -1,0 +1,1 @@
+Heap-buffer-overflow in dnsmasq's extract_name function in rfc1035.c allows a remote attacker to cause a denial of service via a crafted DNS name.

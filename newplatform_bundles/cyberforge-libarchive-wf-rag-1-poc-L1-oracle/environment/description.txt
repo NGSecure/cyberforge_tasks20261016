@@ -1,0 +1,1 @@
+A heap-buffer-overflow in archive_string_append in archive_string.c allows attackers to corrupt memory via specially crafted archive data.

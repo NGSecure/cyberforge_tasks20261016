@@ -1,0 +1,1 @@
+A global buffer overflow in readclause.c in espeak-ng allows out-of-bounds access during SSML parsing.

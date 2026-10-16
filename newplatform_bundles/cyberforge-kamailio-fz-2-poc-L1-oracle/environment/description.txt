@@ -1,0 +1,1 @@
+In kamailio, an off-by-one iteration bug in src/core/parser/contact/contact.c's parser can trigger a heap-buffer-overflow when processing contact URIs.

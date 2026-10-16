@@ -1,0 +1,1 @@
+A NULL pointer dereference in njs_date.c leads to a segmentation violation when processing invalid Date values.

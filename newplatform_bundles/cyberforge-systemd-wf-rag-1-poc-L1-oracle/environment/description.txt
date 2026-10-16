@@ -1,0 +1,1 @@
+heap-buffer-overflow in dhcp6_option_parse_ia in systemd's DHCP6 client option parsing allows a crafted DHCPv6 packet to cause an out-of-bounds write.

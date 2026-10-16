@@ -1,0 +1,1 @@
+if(hdr->type == HDR_CONTACT_T) {

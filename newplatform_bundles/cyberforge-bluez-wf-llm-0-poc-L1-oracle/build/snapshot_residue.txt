@@ -1,0 +1,10 @@
+/opt/src_snapshot.tar
+/out/fuzz_gobex
+/out/fuzz_gobex.options
+/out/fuzz_hci
+/out/fuzz_sdp
+/out/fuzz_textfile
+/out/fuzz_xml
+/out/llvm-symbolizer
+/workspace/run/unit_tests/parse_results.py
+/workspace/run/unit_tests/test.sh

@@ -1,0 +1,1 @@
+A heap-buffer-overflow in protobuf-c's unpacking code can be triggered by a crafted message, leading to memory corruption.

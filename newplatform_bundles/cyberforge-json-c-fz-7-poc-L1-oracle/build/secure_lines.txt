@@ -1,0 +1,1 @@
+if (idx >= arr->length || stop > arr->length)

@@ -1,0 +1,1 @@
+A heap-buffer-overflow in libarchive's archive_wstring_free function in archive_string.c allows remote attackers to cause a crash via crafted archive files.

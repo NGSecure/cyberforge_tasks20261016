@@ -1,0 +1,1 @@
+A stack-buffer-overflow in Wireshark's file_getsp function in wiretap/file_wrappers.c can be triggered by a crafted packet, leading to a crash.

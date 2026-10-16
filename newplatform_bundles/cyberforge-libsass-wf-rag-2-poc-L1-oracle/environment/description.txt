@@ -1,0 +1,1 @@
+A heap-buffer-overflow in libsass's sass_copy_c_string function in src/sass.cpp allows crafted input to trigger an out-of-bounds read.

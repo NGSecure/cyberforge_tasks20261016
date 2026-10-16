@@ -1,0 +1,1 @@
+out_ = copy<Char>(std::begin(buf), std::end(buf), out_);

@@ -1,0 +1,1 @@
+A null pointer dereference in njs_async.c's njs_await_fulfilled causes a segmentation violation.

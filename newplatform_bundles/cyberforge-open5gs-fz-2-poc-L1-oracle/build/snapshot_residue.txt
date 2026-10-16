@@ -1,0 +1,11 @@
+/opt/src_snapshot.tar
+/out/gtp_message_fuzz
+/out/gtp_message_fuzz_seed_corpus.zip
+/out/lib/libtalloc.so
+/out/lib/libtalloc.so.2
+/out/lib/libtalloc.so.2.3.3
+/out/llvm-symbolizer
+/out/nas_message_fuzz
+/out/nas_message_fuzz_seed_corpus.zip
+/workspace/run/unit_tests/parse_results.py
+/workspace/run/unit_tests/test.sh

@@ -1,0 +1,1 @@
+Brotli parser in c/dec/decode.c has a conversion-boundary regression in ReadHuffmanCode that can trigger a global-buffer-overflow.

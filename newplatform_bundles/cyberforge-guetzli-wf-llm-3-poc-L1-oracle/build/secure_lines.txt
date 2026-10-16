@@ -1,0 +1,1 @@
+VERIFY_INPUT(width, 1, 65535, WIDTH);

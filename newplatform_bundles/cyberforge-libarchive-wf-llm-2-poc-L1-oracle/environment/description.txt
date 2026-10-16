@@ -1,0 +1,1 @@
+In libarchive, the peek_at_header function in archive_read_support_filter_gzip.c can trigger a double-free when processing a crafted gzip header, leading to memory corruption.

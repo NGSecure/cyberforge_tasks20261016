@@ -1,0 +1,1 @@
+A heap-buffer-overflow in PcapFileDevice.cpp during packet data reading leads to an oversized write in a user-controlled buffer.

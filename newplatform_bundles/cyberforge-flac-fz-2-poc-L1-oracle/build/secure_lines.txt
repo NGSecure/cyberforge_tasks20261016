@@ -1,0 +1,1 @@
+for(i = format==FORMAT_RF64?2:1; i < fm->num_blocks; i++) {

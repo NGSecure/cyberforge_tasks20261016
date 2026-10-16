@@ -1,0 +1,1 @@
+An off-by-one error in libpng's pngrutil.c can trigger a stack-buffer-overflow when processing crafted PNG data.

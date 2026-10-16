@@ -1,0 +1,1 @@
+A stack-buffer-overflow in fmt's do_format_base2e in include/fmt/format.h allows an out-of-bounds write during integer formatting.

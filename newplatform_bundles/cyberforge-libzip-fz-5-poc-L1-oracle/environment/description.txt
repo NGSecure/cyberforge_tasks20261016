@@ -1,0 +1,1 @@
+A global-buffer-overflow in zip_source_compress.c in libzip allows attackers to cause a crash or memory corruption via a crafted ZIP file.

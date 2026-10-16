@@ -1,0 +1,1 @@
+ufield->data = do_alloc(allocator, scanned_member->len);

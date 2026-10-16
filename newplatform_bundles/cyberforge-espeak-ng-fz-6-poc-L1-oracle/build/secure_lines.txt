@@ -1,0 +1,1 @@
+while (!Eof() && (c1 != '>') && (n_xml_buf < N_XML_BUF)) {

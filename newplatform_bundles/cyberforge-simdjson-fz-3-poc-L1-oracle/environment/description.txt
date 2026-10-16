@@ -1,0 +1,1 @@
+In simdjson, the array iterator's begin() function in array-inl.h asserts that the tape is usable, but a crafted JSON input can trigger a post-buffer operation causing an assertion failure.

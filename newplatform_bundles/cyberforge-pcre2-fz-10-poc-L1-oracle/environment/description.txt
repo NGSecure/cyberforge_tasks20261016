@@ -1,0 +1,1 @@
+An off-by-one calculation error in PCRE2's compile group processing (src/pcre2_compile_cgroup.c) can trigger a use-after-free when handling crafted regular expressions.

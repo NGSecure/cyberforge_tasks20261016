@@ -1,0 +1,1 @@
+QuickJS in quickjs.c is vulnerable to a stack-based buffer overflow caused by improper index validation (CWE-129), enabling memory corruption via a crafted script.

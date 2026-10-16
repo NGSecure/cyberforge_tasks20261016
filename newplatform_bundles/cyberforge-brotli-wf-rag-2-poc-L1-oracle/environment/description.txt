@@ -1,0 +1,1 @@
+A heap-buffer-overflow in brotli's ProcessCommandsInternal in c/dec/decode.c allows a crafted compressed stream to trigger a post buffer operation past the end of an allocated buffer.

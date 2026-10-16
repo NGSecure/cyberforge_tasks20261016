@@ -1,0 +1,1 @@
+A buffer overflow in pupnp's ixml/src/ixmlparser.c allows out-of-bounds writes after buffer operations when parsing crafted XML, potentially leading to crashes or code execution.

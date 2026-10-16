@@ -1,0 +1,1 @@
+A removed bounds check in cgif's parser (src/cgif.c) can trigger a heap-buffer-overflow, allowing out-of-bounds heap access during binary parsing.

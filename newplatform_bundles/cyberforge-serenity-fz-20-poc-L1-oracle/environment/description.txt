@@ -1,0 +1,1 @@
+A malformed text input triggers a failed length check in SerenityOS's FuzzTextDecoder, leading to a potential out-of-bounds access in StringView.

@@ -1,0 +1,1 @@
+Assimp's FBXMeshGeometry.cpp contains an off-by-one calculation (CWE-193) that may cause incorrect buffer indexing when parsing FBX mesh geometry.

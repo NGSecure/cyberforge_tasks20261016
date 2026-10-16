@@ -1,0 +1,1 @@
+In pupnp, the ixml parser in ixmlparser.c fails to validate pointers, causing a NULL pointer dereference and memory leak when processing malformed XML.

@@ -1,0 +1,1 @@
+if (!buffer->ok || buffer->offset + length < length || buffer->offset + length > buffer->size) {

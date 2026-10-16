@@ -1,0 +1,2 @@
+PCPP_LOG_ERROR("Packet length " << capturedLength << " is too large");
+if (capturedLength > packetDataLen)

@@ -1,0 +1,1 @@
+if (next_pos <= len) { // if it is safe to read 8 more bytes, check that they are ascii

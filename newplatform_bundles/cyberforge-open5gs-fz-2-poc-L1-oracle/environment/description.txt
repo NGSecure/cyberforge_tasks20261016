@@ -1,0 +1,1 @@
+In Open5GS, a crafted message triggers a segmentation violation due to a post-buffer operation (CWE-129) in ogs-tlv-msg.c.

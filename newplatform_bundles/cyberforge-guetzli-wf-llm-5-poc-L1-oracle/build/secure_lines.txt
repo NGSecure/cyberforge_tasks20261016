@@ -1,0 +1,1 @@
+VERIFY_INPUT(marker_len, 2, 65535, MARKER_LEN);

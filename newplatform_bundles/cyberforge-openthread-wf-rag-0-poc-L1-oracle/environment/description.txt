@@ -1,0 +1,1 @@
+An out-of-bounds read in the Match function of OpenThread's string utility leads to a heap-buffer-overflow.

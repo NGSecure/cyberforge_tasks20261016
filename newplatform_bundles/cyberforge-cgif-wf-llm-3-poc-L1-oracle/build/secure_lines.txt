@@ -1,0 +1,2 @@
+pGIF->curResult = CGIF_ERROR; // invalid LCT size
+if(pConfig->sizeLCT > 256) {

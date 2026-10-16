@@ -1,0 +1,1 @@
+A buffer overflow in simdjson's serialization header allows an out-of-bounds write during DOM serialization.

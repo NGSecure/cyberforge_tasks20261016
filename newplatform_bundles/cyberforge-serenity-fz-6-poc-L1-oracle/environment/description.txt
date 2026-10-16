@@ -1,0 +1,1 @@
+A heap-buffer-overflow vulnerability in SerenityOS's FuzzGzipRoundtrip gzip processing can lead to out-of-bounds memory access via malformed input.

@@ -1,0 +1,1 @@
+A stack-buffer-overflow in the ftrace format parser of Perfetto allows a malformed trace to overflow the stack.

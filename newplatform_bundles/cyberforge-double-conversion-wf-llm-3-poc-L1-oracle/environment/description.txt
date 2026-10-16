@@ -1,0 +1,1 @@
+In double-conversion's StringToIeee function, a crafted string can trigger a heap-buffer-overflow due to insufficient input validation.

@@ -1,0 +1,1 @@
+HarfBuzz contains an invalid pointer dereference in hb-object.hh, which may cause a crash via crafted input.

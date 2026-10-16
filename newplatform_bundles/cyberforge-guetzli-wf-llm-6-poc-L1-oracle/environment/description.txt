@@ -1,0 +1,1 @@
+A heap-buffer-overflow in ProcessDQT in jpeg_data_reader.cc can read out of bounds when parsing a crafted JPEG.

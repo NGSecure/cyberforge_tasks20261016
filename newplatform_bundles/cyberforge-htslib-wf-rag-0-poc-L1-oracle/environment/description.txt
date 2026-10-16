@@ -1,0 +1,1 @@
+A heap-buffer-overflow in cram_huffman_decode_free in htslib's CRAM codec can be exploited by a crafted CRAM file, causing an out-of-bounds read.

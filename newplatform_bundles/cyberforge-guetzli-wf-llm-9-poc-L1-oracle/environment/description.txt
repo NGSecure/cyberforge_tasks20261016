@@ -1,0 +1,1 @@
+Heap-buffer-overflow in ProcessCOM of jpeg_data_reader.cc reads out of bounds when parsing a crafted JPEG comment segment.

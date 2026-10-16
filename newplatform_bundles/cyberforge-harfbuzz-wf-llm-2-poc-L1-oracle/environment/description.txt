@@ -1,0 +1,1 @@
+Integer overflow in HarfBuzz's buffer enlargement in hb_buffer_t::enlarge leads to a heap-buffer-overflow.

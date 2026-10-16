@@ -1,0 +1,1 @@
+libsass contains a double-free vulnerability in src/sass_functions.cpp that can be triggered by crafted stylesheet input, leading to memory corruption or denial of service.

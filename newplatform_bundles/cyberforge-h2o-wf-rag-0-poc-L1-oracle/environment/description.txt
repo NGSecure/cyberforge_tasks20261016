@@ -1,0 +1,1 @@
+A stack-use-after-return vulnerability in h2o's HTTP/2 HPACK parser (hpack.c) in h2o_hpack_parse_request can lead to memory corruption.

@@ -1,0 +1,1 @@
+h2o can crash in HTTP/2 stream handling due to improper initialization in stream.c.

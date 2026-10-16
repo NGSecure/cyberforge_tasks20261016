@@ -1,0 +1,1 @@
+In OpenH264, a use-after-free in WelsDec::DestroyPicBuff in decoder.cpp can cause memory corruption during decoder cleanup.

@@ -1,0 +1,1 @@
+Assimp's PlyParser.cpp contains a CWE-193 off-by-one calculation in PLY parsing that can lead to incorrect buffer sizing and potential out-of-bounds memory access.

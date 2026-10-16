@@ -1,0 +1,1 @@
+a.counts.size() > i ? LoadU(di, &a.counts[i]) : Zero(di);

@@ -1,0 +1,1 @@
+In h3, a stack-based buffer overflow in src/h3lib/lib/vertex.c can be triggered by crafted input, causing memory corruption.

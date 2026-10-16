@@ -1,0 +1,1 @@
+Heap-buffer-overflow in ProcessSOF of jpeg_data_reader.cc reads 33 bytes past a heap buffer when parsing JPEG SOF data.

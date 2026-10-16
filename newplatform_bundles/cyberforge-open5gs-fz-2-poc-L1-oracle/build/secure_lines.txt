@@ -1,0 +1,1 @@
+for (i = 0, desc = parent_desc->child_descs[i]; desc != NULL;

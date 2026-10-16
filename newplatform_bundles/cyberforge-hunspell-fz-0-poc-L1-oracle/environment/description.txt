@@ -1,0 +1,1 @@
+In hunspell, src/hunspell/affixmgr.cxx contains an incorrect buffer size calculation (CWE-193) that can lead to heap-based buffer overflows when processing affix data.

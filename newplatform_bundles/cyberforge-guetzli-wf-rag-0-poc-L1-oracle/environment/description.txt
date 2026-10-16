@@ -1,0 +1,1 @@
+A heap-buffer-overflow in ReadJpeg in jpeg_data_reader.cc can be triggered while processing crafted JPEG data.

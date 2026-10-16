@@ -1,0 +1,1 @@
+Assimp's code/AssetLib/MD5/MD5Parser.cpp contains an off-by-one calculation error in MD5 parsing that can lead to out-of-bounds memory access when processing crafted input.

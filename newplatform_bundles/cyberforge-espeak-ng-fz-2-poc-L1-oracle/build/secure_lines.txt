@@ -1,0 +1,1 @@
+return text_decoder_decode_string(decoder, (const char *)input, -1, ESPEAKNG_ENCODING_UTF_8);

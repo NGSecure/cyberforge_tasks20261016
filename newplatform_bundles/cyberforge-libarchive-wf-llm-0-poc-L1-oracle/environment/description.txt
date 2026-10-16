@@ -1,0 +1,1 @@
+Improper validation of extra field data in libarchive's ZIP reader can cause a double-free when processing crafted archives.

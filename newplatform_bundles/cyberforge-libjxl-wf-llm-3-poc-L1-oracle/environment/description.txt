@@ -1,0 +1,1 @@
+A heap-buffer-overflow in DecodeImagePNM in libjxl's pnm.cc allows attackers to cause memory corruption via a crafted image.

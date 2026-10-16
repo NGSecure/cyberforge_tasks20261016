@@ -1,0 +1,1 @@
+An off-by-one calculation in src/schema_compile.c in libyang can produce incorrect buffer sizing during schema compilation, potentially causing out-of-bounds memory access.

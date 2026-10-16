@@ -1,0 +1,1 @@
+for (size_t i = 0; i < utf16_pattern_view.length_in_code_units();) {

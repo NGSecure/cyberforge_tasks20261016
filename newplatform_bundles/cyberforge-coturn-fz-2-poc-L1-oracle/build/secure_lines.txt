@@ -1,0 +1,1 @@
+strncpy((char *)pwd, (const char *)upwd, sizeof(password_t) - 1);

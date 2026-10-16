@@ -1,0 +1,1 @@
+A heap-buffer-overflow in fmt's base.h results from an off-by-one calculation in format handling, potentially leading to memory corruption.

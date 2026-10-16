@@ -1,0 +1,1 @@
+In Serenity's TGALoader, an unchecked error return value leads to a failed assertion during TGA image decoding.

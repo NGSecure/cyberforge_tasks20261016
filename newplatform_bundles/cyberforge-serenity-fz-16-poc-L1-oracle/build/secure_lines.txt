@@ -1,0 +1,1 @@
+if (checked_size.has_overflow() || checked_size.value() > chunk_data.size())

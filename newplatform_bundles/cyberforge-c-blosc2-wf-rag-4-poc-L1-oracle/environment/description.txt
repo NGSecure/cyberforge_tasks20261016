@@ -1,0 +1,1 @@
+In c-blosc2, the blosc_d function in blosc/blosc2.c performs an out-of-bounds heap buffer read during decompression, leading to a heap-buffer-overflow (CWE-122).

@@ -1,0 +1,3 @@
+maxout = maxbytes - ntbytes;   /* avoid buffer overrun */
+return 0;                  /* non-compressible block */
+if (ntbytes+maxout > maxbytes) {

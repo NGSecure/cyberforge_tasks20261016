@@ -1,0 +1,1 @@
+case SIDENT:  strncpy(Buffer, StringPtr(it8->id), max);

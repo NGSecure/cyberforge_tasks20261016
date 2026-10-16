@@ -1,0 +1,15 @@
+/opt/src_snapshot.tar
+/out/binpolicy-fuzzer
+/out/binpolicy-fuzzer_seed_corpus.zip
+/out/checkpolicy-fuzzer
+/out/checkpolicy-fuzzer.dict
+/out/checkpolicy-fuzzer_seed_corpus.zip
+/out/llvm-symbolizer
+/out/secilc-fuzzer
+/out/secilc-fuzzer_seed_corpus.zip
+/out/selabel_file_compiled-fuzzer
+/out/selabel_file_compiled-fuzzer_seed_corpus.zip
+/out/selabel_file_text-fuzzer
+/out/selabel_file_text-fuzzer_seed_corpus.zip
+/workspace/run/unit_tests/parse_results.py
+/workspace/run/unit_tests/test.sh

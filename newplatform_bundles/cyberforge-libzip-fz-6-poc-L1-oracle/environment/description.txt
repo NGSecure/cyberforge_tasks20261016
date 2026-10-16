@@ -1,0 +1,1 @@
+libzip's zip_pkware.c contains a heap-buffer-overflow in PKWARE encryption processing, which could lead to memory corruption when handling a crafted archive.

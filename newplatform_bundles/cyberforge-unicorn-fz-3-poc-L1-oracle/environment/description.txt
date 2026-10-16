@@ -1,0 +1,1 @@
+Unicorn's i386 TCG target contains a post-buffer operation that may access memory outside the intended buffer.

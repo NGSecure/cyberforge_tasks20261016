@@ -1,0 +1,2 @@
+if (input_buffer->depth >= CJSON_NESTING_LIMIT)
+return false; /* to deeply nested */

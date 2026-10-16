@@ -1,0 +1,5 @@
+return status; /* we've been asked to reuse an index */
+srtp_stream_dealloc(*str_ptr, stream_template);
+if (status != srtp_err_status_replay_fail ||
+srtp_crypto_free(new_stream_template);
+srtp_stream_dealloc(stream, template);

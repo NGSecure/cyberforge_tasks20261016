@@ -1,0 +1,1 @@
+Heap-buffer-overflow in the mem_infile::read function of openjph's ojph_file.cpp allows attackers to cause a crash via crafted input, leading to an out-of-bounds read.

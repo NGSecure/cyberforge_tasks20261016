@@ -1,0 +1,1 @@
+A crafted font can trigger a buffer overflow in HarfBuzz's GSUB SubstLookup handling, causing a crash during font shaping.

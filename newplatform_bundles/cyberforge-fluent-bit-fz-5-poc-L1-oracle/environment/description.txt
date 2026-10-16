@@ -1,0 +1,1 @@
+fluent-bit record accessor parser may perform a post-buffer operation in flb_ra_parser.c.

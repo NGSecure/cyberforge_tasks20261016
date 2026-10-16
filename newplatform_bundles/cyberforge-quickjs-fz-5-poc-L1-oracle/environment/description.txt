@@ -1,0 +1,1 @@
+QuickJS contains a stack buffer overflow in the regular expression parser in libregexp.c, allowing memory corruption via crafted regex patterns.

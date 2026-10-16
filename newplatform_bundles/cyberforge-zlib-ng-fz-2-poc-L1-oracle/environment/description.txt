@@ -1,0 +1,1 @@
+Heap-based buffer overflow in zlib-ng's crc32_pclmulqdq_tpl.h leads to an out-of-bounds read due to an improper calculation error (CWE-193).

@@ -1,0 +1,1 @@
+In HarfBuzz, an invalid pointer in hb-object.hh causes a heap-buffer-overflow during object handling.

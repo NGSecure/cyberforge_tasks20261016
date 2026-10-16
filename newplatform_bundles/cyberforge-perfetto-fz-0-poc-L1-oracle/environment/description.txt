@@ -1,0 +1,1 @@
+A post-buffer operation in perfetto's format_parser.cc (CWE-130) can cause out-of-bounds memory writes when parsing malformed ftrace format strings, leading to memory corruption.

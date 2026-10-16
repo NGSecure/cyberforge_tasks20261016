@@ -1,0 +1,1 @@
+Serenity's ISOBMFF Reader performs a post-buffer operation in JPEG 2000 loading, allowing out-of-bounds access.

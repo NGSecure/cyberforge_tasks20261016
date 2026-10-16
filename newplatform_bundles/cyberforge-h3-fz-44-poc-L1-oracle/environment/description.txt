@@ -1,0 +1,1 @@
+A heap-buffer-overflow in h3's fuzzerResolutions.c allows remote attackers to cause an out-of-bounds read via crafted input.

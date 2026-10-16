@@ -1,0 +1,13 @@
+/opt/src_snapshot.tar
+/out/cgif_file_fuzzer
+/out/cgif_file_fuzzer_seed_corpus.zip
+/out/cgif_fuzzer
+/out/cgif_fuzzer_seed_corpus.zip
+/out/cgif_rgb_fuzzer
+/out/cgif_rgb_fuzzer_seed_corpus.zip
+/out/llvm-symbolizer
+/work/include/cgif.h
+/work/lib/libcgif.a
+/work/lib/pkgconfig/cgif.pc
+/workspace/run/unit_tests/parse_results.py
+/workspace/run/unit_tests/test.sh

@@ -1,0 +1,1 @@
+A heap-buffer-overflow in brotli's decoder (c/dec/decode.c) in BrotliCopyPreloadedSymbolsToU8 allows a crafted bitstream to cause an out-of-bounds read.

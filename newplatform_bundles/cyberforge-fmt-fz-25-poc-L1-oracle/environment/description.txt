@@ -1,0 +1,1 @@
+fmt's format.h is vulnerable to a heap-buffer-overflow caused by a post-buffer operation while formatting strings.

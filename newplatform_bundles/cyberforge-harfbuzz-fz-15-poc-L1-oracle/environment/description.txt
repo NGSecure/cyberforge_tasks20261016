@@ -1,0 +1,1 @@
+harfbuzz: a post-buffer operation in src/hb-array.hh can trigger out-of-bounds access in hb-array code, leading to potential memory corruption or unintended reads/writes of adjacent memory.

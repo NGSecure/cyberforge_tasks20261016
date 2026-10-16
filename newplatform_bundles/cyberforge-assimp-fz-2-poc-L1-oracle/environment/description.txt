@@ -1,0 +1,1 @@
+Assimp PlyParser.cpp contains an off-by-one calculation error that may result in a buffer write past allocated memory when parsing PLY elements.

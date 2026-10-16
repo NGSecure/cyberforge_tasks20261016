@@ -1,0 +1,1 @@
+ret.base = pool != NULL ? h2o_mem_alloc_pool(pool, char, ret.len + 2) : h2o_mem_alloc(ret.len + 2);

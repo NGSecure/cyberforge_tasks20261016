@@ -1,0 +1,1 @@
+A buffer over-read in cellsToMultiPoly.c in H3 can cause a segmentation violation when processing crafted cell input.

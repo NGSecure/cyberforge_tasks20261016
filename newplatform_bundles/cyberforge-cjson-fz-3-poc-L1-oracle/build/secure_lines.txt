@@ -1,0 +1,2 @@
+output = ensure(output_buffer, output_length + sizeof("\"\""));
+output = ensure(output_buffer, sizeof("\"\""));

@@ -1,0 +1,1 @@
+A segmentation violation in AC3DImporter::ConvertObjectSection in assimp's ACLoader.cpp allows remote attackers to cause a denial of service via a crafted AC3D file.

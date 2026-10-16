@@ -1,0 +1,1 @@
+Null pointer dereference in lcms src/cmsio1.c during ICC matrix parsing causes a segmentation violation that can crash the parser (parser_state_misuse).

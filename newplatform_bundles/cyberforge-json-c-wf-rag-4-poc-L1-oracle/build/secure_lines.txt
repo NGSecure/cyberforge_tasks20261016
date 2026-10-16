@@ -1,0 +1,1 @@
+(((tok)->char_offset == len)                                         \

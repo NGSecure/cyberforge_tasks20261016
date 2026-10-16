@@ -1,0 +1,2 @@
+if (pnm_remaining_size < required_pnm_size) {
+return JXL_FAILURE("PNM file too small");

@@ -1,0 +1,1 @@
+A heap use-after-free in Locale::canonicalize in locid.cpp can cause memory corruption when canonicalizing a crafted locale.

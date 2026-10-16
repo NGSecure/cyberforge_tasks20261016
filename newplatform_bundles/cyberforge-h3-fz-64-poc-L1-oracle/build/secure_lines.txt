@@ -1,0 +1,2 @@
+_faceIjkPentToCellBoundary(&fijk, res, vertexNum, 1, &gb);
+_faceIjkToCellBoundary(&fijk, res, vertexNum, 1, &gb);

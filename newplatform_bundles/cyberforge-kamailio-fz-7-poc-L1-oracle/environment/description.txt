@@ -1,0 +1,1 @@
+A post-buffer operation in Kamailio's sdp_helpr_funcs.c can be triggered by a crafted SIP message.

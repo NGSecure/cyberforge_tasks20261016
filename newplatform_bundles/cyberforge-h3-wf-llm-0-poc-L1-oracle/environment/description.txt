@@ -1,0 +1,1 @@
+A double-free vulnerability in h3's polygonToCells function can cause a crash via memory corruption.

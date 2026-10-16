@@ -1,0 +1,1 @@
+A memory leak in sc_pkcs15_decode_pukdf_entry in pkcs15-pubkey.c can cause a denial of service via crafted input.

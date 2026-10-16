@@ -1,0 +1,1 @@
+A heap-buffer-overflow in espeak-ng's SSML parser (ssml.c) can occur when processing crafted SSML input, potentially leading to memory corruption.

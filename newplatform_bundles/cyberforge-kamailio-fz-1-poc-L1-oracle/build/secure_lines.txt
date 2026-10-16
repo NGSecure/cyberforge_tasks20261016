@@ -1,0 +1,1 @@
+for(tmp = p; tmp < end; tmp++) {

@@ -1,0 +1,1 @@
+A heap-buffer-overflow in fmt's format.h can be triggered by crafted input, leading to memory corruption.

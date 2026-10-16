@@ -1,0 +1,1 @@
+while (i < x.length() && !at_end() && to_ascii_lowercase(x[i]) == to_ascii_lowercase(m_buffer[m_position])) {

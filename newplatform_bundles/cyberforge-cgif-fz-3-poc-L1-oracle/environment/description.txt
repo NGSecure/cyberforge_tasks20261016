@@ -1,0 +1,1 @@
+Heap-buffer-overflow in cgif_rgb.c: an unchecked index when accessing the parser's color hash/table can cause an out-of-bounds heap write.

@@ -1,0 +1,1 @@
+unsigned char number_buffer[26] = {0}; /* temporary buffer to print the number into */

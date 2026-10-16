@@ -1,0 +1,1 @@
+In serenity's LibGfx OpenType parser (Font.cpp), a removed length restriction in FuzzTTF-crafted font data can trigger a post-buffer write (CWE-130) when parsing binary font tables.

@@ -1,0 +1,1 @@
+if (HB_DIRECTION_IS_BACKWARD (c->buffer->props.direction))

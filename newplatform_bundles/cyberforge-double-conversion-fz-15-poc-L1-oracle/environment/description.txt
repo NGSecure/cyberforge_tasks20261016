@@ -1,0 +1,1 @@
+A removed bounds check in double-conversion's strtod.cc can allow an out-of-bounds read while parsing crafted binary input.

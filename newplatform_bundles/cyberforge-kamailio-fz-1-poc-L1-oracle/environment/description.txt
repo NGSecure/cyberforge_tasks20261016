@@ -1,0 +1,1 @@
+Heap buffer overflow in kamailio's src/core/parser/parse_via.c due to an off-by-one iteration while parsing VIA parameters, allowing out-of-bounds heap writes.

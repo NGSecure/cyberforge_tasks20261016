@@ -1,0 +1,1 @@
+VERIFY_INPUT(num_components, 1, kMaxComponents, NUMCOMP);

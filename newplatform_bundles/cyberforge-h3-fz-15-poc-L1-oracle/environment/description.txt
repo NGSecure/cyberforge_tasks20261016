@@ -1,0 +1,1 @@
+Invalid pointer handling in h3's src/h3lib/lib/cellsToMultiPoly.c can cause a null pointer dereference during cells-to-multipolygon conversion.

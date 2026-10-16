@@ -1,0 +1,1 @@
+while(indexUsed[h] != 0 && memcmp(rgb, &hashTable[3 * h], 3) != 0) { // until free spot is found

@@ -1,0 +1,1 @@
+A null pointer dereference in njs date parsing can cause a segmentation violation when processing crafted invalid date input.

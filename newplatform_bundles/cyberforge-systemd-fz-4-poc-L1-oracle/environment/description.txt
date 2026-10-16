@@ -1,0 +1,1 @@
+A heap-buffer-overflow in systemd's hashmap implementation (src/basic/hashmap.c) can be triggered by a crafted unit file, potentially causing memory corruption.

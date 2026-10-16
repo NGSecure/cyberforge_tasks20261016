@@ -1,0 +1,1 @@
+A heap-buffer-overflow in njs_error_to_string2 in njs_error.c allows an out-of-bounds write during error string formatting.

@@ -1,0 +1,3 @@
+else if (!common->local_quit_available && common->in_positive_assertion)
+add_jump(compiler, &common->positive_assertion_quit, JUMP(SLJIT_JUMP));
+if (common->then_trap != NULL)

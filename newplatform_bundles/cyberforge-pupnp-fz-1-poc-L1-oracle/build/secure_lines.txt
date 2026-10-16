@@ -1,0 +1,1 @@
+node->prefix = (char *)malloc((size_t)nPrefix + (size_t)1);

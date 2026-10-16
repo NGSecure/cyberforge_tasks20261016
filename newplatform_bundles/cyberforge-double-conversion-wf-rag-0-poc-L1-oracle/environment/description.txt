@@ -1,0 +1,1 @@
+In double-conversion, a heap-buffer-overflow in ConsumeSubStringImpl in string-to-double.cc causes an out-of-bounds read when parsing a specially crafted input.

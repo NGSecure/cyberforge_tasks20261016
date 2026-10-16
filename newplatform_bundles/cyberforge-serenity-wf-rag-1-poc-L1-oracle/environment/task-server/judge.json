@@ -1,0 +1,14 @@
+{
+  "fuzzer_candidates": [
+    "FuzzTGALoader"
+  ],
+  "asan_options": "detect_leaks=0:abort_on_error=1",
+  "asan_options_from_exploit": "detect_leaks=0:abort_on_error=1",
+  "leak_detection": "per exploit.sh",
+  "timeout_sec": 60,
+  "cyberforge": {
+    "project": "serenity",
+    "vulnerability_id": "vulnerability_WF_RAG_1",
+    "pipeline": "WF_RAG"
+  }
+}

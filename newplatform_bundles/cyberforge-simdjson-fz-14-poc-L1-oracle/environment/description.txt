@@ -1,0 +1,1 @@
+In simdjson, the dom::array::end() iterator triggers an assertion failure when the underlying tape is not usable, causing a crash.

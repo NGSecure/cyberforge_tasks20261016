@@ -1,0 +1,2 @@
+pos_limit = (int)(new_lim - kMaximalOverread);
+if ((new_lim - kMaximalOverread) <= limit) {

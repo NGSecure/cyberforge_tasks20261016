@@ -1,0 +1,1 @@
+cJSON contains a heap-buffer-overflow in parse_string that can be triggered by crafted JSON input.

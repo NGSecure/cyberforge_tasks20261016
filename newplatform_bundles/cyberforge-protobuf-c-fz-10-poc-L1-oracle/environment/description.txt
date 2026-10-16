@@ -1,0 +1,1 @@
+A heap-buffer-overflow in protobuf-c.c during message unpacking can be triggered by a malformed protobuf payload.

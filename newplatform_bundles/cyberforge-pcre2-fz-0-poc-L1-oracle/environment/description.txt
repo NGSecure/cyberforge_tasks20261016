@@ -1,0 +1,1 @@
+An invalid pointer dereference in pcre2's src/pcre2_compile.c (CWE-476) can lead to crashes during regular expression compilation.

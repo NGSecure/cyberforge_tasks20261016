@@ -1,0 +1,1 @@
+In include/fmt/base.h, a parser_state_misuse in operator() can weaken a validation check so malformed format specifiers propagate into the parser, risking an invalid pointer dereference (CWE-476).

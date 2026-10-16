@@ -1,0 +1,1 @@
+strcpy(current_voice_id, new_voice_id);

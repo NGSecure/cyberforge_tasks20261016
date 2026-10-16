@@ -1,0 +1,1 @@
+for (; i != p_pcOut->alProperties.end(); ++i, ++a) {

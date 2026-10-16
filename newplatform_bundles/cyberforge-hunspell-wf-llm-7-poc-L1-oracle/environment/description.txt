@@ -1,0 +1,1 @@
+Hunspell's AffixMgr::parse_file in affixmgr.cxx leaks memory when processing a crafted affix dictionary, enabling denial of service via resource exhaustion.

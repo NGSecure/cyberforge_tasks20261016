@@ -1,0 +1,1 @@
+A heap-buffer-overflow in the h3 library's algos.c leads to an out-of-bounds read.

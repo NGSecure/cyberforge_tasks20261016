@@ -1,0 +1,1 @@
+if (PtrRed == NULL || PtrGreen == NULL || PtrBlue == NULL)

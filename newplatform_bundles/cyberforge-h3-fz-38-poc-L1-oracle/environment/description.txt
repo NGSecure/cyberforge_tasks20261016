@@ -1,0 +1,1 @@
+In h3, an out-of-bounds read in baseCells.c causes an assertion failure in h3NeighborRotations.

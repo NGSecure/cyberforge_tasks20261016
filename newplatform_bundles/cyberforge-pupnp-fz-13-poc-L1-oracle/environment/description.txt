@@ -1,0 +1,1 @@
+A heap-buffer-overflow in ixmlparser.c in pupnp allows remote attackers to cause a denial of service via crafted XML.

@@ -1,0 +1,1 @@
+lcms in src/cmscgats.c contains a heap-buffer-overflow in cmsIT8LoadFromFile's parser where a removed copy size constraint allows out-of-bounds heap writes during CGATS parsing.

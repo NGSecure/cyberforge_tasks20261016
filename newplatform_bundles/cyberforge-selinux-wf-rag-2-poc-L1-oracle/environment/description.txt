@@ -1,0 +1,1 @@
+A use-after-free in cil_destroy_classpermission within libsepol's CIL AST builder can be triggered by a crafted policy, leading to memory corruption.

@@ -1,0 +1,1 @@
+A heap-buffer-overflow in Exiv2's basicio.cpp allows remote attackers to cause a denial of service via a crafted PNG file.

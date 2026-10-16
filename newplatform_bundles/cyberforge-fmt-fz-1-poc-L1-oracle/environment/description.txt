@@ -1,0 +1,1 @@
+fmt (include/fmt/format.h) contains a stack-buffer-overflow in its parser where a removed copy-size constraint allows post-buffer writes during binary-format parsing.

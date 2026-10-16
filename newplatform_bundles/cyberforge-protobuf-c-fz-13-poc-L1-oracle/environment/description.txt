@@ -1,0 +1,1 @@
+protobuf-c.c contains a heap-buffer-overflow vulnerability that can be triggered by crafted input, leading to potential memory corruption.

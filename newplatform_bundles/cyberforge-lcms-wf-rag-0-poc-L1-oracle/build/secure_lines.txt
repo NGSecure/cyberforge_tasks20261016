@@ -1,0 +1,2 @@
+if (v ->List) _cmsFree(v ->ContextID, v ->List);
+_cmsFree(v ->ContextID, v);

@@ -1,0 +1,1 @@
+A heap-buffer-overflow in blosc_c in blosc/blosc.c allows a crafted compressed input to cause a write beyond the heap buffer, potentially crashing the process.

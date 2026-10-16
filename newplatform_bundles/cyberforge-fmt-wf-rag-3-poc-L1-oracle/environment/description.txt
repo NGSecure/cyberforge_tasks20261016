@@ -1,0 +1,1 @@
+A stack-buffer-overflow in fmt::v12::detail::write_padded in include/fmt/format.h allows writing past the end of a stack buffer during base-2 formatting.

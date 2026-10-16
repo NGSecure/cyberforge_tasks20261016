@@ -1,0 +1,2 @@
+color_table.unchecked_append(Color(cmap_chunk[i * 3], cmap_chunk[(i * 3) + 1], cmap_chunk[(i * 3) + 2]));
+size_t const size = cmap_chunk.size() / 3;

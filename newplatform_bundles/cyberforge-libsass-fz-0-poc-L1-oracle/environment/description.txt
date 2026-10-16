@@ -1,0 +1,1 @@
+libsass in src/sass_functions.cpp contains a post-buffer access (CWE-125) that can lead to out-of-bounds memory reads or writes when processing crafted inputs.

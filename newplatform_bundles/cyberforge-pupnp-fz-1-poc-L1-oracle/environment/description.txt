@@ -1,0 +1,1 @@
+A post-buffer-write flaw in pupnp's ixml/src/ixmlparser.c (CWE-120) can trigger a buffer overflow when parsing malicious XML input.

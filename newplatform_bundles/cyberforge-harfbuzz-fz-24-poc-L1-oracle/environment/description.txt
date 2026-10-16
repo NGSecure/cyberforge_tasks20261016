@@ -1,0 +1,1 @@
+HarfBuzz's GSUB substitution lookup serialization (SubstLookup.hh) performs a post-buffer operation that can cause an out-of-bounds write when processing crafted fonts.

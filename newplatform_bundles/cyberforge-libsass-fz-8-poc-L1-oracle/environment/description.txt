@@ -1,0 +1,1 @@
+A heap-buffer-overflow write in libsass's sass_functions.cpp can cause memory corruption and potentially lead to a crash or arbitrary code execution.

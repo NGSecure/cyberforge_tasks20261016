@@ -1,0 +1,1 @@
+A heap-buffer-overflow in Serenity's ILBM image loader allows out-of-bounds read via a crafted image file.

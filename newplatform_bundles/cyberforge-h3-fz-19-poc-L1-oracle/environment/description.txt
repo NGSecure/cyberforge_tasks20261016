@@ -1,0 +1,1 @@
+In h3, cellsToMultiPoly.c mishandles index validation, leading to a stack-buffer-overflow via crafted polygon input.

@@ -1,0 +1,1 @@
+A heap-buffer-overflow in fmt's parse_arg_id in include/fmt/base.h allows crafted format strings to trigger an out-of-bounds read.

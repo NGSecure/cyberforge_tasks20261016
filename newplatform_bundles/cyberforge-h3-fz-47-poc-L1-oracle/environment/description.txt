@@ -1,0 +1,1 @@
+A heap-buffer-overflow in H3's cellsToMultiPoly.c can be triggered via fuzzerCellsToLinkedMultiPolygon, due to improper array index validation (CWE-129).

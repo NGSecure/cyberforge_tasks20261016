@@ -1,0 +1,1 @@
+fmt's include/fmt/chrono.h contains an off-by-one calculation in time formatting length computation that can lead to incorrect buffer sizing and potential memory corruption.

@@ -1,0 +1,1 @@
+In pupnp, an unhandled error in ixml parser's Parser_processSTag leads to a segmentation violation while parsing a crafted start tag.

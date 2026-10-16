@@ -1,0 +1,1 @@
+A null pointer dereference in fluent-bit's flb_parser.c triggers a segmentation violation during parsing.

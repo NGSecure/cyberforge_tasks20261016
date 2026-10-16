@@ -1,0 +1,1 @@
+A memory leak in hunspell's AffixMgr::parse_file can be triggered by a crafted affix file, leading to denial of service.

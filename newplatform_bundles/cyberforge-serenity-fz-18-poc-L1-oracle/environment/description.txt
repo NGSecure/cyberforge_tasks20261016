@@ -1,0 +1,1 @@
+A post-buffer write vulnerability in LibJS's RegExpObject.cpp (shape subsystem) can cause out-of-bounds memory modification by removing length restriction when handling model-based RegExp assets.

@@ -1,0 +1,1 @@
+Heap-buffer-overflow in blosc2_schunk_append_buffer in schunk.c could be triggered by a crafted compressed frame, causing an abort.

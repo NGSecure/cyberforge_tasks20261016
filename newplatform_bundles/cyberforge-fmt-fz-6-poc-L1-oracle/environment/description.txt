@@ -1,0 +1,1 @@
+A heap-buffer-overflow in fmt's chrono duration formatting (include/fmt/chrono.h) can be triggered by crafted input, causing out-of-bounds memory access.

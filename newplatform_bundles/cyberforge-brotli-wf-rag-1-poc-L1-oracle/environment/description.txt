@@ -1,0 +1,1 @@
+Brotli's decoder contains a use-after-free in BrotliDecoderDestroyInstance (decode.c), allowing a crafted input to trigger memory corruption.

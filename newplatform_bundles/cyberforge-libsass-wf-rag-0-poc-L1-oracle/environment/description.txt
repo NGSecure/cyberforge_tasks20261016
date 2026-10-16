@@ -1,0 +1,1 @@
+libsass's sass_delete_import in src/sass_functions.cpp mishandles an error path, causing a use-after-free.

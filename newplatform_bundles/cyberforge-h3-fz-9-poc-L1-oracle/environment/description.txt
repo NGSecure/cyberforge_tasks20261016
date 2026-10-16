@@ -1,0 +1,1 @@
+Invalid pointer dereference in H3's algos.c leads to a segmentation fault during linked multi-polygon conversion.

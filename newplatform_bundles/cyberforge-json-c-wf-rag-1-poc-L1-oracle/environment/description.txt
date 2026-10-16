@@ -1,0 +1,1 @@
+A stack-buffer-overflow in json_pointer_get_internal in json_pointer.c occurs due to an unbounded strcpy write, allowing memory corruption via a crafted JSON pointer.

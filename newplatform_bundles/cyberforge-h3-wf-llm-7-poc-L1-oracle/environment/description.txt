@@ -1,0 +1,1 @@
+A double-free vulnerability in h3's childPosToCell function allows memory corruption via a crafted cell-to-child position request.

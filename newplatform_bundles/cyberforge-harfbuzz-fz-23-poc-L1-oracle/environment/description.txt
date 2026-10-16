@@ -1,0 +1,1 @@
+A post-buffer operation overflow in HarfBuzz's GSUB substitution lookup serialization can be triggered via hb_serialize_context_t::add_link.

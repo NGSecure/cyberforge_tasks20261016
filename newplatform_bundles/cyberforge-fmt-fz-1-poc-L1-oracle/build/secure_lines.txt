@@ -1,0 +1,1 @@
+memcpy(out, digits2_i(value), 2);

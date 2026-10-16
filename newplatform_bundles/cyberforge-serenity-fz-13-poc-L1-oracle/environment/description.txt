@@ -1,0 +1,1 @@
+In SerenityOS, LibIMAP's quoted-printable parser reads past the end of its input buffer because it fails to check for end-of-input, leading to a crash.

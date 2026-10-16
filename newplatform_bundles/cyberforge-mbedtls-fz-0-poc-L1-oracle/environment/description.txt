@@ -1,0 +1,1 @@
+A null pointer dereference in mbedtls's elliptic curve operations (library/ecp.c) can cause a segmentation violation when processing malformed input.

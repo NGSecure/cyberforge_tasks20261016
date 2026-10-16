@@ -1,0 +1,1 @@
+A heap-buffer-overflow in guetzli/output_image.cc can occur when an integer calculation error processes malformed image data.

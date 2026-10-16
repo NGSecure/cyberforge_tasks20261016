@@ -1,0 +1,2 @@
+file_magwarn(ms, "cannot get string from `%s'",
+if (ms->flags & MAGIC_CHECK)

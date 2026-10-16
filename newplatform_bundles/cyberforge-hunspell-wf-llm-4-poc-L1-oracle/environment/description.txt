@@ -1,0 +1,1 @@
+A memory leak in Hunspell's affixmgr.cxx in the AffixMgr::parse_file function allows memory exhaustion via a crafted dictionary file.

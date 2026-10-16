@@ -1,0 +1,1 @@
+Heap-buffer-overflow in libjxl's decoder when processing a file too small for its signature in decode.cc.

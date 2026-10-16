@@ -1,0 +1,1 @@
+VERIFY_INPUT(quant_val, 1, 65535, QUANT_VAL);

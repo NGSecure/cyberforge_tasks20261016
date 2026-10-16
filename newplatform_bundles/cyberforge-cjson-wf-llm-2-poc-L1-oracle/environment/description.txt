@@ -1,0 +1,1 @@
+A stack overflow in cJSON.c's parse_array function, triggered by uncontrolled recursion (CWE-674), causes the parser to crash on crafted JSON input.

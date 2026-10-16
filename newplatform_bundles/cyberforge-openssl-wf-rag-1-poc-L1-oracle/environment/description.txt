@@ -1,0 +1,1 @@
+A heap-buffer-overflow in OpenSSL's ASN.1 parser (asn1_parse2 in crypto/asn1/asn1_parse.c) allows a crafted input to trigger an out-of-bounds read.

@@ -1,0 +1,1 @@
+A calculation error in Assimp's FBX converter can trigger a segmentation violation when processing a crafted FBX file.

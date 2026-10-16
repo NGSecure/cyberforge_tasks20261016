@@ -1,0 +1,1 @@
+A heap-buffer-overflow in pixCountPixels in src/pix3.c can cause an out-of-bounds read when processing a crafted image.

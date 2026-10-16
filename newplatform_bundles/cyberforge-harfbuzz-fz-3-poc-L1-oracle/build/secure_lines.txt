@@ -1,0 +1,1 @@
+Type *obj = (Type *) hb_calloc (1, sizeof (Type));

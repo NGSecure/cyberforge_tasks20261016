@@ -1,0 +1,2 @@
+init(uncanonicalized.data(), /*canonicalize=*/true);
+CharString uncanonicalized(getName(), status);

@@ -1,0 +1,1 @@
+Kamailio's parse_hname2.c in the parser_compile subsystem has an off-by-one iteration that can cause a heap buffer overflow when parsing header names, allowing memory corruption during SIP message parsing.

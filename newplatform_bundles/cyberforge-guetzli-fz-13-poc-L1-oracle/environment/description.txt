@@ -1,0 +1,1 @@
+Stack buffer overflow in jpeg_data.cc when parsing malformed JPEG input.

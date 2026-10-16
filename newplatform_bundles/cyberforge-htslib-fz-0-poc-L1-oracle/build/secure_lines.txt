@@ -1,0 +1,2 @@
+if (!(fp->state = fastq_state_init(fp->format.format
+== fastq_format ? '@' : '>')))

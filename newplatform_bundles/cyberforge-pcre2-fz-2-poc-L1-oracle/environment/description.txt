@@ -1,0 +1,1 @@
+An off-by-one calculation in pcre2_compile_class.c triggers a segmentation fault while compiling crafted character classes in PCRE2.

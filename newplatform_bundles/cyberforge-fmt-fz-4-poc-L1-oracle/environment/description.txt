@@ -1,0 +1,1 @@
+fmt: off-by-one in fmt::v12::detail::bigint::assign_pow10(int) within include/fmt/format.h can trigger a heap-buffer-overflow in the parser when formatting binary values.

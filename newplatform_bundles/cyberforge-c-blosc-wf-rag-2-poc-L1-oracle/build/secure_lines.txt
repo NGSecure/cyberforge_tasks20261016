@@ -1,0 +1,1 @@
+while ((ip < ip_bound) && (*ref++ == *ip++)) {}

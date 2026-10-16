@@ -1,0 +1,1 @@
+A heap-buffer-overflow in libsass's source.cpp allows an out-of-bounds read via a crafted stylesheet, potentially leading to a crash or memory disclosure.

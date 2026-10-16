@@ -1,0 +1,1 @@
+A post-buffer write operation in sam.c in htslib can lead to a segmentation violation.

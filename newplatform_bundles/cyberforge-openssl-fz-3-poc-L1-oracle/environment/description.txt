@@ -1,0 +1,1 @@
+An out-of-bounds access in OpenSSL's hashtable implementation (crypto/hashtable/hashtable.c) can be triggered by crafted input, causing a crash via a deadly signal.

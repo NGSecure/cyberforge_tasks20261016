@@ -1,0 +1,1 @@
+H3 contains an out-of-bounds read vulnerability in src/h3lib/lib/vertex.c, which could allow a crafted input to trigger undefined behavior.

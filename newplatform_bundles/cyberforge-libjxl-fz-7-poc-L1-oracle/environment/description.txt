@@ -1,0 +1,1 @@
+In libjxl, malformed color description input can trigger an out-of-bounds read in color_description.cc, causing a crash.

@@ -1,0 +1,1 @@
+espeak-ng contains a stack-buffer-overflow vulnerability in ssml.c that can be triggered by specially crafted SSML input, potentially leading to memory corruption or code execution.

@@ -1,0 +1,1 @@
+Heap-buffer-overflow in libjxl's cluster encoder (enc_cluster.cc) allows out-of-bounds read via crafted image data.

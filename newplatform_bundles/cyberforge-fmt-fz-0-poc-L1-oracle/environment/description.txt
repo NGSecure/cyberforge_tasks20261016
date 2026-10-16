@@ -1,0 +1,1 @@
+A heap-buffer-overflow in fmt's base.h allows attackers to trigger memory corruption via crafted input.

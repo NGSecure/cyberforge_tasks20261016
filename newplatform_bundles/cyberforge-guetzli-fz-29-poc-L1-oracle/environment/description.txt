@@ -1,0 +1,1 @@
+A heap buffer overflow in guetzli's output_image.cc can occur due to an unsafe calculation while processing image data.

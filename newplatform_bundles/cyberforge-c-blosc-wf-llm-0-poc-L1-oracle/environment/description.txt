@@ -1,0 +1,1 @@
+A heap-buffer-overflow in blosc_c in c-blosc's blosc.c allows an attacker to cause a write of 16 bytes out of bounds via a crafted compression input.

@@ -1,0 +1,1 @@
+Guetzli output_image.cc performs a post-buffer operation on malformed image data, risking out-of-bounds access.

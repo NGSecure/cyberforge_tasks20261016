@@ -1,0 +1,1 @@
+An off-by-one calculation error in pcre2_jit_compile.c causes a stack-buffer-overflow when processing crafted regular expressions.

@@ -1,0 +1,1 @@
+A crafted input triggers an invalid pointer dereference in the FLAC stream decoder, causing a crash.

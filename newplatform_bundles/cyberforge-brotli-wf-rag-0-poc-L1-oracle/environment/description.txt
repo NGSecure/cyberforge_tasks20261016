@@ -1,0 +1,1 @@
+In Brotli's decoder, a heap-buffer-overflow in BrotliDecoderDecompressStream in c/dec/decode.c can lead to memory corruption during decompression.

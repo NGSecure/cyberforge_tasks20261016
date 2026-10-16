@@ -1,0 +1,1 @@
+A heap buffer overflow in guetzli's processor.cc can occur while processing malformed input.

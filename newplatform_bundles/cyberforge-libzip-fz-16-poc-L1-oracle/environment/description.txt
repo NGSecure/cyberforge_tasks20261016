@@ -1,0 +1,1 @@
+A heap-buffer-overflow in libzip's zip_buffer.c results from a post-buffer operation (CWE-130), allowing out-of-bounds access when processing crafted zip archives.

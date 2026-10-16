@@ -1,0 +1,2 @@
+ogs_error("ogs_pkbuf_pull() failed [size:%d]", (int)size);
+if (ogs_pkbuf_pull(pkbuf, size) == NULL) {

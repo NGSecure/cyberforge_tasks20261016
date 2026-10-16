@@ -1,0 +1,1 @@
+A crafted affix dictionary in Hunspell can trigger an invalid free in HashMgr::parse_aliasf, causing an attempted free on a non-malloc'd address during destruction.

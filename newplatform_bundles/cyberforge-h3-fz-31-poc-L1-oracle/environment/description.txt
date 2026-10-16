@@ -1,0 +1,1 @@
+A heap-buffer-overflow in polygon.c causes an out-of-bounds read during polygon-to-cells conversion in H3.

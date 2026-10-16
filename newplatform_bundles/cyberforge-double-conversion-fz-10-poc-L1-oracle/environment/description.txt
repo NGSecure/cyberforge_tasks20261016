@@ -1,0 +1,1 @@
+An assertion failure in double-conversion's DiyFp::Normalize() in diy-fp.h reveals an out-of-bounds read (CWE-125) when parsing crafted string input.

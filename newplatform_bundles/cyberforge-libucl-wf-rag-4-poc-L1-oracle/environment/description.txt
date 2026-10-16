@@ -1,0 +1,1 @@
+In libucl, a heap-buffer-overflow occurs in ucl_set_err in ucl_parser.c, which could allow a crafted input to crash the parser or cause memory corruption.

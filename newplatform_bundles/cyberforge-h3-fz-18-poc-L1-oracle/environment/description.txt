@@ -1,0 +1,1 @@
+In h3, cellsToMultiPoly.c has a heap-buffer-overflow that can be triggered by crafted input, leading to a crash.

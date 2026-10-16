@@ -1,0 +1,1 @@
+An off-by-one calculation error in ICU's uloc_tag.cpp causes a heap-buffer-overflow when parsing crafted locale tags.

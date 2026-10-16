@@ -1,0 +1,1 @@
+In HarfBuzz, hb_draw_funcs_create in hb-draw.cc has an integer overflow in calloc size computation, causing a calloc parameter overflow and leading to memory corruption.

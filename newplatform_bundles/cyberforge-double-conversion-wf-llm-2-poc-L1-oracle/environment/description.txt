@@ -1,0 +1,1 @@
+A heap-buffer-overflow in double-conversion's IsHexFloatString function allows out-of-bounds read when parsing crafted hex float strings.

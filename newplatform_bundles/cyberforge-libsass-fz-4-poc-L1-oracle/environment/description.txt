@@ -1,0 +1,1 @@
+libsass src/sass.cpp contains a post buffer operation (CWE-120) vulnerability that can cause memory corruption and potential code execution when parsing crafted input.

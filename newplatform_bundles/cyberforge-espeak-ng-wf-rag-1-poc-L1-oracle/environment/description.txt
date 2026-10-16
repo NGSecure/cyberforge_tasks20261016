@@ -1,0 +1,1 @@
+A heap-use-after-free in espeak-ng's LookupAccentedLetter function in numbers.c can be triggered by crafted SSML input, causing a crash.

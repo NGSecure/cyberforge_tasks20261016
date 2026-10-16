@@ -1,0 +1,1 @@
+An invalid pointer in the JIT compiler of PCRE2 (src/pcre2_jit_compile.c) triggers a segmentation violation while processing a crafted regular expression.

@@ -1,0 +1,1 @@
+A null pointer dereference in sarrayDestroy causes a segmentation violation when processing barcode data in leptonica.

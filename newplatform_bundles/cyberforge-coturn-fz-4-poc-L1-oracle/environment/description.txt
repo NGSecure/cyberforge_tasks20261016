@@ -1,0 +1,1 @@
+A heap-buffer-overflow in coturn's STUN message parser (src/client/ns_turn_msg.c) allows remote attackers to read out of bounds via a crafted STUN packet.

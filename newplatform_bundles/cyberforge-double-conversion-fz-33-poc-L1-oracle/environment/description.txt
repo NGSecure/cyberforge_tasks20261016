@@ -1,0 +1,1 @@
+A post-buffer out-of-bounds read in double-conversion's string-to-double.cc via ConsumeSubStringImpl can cause a crash when parsing crafted input.

@@ -1,0 +1,1 @@
+QuickJS has a post-buffer out-of-bounds write in re_parse_nested_class (libregexp.c) that can be triggered by a crafted regular expression.

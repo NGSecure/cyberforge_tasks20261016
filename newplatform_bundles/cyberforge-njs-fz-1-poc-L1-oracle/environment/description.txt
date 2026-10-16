@@ -1,0 +1,1 @@
+A crafted script causes an out-of-bounds read in the buffer handling code of njs (src/njs_buffer.c), resulting in a segmentation violation.

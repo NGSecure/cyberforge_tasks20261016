@@ -1,0 +1,1 @@
+A post-buffer operation in jq's exec_stack.h causes a segmentation violation when processing crafted input.

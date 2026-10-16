@@ -1,0 +1,1 @@
+Hunspell's HashMgr::parse_aliasm performs an out-of-bounds read, causing an AddressSanitizer container-overflow.

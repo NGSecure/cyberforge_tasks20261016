@@ -1,0 +1,1 @@
+A heap-buffer-overflow read in ProcessAPP of jpeg_data_reader.cc can occur while parsing JPEG APP data.

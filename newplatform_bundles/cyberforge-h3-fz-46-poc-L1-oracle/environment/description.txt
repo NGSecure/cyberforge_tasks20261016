@@ -1,0 +1,1 @@
+A calculation error in h3Index.c in the H3 library leads to a heap-buffer-overflow, allowing a crafted H3 index to cause a crash or memory corruption.

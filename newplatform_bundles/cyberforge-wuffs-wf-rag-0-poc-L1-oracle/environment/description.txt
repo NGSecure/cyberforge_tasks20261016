@@ -1,0 +1,1 @@
+A double-free vulnerability in wuffs_gif__decoder__copy_to_image_buffer in wuffs-unsupported-snapshot.c allows attackers to cause memory corruption via crafted GIF data.

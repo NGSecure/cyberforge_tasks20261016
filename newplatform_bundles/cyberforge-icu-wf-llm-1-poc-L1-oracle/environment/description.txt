@@ -1,0 +1,1 @@
+A stack-buffer-overflow in ICU's CheckedArrayByteSink::Append in bytestream.cpp can cause an out-of-bounds write when processing crafted locale data.

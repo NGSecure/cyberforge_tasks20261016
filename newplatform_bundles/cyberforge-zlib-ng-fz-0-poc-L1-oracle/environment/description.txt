@@ -1,0 +1,1 @@
+zlib-ng may dereference an invalid pointer in deflate_p.h, causing a segmentation violation.

@@ -1,0 +1,1 @@
+A crafted pixel swizzling input in wuffs-v0.3.c causes an out-of-bounds read in wuffs_base__pixel_swizzler__bgr__bgra_premul__src, leading to a segmentation violation.

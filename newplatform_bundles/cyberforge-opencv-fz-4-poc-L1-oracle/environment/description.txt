@@ -1,0 +1,1 @@
+A post-buffer operation in OpenCV's 3rdparty/protobuf/src/google/protobuf/parse_context.h can lead to an out-of-bounds write (CWE-120), potentially causing memory corruption or crash.

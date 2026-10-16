@@ -1,0 +1,1 @@
+The ixml_membuf_insert function in ixmlmembuf.c in pupnp mishandles buffer insertion, leading to a heap buffer overflow and segmentation violation via crafted XML input.

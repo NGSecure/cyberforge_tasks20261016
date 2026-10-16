@@ -1,0 +1,1 @@
+A heap-buffer-overflow in blosc/fastcopy.c results from an incorrect offset calculation, allowing memory corruption during fast copy operations.

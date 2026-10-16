@@ -1,0 +1,10 @@
+/opt/src_snapshot.tar
+/out/llvm-symbolizer
+/out/xpath
+/out/xpath.dict
+/out/xpath_seed_corpus.zip
+/out/xslt
+/out/xslt.dict
+/out/xslt_seed_corpus.zip
+/workspace/run/unit_tests/parse_results.py
+/workspace/run/unit_tests/test.sh

@@ -1,0 +1,1 @@
+Unchecked index lookup in BlueZ sdp_lib.h (sdp_list_find) allows a malformed SDP record to trigger a segmentation violation via a post-buffer out-of-range array access in the parser.

@@ -1,0 +1,1 @@
+In H3, latLng.c contains an out-of-bounds read (CWE-125) when processing crafted latitude/longitude values, allowing attackers to trigger undefined behavior.

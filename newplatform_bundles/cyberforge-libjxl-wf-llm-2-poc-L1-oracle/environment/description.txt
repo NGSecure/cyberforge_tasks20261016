@@ -1,0 +1,1 @@
+A heap-buffer-overflow in libjxl's PNM image decoder's DecodeImagePNM function (pnm.cc) allows an oversized memcpy read.

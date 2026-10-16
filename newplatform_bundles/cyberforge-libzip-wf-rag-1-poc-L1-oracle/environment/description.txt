@@ -1,0 +1,1 @@
+In libzip's _zip_dirent_write function in zip_dirent.c, a use-after-free occurs when writing directory entries, leading to memory corruption.

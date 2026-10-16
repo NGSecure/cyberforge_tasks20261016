@@ -1,0 +1,1 @@
+Perfetto's trace processor has a heap-buffer-overflow in android_log_event.cc caused by improper length handling when parsing Android log events, potentially leading to memory corruption.

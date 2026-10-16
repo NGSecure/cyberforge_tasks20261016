@@ -1,0 +1,1 @@
+A heap-buffer-overflow in espeak-ng's encoding.c reads past the end of a buffer during a post-buffer operation, potentially causing a crash.

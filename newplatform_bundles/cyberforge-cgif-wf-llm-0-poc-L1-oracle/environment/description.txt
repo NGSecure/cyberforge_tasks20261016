@@ -1,0 +1,1 @@
+A use-after-free vulnerability in cgif_addframe can lead to a heap-use-after-free crash when closing a GIF.

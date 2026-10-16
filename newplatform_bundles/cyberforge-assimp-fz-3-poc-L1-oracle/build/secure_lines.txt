@@ -1,0 +1,1 @@
+for (TextureMap::const_iterator it = _textures.begin(); it != _textures.end(); ++it) {

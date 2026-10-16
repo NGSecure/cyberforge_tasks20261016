@@ -1,0 +1,1 @@
+Improper input validation in cJSON.c's print_number function leads to a stack-buffer-overflow via a crafted JSON value.

@@ -1,0 +1,1 @@
+In Brotli's decoder (decode.c), a missing copy-size constraint allows an oversized allocation during parsing, resulting in an AddressSanitizer allocation-size failure.

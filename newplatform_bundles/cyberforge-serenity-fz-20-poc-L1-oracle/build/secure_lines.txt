@@ -1,0 +1,1 @@
+auto encoded_data = data_string_view.substring_view(separator_index.value() + MAGIC_SEPARATOR.length());

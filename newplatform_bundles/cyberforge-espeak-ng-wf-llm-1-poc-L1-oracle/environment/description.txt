@@ -1,0 +1,1 @@
+In espeak-ng, ReadVoiceFile in voices.c triggers a stack-buffer-overflow via an oversized write (61 bytes) when parsing a crafted voice file.

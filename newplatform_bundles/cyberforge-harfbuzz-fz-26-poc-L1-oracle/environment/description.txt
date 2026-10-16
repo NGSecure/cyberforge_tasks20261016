@@ -1,0 +1,1 @@
+Heap-buffer-overflow in HarfBuzz's GSUB Sequence.hh due to a calculation error, causing unsafe-to-break buffer verification failure.

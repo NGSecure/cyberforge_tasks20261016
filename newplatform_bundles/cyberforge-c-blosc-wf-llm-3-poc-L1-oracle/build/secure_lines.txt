@@ -1,0 +1,1 @@
+memcpy((void *) _dest, (void *) _src, blocksize);

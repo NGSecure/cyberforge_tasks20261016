@@ -1,0 +1,2 @@
+dbgln("FIXME: Handle non-utf8 identifiers in TGALoader");
+if (!identifier.is_error())

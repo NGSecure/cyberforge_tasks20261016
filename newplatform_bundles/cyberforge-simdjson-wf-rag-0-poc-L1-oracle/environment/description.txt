@@ -1,0 +1,1 @@
+A heap-buffer-overflow in simdjson::fallback::implementation::validate_utf8 in src/fallback.cpp allows out-of-bounds reads via crafted UTF-8 input.

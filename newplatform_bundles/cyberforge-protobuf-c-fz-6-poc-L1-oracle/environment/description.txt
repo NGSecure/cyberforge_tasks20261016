@@ -1,0 +1,1 @@
+protobuf-c contains a heap-buffer-overflow vulnerability in protobuf-c.c that can cause an out-of-bounds read when parsing crafted input.

@@ -1,0 +1,1 @@
+An off-by-one calculation error in libselinux's label_file.c causes a heap-buffer-overflow during SELinux label file processing.

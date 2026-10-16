@@ -1,0 +1,1 @@
+PCRE2's JIT compiler contains an off-by-one calculation in pcre2_jit_char_inc.h that can trigger a segmentation violation, resulting in a denial of service.
