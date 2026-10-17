@@ -1,0 +1,110 @@
+[
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-c-blosc-wf-llm-2-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/c-blosc/vulnerabilities/vulnerability_WF_LLM_2/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "c-blosc"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles3/cyberforge-c-blosc2-wf-rag-5-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/c-blosc2/vulnerabilities/vulnerability_WF_RAG_5/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "c-blosc2"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-cgif-wf-llm-3-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/cgif/vulnerabilities/vulnerability_WF_LLM_3/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "cgif"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-cjson-wf-llm-5-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/cjson/vulnerabilities/vulnerability_WF_LLM_5/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "cjson"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-dnsmasq-wf-llm-3-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/dnsmasq/vulnerabilities/vulnerability_WF_LLM_3/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "dnsmasq"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles3/cyberforge-harfbuzz-wf-rag-1-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/harfbuzz/vulnerabilities/vulnerability_WF_RAG_1/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "harfbuzz"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-libdwarf-wf-rag-0-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/libdwarf/vulnerabilities/vulnerability_WF_RAG_0/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "libdwarf"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-libsass-wf-llm-5-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/libsass/vulnerabilities/vulnerability_WF_LLM_5/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "libsass"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-libzip-wf-rag-0-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/libzip/vulnerabilities/vulnerability_WF_RAG_0/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "libzip"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles3/cyberforge-opencv-wf-rag-1-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/opencv/vulnerabilities/vulnerability_WF_RAG_1/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "opencv"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-selinux-wf-rag-1-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/selinux/vulnerabilities/vulnerability_WF_RAG_1/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "selinux"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-selinux-wf-rag-2-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/selinux/vulnerabilities/vulnerability_WF_RAG_2/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "selinux"
+ }
+]
