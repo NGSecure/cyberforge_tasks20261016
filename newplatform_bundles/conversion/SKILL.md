@@ -22,7 +22,8 @@ python3 -I scan_snapshots.py  records.json snapshot_scan/ [project ...]   # base
 python3 -I replay_deep.py     <inner_root> snapshot_scan/ replay_deep/ <task> ...   # B/C tasks, in the real image
 python3 -I classify.py        <inner_root> records.json              # again: uses the scans and both replays
 python3 -I report_inputs.py   <inner_root> snapshot_scan/ report_inputs/ <task> ...  # project files a report shows crashing
-python3 -I classify.py        <inner_root> records.json              # (only if report_inputs.py copied something)
+python3 -I select_candidates.py <inner_root> snapshot_scan/ replay_deep/ candidates/ <task> ...  # which fixed candidate crashed
+python3 -I classify.py        <inner_root> records.json              # (again if either of the two above found something)
 python3 -I prune_replay_deep.py <inner_root> records.json replay_deep/  # optional: stub captures no result needs
 python3 -I convert.py         <inner_root> records.json <out_dir>    # one bundle per converted task: A in <out_dir>,
                                                                      #   B in <out_dir>2, C in <out_dir>3 (--out-b/--out-c)
@@ -107,6 +108,14 @@ the injected build and not on the clean build.
   ambiguous (several inputs or invocations, the driver run after the CLI, a server
   the exploit started, unit tests selected by gtest flags, no input at all, an input
   from the project tree, a driver that reads files the exploit made) give no recipe.
+  Exploits that try a fixed list of inputs or command lines and stop at the first that
+  fails leave several recorded calls; `select_candidates.py` builds the project like the
+  task-server (pristine /src, `compile` with the diff), runs exploit.sh with each called
+  program wrapped by a recorder that runs the real one, takes the first call that crashed
+  (sanitizer report or fatal signal, leaks not counted), runs it again on the secure build,
+  and writes candidates/<project>/<vuln>/selection.json; deep_recipe.py then reads the
+  recording as that one call (only when it crashed the vulnerable build and not the
+  secure one), putting back the call's pruned inputs after checking their SHA-256.
   An empty input file next to other arguments means the trigger is on the command line:
   `cli-argv`, with the empty file recreated where the exploit made it (judge.json
   `aux_files`). A driver counts as built against the project when its compile names a

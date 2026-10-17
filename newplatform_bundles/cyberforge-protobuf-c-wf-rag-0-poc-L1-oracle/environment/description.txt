@@ -1,0 +1,1 @@
+In protobuf-c.c, parse_uint64 performs an out-of-bounds read, causing a heap-buffer-overflow when parsing malformed message data.

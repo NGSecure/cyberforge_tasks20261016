@@ -1,0 +1,1 @@
+A global-buffer-overflow in _geoToClosestFace in faceijk.c reads past the end of a static buffer, leading to an out-of-bounds read in _pointSquareDist.

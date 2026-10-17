@@ -11,6 +11,8 @@ recipe(task_dir) -> None, or a dict:
   poc_path   absolute path the PoC is put at (cli-file, program)
   aux        {absolute path: saved file name} other files the exploit had made
   dirs       scratch directories to recreate before a run
+  selected   (harness, cli) the recording was read as the one call select_candidates.py
+             picked among the exploit's candidates (candidates/<project>/<vuln>/)
   language   (program) "c" | "c++"
   why        (None result only, via recipe_or_reason) what made it unusable
 Only unambiguous recordings give a recipe: one harness input, one CLI invocation, or
@@ -86,6 +88,20 @@ def _outside_heredocs(sh):
     return "\n".join(out)
 
 
+def selected_call(task_dir):
+    """Index in calls.json of the call select_candidates.py found to be the PoV (the first
+    of the exploit's candidates that crashed the rebuilt vulnerable build and not the
+    secure one), from candidates/<project>/<vuln>/selection.json next to replay_deep/."""
+    project, vuln = os.path.normpath(task_dir).split(os.sep)[-2:]
+    f = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(task_dir)))),
+                     "candidates", project, vuln, "selection.json")
+    if not os.path.isfile(f):
+        return None
+    sel = json.load(open(f))
+    ok = sel.get("call") is not None and not sel.get("why") and sel.get("fix") and not sel["fix"]["crashed"]
+    return sel["call"] if ok else None
+
+
 def recipe_or_reason(task_dir, exploit_sh="", exploit_files=()):
     """exploit_sh: the task's exploit.sh text; exploit_files: names in its exploit_files/."""
     try:
@@ -98,7 +114,8 @@ def _recipe(task_dir, exploit_sh, exploit_files):
     f = os.path.join(task_dir, "calls.json")
     if not os.path.isfile(f):
         return None, "not replayed in the project image"
-    calls = [c for c in json.load(open(f)) if c["kind"] != "build"]
+    only = selected_call(task_dir)
+    calls = [c for i, c in enumerate(json.load(open(f))) if c["kind"] != "build" and only in (None, i)]
     if not calls:
         return None, "the exploit ran no program the replay could record"
     generated = False
@@ -126,7 +143,8 @@ def _recipe(task_dir, exploit_sh, exploit_files):
             data = _saved(task_dir, name)
         except Truncated:
             return None, "the exploit's input is larger than 16 MB (the replay cut it off)"
-        return {"kind": "harness", "fuzzer": fuzzer, "gt": data, "gt_file": name, "generated": generated}, None
+        return {"kind": "harness", "fuzzer": fuzzer, "gt": data, "gt_file": name, "generated": generated,
+                "selected": only is not None}, None
 
     if kinds == {"cli"}:
         try:
@@ -153,7 +171,7 @@ def _recipe(task_dir, exploit_sh, exploit_files):
             p = _abs(a.split("=", 1)[-1], c["cwd"]) if "/" in a else ""
             if p.startswith(SCRATCH) and str(i) not in c["files"] and os.path.basename(p) in made:
                 dirs.add(p)
-        out = {"steps": [step], "aux": {}, "generated": generated, "dirs": sorted(dirs)}
+        out = {"steps": [step], "aux": {}, "generated": generated, "dirs": sorted(dirs), "selected": only is not None}
         if files:
             idx, name = files[-1]  # the last file argument is the input; earlier ones are aux
             poc_abs = _abs(c["argv"][int(idx)].split("=", 1)[-1], c["cwd"])

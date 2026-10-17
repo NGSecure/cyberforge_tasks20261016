@@ -1,0 +1,1 @@
+for (int f = 0; f < NUM_ICOSA_FACES; ++f) {

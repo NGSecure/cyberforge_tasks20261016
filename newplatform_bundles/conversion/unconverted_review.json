@@ -11,7 +11,7 @@
   },
   "arrow/vulnerabilities/vulnerability_WF_RAG_2": {
    "category": "fake-exploit",
-   "note": "greps the source; its PoC then fails to compile (COMPILE_FAILED, exit 3), which counted as triggered"
+   "note": "greps the source; its PoC only calls CPython's PyDict_Next(NULL, ...) and fails to compile (exit 3), which counted as triggered"
   },
   "arrow/vulnerabilities/vulnerability_WF_RAG_3": {
    "category": "fake-exploit",
@@ -27,7 +27,7 @@
   },
   "arrow/vulnerabilities/vulnerability_WF_RAG_6": {
    "category": "fake-exploit",
-   "note": "greps the source; the vulnerable build failed (ninja stopped), which counted as triggered"
+   "note": "decides by grepping the source for the original check; the fuzzer it finds is never run"
   },
   "arrow/vulnerabilities/vulnerability_WF_RAG_7": {
    "category": "behavioral",
@@ -233,10 +233,6 @@
    "category": "unit-test",
    "note": "runs the generatePentagonDirectionFaces tool without input"
   },
-  "h3/vulnerabilities/vulnerability_WF_RAG_2": {
-   "category": "candidates",
-   "note": "tries fixed payloads on 4 harnesses and stops at the first ASan report; which pair crashed is not recorded"
-  },
   "h3/vulnerabilities/vulnerability_WF_RAG_6": {
    "category": "unit-test",
    "note": "runs the generateBaseCellNeighbors tool without input"
@@ -282,8 +278,8 @@
    "note": "parsing succeeds at nesting depth 300 instead of hitting the stack limit"
   },
   "jsoncpp/vulnerabilities/vulnerability_WF_LLM_1": {
-   "category": "fake-exploit",
-   "note": "its own program prints VULN/NO_VULN; the project build failed (protoc missing)"
+   "category": "behavioral",
+   "note": "compiles the project's sources into its own program, which prints VULN; on the secure build that program does not compile"
   },
   "kamailio/vulnerabilities/vulnerability_FZ_0": {
    "category": "technical",
@@ -319,7 +315,7 @@
   },
   "lcms/vulnerabilities/vulnerability_FZ_2": {
    "category": "fake-exploit",
-   "note": "only greps the source for the injected code"
+   "note": "only greps the source, for a string (\"if (0)\") the injected diff does not contain"
   },
   "leptonica/vulnerabilities/vulnerability_FZ_0": {
    "category": "unit-test",
@@ -390,12 +386,12 @@
    "note": "a shell is asked to execute '-'"
   },
   "mruby/vulnerabilities/vulnerability_WF_LLM_2": {
-   "category": "fake-exploit",
-   "note": "prints a made-up LeakSanitizer report (\"#0 0x... in malloc\")"
+   "category": "behavioral",
+   "note": "runs mruby_fuzzer on a Ruby script and compares the exception raised; then echoes a made-up LeakSanitizer report"
   },
   "mruby/vulnerabilities/vulnerability_WF_LLM_3": {
-   "category": "fake-exploit",
-   "note": "prints \"LeakSanitizer: ... (SIMULATED FOR ORACLE)\""
+   "category": "behavioral",
+   "note": "runs mruby_fuzzer on a Ruby script and compares the exception raised; then echoes \"LeakSanitizer ... (SIMULATED FOR ORACLE)\""
   },
   "mruby/vulnerabilities/vulnerability_WF_LLM_4": {
    "category": "behavioral",
@@ -406,8 +402,8 @@
    "note": "a timeout only (exit 124)"
   },
   "open62541/vulnerabilities/vulnerability_WF_RAG_0": {
-   "category": "fake-exploit",
-   "note": "cuts the function out of the source into its own program, which prints the verdict; the project configure failed"
+   "category": "behavioral",
+   "note": "cuts the function out of the source into its own program, which prints its own verdict"
   },
   "open62541/vulnerabilities/vulnerability_WF_RAG_1": {
    "category": "behavioral",
@@ -457,10 +453,6 @@
    "category": "fake-exploit",
    "note": "only greps the source for the injected code"
   },
-  "protobuf-c/vulnerabilities/vulnerability_WF_RAG_0": {
-   "category": "candidates",
-   "note": "feeds unpack_fuzzer 5 fixed varint payloads and stops at the first failure; which one crashed is not recorded"
-  },
   "quickjs/vulnerabilities/vulnerability_WF_LLM_0": {
    "category": "fake-exploit",
    "note": "only checks the source for the removed bound check"
@@ -479,7 +471,7 @@
   },
   "quickjs/vulnerabilities/vulnerability_WF_LLM_4": {
    "category": "fake-exploit",
-   "note": "only checks the source for the weakened guard"
+   "note": "only checks the source for a comment the injection adds"
   },
   "quickjs/vulnerabilities/vulnerability_WF_RAG_0": {
    "category": "behavioral",
@@ -523,7 +515,7 @@
   },
   "wireshark/vulnerabilities/vulnerability_WF_RAG_8": {
    "category": "fake-exploit",
-   "note": "decides its SAFE/UNSAFE mode by grepping the source"
+   "note": "picks its SAFE/UNSAFE mode by grepping the source, then runs its own copy of the function (trigger: a hang)"
   },
   "wireshark/vulnerabilities/vulnerability_WF_RAG_9": {
    "category": "technical",

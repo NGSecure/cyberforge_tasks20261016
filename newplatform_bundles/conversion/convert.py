@@ -414,6 +414,7 @@ def build_bundle(root, rec, tier_dirs, ver, scan_dir):
                   "steps": [{"role": st["role"], "cwd": st.get("cwd"), "argv": st["argv"]} for st in steps],
                   "poc_path": recipe.get("poc_path"), "aux_files": sorted(aux_names),
                   "compile_normalized": notes, "touched_files": touched,
+                  **({"selected_candidate": True} if recipe.get("selected") else {}),
                   "diff_touches_headers": any(t.endswith(HEADER_EXT) for t in touched),
                   "uses_out": uses_out}
     write(os.path.join(bd, "task.toml"), render("task.toml", v))

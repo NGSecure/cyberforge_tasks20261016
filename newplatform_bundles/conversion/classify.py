@@ -498,7 +498,9 @@ for r in rows:
         elif deep and deep_kind == "harness":
             poc = os.path.relpath(os.path.join(DEEP_DIR, p, r["vuln"], deep["gt_file"]),
                                   os.path.dirname(DEEP_DIR))
-            poc_src = "exploit_replay_deep" + (" (made by the exploit's own program)" if deep["generated"] else "")
+            poc_src = "exploit_replay_deep" + (" (made by the exploit's own program)" if deep["generated"] else "") + \
+                (" (the first of the exploit's candidates that crashed the rebuilt vulnerable build)"
+                 if deep.get("selected") else "")
             fuzzer, fuzzer_src, ex_h = deep["fuzzer"], "replay_deep", [deep["fuzzer"]]
             mismatch = bool(meta_fz and fuzzer not in meta_fz)
             tier, reason = ("A", "") if evidence else ("C", no_evidence)
