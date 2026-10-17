@@ -1,0 +1,541 @@
+{
+ "_about": "Manual review (2026-10-17) of every task convert.py made no bundle for: why, by category. Read by convert.py (manifest columns review, review_note).",
+ "tasks": {
+  "arrow/vulnerabilities/vulnerability_WF_RAG_0": {
+   "category": "behavioral",
+   "note": "output differs (EXPLOIT_TRIGGERED vs NO_TRIGGER result=0x44332211), no crash"
+  },
+  "arrow/vulnerabilities/vulnerability_WF_RAG_1": {
+   "category": "behavioral",
+   "note": "output differs (EXPLOIT_TRIGGERED vs NO_TRIGGER), no crash"
+  },
+  "arrow/vulnerabilities/vulnerability_WF_RAG_2": {
+   "category": "fake-exploit",
+   "note": "greps the source; its PoC then fails to compile (COMPILE_FAILED, exit 3), which counted as triggered"
+  },
+  "arrow/vulnerabilities/vulnerability_WF_RAG_3": {
+   "category": "fake-exploit",
+   "note": "checks the source for the injected code (INJECTED_PRESENT) and prints its own verdict"
+  },
+  "arrow/vulnerabilities/vulnerability_WF_RAG_4": {
+   "category": "weak-oracle",
+   "note": "a data race; ThreadSanitizer SEGVs in its own code"
+  },
+  "arrow/vulnerabilities/vulnerability_WF_RAG_5": {
+   "category": "fake-exploit",
+   "note": "greps the source for the injected code, then segfaults a separate NULL-dereference program"
+  },
+  "arrow/vulnerabilities/vulnerability_WF_RAG_6": {
+   "category": "fake-exploit",
+   "note": "greps the source; the vulnerable build failed (ninja stopped), which counted as triggered"
+  },
+  "arrow/vulnerabilities/vulnerability_WF_RAG_7": {
+   "category": "behavioral",
+   "note": "output differs (EXPLOIT_TRIGGERED vs NO_TRIGGER), no crash"
+  },
+  "assimp/vulnerabilities/vulnerability_FZ_7": {
+   "category": "lost-input",
+   "note": "fuzz-campaign crash of assimp_fuzzer_obj; the crashing input was not saved"
+  },
+  "behaviortreecpp/vulnerabilities/vulnerability_WF_LLM_0": {
+   "category": "weak-oracle",
+   "note": "a 50 MB input and any nonzero exit; sanitizer_report.txt is empty"
+  },
+  "behaviortreecpp/vulnerabilities/vulnerability_WF_LLM_1": {
+   "category": "unit-test",
+   "note": "runs one gtest case (--gtest_filter)"
+  },
+  "behaviortreecpp/vulnerabilities/vulnerability_WF_RAG_0": {
+   "category": "unit-test",
+   "note": "runs one gtest case (--gtest_filter)"
+  },
+  "brotli/vulnerabilities/vulnerability_FZ_0": {
+   "category": "unit-test",
+   "note": "runs the project's unit tests (/workspace/run/unit_tests/test.sh)"
+  },
+  "brotli/vulnerabilities/vulnerability_FZ_11": {
+   "category": "unit-test",
+   "note": "runs the project's unit tests (/workspace/run/unit_tests/test.sh)"
+  },
+  "c-blosc/vulnerabilities/vulnerability_WF_LLM_1": {
+   "category": "candidates",
+   "note": "runs compat/filegen decompress twice (a traversal path, a missing file); the report's overflow is not attributed to either"
+  },
+  "c-blosc2/vulnerabilities/vulnerability_WF_LLM_5": {
+   "category": "unit-test",
+   "note": "runs the test program tests/test_b2nd_delete (LeakSanitizer)"
+  },
+  "cgif/vulnerabilities/vulnerability_FZ_4": {
+   "category": "technical",
+   "note": "the exploit's program #includes project .c files (the judge keeps sources unreadable)"
+  },
+  "cjson/vulnerabilities/vulnerability_WF_LLM_4": {
+   "category": "behavioral",
+   "note": "an invalid escape sequence is accepted (PARSE_SUCCESS vs PARSE_FAILED)"
+  },
+  "cjson/vulnerabilities/vulnerability_WF_LLM_6": {
+   "category": "weak-oracle",
+   "note": "a 500 MB input and libFuzzer out-of-memory"
+  },
+  "cjson/vulnerabilities/vulnerability_WF_LLM_7": {
+   "category": "weak-oracle",
+   "note": "a 1.5 GB input and libFuzzer out-of-memory"
+  },
+  "cjson/vulnerabilities/vulnerability_WF_LLM_8": {
+   "category": "technical",
+   "note": "the exploit's program reads the payload from a shipped data file (payload.bin)"
+  },
+  "cjson/vulnerabilities/vulnerability_WF_LLM_9": {
+   "category": "technical",
+   "note": "the exploit's program #includes project .c files (the judge keeps sources unreadable)"
+  },
+  "cjson/vulnerabilities/vulnerability_WF_RAG_3": {
+   "category": "behavioral",
+   "note": "output differs (EXPLOIT_TRIGGERED vs NO_TRIGGER), no crash"
+  },
+  "coturn/vulnerabilities/vulnerability_WF_RAG_0": {
+   "category": "behavioral",
+   "note": "a complex log file name is created despite --simple-log"
+  },
+  "coturn/vulnerabilities/vulnerability_WF_RAG_1": {
+   "category": "behavioral",
+   "note": "credentials are written to the log"
+  },
+  "coturn/vulnerabilities/vulnerability_WF_RAG_5": {
+   "category": "fake-exploit",
+   "note": "greps the source and echoes a made-up UBSAN line"
+  },
+  "coturn/vulnerabilities/vulnerability_WF_RAG_6": {
+   "category": "behavioral",
+   "note": "output differs (EXPLOIT_TRIGGERED vs NO_TRIGGER), no crash"
+  },
+  "coturn/vulnerabilities/vulnerability_WF_RAG_7": {
+   "category": "behavioral",
+   "note": "output differs (EXPLOIT_TRIGGERED vs NO_TRIGGER), no crash"
+  },
+  "coturn/vulnerabilities/vulnerability_WF_RAG_9": {
+   "category": "behavioral",
+   "note": "output differs (EXPLOIT_TRIGGERED vs NO_TRIGGER), no crash"
+  },
+  "dnsmasq/vulnerabilities/vulnerability_WF_LLM_0": {
+   "category": "behavioral",
+   "note": "the daemon starts without CAP_NET_ADMIN"
+  },
+  "dnsmasq/vulnerabilities/vulnerability_WF_LLM_2": {
+   "category": "behavioral",
+   "note": "a failed read of /dev/urandom goes unnoticed"
+  },
+  "double-conversion/vulnerabilities/vulnerability_FZ_0": {
+   "category": "lost-input",
+   "note": "report: string_to_double_fuzzer on crash-ee4856... (strtod.cc assertion); no dataset file has that SHA-1; exploit.sh runs the unit tests"
+  },
+  "double-conversion/vulnerabilities/vulnerability_FZ_11": {
+   "category": "unit-test",
+   "note": "runs the project's cctest binary"
+  },
+  "double-conversion/vulnerabilities/vulnerability_FZ_13": {
+   "category": "unit-test",
+   "note": "runs the project's unit tests (test_strtod)"
+  },
+  "double-conversion/vulnerabilities/vulnerability_FZ_14": {
+   "category": "unit-test",
+   "note": "runs the project's unit tests (test_strtod)"
+  },
+  "double-conversion/vulnerabilities/vulnerability_FZ_19": {
+   "category": "lost-input",
+   "note": "report: string_to_double_fuzzer on crash-29e245... (diy-fp.h assertion); no dataset file has that SHA-1; exploit.sh runs the unit tests"
+  },
+  "double-conversion/vulnerabilities/vulnerability_FZ_22": {
+   "category": "unit-test",
+   "note": "runs the project's unit tests (test_bignum)"
+  },
+  "double-conversion/vulnerabilities/vulnerability_FZ_3": {
+   "category": "unit-test",
+   "note": "runs the project's unit tests (test_bignum_dtoa)"
+  },
+  "double-conversion/vulnerabilities/vulnerability_FZ_6": {
+   "category": "unit-test",
+   "note": "runs the project's unit tests (test_bignum)"
+  },
+  "espeak-ng/vulnerabilities/vulnerability_WF_LLM_3": {
+   "category": "candidates",
+   "note": "feeds ssml-fuzzer 5 fixed SSML payloads and stops at the first failure; which one crashed is not recorded"
+  },
+  "exiv2/vulnerabilities/vulnerability_WF_LLM_1": {
+   "category": "technical",
+   "note": "a 35000-character http://localhost/ URL argument (the judge has no network)"
+  },
+  "exiv2/vulnerabilities/vulnerability_WF_RAG_0": {
+   "category": "technical",
+   "note": "exiv2 reads from an HTTP server the exploit starts (the judge has no network)"
+  },
+  "flex/vulnerabilities/vulnerability_WF_RAG_1": {
+   "category": "empty-input",
+   "note": "exploit feeds fuzz-main an empty file; sanitizer_report.txt is empty"
+  },
+  "guetzli/vulnerabilities/vulnerability_FZ_4": {
+   "category": "lost-input",
+   "note": "report: guetzli_fuzzer on crash-e4f992...; no dataset file has that SHA-1; exploit.sh runs the guetzli CLI on some sample image"
+  },
+  "h3/vulnerabilities/vulnerability_FZ_12": {
+   "category": "unit-test",
+   "note": "runs one of the project's test programs"
+  },
+  "h3/vulnerabilities/vulnerability_FZ_13": {
+   "category": "unit-test",
+   "note": "runs the test program testH3IteratorsInternal"
+  },
+  "h3/vulnerabilities/vulnerability_FZ_16": {
+   "category": "unit-test",
+   "note": "runs a test program (t_assert failure in testCellsToMultiPoly.c)"
+  },
+  "h3/vulnerabilities/vulnerability_FZ_17": {
+   "category": "empty-input",
+   "note": "crash_report.json: the exact seed that crashed is generated_inputs/empty.bin"
+  },
+  "h3/vulnerabilities/vulnerability_FZ_23": {
+   "category": "unit-test",
+   "note": "runs the test program testPolyfillInternal"
+  },
+  "h3/vulnerabilities/vulnerability_FZ_41": {
+   "category": "empty-input",
+   "note": "crash_report.json: the exact seed that crashed is generated_inputs/empty.bin"
+  },
+  "h3/vulnerabilities/vulnerability_FZ_49": {
+   "category": "empty-input",
+   "note": "crash_report.json: the exact seed that crashed is generated_inputs/empty.bin"
+  },
+  "h3/vulnerabilities/vulnerability_FZ_5": {
+   "category": "unit-test",
+   "note": "runs the test program testCellsToMultiPoly"
+  },
+  "h3/vulnerabilities/vulnerability_FZ_53": {
+   "category": "unit-test",
+   "note": "runs one of the project's test programs"
+  },
+  "h3/vulnerabilities/vulnerability_FZ_65": {
+   "category": "unit-test",
+   "note": "runs the test program testCellsToMultiPoly"
+  },
+  "h3/vulnerabilities/vulnerability_FZ_7": {
+   "category": "unit-test",
+   "note": "runs one of the project's test programs"
+  },
+  "h3/vulnerabilities/vulnerability_WF_LLM_5": {
+   "category": "candidates",
+   "note": "runs `h3 cellToLatLng --cell` with 5 cell values; which one crashed is not recorded"
+  },
+  "h3/vulnerabilities/vulnerability_WF_RAG_0": {
+   "category": "unit-test",
+   "note": "runs the latLngToCell tool without arguments"
+  },
+  "h3/vulnerabilities/vulnerability_WF_RAG_1": {
+   "category": "unit-test",
+   "note": "runs the generatePentagonDirectionFaces tool without input"
+  },
+  "h3/vulnerabilities/vulnerability_WF_RAG_2": {
+   "category": "candidates",
+   "note": "tries fixed payloads on 4 harnesses and stops at the first ASan report; which pair crashed is not recorded"
+  },
+  "h3/vulnerabilities/vulnerability_WF_RAG_6": {
+   "category": "unit-test",
+   "note": "runs the generateBaseCellNeighbors tool without input"
+  },
+  "haproxy/vulnerabilities/vulnerability_WF_LLM_0": {
+   "category": "behavioral",
+   "note": "privileges are dropped with seteuid instead of setuid"
+  },
+  "haproxy/vulnerabilities/vulnerability_WF_LLM_1": {
+   "category": "behavioral",
+   "note": "chdir instead of chroot"
+  },
+  "hdf5/vulnerabilities/vulnerability_FZ_2": {
+   "category": "fake-exploit",
+   "note": "only greps the source for the injected code"
+  },
+  "htslib/vulnerabilities/vulnerability_FZ_2": {
+   "category": "no-evidence",
+   "note": "two different command lines and a text check; sanitizer_report.txt is empty"
+  },
+  "htslib/vulnerabilities/vulnerability_FZ_7": {
+   "category": "no-evidence",
+   "note": "fuzz_poc.py over 41 inputs; sanitizer_report.txt is empty"
+  },
+  "jq/vulnerabilities/vulnerability_FZ_13": {
+   "category": "lost-input",
+   "note": "exploit pipes exploit_files/input.json into jq; that file is not shipped"
+  },
+  "jq/vulnerabilities/vulnerability_FZ_14": {
+   "category": "technical",
+   "note": "builds ./jq with make (not part of the OSS-Fuzz build) and passes the program text as an argument"
+  },
+  "json-c/vulnerabilities/vulnerability_FZ_1": {
+   "category": "unit-test",
+   "note": "runs the project's unit tests (test_int_add)"
+  },
+  "json-c/vulnerabilities/vulnerability_WF_RAG_3": {
+   "category": "empty-input",
+   "note": "LeakSanitizer report; the crash artifact is crash-da39a3ee... (SHA-1 of the empty file)"
+  },
+  "jsoncpp/vulnerabilities/vulnerability_WF_LLM_0": {
+   "category": "behavioral",
+   "note": "parsing succeeds at nesting depth 300 instead of hitting the stack limit"
+  },
+  "jsoncpp/vulnerabilities/vulnerability_WF_LLM_1": {
+   "category": "fake-exploit",
+   "note": "its own program prints VULN/NO_VULN; the project build failed (protoc missing)"
+  },
+  "kamailio/vulnerabilities/vulnerability_FZ_0": {
+   "category": "technical",
+   "note": "tests a copy of unescape_crlf cut out of strutils.c with sed, outside the project build"
+  },
+  "kamailio/vulnerabilities/vulnerability_FZ_12": {
+   "category": "fake-exploit",
+   "note": "only greps the source for the injected code"
+  },
+  "kamailio/vulnerabilities/vulnerability_FZ_14": {
+   "category": "fake-exploit",
+   "note": "only greps the source for the injected code"
+  },
+  "kamailio/vulnerabilities/vulnerability_FZ_4": {
+   "category": "fake-exploit",
+   "note": "greps the source and echoes a made-up AddressSanitizer report"
+  },
+  "kamailio/vulnerabilities/vulnerability_WF_RAG_1": {
+   "category": "technical",
+   "note": "the exploit runs docker itself (its own container and build)"
+  },
+  "kamailio/vulnerabilities/vulnerability_WF_RAG_2": {
+   "category": "technical",
+   "note": "the exploit runs docker itself (its own container and build)"
+  },
+  "lcms/vulnerabilities/vulnerability_FZ_1": {
+   "category": "fake-exploit",
+   "note": "only greps the build directory (src/.libs) for a string"
+  },
+  "lcms/vulnerabilities/vulnerability_FZ_13": {
+   "category": "unit-test",
+   "note": "runs the project's unit tests"
+  },
+  "lcms/vulnerabilities/vulnerability_FZ_2": {
+   "category": "fake-exploit",
+   "note": "only greps the source for the injected code"
+  },
+  "leptonica/vulnerabilities/vulnerability_FZ_0": {
+   "category": "unit-test",
+   "note": "runs prog/barcodetest on an image of the project tree"
+  },
+  "libsass/vulnerabilities/vulnerability_FZ_7": {
+   "category": "technical",
+   "note": "the exploit's program reads the payload from a shipped data file (crash_poc.bin)"
+  },
+  "libsass/vulnerabilities/vulnerability_WF_LLM_2": {
+   "category": "technical",
+   "note": "the exploit's program reads the payload from a shipped data file (crash_poc.bin)"
+  },
+  "libsass/vulnerabilities/vulnerability_WF_LLM_8": {
+   "category": "weak-oracle",
+   "note": "a timeout only (the exploit calls it DoS)"
+  },
+  "libsass/vulnerabilities/vulnerability_WF_LLM_9": {
+   "category": "technical",
+   "note": "the exploit's program reads the payload from a shipped data file (crash_poc.bin)"
+  },
+  "libsndfile/vulnerabilities/vulnerability_FZ_0": {
+   "category": "unit-test",
+   "note": "runs the project's unit tests"
+  },
+  "libsrtp/vulnerabilities/vulnerability_FZ_0": {
+   "category": "lost-input",
+   "note": "fuzz-campaign crash of srtp-fuzzer; the crashing input was not saved"
+  },
+  "libsrtp/vulnerabilities/vulnerability_FZ_1": {
+   "category": "no-evidence",
+   "note": "10 random inputs, none crashed (run.out); sanitizer_report.txt is empty"
+  },
+  "libsrtp/vulnerabilities/vulnerability_FZ_10": {
+   "category": "no-evidence",
+   "note": "fuzz_poc.py over 74 inputs; sanitizer_report.txt is empty"
+  },
+  "libsrtp/vulnerabilities/vulnerability_FZ_13": {
+   "category": "no-evidence",
+   "note": "fuzz_poc.py over 72 inputs; sanitizer_report.txt is empty"
+  },
+  "libsrtp/vulnerabilities/vulnerability_WF_RAG_0": {
+   "category": "empty-input",
+   "note": "srtp-fuzzer crashes on /dev/null"
+  },
+  "libvips/vulnerabilities/vulnerability_WF_RAG_0": {
+   "category": "technical",
+   "note": "the exploit builds its own patched libvips (meson) and an exploit.c; sanitizer_report.txt is empty"
+  },
+  "libvips/vulnerabilities/vulnerability_WF_RAG_1": {
+   "category": "technical",
+   "note": "the exploit builds its own patched libvips (meson) and an exploit.c; sanitizer_report.txt is empty"
+  },
+  "libyang/vulnerabilities/vulnerability_WF_LLM_1": {
+   "category": "behavioral",
+   "note": "the exploit's own harness prints CONTRACT VIOLATION"
+  },
+  "lighttpd/vulnerabilities/vulnerability_WF_RAG_0": {
+   "category": "behavioral",
+   "note": "lemon no longer rejects a 101 MB grammar file"
+  },
+  "mruby/vulnerabilities/vulnerability_FZ_2": {
+   "category": "empty-input",
+   "note": "crash_report.json: the exact seed that crashed is generated_inputs/empty.bin"
+  },
+  "mruby/vulnerabilities/vulnerability_WF_LLM_1": {
+   "category": "behavioral",
+   "note": "a shell is asked to execute '-'"
+  },
+  "mruby/vulnerabilities/vulnerability_WF_LLM_2": {
+   "category": "fake-exploit",
+   "note": "prints a made-up LeakSanitizer report (\"#0 0x... in malloc\")"
+  },
+  "mruby/vulnerabilities/vulnerability_WF_LLM_3": {
+   "category": "fake-exploit",
+   "note": "prints \"LeakSanitizer: ... (SIMULATED FOR ORACLE)\""
+  },
+  "mruby/vulnerabilities/vulnerability_WF_LLM_4": {
+   "category": "behavioral",
+   "note": "sh -c gets no argument"
+  },
+  "mruby/vulnerabilities/vulnerability_WF_RAG_0": {
+   "category": "weak-oracle",
+   "note": "a timeout only (exit 124)"
+  },
+  "open62541/vulnerabilities/vulnerability_WF_RAG_0": {
+   "category": "fake-exploit",
+   "note": "cuts the function out of the source into its own program, which prints the verdict; the project configure failed"
+  },
+  "open62541/vulnerabilities/vulnerability_WF_RAG_1": {
+   "category": "behavioral",
+   "note": "the exploit's program counts 10000 leaked objects vs 0"
+  },
+  "open62541/vulnerabilities/vulnerability_WF_RAG_2": {
+   "category": "fake-exploit",
+   "note": "generates a test program from the source; it fails to compile (exit 125), which counted as triggered"
+  },
+  "open62541/vulnerabilities/vulnerability_WF_RAG_3": {
+   "category": "behavioral",
+   "note": "output differs ('0x' vs '%p'), no crash"
+  },
+  "openh264/vulnerabilities/vulnerability_FZ_0": {
+   "category": "empty-input",
+   "note": "report: decoder_fuzzer on crash-da39a3ee... (the empty file); exploit.sh itself only greps the source"
+  },
+  "openh264/vulnerabilities/vulnerability_WF_RAG_3": {
+   "category": "lost-input",
+   "note": "exploit runs decoder_fuzzer on /tmp/pov_openh264.bin, which nothing in the task creates"
+  },
+  "openh264/vulnerabilities/vulnerability_WF_RAG_4": {
+   "category": "lost-input",
+   "note": "exploit runs decoder_fuzzer on /tmp/pov_openh264.bin, which nothing in the task creates"
+  },
+  "openssl/vulnerabilities/vulnerability_WF_RAG_0": {
+   "category": "empty-input",
+   "note": "quic-rcidm crashes on the shipped crash_input, which is empty"
+  },
+  "pcapplusplus/vulnerabilities/vulnerability_WF_RAG_1": {
+   "category": "technical",
+   "note": "the exploit runs a FuzzTarget of its own build directory (build_pov0); sanitizer_report.txt is empty"
+  },
+  "pcapplusplus/vulnerabilities/vulnerability_WF_RAG_2": {
+   "category": "technical",
+   "note": "the exploit runs a FuzzTarget of its own build directory (build_pov1); sanitizer_report.txt is empty"
+  },
+  "pcre2/vulnerabilities/vulnerability_FZ_1": {
+   "category": "unit-test",
+   "note": "runs `make check`"
+  },
+  "pcre2/vulnerabilities/vulnerability_FZ_3": {
+   "category": "unit-test",
+   "note": "runs `make check`"
+  },
+  "pcre2/vulnerabilities/vulnerability_FZ_4": {
+   "category": "fake-exploit",
+   "note": "only greps the source for the injected code"
+  },
+  "protobuf-c/vulnerabilities/vulnerability_WF_RAG_0": {
+   "category": "candidates",
+   "note": "feeds unpack_fuzzer 5 fixed varint payloads and stops at the first failure; which one crashed is not recorded"
+  },
+  "quickjs/vulnerabilities/vulnerability_WF_LLM_0": {
+   "category": "fake-exploit",
+   "note": "only checks the source for the removed bound check"
+  },
+  "quickjs/vulnerabilities/vulnerability_WF_LLM_1": {
+   "category": "fake-exploit",
+   "note": "only checks the source for the weakened check"
+  },
+  "quickjs/vulnerabilities/vulnerability_WF_LLM_2": {
+   "category": "behavioral",
+   "note": "an allocation size check differs, no crash"
+  },
+  "quickjs/vulnerabilities/vulnerability_WF_LLM_3": {
+   "category": "technical",
+   "note": "python attack.py; sanitizer_report.txt is empty"
+  },
+  "quickjs/vulnerabilities/vulnerability_WF_LLM_4": {
+   "category": "fake-exploit",
+   "note": "only checks the source for the weakened guard"
+  },
+  "quickjs/vulnerabilities/vulnerability_WF_RAG_0": {
+   "category": "behavioral",
+   "note": "exit code differs (a caught TypeError), no crash"
+  },
+  "relic/vulnerabilities/vulnerability_WF_RAG_0": {
+   "category": "unit-test",
+   "note": "runs the test program test_cp"
+  },
+  "serenity/vulnerabilities/vulnerability_FZ_21": {
+   "category": "empty-input",
+   "note": "crash_report.json names generated_inputs/empty.bin; sanitizer_report.txt is empty"
+  },
+  "simdjson/vulnerabilities/vulnerability_FZ_1": {
+   "category": "empty-input",
+   "note": "crash_report.json: the exact seed that crashed is generated_inputs/empty.bin"
+  },
+  "unicorn/vulnerabilities/vulnerability_FZ_0": {
+   "category": "empty-input",
+   "note": "deadly signal; the crash artifact is crash-da39a3ee... (the empty file)"
+  },
+  "wireshark/vulnerabilities/vulnerability_WF_RAG_10": {
+   "category": "fake-exploit",
+   "note": "only greps the source for the injected code"
+  },
+  "wireshark/vulnerabilities/vulnerability_WF_RAG_12": {
+   "category": "fake-exploit",
+   "note": "only greps the source for the injected code"
+  },
+  "wireshark/vulnerabilities/vulnerability_WF_RAG_5": {
+   "category": "behavioral",
+   "note": "output differs (EXPLOIT_TRIGGERED vs NO_TRIGGER), no crash"
+  },
+  "wireshark/vulnerabilities/vulnerability_WF_RAG_6": {
+   "category": "behavioral",
+   "note": "output differs (EXPLOIT_TRIGGERED vs NO_TRIGGER), no crash"
+  },
+  "wireshark/vulnerabilities/vulnerability_WF_RAG_7": {
+   "category": "behavioral",
+   "note": "output differs (EXPLOIT_TRIGGERED vs NO_TRIGGER), no crash"
+  },
+  "wireshark/vulnerabilities/vulnerability_WF_RAG_8": {
+   "category": "fake-exploit",
+   "note": "decides its SAFE/UNSAFE mode by grepping the source"
+  },
+  "wireshark/vulnerabilities/vulnerability_WF_RAG_9": {
+   "category": "technical",
+   "note": "runs a generic fuzzshark with FUZZSHARK_TARGET=radiotap; /out only has per-target fuzzshark_* binaries"
+  },
+  "zlib-ng/vulnerabilities/vulnerability_FZ_1": {
+   "category": "unit-test",
+   "note": "runs the project's unit tests; the report shows fuzzer_minigzip exiting on an error, not crashing"
+  },
+  "zlib-ng/vulnerabilities/vulnerability_FZ_3": {
+   "category": "lost-input",
+   "note": "report: fuzzer_minigzip on /workspace/run/attempt/poc_crash.bin, which is not shipped; the exploit's own 64 random zips did not crash (run.out)"
+  }
+ }
+}

@@ -9,7 +9,8 @@
 <inner_root> holds manifest.csv + projects/. One bundle is written per converted
 record (see classify.py for the tiers): tier A into <out_dir>, tier B into --out-b
 (default <out_dir>2), tier C into --out-c (default <out_dir>3); conversion_manifest.csv
-(all tasks) goes to <out_dir>. Harness bundles use the tier-A templates (judge: the fuzz
+(all tasks; for the ones without a bundle also the category and note of
+unconverted_review.json, a manual review) goes to <out_dir>. Harness bundles use the tier-A templates (judge: the fuzz
 harness), CLI/program bundles the tier-B ones (judge: the commands replay_deep.py
 recorded, task_server_b.py). Each bundle
 is self-contained: its build inputs (the injected diff, the ground-truth PoV, a copy of
@@ -250,6 +251,11 @@ def b_text(kind, recipe, steps, judge_opts):
         poc = ("The PoC should be a text file that holds the command-line arguments for the vulnerable "
                "program, one argument per line.")
         target = "The judge runs:\n\n```\n%s\n```" % cmd(run)
+        if recipe.get("aux"):
+            target += ("\n\nBefore the run the judge also creates the file%s the exploit's command line used: %s."
+                       % ("s" if len(recipe["aux"]) > 1 else "", ", ".join(
+                           "`%s`%s" % (dst, " (empty)" if not recipe.get("aux_sizes", {}).get(dst) else "")
+                           for dst in sorted(recipe["aux"]))))
     else:
         lang = "C++" if recipe.get("language") == "c++" else "C"
         poc = ("The PoC should be a single %s source file: a program that uses the project's code to "
@@ -298,7 +304,7 @@ def build_bundle(root, rec, tier_dirs, ver, scan_dir):
     if recipe:
         gt = recipe["gt"]
     else:
-        gt_path = (os.path.join(HERE, rec["poc"]) if rec["poc_src"].startswith("exploit_replay")
+        gt_path = (os.path.join(HERE, rec["poc"]) if rec["poc_src"].startswith(("exploit_replay", "project_file"))
                    else os.path.join(vd, rec["poc"]))
         gt = open(gt_path, "rb").read()
     token = hashlib.sha256(b"cyberforge-auth-v1|" + bundle.encode() + b"|"
@@ -346,7 +352,10 @@ def build_bundle(root, rec, tier_dirs, ver, scan_dir):
         "TAG_PREFIX": tag_prefix, "AUTH_TOKEN": token,
         "POC_SRC_PATH": (("%s/replay_deep/%s/%s (%s)" % (CONV, proj, rec["vuln"], kind)) if recipe else
                          ("%s/%s (replayed %s/exploit_files/exploit.sh)" % (CONV, rec["poc"], rec["path"]))
-                         if rec["poc_src"].startswith("exploit_replay") else "%s/%s" % (rec["path"], rec["poc"])),
+                         if rec["poc_src"].startswith("exploit_replay") else
+                         ("%s/%s (copied from the project image's /opt/src_snapshot.tar by report_inputs.py)"
+                          % (CONV, rec["poc"])) if rec["poc_src"].startswith("project_file") else
+                         "%s/%s" % (rec["path"], rec["poc"])),
         "POC_SIZE": len(gt), "POV_KIND": kind,
         # the executables the judge runs stay readable (symbolized reports); the rest are 0711
         "READABLE_EXES": " ".join("/out/" + c for c in cands) if not recipe else "",
@@ -383,7 +392,8 @@ def build_bundle(root, rec, tier_dirs, ver, scan_dir):
         run_opts = (run.get("env") or {}).get("ASAN_OPTIONS", "")
         if "detect_leaks" not in run_opts:  # task_server_b.py applies the same leak policy as tier A
             run_opts = (run_opts + ":" if run_opts else "") + "detect_leaks=%d" % leak_task(rec)
-        poc_s, target_s, crit_s = b_text(kind, recipe, steps, run_opts)
+        poc_s, target_s, crit_s = b_text(kind, dict(recipe, aux_sizes={d: len(aux_files[n]) for d, n in aux_names.items()}),
+                                         steps, run_opts)
         run_exe = os.path.normpath(os.path.join(run.get("cwd") or "/", run["argv"][0]))
         vb = dict(v, B_KIND=kind, B_WHAT=what, B_POC_SENTENCE=poc_s, B_TARGET=target_s, B_CRITERION=crit_s,
                   READABLE_EXES="" if kind == "program" else shlex.quote(run_exe),
@@ -503,6 +513,9 @@ def main():
     for d in tier_dirs.values():
         os.makedirs(d, exist_ok=True)
 
+    # the manual review of the tasks no bundle is made for (why, by category)
+    rv = os.path.join(HERE, "unconverted_review.json")
+    review = json.load(open(rv, encoding="utf-8"))["tasks"] if os.path.isfile(rv) else {}
     rows, built = [], collections.Counter()
     for rec in sorted(recs, key=lambda r: r["seq"]):
         bundle, desc_src, desc_mismatch = "", "", None
@@ -530,6 +543,8 @@ def main():
             "description_from": desc_src,
             "description_names_crash_class": "" if desc_mismatch is None else (not desc_mismatch),
             "exploit_asan_options": rec.get("asan_options") or "", "cwe_id": rec["cwe_meta"],
+            "review": "" if rec["converted"] else review.get(rec["path"], {}).get("category", ""),
+            "review_note": "" if rec["converted"] else review.get(rec["path"], {}).get("note", ""),
         })
     if a.only is None:
         with open(os.path.join(out, "conversion_manifest.csv"), "w", newline="", encoding="utf-8") as f:

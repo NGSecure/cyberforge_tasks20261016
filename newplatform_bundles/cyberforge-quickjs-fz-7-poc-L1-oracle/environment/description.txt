@@ -1,0 +1,1 @@
+QuickJS contains an off-by-one calculation error in dtoa.c that could lead to memory corruption.

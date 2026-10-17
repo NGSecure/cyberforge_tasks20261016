@@ -1,0 +1,1 @@
+A size calculation flaw in assimp's IQM importer can trigger a heap buffer overflow.

@@ -1,0 +1,1 @@
+Improper input validation in json_object_set_int64 can cause behavioral divergence in json-c, leading to unexpected results.

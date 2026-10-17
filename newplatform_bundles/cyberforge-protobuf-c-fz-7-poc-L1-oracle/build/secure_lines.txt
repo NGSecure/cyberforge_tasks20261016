@@ -1,0 +1,2 @@
+PROTOBUF_C_UNPACK_ERROR("data too short after length-prefix of %lu",
+if (hdr_len + val > len) {

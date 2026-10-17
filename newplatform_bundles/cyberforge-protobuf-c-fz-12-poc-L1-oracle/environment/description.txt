@@ -1,0 +1,1 @@
+A heap-buffer-overflow in protobuf-c's protobuf-c.c is triggered by an invalid off-by-one calculation while parsing crafted input.

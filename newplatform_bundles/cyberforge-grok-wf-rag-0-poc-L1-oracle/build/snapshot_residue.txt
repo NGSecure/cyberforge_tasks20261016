@@ -1,0 +1,10 @@
+/opt/src_snapshot.tar
+/out/grk_compress_fuzzer
+/out/grk_decompress_fuzzer
+/out/grk_decompress_fuzzer_seed_corpus.zip
+/out/llvm-symbolizer
+/workspace/run/unit_tests/grok_codec.py
+/workspace/run/unit_tests/grok_core.py
+/workspace/run/unit_tests/parse_results.py
+/workspace/run/unit_tests/run_tests.py
+/workspace/run/unit_tests/test.sh

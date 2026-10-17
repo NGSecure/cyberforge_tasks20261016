@@ -1,0 +1,1 @@
+hb_memcpy ((void *) (arrayZ + length), (const void *) other.arrayZ, other.length * item_size);

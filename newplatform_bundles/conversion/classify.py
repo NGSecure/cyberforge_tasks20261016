@@ -13,7 +13,12 @@ Tier C  no usable crash evidence (empty report, no sanitizer crash, a timeout, a
 A task is converted ("converted" in the record) only when its tier's bundle can be made;
 the rest stay listed with the reason: a behavioral oracle (the exploit compares outputs,
 nothing crashes), a recording that is ambiguous (several inputs, races, unit tests,
-mixed programs), or a missing / empty / oversized ground truth.
+mixed programs), or a missing / empty / oversized ground truth. Before giving up on a
+task with crash evidence, the dataset's own report is read for the harness and the file
+libFuzzer was running when it crashed (report_input(); report_inputs.py copies such
+files of the project tree out of the base image). "DIFFERENTIAL / BEHAVIORAL" reports
+(exploit.sh's output on both builds) count as crash evidence only when the vulnerable
+run really crashed and the secure one did not (differential_signal()).
 
 Harness resolution trusts what the exploit actually executes (literal /out/<x> or a
 FUZZER="x" ... /out/${FUZZER} indirection) and crash_report.json for libFuzzer
@@ -73,14 +78,41 @@ def clean_fuzzer(n):
     return n
 
 
+SAN_NAMES = {"AddressSanitizer": "asan", "LeakSanitizer": "lsan", "MemorySanitizer": "msan",
+             "ThreadSanitizer": "tsan", "UndefinedBehaviorSanitizer": "ubsan"}
+# a real sanitizer report, libFuzzer's crash handler, or bash's job message for a crashed harness
+DIFF_CRASH_RE = re.compile(r"==\d+==\s?ERROR: (AddressSanitizer|LeakSanitizer|MemorySanitizer|"
+                           r"UndefinedBehaviorSanitizer):? ?(?:attempting )?([\w\-]+)"
+                           r"|==\d+== ERROR: libFuzzer: (deadly signal)"
+                           r"|line \d+: +\d+ (Aborted|Segmentation fault)[^\n]*?/out/[\w.+-]+")
+
+
+def differential_signal(t):
+    """The dataset's "DIFFERENTIAL / BEHAVIORAL" reports hold what exploit.sh printed on
+    each build. They count as crash evidence only when the vulnerable run shows a real
+    crash and exploit.sh's verdict (___RC) differs: nonzero there, 0 on the secure build.
+    "both": the secure run crashed too."""
+    if "=== VULNERABLE" not in t or "=== SECURE" not in t:
+        return "behavioral", ""
+    vul, sec = t.split("=== VULNERABLE", 1)[1].split("=== SECURE", 1)
+    rc = lambda s: (re.findall(r"^___RC=(\d+)", s, re.M) or [""])[-1]
+    v, s = DIFF_CRASH_RE.search(vul), DIFF_CRASH_RE.search(sec)
+    if not v or rc(vul) in ("", "0") or rc(sec) != "0":
+        return "behavioral", ""
+    if s:
+        return "both", ""
+    if v.group(1):
+        return SAN_NAMES[v.group(1)], v.group(2)
+    return "signal", "deadly-signal" if v.group(3) or v.group(4) == "Segmentation fault" else "abort"
+
+
 def signal_of(t):
     s = t.strip()
     if not s:
         return "empty", ""
     if "DIFFERENTIAL / BEHAVIORAL" in t:
-        return "behavioral", ""
-    names = {"AddressSanitizer": "asan", "LeakSanitizer": "lsan", "MemorySanitizer": "msan",
-             "ThreadSanitizer": "tsan", "UndefinedBehaviorSanitizer": "ubsan"}
+        return differential_signal(t)
+    names = SAN_NAMES
     m = re.search(r"ERROR: (AddressSanitizer|LeakSanitizer|MemorySanitizer|ThreadSanitizer|"
                   r"UndefinedBehaviorSanitizer):? ?(?:attempting )?([\w\-]+)", t)
     if m:
@@ -210,14 +242,87 @@ def exact_seed(vd, project, crep):
 
 
 def poc_path(vd, poc, poc_src):
-    return (os.path.join(os.path.dirname(REPLAY_DIR), poc) if poc_src.startswith("exploit_replay")
+    return (os.path.join(os.path.dirname(REPLAY_DIR), poc) if poc_src.startswith(("exploit_replay", "project_file"))
             else os.path.join(vd, poc))
+
+
+REPORT_INPUTS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "report_inputs")
+EMPTY_SHA1 = hashlib.sha1(b"").hexdigest()
+CRASH_AT_RE = re.compile(r"==\d+==\s?ERROR: |ERROR: libFuzzer: (deadly signal|out-of-memory)|: Assertion `.*' failed|"
+                         r"runtime error:")
+
+
+def report_run(report):
+    """(harness, input) libFuzzer printed right before the report's first crash:
+    "/out/<harness>: Running N inputs ..." and "Running: <file>" ('' when absent)."""
+    m = CRASH_AT_RE.search(report)
+    pre = report[:m.start()] if m else ""
+    hs = re.findall(r"^/out/([\w.+-]+): Running \d+ inputs", pre, re.M)
+    runs = re.findall(r"^Running: (\S+)", pre, re.M)
+    return (hs[-1] if hs else ""), (runs[-1] if runs else "")
+
+
+def report_harness(name, report, known):
+    """A harness name the dataset used, resolving its /out/vuln_fuzzer rename by the harness
+    source in the report's stack (LLVMFuzzerTestOneInput /src/<name>.cc); '' unless the
+    name is one the project's /out holds."""
+    if name == "vuln_fuzzer":
+        src = re.findall(r" in LLVMFuzzerTestOneInput /\S*?([\w.+-]+)\.(?:c|cc|cpp|cxx):\d+", report)
+        name = src[0] if len(set(src)) == 1 else ""
+    return name if name and name in known else ""
+
+
+_sha1_cache = {}
+
+
+def dataset_file_by_sha1(project, sha1):
+    """A file of any task of the project with this SHA-1 (libFuzzer names crash files
+    crash-<sha1 of the content>), or ''."""
+    if project not in _sha1_cache:
+        idx = {}
+        for f in sorted(glob.glob(os.path.join(PROJ, project, "vulnerabilities", "*", "exploit_files", "**"),
+                                  recursive=True)):
+            if os.path.isfile(f) and os.path.getsize(f) <= 16 << 20:
+                idx.setdefault(hashlib.sha1(open(f, "rb").read()).hexdigest(), f)
+        _sha1_cache[project] = idx
+    return _sha1_cache[project].get(sha1, "")
+
+
+def report_input(vd, rel, project, report, es, ef_files, known):
+    """(poc, poc_src, harness) when the dataset's own report pins down the crashing input
+    and its harness: the file libFuzzer was running right before the crash, found by
+    content (crash-<sha1>), as the one file of that name the exploit ships, or as a file
+    of the project tree (extracted by report_inputs.py). None otherwise; the empty file
+    (crash-da39a3ee...) is a degenerate trigger and is not taken."""
+    h, inp = report_run(report)
+    h = report_harness(h, report, known)
+    if not h or not inp:
+        return None
+    base = os.path.basename(inp)
+    m = re.fullmatch(r"crash-([0-9a-f]{40})", base)
+    if m:
+        f = dataset_file_by_sha1(project, m.group(1)) if m.group(1) != EMPTY_SHA1 else ""
+        return (os.path.relpath(f, vd), "report_sha1 (the crash file the report names, found by SHA-1)", h) if f else None
+    same = [f for f in ef_files if os.path.basename(f) == base and os.path.getsize(os.path.join(vd, f)) > 0]
+    if len(same) == 1 and not re.search(r"/dev/u?random|\$RANDOM", es):
+        return same[0], "report_running (the file the report shows crashing, shipped with the exploit)", h
+    f = os.path.join(REPORT_INPUTS, *rel.split("/vulnerabilities/"), base)
+    if inp.startswith("/src/") and os.path.isfile(f) and os.path.getsize(f) > 0:
+        return (os.path.relpath(f, os.path.dirname(REPORT_INPUTS)),
+                "project_file (%s, the file the report shows crashing)" % inp, h)
+    return None
 
 
 def asan_options_of(es):
     m = re.search(r"\bASAN_OPTIONS=([\"']?)([^\s\"']+)\1", es)
     return m.group(2) if m else ""
 
+
+# the /out names each project's exploits run (stands in for a snapshot scan where there is none)
+used_out = {}
+for r in rows:
+    used_out.setdefault(r["project"], set()).update(
+        exploit_harnesses(rd(os.path.join(PROJ, r["path"], "exploit_files", "exploit.sh")))[0])
 
 records = []
 for r in rows:
@@ -236,6 +341,8 @@ for r in rows:
     sig, sig_detail = signal_of(report)
     sig_src = "sanitizer_report.txt"
     report_ok = report_satisfies_exploit(es, report)
+    if "DIFFERENTIAL / BEHAVIORAL" in report and sig != "behavioral":
+        report_ok = None  # the report holds exploit.sh's own verdict on both builds (___RC)
     if sig in ("empty", "nocrash") and crep.get("asan_like") and crep.get("result_kind") == "real_crash":
         sig, sig_detail, sig_src = "asan", "crash_report.asan_like", "crash_report.json"
 
@@ -247,6 +354,10 @@ for r in rows:
     top_files = [f for f in ef_files if os.path.dirname(f) == "exploit_files"]
 
     custom = []
+    if "DIFFERENTIAL / BEHAVIORAL" in report:
+        # the exploit ran in the dataset's image (seed corpora, /src): only the deep replay,
+        # in that image too, shows what it fed the target
+        custom.append("differential-run report")
     if re.search(r"\b(gcc|g\+\+|clang\+\+|clang|cc)\b[^\n]*\s-o\s", es):
         custom.append("exploit.sh compiles code")
     code = "\n".join(l for l in es.splitlines() if not l.strip().startswith("#"))
@@ -368,7 +479,8 @@ for r in rows:
     evidence = sig in crash_sigs and not (sig_src == "sanitizer_report.txt" and report_ok is False)
     no_evidence = {"empty": "sanitizer_report.txt is empty (no trigger evidence)",
                    "timeout": "timeout signal (the judge treats timeouts as no crash)",
-                   "behavioral": "behavioral-divergence oracle"}.get(
+                   "behavioral": "behavioral-divergence oracle",
+                   "both": "the dataset's differential run crashed the secure build too"}.get(
         sig, MISMATCH if sig in crash_sigs else "report shows no sanitizer crash")
     bundle, deep_kind, deep_why, converted = "", "", "", tier == "A"
     if tier == "A":
@@ -411,6 +523,22 @@ for r in rows:
             reason = "%s; replay: %s" % (reason, deep_why)
         elif not converted and "larger than 16 MB" in deep_why:
             reason = "the exploit's real payload is larger than 16 MB (too large to bundle)"
+
+    # ---- still nothing: the dataset's own report may pin down input and harness ----
+    if not converted and evidence and sig_src == "sanitizer_report.txt":
+        known = outs if outs is not None else used_out.get(p, set())
+        got = report_input(vd, r["path"], p, report, es, ef_files, known)
+        rh = report_harness(report_run(report)[0], report, known)
+        if not got and rp and len(rinfo.get("inputs") or []) == 1 and report_ok is not False and rh \
+                and report_harness(rinfo["inputs"][0]["harness"], report, known) == rh \
+                and os.path.getsize(poc_path(vd, rp, "exploit_replay")) > 0:
+            # the exploit's one replayed input went to the very harness the report shows crashing
+            got = rp, "exploit_replay", rh
+        if got:
+            poc, poc_src, fuzzer = got
+            fuzzer_src, ex_h = "sanitizer_report.txt", [fuzzer]
+            mismatch = bool(meta_fz and fuzzer not in meta_fz)
+            tier, reason, bundle, converted = "A", "", "harness", True
 
     vj = jl(os.path.join(vd, "bug_description_variants.json"))
     variants = vj.get("variants") or []

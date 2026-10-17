@@ -1,0 +1,1 @@
+An off-by-one calculation error in QuickJS's libregexp.c regular expression engine can trigger a heap-buffer-overflow.

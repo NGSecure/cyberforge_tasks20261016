@@ -1,0 +1,1 @@
+return bswap_32(bt_get_unaligned((const uint32_t *) ptr));

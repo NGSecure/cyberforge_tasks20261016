@@ -1,0 +1,1 @@
+Improper input validation in GrkDecompress::parsePrecision causes a segmentation violation when processing crafted image data.

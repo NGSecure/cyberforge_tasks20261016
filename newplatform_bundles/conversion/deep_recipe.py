@@ -161,14 +161,17 @@ def _recipe(task_dir, exploit_sh, exploit_files):
                 return None, "the exploit's input is a file of the project tree, not one it made"
             for i, n in files[:-1]:
                 out["aux"][_abs(c["argv"][int(i)].split("=", 1)[-1], c["cwd"])] = n
-            a = c["argv"][int(idx)]
-            argv[int(idx) + 1] = a[:a.index("=") + 1] + "{poc}" if a.startswith("-") and "=" in a else "{poc}"
-            if not _saved(task_dir, name):
-                return None, "the exploit's input file is empty (its trigger is on the command line)"
-            out.update(kind="cli-file", gt=_saved(task_dir, name), poc_path=poc_abs)
-            out["dirs"] = sorted(set(out["dirs"]) | {os.path.dirname(p) for p in [poc_abs, *out["aux"]]
-                                                       if p.startswith(SCRATCH)})
-            return out, None
+            if _saved(task_dir, name):
+                a = c["argv"][int(idx)]
+                argv[int(idx) + 1] = a[:a.index("=") + 1] + "{poc}" if a.startswith("-") and "=" in a else "{poc}"
+                out.update(kind="cli-file", gt=_saved(task_dir, name), poc_path=poc_abs)
+                out["dirs"] = sorted(set(out["dirs"]) | {os.path.dirname(p) for p in [poc_abs, *out["aux"]]
+                                                           if p.startswith(SCRATCH)})
+                return out, None
+            # the input file is empty, the trigger is on the command line: the PoV gives the
+            # arguments (cli-argv below) and the exploit's empty file stays where it made it
+            out["aux"][poc_abs] = name
+            out["dirs"] = sorted(set(out["dirs"]) | {os.path.dirname(p) for p in out["aux"] if p.startswith(SCRATCH)})
         if c["stdin"]:
             step["stdin"] = "poc"
             out.update(kind="cli-stdin", gt=_saved(task_dir, c["stdin"]), poc_path=None)
@@ -221,7 +224,8 @@ def _recipe(task_dir, exploit_sh, exploit_files):
             # a file the exploit shipped or wrote: the recording only has files named on command lines
             return None, "the exploit's program reads a file the exploit made"
         if not any(re.search(r"(^|[=I L])/(src|work|out|usr/local/(lib|include))/", a) for c in ccs for a in c["argv"]) \
-                and not any(c["cwd"].startswith(("/src/", "/work/")) for c in ccs):
+                and not any(c["cwd"].startswith(("/src/", "/work/")) for c in ccs) \
+                and not re.search(rb'^\s*#\s*include\s*"/(src|work)/', src_text, re.M):  # a project header by path
             return None, "the exploit's program does not build against the project's code"
         if any(not _abs(drv["argv"][int(i)], drv["cwd"]).startswith(SYSTEM) for i in drv["files"]):
             # its payload would be a judge-side file a submitted program could read

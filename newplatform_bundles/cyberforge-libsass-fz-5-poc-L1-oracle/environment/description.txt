@@ -1,0 +1,1 @@
+A heap-buffer-overflow occurs in libsass ast_fwd_decl.cpp when reading four bytes past a heap buffer.

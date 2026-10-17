@@ -1,0 +1,1 @@
+A heap-buffer-overflow in jpeg_data_reader.cc allows an out-of-bounds read while processing JPEG data.

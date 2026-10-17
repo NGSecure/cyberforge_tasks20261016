@@ -1,0 +1,1 @@
+libpng pngrtran.c contains an invalid pointer dereference (CWE-476) that can lead to crashes or memory corruption when processing crafted PNG data.

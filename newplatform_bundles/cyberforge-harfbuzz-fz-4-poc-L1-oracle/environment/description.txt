@@ -1,0 +1,1 @@
+A calculation error (CWE-193) in hb-bit-set.hh in HarfBuzz causes a segmentation violation during bit-set operations.

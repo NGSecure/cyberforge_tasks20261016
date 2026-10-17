@@ -21,6 +21,8 @@ python3 -I classify.py        <inner_root> records.json              # first tie
 python3 -I scan_snapshots.py  records.json snapshot_scan/ [project ...]   # base-image snapshot inventory
 python3 -I replay_deep.py     <inner_root> snapshot_scan/ replay_deep/ <task> ...   # B/C tasks, in the real image
 python3 -I classify.py        <inner_root> records.json              # again: uses the scans and both replays
+python3 -I report_inputs.py   <inner_root> snapshot_scan/ report_inputs/ <task> ...  # project files a report shows crashing
+python3 -I classify.py        <inner_root> records.json              # (only if report_inputs.py copied something)
 python3 -I prune_replay_deep.py <inner_root> records.json replay_deep/  # optional: stub captures no result needs
 python3 -I convert.py         <inner_root> records.json <out_dir>    # one bundle per converted task: A in <out_dir>,
                                                                      #   B in <out_dir>2, C in <out_dir>3 (--out-b/--out-c)
@@ -105,6 +107,10 @@ the injected build and not on the clean build.
   ambiguous (several inputs or invocations, the driver run after the CLI, a server
   the exploit started, unit tests selected by gtest flags, no input at all, an input
   from the project tree, a driver that reads files the exploit made) give no recipe.
+  An empty input file next to other arguments means the trigger is on the command line:
+  `cli-argv`, with the empty file recreated where the exploit made it (judge.json
+  `aux_files`). A driver counts as built against the project when its compile names a
+  project path or its source `#include`s a project header by path (header-only bugs).
   A program run "crashes" only with a sanitizer report whose stack goes through a
   file the injected diff touches; a CLI run crashes with any sanitizer report or a
   fatal signal. The task-server stage builds the project twice, records the files
@@ -149,8 +155,28 @@ when the diff touches a header (`recipe.diff_touches_headers` in cyberforge_sour
   contradicts exploit.sh) but a ground truth and a way to run it (dataset PoV +
   harness, or a deep-replay recipe). Nothing shows this ground truth triggers the bug:
   build.sh's self-check 3 decides.
-- **Not converted** (manifest only): behavioral/output-diff oracles, ambiguous or
-  missing recordings, no / empty / oversized ground truth.
+- **The report itself**, for tasks nothing above converts: libFuzzer prints
+  `/out/<harness>: Running 1 inputs` and `Running: <file>` before a crash. The file is
+  taken when it can be pinned down: `crash-<sha1>` names a file of any task of the
+  project with that SHA-1; the one file of that name the exploit ships (no randomness in
+  exploit.sh); a file of the project tree (`report_inputs.py` copies it from the base
+  image's /opt/src_snapshot.tar); or the exploit's single stub-replay input when it went
+  to the very harness the report shows crashing. `/out/vuln_fuzzer` (the dataset's
+  rename) resolves through the report's `LLVMFuzzerTestOneInput /src/<name>.cc` frame.
+  The empty file (`crash-da39a3ee...`) is never taken.
+- **"DIFFERENTIAL / BEHAVIORAL" reports** hold exploit.sh's output on both builds. They
+  are crash evidence only when the vulnerable run shows a real sanitizer report or bash's
+  `Aborted` / `Segmentation fault` for an /out harness, the secure run shows none, and the
+  exploit's verdict (`___RC`) is nonzero / 0 ("both": the secure run crashed too, so C).
+  Their ground truth comes from the deep replay (the exploit picked seeds from the image).
+- **Not converted** (manifest only): `unconverted_review.json` is a manual review of each
+  (category + note, copied into the manifest's `review` / `review_note` columns):
+  exploits that never run the injected code (grep the source, echo a made-up sanitizer
+  report, crash an unrelated program, count a failed build as a trigger), behavioral
+  oracles, unit-test-only triggers, lost or empty crash inputs, ambiguous candidates,
+  timeouts / races / huge inputs, and recipes the judge cannot run (the exploit's own
+  docker or build, network, payload in a shipped data file, `#include` of project .c files).
+  Re-review it when a change converts or drops tasks (convert.py reads it as is).
 
 ## build.sh self-checks (blocking)
 

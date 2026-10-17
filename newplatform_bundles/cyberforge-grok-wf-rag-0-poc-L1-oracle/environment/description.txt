@@ -1,0 +1,1 @@
+In grok's PacketManager destructor, expired memory is accessed (CWE-416), resulting in behavioral divergence between vulnerable and fixed builds.

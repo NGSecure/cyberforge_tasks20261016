@@ -1,0 +1,49 @@
+{
+  "bundle": "cyberforge-guetzli-fz-3-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/guetzli/vulnerabilities/vulnerability_FZ_3",
+  "base_image": "vuljector/guetzli:setup",
+  "base_image_published": false,
+  "base_image_snapshot": null,
+  "secure_lines_checked": 1,
+  "image_tags": {
+    "docker_image": "cyberforge_guetzli_fz_3_main:v0.0.2",
+    "task_server_image": "cyberforge_guetzli_fz_3_task_server:v0.0.2"
+  },
+  "tier": "A",
+  "pov_kind": "harness",
+  "ground_truth_evidence": "crash evidence in the dataset",
+  "ground_truth": {
+    "dataset_file": "replay/guetzli/vulnerability_FZ_3/input-000",
+    "how_found": "exploit_replay",
+    "bytes": 11,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": true,
+    "sha256": "fefd05279426525f285e96ec473060feefca7707d3d0d684a7ee71a8dac2f86e",
+    "solve_sh": "inline"
+  },
+  "harness": {
+    "candidates": [
+      "guetzli_fuzzer"
+    ],
+    "how_found": "sanitizer_report.txt",
+    "built_by_dataset_snapshot_compile": null,
+    "dataset_metadata_said": [],
+    "metadata_disagrees": false
+  },
+  "recipe": null,
+  "trigger_evidence": {
+    "signal": "asan",
+    "detail": "heap-buffer-overflow",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": true
+  },
+  "asan_options_from_exploit": null,
+  "cwe_id": "CWE-130",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "214f2bb42abf5a577c079d00add5d6cc470620d3"
+}

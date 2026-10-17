@@ -1,0 +1,1 @@
+A heap-buffer-overflow in HarfBuzz's hb-vector.hh allows an out-of-bounds write after a buffer operation, leading to memory corruption.

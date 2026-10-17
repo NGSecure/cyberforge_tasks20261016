@@ -1,0 +1,6 @@
+-p
+4294967295C,
+-i
+input.j2k
+-o
+output.png

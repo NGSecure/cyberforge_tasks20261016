@@ -1,0 +1,1 @@
+HarfBuzz's VARC table processing in VARC.hh performs an out-of-bounds buffer operation, leading to a segmentation violation.

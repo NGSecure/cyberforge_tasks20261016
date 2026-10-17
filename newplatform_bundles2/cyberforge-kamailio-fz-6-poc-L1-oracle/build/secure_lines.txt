@@ -1,0 +1,1 @@
+for(; src < end; src += 3, dst += 4) {

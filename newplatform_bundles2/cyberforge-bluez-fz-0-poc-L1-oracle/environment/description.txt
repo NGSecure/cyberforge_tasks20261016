@@ -1,0 +1,1 @@
+A stack-buffer-overflow occurs in bluez's bt_get_be32 function in lib/bluetooth/bluetooth.h when a 4-byte read is performed past the end of a stack buffer.

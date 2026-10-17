@@ -1,0 +1,1 @@
+A heap-buffer-overflow in protobuf-c.c results in an out-of-bounds read when processing crafted message data.

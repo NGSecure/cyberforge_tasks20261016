@@ -1,0 +1,1 @@
+kamailio has an off-by-one calculation error in src/core/basex.h that may result in incorrect buffer sizing and possible out-of-bounds memory access.

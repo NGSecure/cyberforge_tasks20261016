@@ -1,0 +1,1 @@
+if (!jso || jso->o_type != json_type_int)

@@ -1,0 +1,2 @@
+return dynamic_cast<const T*>(ptr); \
+return dynamic_cast<T*>(ptr); \

@@ -1,0 +1,1 @@
+pScene->mRootNode->mMeshes = new unsigned int[hdr.num_meshes];

@@ -1,0 +1,2 @@
+spdlog::error("Invalid precision {} in precision option {}", prec, option);
+if((prec < 1) || (prec > 32))

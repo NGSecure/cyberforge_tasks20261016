@@ -1,0 +1,1 @@
+A heap-buffer-overflow in cJSON.c results from an off-by-one calculation error, allowing out-of-bounds read beyond a heap buffer.

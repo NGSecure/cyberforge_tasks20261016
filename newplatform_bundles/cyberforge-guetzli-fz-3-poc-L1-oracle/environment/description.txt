@@ -1,0 +1,1 @@
+A heap-buffer-overflow in jpeg_data_reader.cc can occur after a buffer operation when parsing malformed JPEG input.

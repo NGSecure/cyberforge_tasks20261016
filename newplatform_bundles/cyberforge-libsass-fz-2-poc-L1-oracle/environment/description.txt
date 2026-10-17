@@ -1,0 +1,1 @@
+A heap-buffer-overflow in libsass's context.cpp allows a crafted stylesheet to read 8 bytes past the end of a heap buffer.
