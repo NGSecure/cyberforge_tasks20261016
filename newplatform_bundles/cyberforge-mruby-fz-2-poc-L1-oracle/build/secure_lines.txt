@@ -1,0 +1,1 @@
+char *code = (char*)malloc(size+1);

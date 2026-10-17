@@ -137,8 +137,9 @@ def check(bd, tier):
     if len(toks) != 1:
         errs.append("auth token inconsistent: %s" % sorted(toks))
     gt = open(os.path.join(bd, "build/ground_truth_poc"), "rb").read()
-    if hashlib.sha256(gt).hexdigest() != src["ground_truth"]["sha256"] or not gt:
-        errs.append("ground truth sha256 mismatch or empty")
+    if hashlib.sha256(gt).hexdigest() != src["ground_truth"]["sha256"] \
+            or not (gt or src["ground_truth"].get("degenerate_empty_input")):
+        errs.append("ground truth sha256 mismatch, or empty without degenerate_empty_input")
     m = re.search(r"<<'B64'\n(.*?)\nB64\n", solve, re.S)  # the terminator is a line of its own
     if m and base64.b64decode(m.group(1)) != gt:
         errs.append("solve.sh payload != ground truth")

@@ -1,0 +1,1 @@
+In openh264's decoder, a heap-use-after-free in WelsFreeStaticMemory during memory deallocation causes an invalid read in CMemoryAlign::WelsFree.

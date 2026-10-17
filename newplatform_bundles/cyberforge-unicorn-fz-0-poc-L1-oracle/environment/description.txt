@@ -1,0 +1,1 @@
+Unicorn qemu/target/arm/cpu.c contains an invalid pointer dereference (CWE-476) that can cause crashes or undefined behavior when handling crafted inputs.

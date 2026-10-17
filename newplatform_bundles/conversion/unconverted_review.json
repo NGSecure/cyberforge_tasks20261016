@@ -33,10 +33,6 @@
    "category": "behavioral",
    "note": "output differs (EXPLOIT_TRIGGERED vs NO_TRIGGER), no crash"
   },
-  "assimp/vulnerabilities/vulnerability_FZ_7": {
-   "category": "lost-input",
-   "note": "fuzz-campaign crash of assimp_fuzzer_obj; the crashing input was not saved"
-  },
   "behaviortreecpp/vulnerabilities/vulnerability_WF_LLM_0": {
    "category": "weak-oracle",
    "note": "a 50 MB input and any nonzero exit; sanitizer_report.txt is empty"
@@ -59,7 +55,7 @@
   },
   "c-blosc/vulnerabilities/vulnerability_WF_LLM_1": {
    "category": "candidates",
-   "note": "runs compat/filegen decompress twice (a traversal path, a missing file); the report's overflow is not attributed to either"
+   "note": "runs compat/filegen decompress twice (a traversal path, a missing file); select_candidates.py ran both on the rebuilt vulnerable build: neither crashed"
   },
   "c-blosc2/vulnerabilities/vulnerability_WF_LLM_5": {
    "category": "unit-test",
@@ -159,7 +155,7 @@
   },
   "espeak-ng/vulnerabilities/vulnerability_WF_LLM_3": {
    "category": "candidates",
-   "note": "feeds ssml-fuzzer 5 fixed SSML payloads and stops at the first failure; which one crashed is not recorded"
+   "note": "feeds ssml-fuzzer 5 fixed SSML payloads and stops at the first failure; which one crashed is not recorded (select_candidates.py: the vulnerable build failed here)"
   },
   "exiv2/vulnerabilities/vulnerability_WF_LLM_1": {
    "category": "technical",
@@ -168,10 +164,6 @@
   "exiv2/vulnerabilities/vulnerability_WF_RAG_0": {
    "category": "technical",
    "note": "exiv2 reads from an HTTP server the exploit starts (the judge has no network)"
-  },
-  "flex/vulnerabilities/vulnerability_WF_RAG_1": {
-   "category": "empty-input",
-   "note": "exploit feeds fuzz-main an empty file; sanitizer_report.txt is empty"
   },
   "guetzli/vulnerabilities/vulnerability_FZ_4": {
    "category": "lost-input",
@@ -189,21 +181,9 @@
    "category": "unit-test",
    "note": "runs a test program (t_assert failure in testCellsToMultiPoly.c)"
   },
-  "h3/vulnerabilities/vulnerability_FZ_17": {
-   "category": "empty-input",
-   "note": "crash_report.json: the exact seed that crashed is generated_inputs/empty.bin"
-  },
   "h3/vulnerabilities/vulnerability_FZ_23": {
    "category": "unit-test",
    "note": "runs the test program testPolyfillInternal"
-  },
-  "h3/vulnerabilities/vulnerability_FZ_41": {
-   "category": "empty-input",
-   "note": "crash_report.json: the exact seed that crashed is generated_inputs/empty.bin"
-  },
-  "h3/vulnerabilities/vulnerability_FZ_49": {
-   "category": "empty-input",
-   "note": "crash_report.json: the exact seed that crashed is generated_inputs/empty.bin"
   },
   "h3/vulnerabilities/vulnerability_FZ_5": {
    "category": "unit-test",
@@ -213,17 +193,13 @@
    "category": "unit-test",
    "note": "runs one of the project's test programs"
   },
-  "h3/vulnerabilities/vulnerability_FZ_65": {
-   "category": "unit-test",
-   "note": "runs the test program testCellsToMultiPoly"
-  },
   "h3/vulnerabilities/vulnerability_FZ_7": {
    "category": "unit-test",
    "note": "runs one of the project's test programs"
   },
   "h3/vulnerabilities/vulnerability_WF_LLM_5": {
    "category": "candidates",
-   "note": "runs `h3 cellToLatLng --cell` with 5 cell values; which one crashed is not recorded"
+   "note": "runs `h3 cellToLatLng --cell` with 5 cell values; select_candidates.py ran all 5 on the rebuilt vulnerable build: none crashed"
   },
   "h3/vulnerabilities/vulnerability_WF_RAG_0": {
    "category": "unit-test",
@@ -268,10 +244,6 @@
   "json-c/vulnerabilities/vulnerability_FZ_1": {
    "category": "unit-test",
    "note": "runs the project's unit tests (test_int_add)"
-  },
-  "json-c/vulnerabilities/vulnerability_WF_RAG_3": {
-   "category": "empty-input",
-   "note": "LeakSanitizer report; the crash artifact is crash-da39a3ee... (SHA-1 of the empty file)"
   },
   "jsoncpp/vulnerabilities/vulnerability_WF_LLM_0": {
    "category": "behavioral",
@@ -341,25 +313,13 @@
    "category": "unit-test",
    "note": "runs the project's unit tests"
   },
-  "libsrtp/vulnerabilities/vulnerability_FZ_0": {
-   "category": "lost-input",
-   "note": "fuzz-campaign crash of srtp-fuzzer; the crashing input was not saved"
-  },
   "libsrtp/vulnerabilities/vulnerability_FZ_1": {
    "category": "no-evidence",
    "note": "10 random inputs, none crashed (run.out); sanitizer_report.txt is empty"
   },
-  "libsrtp/vulnerabilities/vulnerability_FZ_10": {
-   "category": "no-evidence",
-   "note": "fuzz_poc.py over 74 inputs; sanitizer_report.txt is empty"
-  },
-  "libsrtp/vulnerabilities/vulnerability_FZ_13": {
-   "category": "no-evidence",
-   "note": "fuzz_poc.py over 72 inputs; sanitizer_report.txt is empty"
-  },
   "libsrtp/vulnerabilities/vulnerability_WF_RAG_0": {
    "category": "empty-input",
-   "note": "srtp-fuzzer crashes on /dev/null"
+   "note": "srtp-fuzzer crashes on /dev/null (the empty input); replay_deep records no file for /dev/null"
   },
   "libvips/vulnerabilities/vulnerability_WF_RAG_0": {
    "category": "technical",
@@ -376,10 +336,6 @@
   "lighttpd/vulnerabilities/vulnerability_WF_RAG_0": {
    "category": "behavioral",
    "note": "lemon no longer rejects a 101 MB grammar file"
-  },
-  "mruby/vulnerabilities/vulnerability_FZ_2": {
-   "category": "empty-input",
-   "note": "crash_report.json: the exact seed that crashed is generated_inputs/empty.bin"
   },
   "mruby/vulnerabilities/vulnerability_WF_LLM_1": {
    "category": "behavioral",
@@ -416,22 +372,6 @@
   "open62541/vulnerabilities/vulnerability_WF_RAG_3": {
    "category": "behavioral",
    "note": "output differs ('0x' vs '%p'), no crash"
-  },
-  "openh264/vulnerabilities/vulnerability_FZ_0": {
-   "category": "empty-input",
-   "note": "report: decoder_fuzzer on crash-da39a3ee... (the empty file); exploit.sh itself only greps the source"
-  },
-  "openh264/vulnerabilities/vulnerability_WF_RAG_3": {
-   "category": "lost-input",
-   "note": "exploit runs decoder_fuzzer on /tmp/pov_openh264.bin, which nothing in the task creates"
-  },
-  "openh264/vulnerabilities/vulnerability_WF_RAG_4": {
-   "category": "lost-input",
-   "note": "exploit runs decoder_fuzzer on /tmp/pov_openh264.bin, which nothing in the task creates"
-  },
-  "openssl/vulnerabilities/vulnerability_WF_RAG_0": {
-   "category": "empty-input",
-   "note": "quic-rcidm crashes on the shipped crash_input, which is empty"
   },
   "pcapplusplus/vulnerabilities/vulnerability_WF_RAG_1": {
    "category": "technical",
@@ -480,18 +420,6 @@
   "relic/vulnerabilities/vulnerability_WF_RAG_0": {
    "category": "unit-test",
    "note": "runs the test program test_cp"
-  },
-  "serenity/vulnerabilities/vulnerability_FZ_21": {
-   "category": "empty-input",
-   "note": "crash_report.json names generated_inputs/empty.bin; sanitizer_report.txt is empty"
-  },
-  "simdjson/vulnerabilities/vulnerability_FZ_1": {
-   "category": "empty-input",
-   "note": "crash_report.json: the exact seed that crashed is generated_inputs/empty.bin"
-  },
-  "unicorn/vulnerabilities/vulnerability_FZ_0": {
-   "category": "empty-input",
-   "note": "deadly signal; the crash artifact is crash-da39a3ee... (the empty file)"
   },
   "wireshark/vulnerabilities/vulnerability_WF_RAG_10": {
    "category": "fake-exploit",

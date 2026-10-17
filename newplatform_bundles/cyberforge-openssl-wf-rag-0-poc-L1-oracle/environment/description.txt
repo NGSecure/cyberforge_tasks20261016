@@ -1,0 +1,1 @@
+A null pointer dereference in OpenSSL's rcidm_update() in ssl/quic/quic_rcidm.c causes a segmentation violation when handling QUIC connection ID updates.

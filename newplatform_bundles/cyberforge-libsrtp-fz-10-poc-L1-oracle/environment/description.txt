@@ -1,0 +1,1 @@
+libsrtp may access memory beyond a buffer in crypto/hash/auth.c, causing an out-of-bounds access.

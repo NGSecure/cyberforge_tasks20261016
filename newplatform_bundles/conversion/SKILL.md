@@ -164,6 +164,18 @@ when the diff touches a header (`recipe.diff_touches_headers` in cyberforge_sour
   contradicts exploit.sh) but a ground truth and a way to run it (dataset PoV +
   harness, or a deep-replay recipe). Nothing shows this ground truth triggers the bug:
   build.sh's self-check 3 decides.
+- **The dataset's verified fuzz replay first.** For FZ tasks, fuzz_poc.py's replay
+  (fuzz_results/vulnerable/crash_report.json, checked in verification_result.json) is
+  what the dataset verified: its crash artifact or exact seed and its harness outrank
+  anything exploit.sh does (some FZ exploit.sh only run unit tests). A seed that is a
+  member of the harness's built-in corpus and not shipped is copied by report_inputs.py
+  from /out/<fuzzer>_seed_corpus.zip (size, and SHA-1 names, checked). A passed
+  verification with a nonzero replay exit code is crash evidence even when
+  sanitizer_report.txt is empty.
+- **Empty ground truths** are kept when the dataset's evidence says the empty input
+  crashed (the exact seed or crash file is empty, `crash-da39a3ee...`, or the exploit
+  writes an empty file): record and cyberforge_source.json carry
+  `degenerate_empty_input`, since any empty submission passes too.
 - **The report itself**, for tasks nothing above converts: libFuzzer prints
   `/out/<harness>: Running 1 inputs` and `Running: <file>` before a crash. The file is
   taken when it can be pinned down: `crash-<sha1>` names a file of any task of the
@@ -172,7 +184,7 @@ when the diff touches a header (`recipe.diff_touches_headers` in cyberforge_sour
   image's /opt/src_snapshot.tar); or the exploit's single stub-replay input when it went
   to the very harness the report shows crashing. `/out/vuln_fuzzer` (the dataset's
   rename) resolves through the report's `LLVMFuzzerTestOneInput /src/<name>.cc` frame.
-  The empty file (`crash-da39a3ee...`) is never taken.
+  The empty file (`crash-da39a3ee...`) resolves to report_inputs/empty (degenerate).
 - **"DIFFERENTIAL / BEHAVIORAL" reports** hold exploit.sh's output on both builds. They
   are crash evidence only when the vulnerable run shows a real sanitizer report or bash's
   `Aborted` / `Segmentation fault` for an /out harness, the secure run shows none, and the

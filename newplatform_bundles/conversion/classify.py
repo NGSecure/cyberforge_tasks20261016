@@ -238,11 +238,21 @@ def exact_seed(vd, project, crep):
                                          "generated_inputs", name)))
     if hits and len({hashlib.sha256(open(h, "rb").read()).hexdigest() for h in hits}) == 1:
         return os.path.relpath(hits[0], vd), "fuzz_exact_seed (same-named seed of a sibling task)"
+    # a member of the harness's built-in corpus: fuzz_poc.py read it from
+    # /out/<fuzzer>_seed_corpus.zip, and report_inputs.py copies it from there
+    f = os.path.join(REPORT_INPUTS, project, os.path.basename(vd), name)
+    if sp.get("provenance") == "builtin_corpus_member" and os.path.isfile(f):
+        return (os.path.relpath(f, os.path.dirname(REPORT_INPUTS)),
+                "fuzz_exact_seed (built-in corpus member %s of /out/%s_seed_corpus.zip, copied from the image)"
+                % (sp.get("archive_member"), crep.get("fuzzer")))
     return "", ""
 
 
 def poc_path(vd, poc, poc_src):
-    return (os.path.join(os.path.dirname(REPLAY_DIR), poc) if poc_src.startswith(("exploit_replay", "project_file"))
+    """Ground truths of the replays and of report_inputs.py are relative to this script's
+    directory, the dataset's own files to the task directory."""
+    return (os.path.join(os.path.dirname(REPLAY_DIR), poc)
+            if poc_src.startswith(("exploit_replay", "project_file")) or poc.startswith("report_inputs/")
             else os.path.join(vd, poc))
 
 
@@ -277,7 +287,8 @@ _sha1_cache = {}
 
 def dataset_file_by_sha1(project, sha1):
     """A file of any task of the project with this SHA-1 (libFuzzer names crash files
-    crash-<sha1 of the content>), or ''."""
+    crash-<sha1 of the content>), or ''. The empty file's SHA-1 always resolves, to the
+    project's own empty file or else to report_inputs/empty."""
     if project not in _sha1_cache:
         idx = {}
         for f in sorted(glob.glob(os.path.join(PROJ, project, "vulnerabilities", "*", "exploit_files", "**"),
@@ -285,24 +296,33 @@ def dataset_file_by_sha1(project, sha1):
             if os.path.isfile(f) and os.path.getsize(f) <= 16 << 20:
                 idx.setdefault(hashlib.sha1(open(f, "rb").read()).hexdigest(), f)
         _sha1_cache[project] = idx
+    if sha1 == EMPTY_SHA1 and sha1 not in _sha1_cache[project]:
+        return os.path.join(REPORT_INPUTS, "empty")
     return _sha1_cache[project].get(sha1, "")
 
 
-def report_input(vd, rel, project, report, es, ef_files, known):
+def report_input(vd, rel, project, report, es, ef_files, known, harnesses=()):
     """(poc, poc_src, harness) when the dataset's own report pins down the crashing input
-    and its harness: the file libFuzzer was running right before the crash, found by
-    content (crash-<sha1>), as the one file of that name the exploit ships, or as a file
-    of the project tree (extracted by report_inputs.py). None otherwise; the empty file
-    (crash-da39a3ee...) is a degenerate trigger and is not taken."""
+    and its harness: the file libFuzzer was running right before the crash (or, when it
+    found the crash itself, the crash file it wrote: "Test unit written to"), found by
+    content (crash-<sha1>, crash-da39a3ee... being the empty file), as the one file of
+    that name the exploit ships, or as a file of the project tree (extracted by
+    report_inputs.py). The harness is the one the report shows running, else the task's."""
     h, inp = report_run(report)
-    h = report_harness(h, report, known)
+    if not inp:
+        m = re.search(r"Test unit written to (\S*crash-[0-9a-f]{40})", report)
+        inp = m.group(1) if m else ""
+    h = report_harness(h, report, known) or next((x for x in harnesses if x in known), "")
     if not h or not inp:
         return None
     base = os.path.basename(inp)
     m = re.fullmatch(r"crash-([0-9a-f]{40})", base)
     if m:
-        f = dataset_file_by_sha1(project, m.group(1)) if m.group(1) != EMPTY_SHA1 else ""
-        return (os.path.relpath(f, vd), "report_sha1 (the crash file the report names, found by SHA-1)", h) if f else None
+        f = dataset_file_by_sha1(project, m.group(1))
+        if not f:
+            return None
+        return (os.path.relpath(f, os.path.dirname(REPORT_INPUTS)) if f.startswith(REPORT_INPUTS + os.sep)
+                else os.path.relpath(f, vd)), "report_sha1 (the crash file the report names, found by SHA-1)", h
     same = [f for f in ef_files if os.path.basename(f) == base and os.path.getsize(os.path.join(vd, f)) > 0]
     if len(same) == 1 and not re.search(r"/dev/u?random|\$RANDOM", es):
         return same[0], "report_running (the file the report shows crashing, shipped with the exploit)", h
@@ -345,6 +365,11 @@ for r in rows:
         report_ok = None  # the report holds exploit.sh's own verdict on both builds (___RC)
     if sig in ("empty", "nocrash") and crep.get("asan_like") and crep.get("result_kind") == "real_crash":
         sig, sig_detail, sig_src = "asan", "crash_report.asan_like", "crash_report.json"
+    vres = jl(os.path.join(vd, "verification_result.json"))
+    if sig in ("empty", "nocrash", "timeout") and (vres.get("checks") or {}).get("exploit_on_vulnerable") == "passed" \
+            and crep.get("returncode") not in (0, None, 124, 137, -9):
+        # the dataset's verified replay (fuzz_poc.py) of this task crashed the vulnerable build
+        sig, sig_detail, sig_src = "verified", "replay exit %s" % crep["returncode"], "verification_result.json"
 
     ef_files = []
     if os.path.isdir(ef):
@@ -449,8 +474,13 @@ for r in rows:
 
     # ---- tier ----
     # libFuzzer's own out-of-memory report exits 71, which the judge counts as a crash
-    crash_sigs = ("asan", "lsan", "ubsan", "msan", "tsan", "signal", "oom")
-    if sig == "behavioral" or custom:
+    crash_sigs = ("asan", "lsan", "ubsan", "msan", "tsan", "signal", "oom", "verified")
+    # fuzz_results/vulnerable/crash_report.json holds the dataset's verified crash input and
+    # harness: they outrank whatever else exploit.sh does (e.g. it also runs unit tests)
+    from_crash_report = poc_src.startswith(("fuzz_crash_artifact", "fuzz_exact_seed")) and fuzzer_src == "crash_report.json"
+    empty_gt = bool(poc) and os.path.getsize(poc_path(vd, poc, poc_src)) == 0
+    degenerate = empty_gt and from_crash_report  # the dataset's crashing seed is the empty file
+    if (sig == "behavioral" or custom) and not from_crash_report:
         tier, reason = "B", ("behavioral-divergence oracle" if sig == "behavioral" else custom[0])
     elif sig == "empty":
         tier, reason = "C", "sanitizer_report.txt is empty (no trigger evidence)"
@@ -463,7 +493,7 @@ for r in rows:
                              if crep else "no concrete PoC file (payload only inline / missing)")
     elif not fuzzer:
         tier, reason = "C", note or "fuzz harness not identifiable"
-    elif os.path.getsize(poc_path(vd, poc, poc_src)) == 0:
+    elif empty_gt and not degenerate:
         tier, reason = "C", "ground-truth PoC file is empty (pov.bin harvest failure or degenerate empty-input trigger)"
     elif "file size limit" in (rinfo.get("problems") or []) and \
             not poc_src.startswith(("fuzz_crash_artifact", "fuzz_exact_seed")):
@@ -493,8 +523,6 @@ for r in rows:
         if sig == "behavioral":
             # the exploit compares outputs and nothing crashes: a crash-based judge cannot score it
             tier, reason = "B", "behavioral-divergence oracle (the exploit compares outputs; nothing crashes)"
-        elif deep and deep_kind == "harness" and not deep["gt"]:
-            reason = "the input the exploit fed its harness is empty"
         elif deep and deep_kind == "harness":
             poc = os.path.relpath(os.path.join(DEEP_DIR, p, r["vuln"], deep["gt_file"]),
                                   os.path.dirname(DEEP_DIR))
@@ -504,7 +532,7 @@ for r in rows:
             fuzzer, fuzzer_src, ex_h = deep["fuzzer"], "replay_deep", [deep["fuzzer"]]
             mismatch = bool(meta_fz and fuzzer not in meta_fz)
             tier, reason = ("A", "") if evidence else ("C", no_evidence)
-            bundle, converted = "harness", True
+            bundle, converted, degenerate = "harness", True, not deep["gt"]
         elif deep:
             mains = re.findall(r"#\d+ 0x[0-9a-f]+ in main (/\S+?):\d+", report)
             if deep_kind == "program" and evidence and mains and \
@@ -529,7 +557,7 @@ for r in rows:
     # ---- still nothing: the dataset's own report may pin down input and harness ----
     if not converted and evidence and sig_src == "sanitizer_report.txt":
         known = outs if outs is not None else used_out.get(p, set())
-        got = report_input(vd, r["path"], p, report, es, ef_files, known)
+        got = report_input(vd, r["path"], p, report, es, ef_files, known, ex_h or [fuzzer])
         rh = report_harness(report_run(report)[0], report, known)
         if not got and rp and len(rinfo.get("inputs") or []) == 1 and report_ok is not False and rh \
                 and report_harness(rinfo["inputs"][0]["harness"], report, known) == rh \
@@ -541,12 +569,14 @@ for r in rows:
             fuzzer_src, ex_h = "sanitizer_report.txt", [fuzzer]
             mismatch = bool(meta_fz and fuzzer not in meta_fz)
             tier, reason, bundle, converted = "A", "", "harness", True
+            degenerate = os.path.getsize(poc_path(vd, poc, poc_src)) == 0
 
     vj = jl(os.path.join(vd, "bug_description_variants.json"))
     variants = vj.get("variants") or []
     records.append({
         "seq": int(r["seq"]), "type": t, "project": p, "vuln": r["vuln"], "path": r["path"],
         "tier": tier, "reason": reason, "converted": converted, "bundle_type": bundle,
+        "degenerate_empty_input": bool(converted and degenerate),
         "deep_replay": deep_kind or deep_why,
         "signal": sig, "signal_detail": sig_detail, "signal_src": sig_src,
         "report_matches_exploit_check": report_ok,

@@ -1,0 +1,1 @@
+for (int vert = start; vert < start + length + additionalIteration;

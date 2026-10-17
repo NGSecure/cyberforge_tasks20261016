@@ -1,0 +1,1 @@
+In OpenH264's decoder_core.cpp, WelsInitStaticMemory performs a stack-use-after-scope read, causing a crash during decoder static memory initialization.

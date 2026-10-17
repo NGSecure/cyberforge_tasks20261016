@@ -305,7 +305,7 @@ def build_bundle(root, rec, tier_dirs, ver, scan_dir):
         gt = recipe["gt"]
     else:
         gt_path = (os.path.join(HERE, rec["poc"]) if rec["poc_src"].startswith(("exploit_replay", "project_file"))
-                   else os.path.join(vd, rec["poc"]))
+                   or rec["poc"].startswith("report_inputs/") else os.path.join(vd, rec["poc"]))
         gt = open(gt_path, "rb").read()
     token = hashlib.sha256(b"cyberforge-auth-v1|" + bundle.encode() + b"|"
                            + hashlib.sha256(diff).hexdigest().encode()).hexdigest()[:32]
@@ -355,6 +355,8 @@ def build_bundle(root, rec, tier_dirs, ver, scan_dir):
                          if rec["poc_src"].startswith("exploit_replay") else
                          ("%s/%s (copied from the project image's /opt/src_snapshot.tar by report_inputs.py)"
                           % (CONV, rec["poc"])) if rec["poc_src"].startswith("project_file") else
+                         ("%s/%s (copied from the project image by report_inputs.py)" % (CONV, rec["poc"]))
+                         if rec["poc"].startswith("report_inputs/") else
                          "%s/%s" % (rec["path"], rec["poc"])),
         "POC_SIZE": len(gt), "POV_KIND": kind,
         # the executables the judge runs stay readable (symbolized reports); the rest are 0711
@@ -478,7 +480,9 @@ def build_bundle(root, rec, tier_dirs, ver, scan_dir):
                          "exploit_replay_inputs": rec.get("replay_distinct_inputs", 0),
                          "dataset_report_matches_exploit_check": rec.get("report_matches_exploit_check"),
                          "sha256": hashlib.sha256(gt).hexdigest(),
-                         "solve_sh": "inline" if len(gt) <= INLINE_MAX else "fetch /solve"},
+                         "solve_sh": "inline" if len(gt) <= INLINE_MAX else "fetch /solve",
+                         # the dataset's crashing input is the empty file: any empty submission passes too
+                         **({"degenerate_empty_input": True} if rec.get("degenerate_empty_input") else {})},
         "harness": None if recipe else {"candidates": cands, "how_found": rec["fuzzer_src"],
                                         "built_by_dataset_snapshot_compile": built,
                                         "dataset_metadata_said": rec["fuzzer_metadata"],
@@ -544,6 +548,7 @@ def main():
             "description_from": desc_src,
             "description_names_crash_class": "" if desc_mismatch is None else (not desc_mismatch),
             "exploit_asan_options": rec.get("asan_options") or "", "cwe_id": rec["cwe_meta"],
+            "degenerate_empty_input": bool(rec.get("degenerate_empty_input")),
             "review": "" if rec["converted"] else review.get(rec["path"], {}).get("category", ""),
             "review_note": "" if rec["converted"] else review.get(rec["path"], {}).get("note", ""),
         })

@@ -1,0 +1,1 @@
+A null or invalid pointer dereference in simdjson's parser-inl.h (ensure_capacity) can trigger an AddressSanitizer SEGV during parser compilation of model_asset inputs.

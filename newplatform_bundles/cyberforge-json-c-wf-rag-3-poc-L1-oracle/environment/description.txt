@@ -1,0 +1,1 @@
+In json-c, improper error handling in json_tokener_free leads to a memory leak when parsing malformed JSON, allowing resource exhaustion.

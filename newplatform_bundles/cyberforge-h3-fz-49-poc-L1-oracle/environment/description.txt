@@ -1,0 +1,1 @@
+A null pointer dereference in h3's linkedGeo.c causes a segmentation violation when handling cells-to-linked-multipolygon input.

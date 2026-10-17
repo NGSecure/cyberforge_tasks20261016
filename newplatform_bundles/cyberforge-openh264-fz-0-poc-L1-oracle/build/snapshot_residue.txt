@@ -1,0 +1,5 @@
+/opt/src_snapshot.tar
+/out/decoder_fuzzer
+/out/llvm-symbolizer
+/workspace/run/unit_tests/parse_results.py
+/workspace/run/unit_tests/test.sh

@@ -1,0 +1,1 @@
+OpenH264 decoder.cpp contains a post-buffer-operation (CWE-120) vulnerability that can lead to memory corruption when data is written past a buffer boundary.

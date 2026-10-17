@@ -1,0 +1,1 @@
+Heap-based buffer overflow in mruby's regexp handling via mruby_proto_fuzzer.cpp allows out-of-bounds write when a removed copy size constraint in model asset parsing is exercised.

@@ -1,0 +1,1 @@
+Invalid pointer dereference in h3 (src/h3lib/lib/algos.c) causes a SEGV during parser-state misuse when destroyGeoMultiPolygon is invoked.

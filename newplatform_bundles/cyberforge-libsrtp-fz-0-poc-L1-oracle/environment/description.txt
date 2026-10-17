@@ -1,0 +1,1 @@
+Off-by-one in libsrtp's srtp_hmac_init in crypto/hash/hmac.c leads to a global buffer overflow in HMAC initialization.

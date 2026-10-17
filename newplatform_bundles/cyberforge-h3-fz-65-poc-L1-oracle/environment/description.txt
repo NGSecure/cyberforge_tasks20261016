@@ -1,0 +1,1 @@
+A heap-buffer-overflow in H3's createSortableLoop during cells-to-multi-polygon conversion can lead to out-of-bounds memory writes.

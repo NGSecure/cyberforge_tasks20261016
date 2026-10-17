@@ -1,0 +1,1 @@
+A parser state misuse in h3's linkedGeo.c can cause destroyLinkedMultiPolygon to dereference a null pointer, leading to a segmentation fault.

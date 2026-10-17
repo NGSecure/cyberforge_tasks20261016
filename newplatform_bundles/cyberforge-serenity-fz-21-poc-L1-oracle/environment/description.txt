@@ -1,0 +1,1 @@
+FuzzWasmParser.cpp may perform a post-buffer operation after processing a crafted WebAssembly input.
