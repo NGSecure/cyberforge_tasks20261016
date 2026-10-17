@@ -31,8 +31,8 @@
     "task_server_image": "cyberforge_serenity_fz_24_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/reproducer.bin",
-    "how_found": "single_input_file",
+    "dataset_file": "exploit_files/generated_inputs/curated_seed_4965b707563de7955743d9b0295abe6aff1185e42238910922e2d2ec7a550f38.png",
+    "how_found": "fuzz_exact_seed",
     "bytes": 40,
     "exploit_replay_inputs": 0,
     "dataset_report_matches_exploit_check": null,
@@ -43,7 +43,7 @@
     "candidates": [
       "FuzzPNGLoader"
     ],
-    "how_found": "metadata (fuzz_poc.py)",
+    "how_found": "crash_report.json",
     "built_by_dataset_snapshot_compile": [
       "FuzzPNGLoader"
     ],

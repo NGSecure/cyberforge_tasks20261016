@@ -1,0 +1,1 @@
+size = strlen(key) + strlen(value) + 2;

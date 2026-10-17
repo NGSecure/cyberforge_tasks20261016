@@ -1,6 +1,6 @@
 #!/bin/bash
 # Reference solution (oracle): materialize the CyberForge ground-truth PoV for
-# fluent-bit / vulnerability_FZ_4 (dataset file: fluent-bit/vulnerabilities/vulnerability_FZ_4/exploit_files/reauthor_poc_FZ_4.bin) at /workspace/poc.
+# fluent-bit / vulnerability_FZ_4 (dataset file: fluent-bit/vulnerabilities/vulnerability_FZ_4/exploit_files/generated_inputs/curated_seed_041acbf0e20525bb0b717159feeacda79200f22f164cb72f9e722af057ad16a3.txt) at /workspace/poc.
 # It does not build anything: grading runs on the task-server's own builds.
 set -euo pipefail
 

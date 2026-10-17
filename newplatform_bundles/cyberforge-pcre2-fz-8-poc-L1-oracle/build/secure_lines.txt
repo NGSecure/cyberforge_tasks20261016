@@ -1,0 +1,1 @@
+if (minp != NULL) *minp = (uint32_t)min;

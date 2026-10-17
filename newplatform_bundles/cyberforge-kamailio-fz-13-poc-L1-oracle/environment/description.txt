@@ -1,0 +1,1 @@
+A use-after-free in Kamailio's parse_diversion.c when processing a crafted Diversion header leads to memory corruption due to an off-by-one iteration.

@@ -1,0 +1,1 @@
+QuickJS (quickjs.c) has an off-by-one iteration bug in add_fast_array_element that can cause a NULL write and trigger a segmentation-violation (CWE-193) by relaxing array capacity/size accounting.

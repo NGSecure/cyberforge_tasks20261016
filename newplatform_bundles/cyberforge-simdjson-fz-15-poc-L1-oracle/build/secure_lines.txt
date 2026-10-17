@@ -1,0 +1,1 @@
+return padded_string_view(data(), length(), length() + SIMDJSON_PADDING);

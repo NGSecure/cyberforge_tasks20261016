@@ -1,0 +1,1 @@
+A heap-buffer-overflow in BlueZ's SDP parser (lib/bluetooth/sdp.c) allows a remote attacker to trigger memory corruption via a crafted Bluetooth packet due to an unchecked array index.

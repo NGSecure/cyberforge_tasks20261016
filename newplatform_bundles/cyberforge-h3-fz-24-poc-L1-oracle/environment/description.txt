@@ -1,0 +1,1 @@
+A divide-by-zero error in h3's polygon-to-cells algorithm (algos.c) triggers an address-sanitizer FPE when processing malformed polygon data.

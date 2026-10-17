@@ -1,0 +1,1 @@
+A heap-buffer-overflow in H3's fuzzerDistances parser due to a removed bounds check allows out-of-bounds read.

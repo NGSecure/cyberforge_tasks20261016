@@ -1,0 +1,1 @@
+The protobuf-c parser in protobuf-c/protobuf-c.c has a heap-buffer-overflow caused by an off-by-one iteration when unpacking binary messages, allowing out-of-bounds reads one byte past the end of a heap buffer.

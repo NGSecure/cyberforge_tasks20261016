@@ -1,0 +1,1 @@
+for (i = tok->depth; i >= 0; i--)

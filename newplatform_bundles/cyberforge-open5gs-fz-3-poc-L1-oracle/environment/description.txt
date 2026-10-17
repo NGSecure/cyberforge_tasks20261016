@@ -1,0 +1,1 @@
+Open5GS decoder.c contains a buffer overflow in the NAS EMM decoding path (ogs_nas_emm_decode) where a removed copy size constraint can permit post-buffer writes during NAS EPS parsing.

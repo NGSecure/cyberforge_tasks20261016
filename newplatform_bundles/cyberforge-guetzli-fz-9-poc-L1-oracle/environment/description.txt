@@ -1,0 +1,1 @@
+guetzli: CWE-130 (Post buffer operation) in guetzli/jpeg_data_reader.cc.

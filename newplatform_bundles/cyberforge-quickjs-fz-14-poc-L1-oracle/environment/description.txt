@@ -1,0 +1,1 @@
+In QuickJS's regular expression compiler, an off-by-one iteration in quickjs.c causes a heap-buffer-overflow when processing a crafted script, leading to memory corruption.

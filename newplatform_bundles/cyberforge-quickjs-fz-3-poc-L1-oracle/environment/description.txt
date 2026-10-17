@@ -1,0 +1,1 @@
+QuickJS's regexp processing contains a heap-buffer-overflow vulnerability where an unchecked index leads to out-of-bounds access when evaluating a crafted script.

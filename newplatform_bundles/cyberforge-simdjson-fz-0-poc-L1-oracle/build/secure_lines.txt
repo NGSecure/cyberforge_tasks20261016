@@ -1,0 +1,1 @@
+return p.implementation->stage1(&buf[_batch_start], remaining, mode);

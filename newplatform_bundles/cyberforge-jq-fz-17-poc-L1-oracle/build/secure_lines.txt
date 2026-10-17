@@ -1,0 +1,1 @@
+if (newslot_idx == jvp_object_size(object)) return 0;

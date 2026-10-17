@@ -1,0 +1,1 @@
+H3Index pentagons[12] = {0};

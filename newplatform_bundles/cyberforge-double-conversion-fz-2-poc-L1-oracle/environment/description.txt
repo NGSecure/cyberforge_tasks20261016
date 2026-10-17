@@ -1,0 +1,1 @@
+double-conversion's bignum.cc contains a removed bounds check in double_conversion::Bignum::AssignUInt64 that can trigger a post-buffer read and out-of-bounds memory access during parsing.

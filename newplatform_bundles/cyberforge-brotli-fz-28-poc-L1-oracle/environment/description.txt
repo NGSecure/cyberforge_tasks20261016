@@ -1,0 +1,1 @@
+Brotli's decode.c has a heap-buffer-overflow triggered by a post-buffer operation, potentially leading to memory corruption.

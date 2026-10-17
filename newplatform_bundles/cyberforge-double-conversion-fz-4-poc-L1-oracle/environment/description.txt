@@ -1,0 +1,1 @@
+A removed bounds check in double-conversion's utils.h can trigger an out-of-bounds read while parsing strings to doubles.

@@ -1,0 +1,1 @@
+An off-by-one calculation error in ICU's number pattern string processing can cause a libFuzzer crash via a deadly signal.

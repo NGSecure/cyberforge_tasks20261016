@@ -1,0 +1,1 @@
+An invalid pointer dereference in OpenSSL's PEM utility (pem_oth.c) causes an assertion failure when cert is NULL, leading to a crash.

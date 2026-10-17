@@ -1,0 +1,1 @@
+A stack-buffer-overflow in systemd's siphash24 hash calculation, due to an off-by-one error, can cause out-of-bounds memory access.

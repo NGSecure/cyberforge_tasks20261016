@@ -1,0 +1,1 @@
+lcms's cmscgats.c contains a global-buffer-overflow that can be triggered by a crafted input file during IT8 loading, resulting in an out-of-bounds access.

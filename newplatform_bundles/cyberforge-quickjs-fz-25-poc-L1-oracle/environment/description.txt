@@ -1,0 +1,1 @@
+An off-by-one calculation error in QuickJS's regexp handling causes a heap-buffer-overflow that may lead to memory corruption.

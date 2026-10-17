@@ -1,0 +1,1 @@
+A heap-buffer-overflow in coturn's STUN parser (ns_turn_msg.c) is triggered by an off-by-one iteration while processing message attributes.

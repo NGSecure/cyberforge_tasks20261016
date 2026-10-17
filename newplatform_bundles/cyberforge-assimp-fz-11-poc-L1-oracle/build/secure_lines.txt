@@ -1,0 +1,1 @@
+ai_assert(static_cast<size_t>(end - data) >= sizeof(T));

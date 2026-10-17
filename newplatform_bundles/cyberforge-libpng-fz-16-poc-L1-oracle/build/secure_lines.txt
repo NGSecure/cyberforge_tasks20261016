@@ -1,0 +1,1 @@
+PNG_MAX_PALETTE_LENGTH * (sizeof (png_color)));

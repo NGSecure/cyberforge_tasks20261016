@@ -1,0 +1,1 @@
+libpng's pngread.c triggers a heap-buffer-overflow in png_image_memory_read when parsing colormap data due to a removed copy size constraint, enabling post-buffer memory corruption.

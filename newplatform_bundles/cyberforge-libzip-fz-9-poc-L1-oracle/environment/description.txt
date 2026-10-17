@@ -1,0 +1,1 @@
+A stack-buffer-overflow in libzip's zip_stat_index can be triggered by an unchecked index, leading to memory corruption.

@@ -1,0 +1,1 @@
+coturn's stun_init_buffer function in stun_buffer.c dereferences an invalid pointer, leading to a crash via crafted STUN input.

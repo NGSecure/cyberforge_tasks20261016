@@ -1,0 +1,1 @@
+if (JC_STRING(jso)->len < 0)

@@ -1,0 +1,1 @@
+In libzip, a specially crafted ZIP archive with an inconsistent central header triggers a post-buffer operation in zip_source_free, leading to memory corruption.

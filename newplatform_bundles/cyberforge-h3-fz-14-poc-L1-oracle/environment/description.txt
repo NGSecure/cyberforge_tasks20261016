@@ -1,0 +1,1 @@
+In h3, a removed bounds check in fuzzerCellToLatLng.c causes a heap-buffer-overflow, leading to an out-of-bounds read.

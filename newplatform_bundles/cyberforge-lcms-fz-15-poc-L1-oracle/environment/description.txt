@@ -1,0 +1,1 @@
+A stack-buffer-overflow in cmscgats.c during IT8 load can cause an out-of-bounds write.

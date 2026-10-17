@@ -1,0 +1,1 @@
+In jq's src/jv.c, jvp_object_write lacks a valid slot assertion when writing into an object, causing an assertion failure and crash.

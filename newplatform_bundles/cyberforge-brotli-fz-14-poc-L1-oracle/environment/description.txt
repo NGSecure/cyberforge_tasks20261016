@@ -1,0 +1,1 @@
+Double-free in BrotliDefaultFreeFunc (platform.c) during decoder cleanup allows the same address to be freed twice while decompressing inputs.

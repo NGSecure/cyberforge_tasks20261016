@@ -85,14 +85,17 @@ the injected build and not on the clean build.
 ## Tiers (classify.py)
 
 - **A → bundle**: crash evidence (sanitizer report, or crash_report.json for fuzz
-  artifacts), a concrete non-empty PoV (fuzz crash artifact > replayed exploit input >
-  pov.bin and other dataset files), the harness exploit.sh really runs (and that the
-  dataset's own compile put in /out), and — unless the PoV comes from the replay — the
-  recorded report satisfies exploit.sh's own grep (when it greps).
+  artifacts), a concrete non-empty PoV (fuzz crash artifact > the seed crash_report.json
+  names for a replay-mode run (`attribution_kind: exact_seed`; a same-named seed of a
+  sibling task only if every copy is identical) > replayed exploit input > pov.bin and
+  other dataset files), the harness exploit.sh really runs (and that the dataset's own
+  compile put in /out), and — unless the PoV comes from the replay — the recorded
+  report satisfies exploit.sh's own grep (when it greps). libFuzzer's own
+  out-of-memory report (exit 71) counts as a crash; timeouts do not.
 - **B → needs another bundle type**: custom driver programs, exploits that run a
   project CLI/test binary instead of the fuzz harness, behavioral/output-diff oracles.
-- **C → insufficient ground truth**: crash input never saved and not recoverable by
-  replay, empty/no-crash report, OOM/timeout, empty PoV, report contradicts exploit.sh.
+- **C → insufficient ground truth**: no PoV recoverable (seed, replay or file),
+  empty/no-crash report, timeout, empty PoV, report contradicts exploit.sh.
 
 ## build.sh self-checks (blocking)
 

@@ -1,0 +1,1 @@
+Unchecked index in src/cmslut.c's CLUT allocation path allows out-of-bounds access leading to a segmentation fault when parsing crafted binary input.

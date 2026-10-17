@@ -1,0 +1,1 @@
+A heap-buffer-overflow occurs in QuickJS's regexp handling when a removed bounds check allows reading past the end of a buffer in quickjs.c.

@@ -1,0 +1,1 @@
+libpng in pngread.c contains a heap-buffer-overflow that can be triggered by a crafted PNG file, leading to memory corruption.

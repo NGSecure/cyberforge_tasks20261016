@@ -1,0 +1,1 @@
+A calculation error in pcre2_compile_class.c can lead to a heap use-after-free when compiling certain character classes.

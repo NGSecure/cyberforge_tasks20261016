@@ -1,0 +1,74 @@
+{
+  "bundle": "cyberforge-kamailio-fz-13-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/kamailio/vulnerabilities/vulnerability_FZ_13",
+  "base_image": "vuljector/kamailio:setup@sha256:9068c7fbb221e7d2bb3e6036d9fb9dc36758e37519db6b344ec64ef0744e6071",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-04-17T13:45:06.829102063Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T16:08:16.037922199Z",
+        "created_by": "sleep infinity",
+        "bytes": 211269622
+      }
+    ],
+    "post_setup_files": 566,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 558,
+    "scrubbed_from_agent_image": 6,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out": 3,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 1,
+  "image_tags": {
+    "docker_image": "cyberforge_kamailio_fz_13_main:v0.0.1",
+    "task_server_image": "cyberforge_kamailio_fz_13_task_server:v0.0.1"
+  },
+  "ground_truth": {
+    "dataset_file": "exploit_files/generated_inputs/poc_orig_bea41d4f6c.txt",
+    "how_found": "fuzz_exact_seed",
+    "bytes": 139,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": null,
+    "sha256": "bea41d4f6cb8be132ca7305d66cc0b3cfea71e83eacca387f30db3ff6f67d8ee",
+    "solve_sh": "inline"
+  },
+  "harness": {
+    "candidates": [
+      "fuzz_parse_msg"
+    ],
+    "how_found": "crash_report.json",
+    "built_by_dataset_snapshot_compile": [
+      "fuzz_parse_msg"
+    ],
+    "dataset_metadata_said": [
+      "fuzz_parse_msg",
+      "fuzz_parse_msg",
+      "fuzz_parse_msg"
+    ],
+    "metadata_disagrees": false
+  },
+  "trigger_evidence": {
+    "signal": "asan",
+    "detail": "heap-use-after-free",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": {
+      "unit_tests": "passed",
+      "exploit_on_vulnerable": "passed",
+      "exploit_on_secure": "passed"
+    }
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": true
+  },
+  "asan_options_from_exploit": null,
+  "cwe_id": "CWE-416",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "74015a784fdbd1e4b30ef5895127ee40282bacd4"
+}

@@ -1,0 +1,1 @@
+Missing length restriction in trace_blob_view_reader.cc can cause out-of-bounds access and memory corruption, leading to a segmentation violation when parsing crafted model_asset inputs.

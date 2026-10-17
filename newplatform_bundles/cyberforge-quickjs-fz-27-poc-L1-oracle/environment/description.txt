@@ -1,0 +1,1 @@
+A buffer overflow in cutils.h in QuickJS can cause a segmentation violation when processing crafted input.

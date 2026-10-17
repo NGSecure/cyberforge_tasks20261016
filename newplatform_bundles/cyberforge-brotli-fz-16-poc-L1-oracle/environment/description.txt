@@ -1,0 +1,1 @@
+A missing size constraint in Brotli's ring buffer copy in c/dec/decode.c allows crafted compressed data to cause a memcpy-param-overlap, leading to buffer corruption.

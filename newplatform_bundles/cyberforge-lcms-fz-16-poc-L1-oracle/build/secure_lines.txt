@@ -1,0 +1,1 @@
+strcpy(it8->DoubleFormatter, DEFAULT_DBL_FORMAT);

@@ -1,0 +1,1 @@
+Assimp's FBX parser (FBXParser.cpp) performs a post-buffer operation with a removed length restriction when parsing shape data, allowing out-of-bounds access that leads to a segmentation violation.

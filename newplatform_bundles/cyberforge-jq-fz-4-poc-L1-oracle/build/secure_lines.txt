@@ -1,0 +1,3 @@
+p->stack = jv_mem_realloc(p->stack, p->stacklen * sizeof(jv));
+p->stacklen = p->stacklen * 2 + 10;
+if (p->stackpos == p->stacklen) {

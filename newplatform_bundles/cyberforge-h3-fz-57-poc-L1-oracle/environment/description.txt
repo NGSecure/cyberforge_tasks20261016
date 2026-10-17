@@ -1,0 +1,1 @@
+A heap-buffer-overflow in h3's cellsToMultiPoly.c allows an off-by-one iteration to read beyond allocated memory during polygon creation from cells.

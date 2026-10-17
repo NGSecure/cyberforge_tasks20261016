@@ -1,0 +1,1 @@
+if (!ZIP_SOURCE_IS_OPEN_READING(src)) {

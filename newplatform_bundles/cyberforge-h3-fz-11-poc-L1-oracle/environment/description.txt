@@ -1,0 +1,1 @@
+A heap-buffer-overflow in the IndexIO parser of h3, caused by a removed bounds check, allows crafted binary input to trigger out-of-bounds reads.

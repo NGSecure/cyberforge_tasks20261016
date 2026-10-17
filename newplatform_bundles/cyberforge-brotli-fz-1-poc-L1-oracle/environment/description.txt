@@ -1,0 +1,1 @@
+Out-of-bounds access in brotli's c/common/dictionary.c during dictionary handling (BrotliGetDictionary path) results in a segmentation violation (CWE-125) in the parser.

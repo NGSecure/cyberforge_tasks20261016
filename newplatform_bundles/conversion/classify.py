@@ -175,6 +175,27 @@ def snapshot_out(project):
             if x.startswith("/out/")}
 
 
+def exact_seed(vd, project, crep):
+    """(path relative to vd, how) of the seed crash_report.json says crashed the vulnerable
+    build. Seeds drawn from the built-in corpus are not always shipped with the task; then
+    a file of that name in another task of the same project is used, but only when every
+    copy found has the same content."""
+    sp = crep.get("seed_provenance") or {}
+    rel = sp.get("relative_path") or ""
+    if "exploit_files/" in rel:
+        f = os.path.join(vd, "exploit_files", rel.split("exploit_files/", 1)[1])
+        if os.path.isfile(f):
+            return os.path.relpath(f, vd), "fuzz_exact_seed"
+    name = crep.get("seed") or sp.get("name") or ""
+    if not name or "/" in name:
+        return "", ""
+    hits = sorted(glob.glob(os.path.join(PROJ, project, "vulnerabilities", "*", "exploit_files",
+                                         "generated_inputs", name)))
+    if hits and len({hashlib.sha256(open(h, "rb").read()).hexdigest() for h in hits}) == 1:
+        return os.path.relpath(hits[0], vd), "fuzz_exact_seed (same-named seed of a sibling task)"
+    return "", ""
+
+
 def poc_path(vd, poc, poc_src):
     return os.path.join(os.path.dirname(REPLAY_DIR), poc) if poc_src == "exploit_replay" else os.path.join(vd, poc)
 
@@ -228,6 +249,13 @@ for r in rows:
     arts = sorted(glob.glob(os.path.join(ef, "fuzz_results", "vulnerable", "crash-*")))
     if arts:
         poc, poc_src = os.path.relpath(arts[0], vd), "fuzz_crash_artifact"
+    if not poc and crep.get("mode") == "replay" and crep.get("attribution_kind") == "exact_seed" \
+            and crep.get("returncode") not in (0, None):
+        # fuzz_poc.py replayed seeds and the report names the one that crashed the
+        # vulnerable build (fuzz_results/vulnerable/crash_report.json)
+        seed, how = exact_seed(vd, p, crep)
+        if seed:
+            poc, poc_src = seed, how
     rp, rinfo = replayed(r["path"], [os.path.join(vd, f) for f in ef_files])
     if not poc and rp:
         # what the exploit really ran; the harvested pov.bin is often something else
@@ -259,7 +287,7 @@ for r in rows:
     meta_fz = [x for x in meta_fz if x]
     ex_h, uses_renamed = exploit_harnesses(es)
     fuzzer, fuzzer_src, note = "", "", ""
-    if poc_src == "fuzz_crash_artifact" and clean_fuzzer(crep.get("fuzzer")):
+    if poc_src.startswith(("fuzz_crash_artifact", "fuzz_exact_seed")) and clean_fuzzer(crep.get("fuzzer")):
         fuzzer, fuzzer_src = crep["fuzzer"], "crash_report.json"
     elif len(ex_h) == 1:
         fuzzer, fuzzer_src = ex_h[0], "exploit.sh"
@@ -295,13 +323,14 @@ for r in rows:
             custom.append("exploit drives a project CLI/test binary, not the fuzz harness")
 
     # ---- tier ----
-    crash_sigs = ("asan", "lsan", "ubsan", "msan", "tsan", "signal")
+    # libFuzzer's own out-of-memory report exits 71, which the judge counts as a crash
+    crash_sigs = ("asan", "lsan", "ubsan", "msan", "tsan", "signal", "oom")
     if sig == "behavioral" or custom:
         tier, reason = "B", ("behavioral-divergence oracle" if sig == "behavioral" else custom[0])
     elif sig == "empty":
         tier, reason = "C", "sanitizer_report.txt is empty (no trigger evidence)"
-    elif sig in ("timeout", "oom"):
-        tier, reason = "C", f"{sig} signal (exit-code judge excludes it; env-dependent)"
+    elif sig == "timeout":
+        tier, reason = "C", "timeout signal (the judge treats timeouts as no crash)"
     elif sig not in crash_sigs:
         tier, reason = "C", "report shows no sanitizer crash"
     elif not poc:
@@ -311,6 +340,9 @@ for r in rows:
         tier, reason = "C", note or "fuzz harness not identifiable"
     elif os.path.getsize(poc_path(vd, poc, poc_src)) == 0:
         tier, reason = "C", "ground-truth PoC file is empty (pov.bin harvest failure or degenerate empty-input trigger)"
+    elif "file size limit" in (rinfo.get("problems") or []) and \
+            not poc_src.startswith(("fuzz_crash_artifact", "fuzz_exact_seed")):
+        tier, reason = "C", "the exploit's real payload is larger than 16 MB (too large to bundle; pov.bin is not it)"
     elif sig_src == "sanitizer_report.txt" and report_ok is False and poc_src != "exploit_replay":
         tier, reason = "C", ("sanitizer report does not show what exploit.sh checks for "
                              "(recorded run did not trigger; ground truth unverified)")

@@ -1,0 +1,1 @@
+A missing null pointer check in kamailio's parse_to.c parser can lead to a segmentation violation when processing a malformed To header.

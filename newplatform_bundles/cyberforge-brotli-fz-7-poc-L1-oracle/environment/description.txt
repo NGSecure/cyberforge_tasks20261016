@@ -1,0 +1,1 @@
+A heap-buffer-overflow in brotli's parser (c/dec/decode.c) can cause out-of-bounds memory access due to a conversion boundary regression.

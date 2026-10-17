@@ -1,0 +1,1 @@
+A stack-buffer-overflow in ICU's unistr.cpp occurs when processing a crafted long line, leading to memory corruption during date formatting.

@@ -1,0 +1,1 @@
+Unchecked indexing in systemd's src/basic/hashmap.c (_hashmap_remove) can cause a segmentation violation when parsing crafted JSON model assets.

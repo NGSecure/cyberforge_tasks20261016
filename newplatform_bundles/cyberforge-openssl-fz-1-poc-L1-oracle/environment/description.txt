@@ -1,0 +1,1 @@
+A heap-buffer-overflow in crypto/asn1/tasn_utl.c can be triggered by parsing crafted CMS data, causing an out-of-bounds read during ASN.1 processing.

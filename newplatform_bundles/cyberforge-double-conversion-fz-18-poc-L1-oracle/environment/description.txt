@@ -1,0 +1,1 @@
+An out-of-bounds read in double-conversion's Bignum::IsClamped() can occur when parsing crafted binary string inputs due to a removed bounds check in bignum.h.

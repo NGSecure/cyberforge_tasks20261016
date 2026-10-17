@@ -1,0 +1,1 @@
+libpng's pngread.c lacks a copy-size/validation check in png_image_read_colormap, allowing a post-buffer dereference of display->background that triggers a segmentation-violation under libpng_colormap_fuzzer.

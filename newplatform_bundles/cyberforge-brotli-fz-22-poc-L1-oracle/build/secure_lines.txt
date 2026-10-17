@@ -1,0 +1,1 @@
+while (table_size != goal_size) {

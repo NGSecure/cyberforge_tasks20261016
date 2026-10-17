@@ -1,0 +1,1 @@
+An out-of-bounds read in the NAS EPS message parser of Open5GS (lib/nas/eps/ies.c) can trigger a fatal assertion in ogs_pkbuf_push, leading to denial of service.

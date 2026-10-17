@@ -1,0 +1,1 @@
+while(tmp < end && (flags & msg->parsed_flag) != flags) {

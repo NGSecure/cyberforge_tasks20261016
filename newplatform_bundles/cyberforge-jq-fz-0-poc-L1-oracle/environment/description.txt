@@ -1,0 +1,1 @@
+A stack-buffer-overflow in jq's parser.c due to an off-by-one iteration during syntax error handling can be triggered by crafted script input.

@@ -1,0 +1,1 @@
+A crafted ZIP archive triggers a segmentation violation in libzip's ZIP reading code, leading to a denial of service.

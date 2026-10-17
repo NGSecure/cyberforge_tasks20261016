@@ -1,0 +1,1 @@
+A missing bounds check in systemd's journal-remote JSON parser (src/journal-remote/journal-remote-parse.c) can cause a post-buffer out-of-bounds access when parsing model asset input.

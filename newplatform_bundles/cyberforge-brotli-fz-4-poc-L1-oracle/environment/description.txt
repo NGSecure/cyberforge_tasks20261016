@@ -1,0 +1,1 @@
+An off-by-one error in BrotliBuildHuffmanTable (c/dec/huffman.c) can trigger a global buffer overflow while building Huffman tables in the parser.

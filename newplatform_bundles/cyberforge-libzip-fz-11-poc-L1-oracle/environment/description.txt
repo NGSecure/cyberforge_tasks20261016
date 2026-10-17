@@ -1,0 +1,1 @@
+A heap memory leak in libzip's zip_source_close.c can be triggered by processing a crafted zip file, leading to resource exhaustion.

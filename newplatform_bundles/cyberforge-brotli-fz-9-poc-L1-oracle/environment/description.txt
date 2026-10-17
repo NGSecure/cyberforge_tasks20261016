@@ -1,0 +1,1 @@
+Heap-buffer-overflow in brotli's huffman.c (BrotliBuildSimpleHuffmanTable) permits out-of-bounds write after a removed copy-size constraint, causing heap corruption.

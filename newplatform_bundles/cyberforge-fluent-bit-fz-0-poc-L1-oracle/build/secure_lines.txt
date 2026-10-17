@@ -1,0 +1,5 @@
+return flb_parser_logfmt_do(parser, buf, length,
+return flb_parser_json_do(parser, buf, length,
+return flb_parser_ltsv_do(parser, buf, length,
+else if (parser->type == FLB_PARSER_LOGFMT) {
+else if (parser->type == FLB_PARSER_JSON) {

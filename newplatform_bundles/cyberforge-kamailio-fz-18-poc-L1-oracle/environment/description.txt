@@ -1,0 +1,1 @@
+In Kamailio's message parser (msg_parser.c), an off-by-one error causes a heap-buffer-overflow during header parsing.

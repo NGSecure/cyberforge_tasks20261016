@@ -1,0 +1,1 @@
+QuickJS's regexp handling in cutils.h lacks a bounds check (removed_bounds_check), allowing a heap-buffer-overflow (CWE-125) when evaluating crafted script input.

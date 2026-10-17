@@ -1,0 +1,1 @@
+In double-conversion's strtod.cc, an off-by-one iteration in the ReadUint64 helper leads to a CWE-193 calculation error.

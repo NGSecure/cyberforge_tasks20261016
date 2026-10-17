@@ -1,0 +1,1 @@
+SortablePoly *spolys = H3_MEMORY(malloc)(sizeof(SortablePoly) * numPolys);

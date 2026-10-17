@@ -1,0 +1,1 @@
+A NULL pointer write in libsepol/cil/src/cil_parser.c's insert_node allows a malformed parser state to dereference current->cl_tail->next, causing an AddressSanitizer-observed SEGV.

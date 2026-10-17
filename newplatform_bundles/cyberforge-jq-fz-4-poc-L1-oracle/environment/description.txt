@@ -1,0 +1,1 @@
+Post-buffer write vulnerability (CWE-120) in jv_parse.c (jq parser_compile) allows out-of-bounds memory writes when copy size constraints are removed during script text loading.

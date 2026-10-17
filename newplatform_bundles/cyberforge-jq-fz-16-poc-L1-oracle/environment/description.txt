@@ -1,0 +1,1 @@
+Buffer overflow in jq's parser (src/jv_parse.c) caused by a removed copy size constraint leads to memory corruption when parsing crafted script text.

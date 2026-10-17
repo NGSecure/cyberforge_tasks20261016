@@ -1,0 +1,1 @@
+for (len = 1; len <= kJpegHuffmanMaxBitLength; ++len) {

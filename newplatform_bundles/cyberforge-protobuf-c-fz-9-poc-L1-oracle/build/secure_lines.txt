@@ -1,0 +1,1 @@
+return allocator->alloc(allocator->allocator_data, size);

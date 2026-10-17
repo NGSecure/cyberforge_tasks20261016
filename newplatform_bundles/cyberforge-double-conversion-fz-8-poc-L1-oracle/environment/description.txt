@@ -1,0 +1,1 @@
+An off-by-one iteration in the double-conversion library's strtod parser can cause incorrect floating-point conversion of certain inputs.

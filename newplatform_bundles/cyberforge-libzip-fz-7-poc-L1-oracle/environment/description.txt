@@ -1,0 +1,1 @@
+libzip: _zip_progress_subrange in zip_progress.c may dereference an invalid progress pointer and perform a write to the NULL page, causing a segmentation fault.

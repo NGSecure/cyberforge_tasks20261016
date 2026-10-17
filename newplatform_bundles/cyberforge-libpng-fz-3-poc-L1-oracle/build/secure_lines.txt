@@ -1,0 +1,2 @@
+"background color must be supplied to remove alpha/transparency");
+else if (display->background == NULL /* no way to remove it */)

@@ -1,0 +1,1 @@
+Heap-buffer-overflow in Meta/Lagom/Fuzzers/FuzzSQLParser.cpp when parsing regexp model assets allows out-of-bounds heap writes due to a removed length restriction (CWE-130).

@@ -1,0 +1,1 @@
+return used_bigits_ == 0 || RawBigit(used_bigits_ - 1) != 0;

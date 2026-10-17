@@ -1,0 +1,1 @@
+jq's compile.c in the parser_compile subsystem contains a CWE-120 post-buffer operation vulnerability from a removed copy size constraint, allowing a potential buffer overflow when compiling scripts.

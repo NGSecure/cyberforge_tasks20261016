@@ -1,0 +1,1 @@
+A memcpy-param-overlap in libpng's pngrtran.c can cause memory corruption during PNG processing.

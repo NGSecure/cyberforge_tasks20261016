@@ -1,0 +1,1 @@
+libpng's pngmem.c contains an off-by-one heap-buffer-overflow in PNG memory handling, allowing malformed PNGs to trigger out-of-bounds heap writes during parsing.

@@ -1,0 +1,1 @@
+An off-by-one calculation in H5Fint.c leads to a heap-buffer-overflow when decoding address lengths in HDF5 files.

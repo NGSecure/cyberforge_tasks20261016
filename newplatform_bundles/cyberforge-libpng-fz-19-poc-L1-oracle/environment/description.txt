@@ -1,0 +1,1 @@
+A memcpy parameter overlap in libpng's pngrtran.c allows undefined behavior when processing crafted PNG files with empty ancillary chunks.

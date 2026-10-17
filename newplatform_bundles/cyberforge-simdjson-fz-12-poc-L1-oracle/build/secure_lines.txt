@@ -1,0 +1,1 @@
+for (i = 0; i < json_pointer.length() && json_pointer[i] != '/'; i++) {

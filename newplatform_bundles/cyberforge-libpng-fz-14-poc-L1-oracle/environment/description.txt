@@ -1,0 +1,1 @@
+A null pointer dereference in pngerror.c leads to a segmentation violation in libpng.

@@ -1,0 +1,1 @@
+A null pointer dereference in the chrono duration parser in fmt's include/fmt/chrono.h leads to a segmentation violation.

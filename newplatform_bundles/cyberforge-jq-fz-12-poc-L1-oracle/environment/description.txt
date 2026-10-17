@@ -1,0 +1,1 @@
+jq's src/jv_parse.c contains an off-by-one iteration bug in the parser that can trigger a global buffer overflow when parsing crafted script text.

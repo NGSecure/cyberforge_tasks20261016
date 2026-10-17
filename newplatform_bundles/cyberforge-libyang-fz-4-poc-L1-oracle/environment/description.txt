@@ -1,0 +1,1 @@
+An off-by-one calculation in libyang's schema_compile_amend.c triggers a segmentation violation when parsing a crafted YANG file.

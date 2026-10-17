@@ -1,0 +1,1 @@
+An off-by-one iteration in hashtab.c's parser in selinux causes a heap-buffer-overflow during hashtab_map iteration leading to out-of-bounds heap write.

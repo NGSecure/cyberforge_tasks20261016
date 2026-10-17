@@ -1,0 +1,4 @@
+PNG_MAX_PALETTE_LENGTH * (sizeof (png_color))));
+PNG_MAX_PALETTE_LENGTH * (sizeof (png_color)));
+for (i = 0; i < PNG_MAX_PALETTE_LENGTH; i++)
+PNG_MAX_PALETTE_LENGTH);

@@ -1,0 +1,1 @@
+A heap-buffer-overflow in double-conversion's string-to-double parser at string-to-double.cc can read out of bounds when parsing crafted binary input due to a removed bounds check.

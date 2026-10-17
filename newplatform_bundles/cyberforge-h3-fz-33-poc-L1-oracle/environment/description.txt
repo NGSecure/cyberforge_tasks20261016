@@ -1,0 +1,1 @@
+A heap-buffer-overflow in fuzzerCellArea.c in H3 can be triggered by crafted binary input because a bounds check was removed.

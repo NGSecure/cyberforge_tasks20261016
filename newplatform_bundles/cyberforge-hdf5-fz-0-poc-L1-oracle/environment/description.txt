@@ -1,0 +1,1 @@
+An off-by-one iteration bug in hdf5's src/H5FL.c can cause a null-pointer segmentation-violation in the json_parser when processing model_asset inputs, reachable via the h5_read_fuzzer.

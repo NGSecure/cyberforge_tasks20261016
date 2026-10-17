@@ -1,0 +1,1 @@
+filename.erase(prevpos, pos + relsize - prevpos);

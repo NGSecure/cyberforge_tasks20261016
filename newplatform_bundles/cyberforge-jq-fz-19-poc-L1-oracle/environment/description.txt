@@ -1,0 +1,1 @@
+Improper validation of array indexes in src/jv.c can cause jq to crash when processing a crafted filter.

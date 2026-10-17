@@ -1,0 +1,1 @@
+A null pointer dereference in OpenCV's TensorFlow importer (tf_importer.cpp) causes a segmentation violation when loading a crafted model.

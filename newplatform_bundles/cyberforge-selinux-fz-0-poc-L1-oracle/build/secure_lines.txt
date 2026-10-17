@@ -1,0 +1,1 @@
+if (current->cl_head == NULL) {

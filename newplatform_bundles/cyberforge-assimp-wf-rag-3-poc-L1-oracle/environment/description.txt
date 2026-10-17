@@ -1,0 +1,1 @@
+An out-of-bounds buffer operation in Assimp's ZipArchiveIOSystem::Implement::SimplifyFilename can be triggered by a crafted ZIP archive, leading to memory corruption.

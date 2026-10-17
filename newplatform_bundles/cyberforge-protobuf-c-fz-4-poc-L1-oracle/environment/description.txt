@@ -1,0 +1,1 @@
+A removed bounds check in protobuf-c's parser (protobuf-c.c) allows a heap-buffer-overflow (CWE-125) during binary unpacking, as reported by AddressSanitizer.

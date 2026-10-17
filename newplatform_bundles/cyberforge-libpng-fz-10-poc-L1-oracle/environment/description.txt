@@ -1,0 +1,1 @@
+Off-by-one in libpng's png_build_16bit_table (png.c) triggers a heap-buffer-overflow when parsing crafted colormap PNGs, allowing memory corruption.

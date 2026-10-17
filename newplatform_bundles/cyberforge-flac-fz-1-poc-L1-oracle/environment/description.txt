@@ -1,0 +1,1 @@
+An off-by-one iteration in FLAC's bitreader.c client read path causes a heap-buffer-overflow.

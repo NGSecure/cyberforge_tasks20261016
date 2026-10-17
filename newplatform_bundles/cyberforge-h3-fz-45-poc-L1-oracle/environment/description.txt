@@ -1,0 +1,1 @@
+A heap-buffer-overflow in the fuzzerEdgeLength parser of h3 enables out-of-bounds reads via malformed input because a bounds check was removed.

@@ -1,0 +1,1 @@
+Brotli parser in c/common/platform.c has a heap-buffer-overflow (CWE-125) due to a conversion boundary regression in allocation logic, allowing out-of-bounds write when decoding input.

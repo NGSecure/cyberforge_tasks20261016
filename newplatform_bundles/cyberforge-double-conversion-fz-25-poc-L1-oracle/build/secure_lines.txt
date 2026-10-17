@@ -1,0 +1,1 @@
+return StringToIeee(buffer, length, true, processed_characters_count);

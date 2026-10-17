@@ -1,0 +1,1 @@
+for (f = s, t = ans + pl; f < s + length; f++) {

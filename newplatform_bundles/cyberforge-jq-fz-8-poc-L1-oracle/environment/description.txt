@@ -1,0 +1,1 @@
+A missing bounds check in jq's compile.c can trigger an out-of-bounds read of a global buffer during parser compilation, resulting in a crash.

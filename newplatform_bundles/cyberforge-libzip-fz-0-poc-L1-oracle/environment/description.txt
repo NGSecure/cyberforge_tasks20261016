@@ -1,0 +1,1 @@
+libzip's _zip_source_call can misuse parser state to dereference an invalid pointer, letting malformed zip inputs (via zip_read_fuzzer) trigger memory leaks and potential crashes.

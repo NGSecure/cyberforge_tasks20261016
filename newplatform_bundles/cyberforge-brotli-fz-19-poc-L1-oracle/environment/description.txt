@@ -1,0 +1,1 @@
+In c/dec/huffman.c, an off-by-one iteration in BrotliBuildCodeLengthsHuffmanTable triggers a stack-buffer-overflow when parsing crafted input.

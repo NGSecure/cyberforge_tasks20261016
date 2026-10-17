@@ -1,0 +1,1 @@
+Off-by-one in libpng's OSS_FUZZ_png_calculate_crc (png.c) causes an extra loop iteration that leads to an out-of-bounds read and triggers an AddressSanitizer SEGV.

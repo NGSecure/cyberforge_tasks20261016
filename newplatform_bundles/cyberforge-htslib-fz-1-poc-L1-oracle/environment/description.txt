@@ -1,0 +1,1 @@
+Stack-based buffer overflow in htslib's cram/cram_codecs.c during CRAM encoding (cram_byte_array_stop_encode_init path) can corrupt stack memory and crash the parser.

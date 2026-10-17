@@ -1,0 +1,1 @@
+In openssl's crypto/pem/pem_oth.c a parser-state misuse in the json_parser paths can cause PEM_ASN1_read_bio to dereference an invalid pointer (CWE-476).

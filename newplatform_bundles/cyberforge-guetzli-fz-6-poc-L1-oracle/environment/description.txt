@@ -1,0 +1,1 @@
+guetzli: CWE-193 (Calculation) in guetzli/jpeg_huffman_decode.cc.

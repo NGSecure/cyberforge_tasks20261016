@@ -1,0 +1,1 @@
+H3Error err = H3_EXPORT(maxGridDiskSize)(k, &maxIdx);

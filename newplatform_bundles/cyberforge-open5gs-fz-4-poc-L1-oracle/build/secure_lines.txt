@@ -1,0 +1,1 @@
+pkbuf = ogs_talloc_zero_size(pool, sizeof(*pkbuf) + size, file_line);

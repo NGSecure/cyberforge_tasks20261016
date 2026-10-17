@@ -1,0 +1,1 @@
+An off-by-one calculation in Hunspell's hash manager (hashmgr.cxx) can trigger a segmentation violation when processing crafted dictionary data.

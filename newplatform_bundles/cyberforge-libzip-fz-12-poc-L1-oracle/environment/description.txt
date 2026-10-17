@@ -1,0 +1,1 @@
+A use-after-free vulnerability in libzip's zip_discard.c can be triggered by processing a crafted ZIP archive, leading to memory corruption.

@@ -1,0 +1,1 @@
+if (ogs_pkbuf_pull(pkbuf, size) == NULL) {

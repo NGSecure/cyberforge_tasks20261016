@@ -1,0 +1,1 @@
+A stack-buffer-overflow in QuickJS's quickjs.c, caused by invalid pointer handling, can be triggered via crafted JavaScript.

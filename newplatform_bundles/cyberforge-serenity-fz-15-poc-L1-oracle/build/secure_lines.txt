@@ -1,0 +1,1 @@
+auto parser = SQL::AST::Parser(SQL::AST::Lexer({ data, size }));

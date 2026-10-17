@@ -1,0 +1,1 @@
+c->u.e_byte_array_stop.content_id = ((int *)dat)[1];

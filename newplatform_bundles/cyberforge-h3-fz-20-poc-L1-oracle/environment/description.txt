@@ -1,0 +1,1 @@
+A heap-buffer-overflow in the cells-to-multi-polygon conversion logic in fuzzerCellsToMultiPolygon.c allows out-of-bounds reads due to a missing bounds check.

@@ -1,0 +1,1 @@
+A null pointer dereference in htslib's sam.c triggers a segmentation violation during parsing of crafted binary files.

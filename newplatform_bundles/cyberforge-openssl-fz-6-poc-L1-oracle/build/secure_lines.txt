@@ -1,0 +1,2 @@
+if (BIO_puts(out, "NULL\n") <= 0)
+if (utype == V_ASN1_NULL) {

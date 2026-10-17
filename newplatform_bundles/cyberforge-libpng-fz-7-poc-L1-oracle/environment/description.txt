@@ -1,0 +1,1 @@
+A null pointer dereference in libpng's pngrtran.c during PNG transformation processing causes a segmentation violation, leading to denial of service.

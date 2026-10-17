@@ -1,0 +1,1 @@
+In libdwarf's dwarf_object_detector_path_b, an unhandled error condition can be triggered by a crafted DWARF file, leading to a crash.

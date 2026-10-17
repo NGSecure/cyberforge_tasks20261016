@@ -1,0 +1,1 @@
+it8 ->MemoryBlock = (char*) _cmsMalloc(ContextID, len + 1);

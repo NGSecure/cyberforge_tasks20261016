@@ -1,0 +1,1 @@
+An off-by-one calculation in simdjson's array iteration code in array-inl.h can cause a heap-buffer-overflow when parsing crafted JSON.

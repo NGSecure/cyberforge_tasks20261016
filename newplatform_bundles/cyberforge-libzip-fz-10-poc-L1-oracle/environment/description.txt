@@ -1,0 +1,1 @@
+A use-after-free in libzip's zip_fclose.c during archive close can be triggered by malformed input, causing memory corruption due to an improper post-buffer operation.

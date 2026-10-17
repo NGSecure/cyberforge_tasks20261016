@@ -1,0 +1,1 @@
+A missing copy-size constraint in the SSE2 bitshuffle function bshuf_copy of c-blosc causes a heap-buffer-overflow, allowing out-of-bounds memory access.

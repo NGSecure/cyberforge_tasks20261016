@@ -1,0 +1,1 @@
+An unchecked index in cellsToMultiPoly.c leads to a heap-buffer-overflow when parsing binary H3 data.

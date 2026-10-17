@@ -1,0 +1,1 @@
+A heap-buffer-overflow in H3's fuzzerCellsToLinkedMultiPolygon.c causes an out-of-bounds read while processing linked multi-polygon cell input due to a missing bounds check.

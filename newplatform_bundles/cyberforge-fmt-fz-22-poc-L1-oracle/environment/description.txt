@@ -1,0 +1,1 @@
+An unchecked named argument index in fmt's parser causes a stack-buffer-overflow while processing format strings in include/fmt/base.h.

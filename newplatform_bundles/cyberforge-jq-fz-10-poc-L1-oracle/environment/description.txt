@@ -1,0 +1,1 @@
+A null pointer dereference in jq's UTF-8 validation in jv_unicode.c triggers a segmentation violation while parsing crafted script input.

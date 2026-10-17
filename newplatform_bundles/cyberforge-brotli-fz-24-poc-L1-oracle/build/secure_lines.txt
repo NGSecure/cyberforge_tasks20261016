@@ -1,0 +1,1 @@
+memcpy(s->ringbuffer, old_ringbuffer, (size_t)s->pos);

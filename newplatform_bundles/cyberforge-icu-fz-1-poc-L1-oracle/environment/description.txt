@@ -1,0 +1,1 @@
+Unchecked array index in icu4c unifiedcache.cpp (icu_78::UnifiedCache::_poll) can cause a segmentation violation while importing malformed model assets.

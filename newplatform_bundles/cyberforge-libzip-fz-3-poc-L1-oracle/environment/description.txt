@@ -1,0 +1,1 @@
+A parser-state regression in libzip lib/zip_progress.c allows _zip_progress_update to dereference an invalid progress pointer, causing an AddressSanitizer-detected segmentation violation.

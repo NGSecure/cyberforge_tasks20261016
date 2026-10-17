@@ -1,0 +1,1 @@
+A global buffer over-read in brotli's decompression code (c/dec/decode.c) can cause an out-of-bounds read, leading to a crash or memory disclosure.

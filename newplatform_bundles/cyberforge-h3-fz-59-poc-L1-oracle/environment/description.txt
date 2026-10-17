@@ -1,0 +1,1 @@
+An unchecked index in H3's cellsToMultiPoly.c can trigger a heap-buffer-overflow during cell-to-multi-polygon conversion of crafted binary input.

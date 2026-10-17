@@ -31,19 +31,19 @@
     "task_server_image": "cyberforge_serenity_fz_5_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "exploit_files/reproducer.bin",
-    "how_found": "single_input_file",
-    "bytes": 29,
+    "dataset_file": "exploit_files/generated_inputs/poc_orig_357719ec47.ttf",
+    "how_found": "fuzz_exact_seed",
+    "bytes": 28,
     "exploit_replay_inputs": 0,
     "dataset_report_matches_exploit_check": null,
-    "sha256": "c80bd7dd8c555800a61f4f7e0fca6eb7f4e39cbca6419590e4b2f8d8c777fc2b",
+    "sha256": "357719ec47f6a915da7b4c73fc9a38b03258751c0043e679b246644596d17483",
     "solve_sh": "inline"
   },
   "harness": {
     "candidates": [
       "FuzzTTF"
     ],
-    "how_found": "metadata (fuzz_poc.py)",
+    "how_found": "crash_report.json",
     "built_by_dataset_snapshot_compile": [
       "FuzzTTF"
     ],

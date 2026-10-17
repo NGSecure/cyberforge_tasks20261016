@@ -1,0 +1,1 @@
+fluent-bit's Docker multiline parser (flb_ml_parser_docker.c) contains a null pointer dereference triggered by an off-by-one iteration, causing a segmentation violation.

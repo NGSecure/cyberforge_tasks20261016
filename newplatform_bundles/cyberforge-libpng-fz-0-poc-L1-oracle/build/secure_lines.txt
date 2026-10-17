@@ -1,0 +1,1 @@
+return malloc((size_t)/*SAFE*/size); /* checked for truncation above */

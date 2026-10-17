@@ -1,0 +1,1 @@
+png_longjmp(png_ptr, 1);

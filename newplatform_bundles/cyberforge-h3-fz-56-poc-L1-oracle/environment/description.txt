@@ -1,0 +1,1 @@
+A heap-buffer-overflow in cellsToMultiPoly.c allows memory corruption via crafted binary input, causing a post-buffer operation.

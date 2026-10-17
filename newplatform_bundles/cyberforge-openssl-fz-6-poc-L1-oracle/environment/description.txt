@@ -1,0 +1,1 @@
+A NULL pointer dereference in OpenSSL's ASN.1 pretty-printing function (tasn_prn.c) can cause a segmentation violation when processing a crafted DER input.

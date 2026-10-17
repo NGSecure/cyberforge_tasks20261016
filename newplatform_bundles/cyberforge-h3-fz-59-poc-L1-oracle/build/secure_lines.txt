@@ -1,0 +1,1 @@
+arcset->arcs = H3_MEMORY(malloc)(numArcs * sizeof(Arc));

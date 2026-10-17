@@ -1,0 +1,1 @@
+Unchecked indexing in jvp_object_get_slot in jq's jv.c can cause a heap-buffer-overflow when compiling malicious script text via the parser/compile subsystem.

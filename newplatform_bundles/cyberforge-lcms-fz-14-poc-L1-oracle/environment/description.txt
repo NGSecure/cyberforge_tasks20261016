@@ -1,0 +1,1 @@
+A heap-buffer-overflow in lcms's cmscgats.c during IT8 data loading can allow a crafted file to cause a crash or memory corruption.

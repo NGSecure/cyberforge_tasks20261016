@@ -1,0 +1,1 @@
+In H3, polygonToCells in algos.c has an off-by-one iteration that causes a heap-buffer-overflow.

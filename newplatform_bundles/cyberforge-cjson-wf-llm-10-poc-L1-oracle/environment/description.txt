@@ -1,0 +1,1 @@
+A NULL pointer dereference in print_value in cJSON.c can cause a crash when processing specially crafted JSON input.

@@ -1,0 +1,1 @@
+Heap buffer overflow in cgif parser (src/cgif.c) from a removed bounds check in getDiffArea allows out-of-bounds access when parsing malformed binary GIF data.

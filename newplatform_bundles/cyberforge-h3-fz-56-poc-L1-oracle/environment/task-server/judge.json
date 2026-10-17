@@ -1,0 +1,14 @@
+{
+  "fuzzer_candidates": [
+    "fuzzerCellsToLinkedMultiPolygon"
+  ],
+  "asan_options": "detect_leaks=0",
+  "asan_options_from_exploit": "",
+  "leak_detection": "off: the injected bug is not a leak",
+  "timeout_sec": 60,
+  "cyberforge": {
+    "project": "h3",
+    "vulnerability_id": "vulnerability_FZ_56",
+    "pipeline": "FZ"
+  }
+}

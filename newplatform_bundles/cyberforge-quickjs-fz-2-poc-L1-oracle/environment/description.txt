@@ -1,0 +1,1 @@
+quickjs.c contains a buffer overflow in regexp handling (CWE-120) where a removed copy size constraint can trigger a segmentation fault during script evaluation.

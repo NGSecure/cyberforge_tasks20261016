@@ -1,0 +1,1 @@
+QuickJS cutils.c has a post-buffer-operation (CWE-120) bug in dbuf_put usage within the regexp path that can trigger a segmentation fault due to a removed copy size constraint during script compilation.

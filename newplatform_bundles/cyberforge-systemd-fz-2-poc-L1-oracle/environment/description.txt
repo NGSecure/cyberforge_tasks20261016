@@ -1,0 +1,1 @@
+Off-by-one iteration in escape.c's cunescape_length_with_prefix can miscalculate buffer length when parsing model-based JSON assets, risking out-of-bounds memory access (CWE-193).

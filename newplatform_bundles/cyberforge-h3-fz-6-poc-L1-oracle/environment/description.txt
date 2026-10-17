@@ -1,0 +1,1 @@
+A missing bounds check in directedEdge.c triggers a stack-buffer-overflow while parsing crafted binary input, potentially leading to memory corruption.

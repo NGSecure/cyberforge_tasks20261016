@@ -1,0 +1,1 @@
+return ((const struct packed_u32 *)tab)->v;

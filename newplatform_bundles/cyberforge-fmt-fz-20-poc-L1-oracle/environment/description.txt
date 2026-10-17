@@ -1,0 +1,1 @@
+A stack-buffer-overflow in fmt's base.h parser occurs when named-argument formatting lacks a copy size constraint, allowing an overly long argument to overflow the buffer.

@@ -1,0 +1,1 @@
+A removed bounds check in double-conversion's string-to-double parser triggers a global-buffer-overflow (AddressSanitizer, CWE-125) when exercised by string_to_double_fuzzer.

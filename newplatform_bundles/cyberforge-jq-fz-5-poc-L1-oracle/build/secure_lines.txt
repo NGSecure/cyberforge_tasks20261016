@@ -1,0 +1,1 @@
+block tail = BLOCK(gen_op_bound(APPEND, array_var),

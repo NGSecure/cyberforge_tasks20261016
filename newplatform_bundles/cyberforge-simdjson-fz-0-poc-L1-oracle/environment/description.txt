@@ -1,0 +1,1 @@
+simdjson's document_stream-inl.h contains a heap-buffer-overflow in document_stream::start_stage1_thread where parser state misuse can lead to dereferencing an invalid pointer.

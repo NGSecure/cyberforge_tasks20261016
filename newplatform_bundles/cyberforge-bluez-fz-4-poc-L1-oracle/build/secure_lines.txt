@@ -1,0 +1,2 @@
+size = strlen(key) + strlen(value) + 2;
+if (write(fd, str, size) < 0)

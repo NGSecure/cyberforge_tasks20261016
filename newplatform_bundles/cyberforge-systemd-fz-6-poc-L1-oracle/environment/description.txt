@@ -1,0 +1,1 @@
+A heap buffer over-read in systemd's journal remote parser can lead to a crash while processing malformed journal input.

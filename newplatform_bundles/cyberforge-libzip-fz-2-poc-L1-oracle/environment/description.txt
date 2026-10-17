@@ -1,0 +1,1 @@
+A weakened validation in lib/zip_progress.c's _zip_progress_start leads to an invalid pointer dereference when invoking callbacks, causing a segmentation fault (CWE-476).

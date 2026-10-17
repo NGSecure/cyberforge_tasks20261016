@@ -1,0 +1,1 @@
+A NULL pointer dereference in linkedGeo.c can cause a segmentation violation while parsing linked multi-polygon data.

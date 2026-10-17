@@ -1,0 +1,1 @@
+A heap-buffer-overflow in OpenSSL's err_save.c allows an attacker to trigger memory corruption via crafted input.

@@ -1,0 +1,1 @@
+libzip has a post-buffer operation flaw in zip_source_layered.c, causing incorrect behavior while opening archive entries.

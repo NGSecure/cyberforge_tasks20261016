@@ -1,0 +1,1 @@
+Fluent Bit's parser parses a malformed input in src/flb_parser.c, leading to an invalid pointer dereference and a segmentation violation.

@@ -1,0 +1,1 @@
+In pupnp's ixmlparser.c, an invalid pointer causes a 27-byte memory leak during XML parsing.

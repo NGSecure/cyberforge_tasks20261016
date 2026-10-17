@@ -1,0 +1,1 @@
+memcpy(out_b, in_b, size * elem_size);

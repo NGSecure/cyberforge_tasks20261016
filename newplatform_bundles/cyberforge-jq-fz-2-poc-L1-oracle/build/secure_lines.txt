@@ -1,0 +1,1 @@
+if (pthread_getspecific(nomem_handler_key) == NULL) {

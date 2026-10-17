@@ -1,0 +1,1 @@
+An invalid pointer dereference in fluent-bit's log event decoder (src/flb_log_event_decoder.c) causes a segmentation violation during parser state handling.

@@ -1,0 +1,1 @@
+for (size_t j = 0; j < jpg->components.size(); ++j) {

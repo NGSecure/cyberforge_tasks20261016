@@ -1,0 +1,1 @@
+A heap-buffer-overflow in H3's cellsToMultiPoly.c permits an out-of-bounds memory access when constructing linked multi-polygons because the copy size constraint was removed.

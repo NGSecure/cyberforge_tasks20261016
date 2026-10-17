@@ -1,0 +1,1 @@
+A buffer overflow in Assimp's FBX parser (FBXParser.cpp) allows memory corruption via a crafted FBX file because SafeParse lacks a copy size constraint.

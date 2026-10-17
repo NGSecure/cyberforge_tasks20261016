@@ -1,0 +1,1 @@
+A heap-buffer-overflow in json_tokener_reset_level in json_tokener.c allows crafted input to cause an out-of-bounds write.

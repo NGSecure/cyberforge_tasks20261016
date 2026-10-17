@@ -1,0 +1,1 @@
+A heap-buffer-overflow in the directed-edge parser of the h3 library allows out-of-bounds reads when processing crafted binary input.

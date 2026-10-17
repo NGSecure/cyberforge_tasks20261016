@@ -1,0 +1,13 @@
+/opt/src_snapshot.tar
+/out/llvm-symbolizer
+/out/unpack_fuzzer
+/usr/local/bin/protoc-c
+/usr/local/bin/protoc-gen-c
+/usr/local/include/google/protobuf-c/protobuf-c.h
+/usr/local/include/protobuf-c/protobuf-c.h
+/usr/local/include/protobuf-c/protobuf-c.proto
+/usr/local/lib/libprotobuf-c.a
+/usr/local/lib/libprotobuf-c.la
+/usr/local/lib/pkgconfig/libprotobuf-c.pc
+/workspace/run/unit_tests/parse_results.py
+/workspace/run/unit_tests/test.sh

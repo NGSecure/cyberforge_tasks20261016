@@ -1,0 +1,1 @@
+Off-by-one iteration in lcms cmstypes.c parser (Type_MLU handling) can trigger a heap-buffer-overflow when parsing malformed profiles.

@@ -1,0 +1,1 @@
+In Open5GS, a heap-buffer-overflow in ogs_pkbuf_alloc_debug may allow remote attackers to cause a denial of service via a crafted NAS message.

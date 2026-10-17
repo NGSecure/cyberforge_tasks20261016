@@ -1,0 +1,1 @@
+A segmentation violation due to an invalid pointer dereference in Fluent Bit's record accessor JSON parser (flb_ra_parser.c) can be triggered by crafted input via an unchecked index.

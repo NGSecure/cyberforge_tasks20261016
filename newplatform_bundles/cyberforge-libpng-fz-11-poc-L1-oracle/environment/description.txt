@@ -1,0 +1,1 @@
+A heap-buffer-overflow in libpng's png.c occurs when an unchecked index is used in a post-buffer operation during PNG color map processing, leading to out-of-bounds access.

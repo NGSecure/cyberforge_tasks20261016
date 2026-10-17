@@ -1,0 +1,1 @@
+In H3's algos.c, a stack-buffer-overflow occurs due to an unchecked index during polygon-to-cells processing.

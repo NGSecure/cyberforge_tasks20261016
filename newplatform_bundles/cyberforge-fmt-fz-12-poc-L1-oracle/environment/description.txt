@@ -1,0 +1,1 @@
+A null pointer dereference in include/fmt/format-inl.h during chrono timepoint parsing can cause a segmentation violation.

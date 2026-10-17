@@ -1,0 +1,1 @@
+In QuickJS, an unchecked array index in cutils.h during regexp handling can trigger an out-of-bounds memory access, resulting in a segmentation violation.

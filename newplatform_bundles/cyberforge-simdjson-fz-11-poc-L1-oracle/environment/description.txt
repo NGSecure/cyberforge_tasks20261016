@@ -1,0 +1,1 @@
+A heap-buffer-overflow in simdjson's serialization.h occurs during DOM serialization due to a post-buffer operation, allowing out-of-bounds memory access.

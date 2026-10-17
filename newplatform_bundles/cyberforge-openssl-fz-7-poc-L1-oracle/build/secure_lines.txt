@@ -1,0 +1,1 @@
+memcpy(data, es->err_data[i], data_sz);

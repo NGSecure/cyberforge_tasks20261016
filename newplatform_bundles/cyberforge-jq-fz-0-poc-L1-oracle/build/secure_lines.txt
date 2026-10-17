@@ -1,0 +1,1 @@
+int yycount = yy_syntax_error_arguments (yyctx, yyarg, YYARGS_MAX);

@@ -1,0 +1,1 @@
+BlueZ's textfile handling in src/textfile.c has a heap-buffer-overflow because a bounds check was removed, allowing an out-of-bounds write when parsing crafted binary input.

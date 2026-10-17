@@ -1,0 +1,1 @@
+for(i = old_size; i < s->atom_to_idx_size; i++)

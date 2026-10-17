@@ -1,0 +1,2 @@
+log_warning("Entry with no payload, skipping");
+if (source->importer.iovw.count == 0) {

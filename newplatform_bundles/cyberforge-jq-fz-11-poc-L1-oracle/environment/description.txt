@@ -1,0 +1,1 @@
+A crafted JSON input triggers an unchecked index in jv_parse.c, leading to a NULL pointer dereference and segmentation fault.

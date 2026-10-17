@@ -1,0 +1,1 @@
+lcms src/cmslut.c contains an unchecked index in cmsStageAllocMatrix that can cause out-of-bounds access and segmentation violation (CWE-129).

@@ -1,0 +1,1 @@
+buffer[uncompressed_length+(keyword_length+2)] = 0;

@@ -1,0 +1,5 @@
+JC_STRING(jso)->c_string.pdata = dstbuf;
+free(JC_STRING(jso)->c_string.pdata);
+dstbuf = (char *)malloc(len + 1);
+else if (JC_STRING(jso)->len < 0)
+if ((ssize_t)len > curlen)

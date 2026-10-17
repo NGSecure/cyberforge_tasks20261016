@@ -1,0 +1,1 @@
+A null pointer dereference in pngerror.c within libpng can cause a denial of service via a crafted PNG file.

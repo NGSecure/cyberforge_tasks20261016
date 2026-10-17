@@ -1,0 +1,2 @@
+selector = OBJ_obj2nid((ASN1_OBJECT *)*sfld);
+if ((tt->flags & ASN1_TFLG_ADB_OID) != 0)

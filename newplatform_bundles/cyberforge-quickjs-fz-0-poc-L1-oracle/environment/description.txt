@@ -1,0 +1,1 @@
+Insufficient size checks in quickjs cutils.c's dbuf_put allow memcpy to write past s->buf, leading to a segmentation-violation (SEGV).

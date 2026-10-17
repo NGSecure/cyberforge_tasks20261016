@@ -1,0 +1,1 @@
+if (srcLength <= getCapacity() - oldLength && isBufferWritable()) {

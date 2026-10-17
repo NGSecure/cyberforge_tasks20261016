@@ -1,0 +1,1 @@
+simdjson's padded_string implementation reads beyond its buffer, causing a segmentation violation.

@@ -1,0 +1,1 @@
+An off-by-one iteration in hdf5's H5Fint.c (H5F_addr_decode_len) during JSON/model_asset decoding can trigger a heap-buffer-overflow, enabling memory corruption when reading malformed inputs.

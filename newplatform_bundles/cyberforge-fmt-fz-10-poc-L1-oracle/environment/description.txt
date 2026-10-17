@@ -1,0 +1,1 @@
+A removed bounds check in format.h's parser permits a post-buffer out-of-bounds access that can result in freeing a non-malloc address and cause heap corruption.

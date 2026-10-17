@@ -1,0 +1,1 @@
+A buffer overflow in brotli's decode.c can cause a segmentation violation via crafted input.

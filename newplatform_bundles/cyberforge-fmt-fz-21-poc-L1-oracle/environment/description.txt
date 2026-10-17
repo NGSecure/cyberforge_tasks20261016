@@ -1,0 +1,1 @@
+A stack-buffer-overflow occurs in fmt's parsing of named arguments in include/fmt/base.h, allowing an oversized copy to write past the end of a stack buffer.

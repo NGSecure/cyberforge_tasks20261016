@@ -1,0 +1,1 @@
+A heap-buffer-overflow in OpenSSL's ASN.1 utility functions (tasn_utl.c) allows out-of-bounds read during DER decoding, potentially leading to memory disclosure or crash.

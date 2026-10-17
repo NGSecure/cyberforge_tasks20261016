@@ -1,0 +1,1 @@
+In jq's jv_parse.c, an invalid parser state pointer causes a heap-buffer-overflow while compiling a script.

@@ -1,0 +1,1 @@
+Heap-buffer overflow in cmsnamed.c allows out-of-bounds write when named color data is copied without proper size checks.

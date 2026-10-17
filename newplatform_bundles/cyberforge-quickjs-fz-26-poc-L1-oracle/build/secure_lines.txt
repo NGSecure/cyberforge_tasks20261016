@@ -1,0 +1,1 @@
+for (i = 0; i < sp->len && i < (int)countof(buf) - 1; i++) {

@@ -1,0 +1,1 @@
+BROTLI_DECODER_FREE(s, s->context_modes);

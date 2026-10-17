@@ -1,0 +1,3 @@
+syntax_error(ByteString::formatted("Exceeded maximum expression tree depth of {}", Limits::maximum_expression_tree_depth));
+if (++m_parser_state.m_current_expression_depth > Limits::maximum_expression_tree_depth) {
+return create_ast_node<ErrorExpression>();

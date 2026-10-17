@@ -1,0 +1,1 @@
+strncpy(VarName, StringPtr(it8->id), MAXID - 1);

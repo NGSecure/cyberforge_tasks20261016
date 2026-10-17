@@ -30,19 +30,19 @@
     "task_server_image": "cyberforge_json_c_fz_7_task_server:v0.0.1"
   },
   "ground_truth": {
-    "dataset_file": "replay/json-c/vulnerability_FZ_7/input-000",
-    "how_found": "exploit_replay",
-    "bytes": 23,
+    "dataset_file": "exploit_files/generated_inputs/long_ff.bin",
+    "how_found": "fuzz_exact_seed",
+    "bytes": 256,
     "exploit_replay_inputs": 1,
     "dataset_report_matches_exploit_check": true,
-    "sha256": "9b6bff2dade8fca29b5fe5f0bb776c212fddcb1a28bc7deb997c0d48a1c012a3",
+    "sha256": "3d6876a0146de8576eb2395a858de1213d1b92c65b779df3a331cfd5a4584546",
     "solve_sh": "inline"
   },
   "harness": {
     "candidates": [
       "json_array_fuzzer"
     ],
-    "how_found": "exploit.sh",
+    "how_found": "crash_report.json",
     "built_by_dataset_snapshot_compile": [
       "json_array_fuzzer"
     ],

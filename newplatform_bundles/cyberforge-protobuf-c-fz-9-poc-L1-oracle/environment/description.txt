@@ -1,0 +1,1 @@
+Heap-buffer-overflow in protobuf-c parser (protobuf-c.c) from a removed bounds check when unpacking binary data, enabling post-buffer writes.

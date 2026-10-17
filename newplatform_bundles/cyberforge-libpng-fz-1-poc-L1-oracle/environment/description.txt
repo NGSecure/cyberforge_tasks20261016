@@ -1,0 +1,1 @@
+libpng (pngread.c) has an invalid pointer (CWE-476) leading to a segmentation violation via parser_state_misuse when parsing crafted PNG colormap data.

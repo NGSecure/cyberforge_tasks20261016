@@ -1,0 +1,1 @@
+A global buffer overflow in fmt's chrono.h occurs in fmt::detail::copy_unit while formatting durations, allowing memory corruption via crafted input.

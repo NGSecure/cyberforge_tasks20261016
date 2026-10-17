@@ -1,0 +1,1 @@
+if (get_lvalue(s, &opcode, &scope, &name, &label, NULL, TRUE, op))

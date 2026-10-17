@@ -1,0 +1,1 @@
+A heap-buffer-overflow in json-c's json_object.c can occur during JSON object string conversion because the copy size constraint was removed.

@@ -1,0 +1,1 @@
+if ((de = _zip_get_dirent(za, index, flags, NULL)) == NULL) {

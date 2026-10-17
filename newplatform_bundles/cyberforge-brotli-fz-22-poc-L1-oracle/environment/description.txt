@@ -1,0 +1,1 @@
+A heap-buffer-overflow in BrotliBuildSimpleHuffmanTable within c/dec/huffman.c can be triggered by a crafted compressed stream, leading to memory corruption.

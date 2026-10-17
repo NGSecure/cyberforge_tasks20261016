@@ -1,0 +1,1 @@
+Heap-buffer-overflow in brotli c/dec/decode.c WriteRingBuffer allows a 1157-byte out-of-bounds write due to a removed copy-size constraint.

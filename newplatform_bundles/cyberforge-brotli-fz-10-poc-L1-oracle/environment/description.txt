@@ -1,0 +1,1 @@
+Heap-buffer-overflow in brotli's c/dec/decode.c parser (CWE-120) permits out-of-bounds memory access due to a removed copy-size constraint during ring-buffer handling.

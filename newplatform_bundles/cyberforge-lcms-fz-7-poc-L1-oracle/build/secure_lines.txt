@@ -1,0 +1,1 @@
+strncpy(v ->Prefix, Prefix, sizeof(v ->Prefix)-1);

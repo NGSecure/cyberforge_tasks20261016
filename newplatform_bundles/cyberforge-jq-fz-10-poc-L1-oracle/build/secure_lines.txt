@@ -1,0 +1,1 @@
+while ((in = jvp_utf8_next(in, end, &codepoint))) {

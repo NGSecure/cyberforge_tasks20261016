@@ -1,0 +1,1 @@
+An off-by-one iteration in Brotli's c/dec/decode.c ring buffer sizing can let malformed input reach command processing and trigger a NULL-pointer write, causing a segmentation fault.

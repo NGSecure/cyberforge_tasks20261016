@@ -1,0 +1,1 @@
+A heap-buffer-overflow in libpng pngrutil.c arises from an off-by-one calculation, allowing a crafted PNG file to trigger out-of-bounds memory access.

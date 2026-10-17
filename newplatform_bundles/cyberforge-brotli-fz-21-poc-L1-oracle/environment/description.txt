@@ -1,0 +1,1 @@
+A memory leak in the Brotli decoder's state cleanup while parsing crafted compressed input can cause resource exhaustion, enabling denial of service.

@@ -1,0 +1,5 @@
+png_safecat(image->message, (sizeof image->message), 0, error_message);
+size_t pos = png_safecat(image->message, (sizeof image->message), 0,
+if (image->opaque != NULL && image->opaque->error_buf != NULL)
+png_safecat(image->message, (sizeof image->message), pos,
+longjmp(png_control_jmp_buf(image->opaque), 1);

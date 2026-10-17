@@ -1,0 +1,1 @@
+while (SUPER::env.str_ref.avail ())

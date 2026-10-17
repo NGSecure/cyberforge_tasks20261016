@@ -1,0 +1,1 @@
+A crafted Brotli stream can trigger an oversized allocation in state.c due to a conversion boundary regression, leading to an out-of-bounds read.

@@ -1,0 +1,1 @@
+A global-buffer-overflow in QuickJS's libunicode.c occurs during regexp processing because an unchecked index into a Unicode table leads to an out-of-bounds read.

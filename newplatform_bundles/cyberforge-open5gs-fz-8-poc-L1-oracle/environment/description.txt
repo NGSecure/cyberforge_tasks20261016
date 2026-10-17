@@ -1,0 +1,1 @@
+An out-of-bounds read in the NAS EPS message parsing code of open5gs can be triggered by a crafted packet, leading to a denial of service.

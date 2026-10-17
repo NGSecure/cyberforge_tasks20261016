@@ -1,0 +1,1 @@
+A heap-buffer-overflow in jq's JSON parser (src/jv_parse.c) allows crafted script input to corrupt memory due to parser state misuse during token addition.

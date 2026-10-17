@@ -1,0 +1,1 @@
+In libzip, a crafted ZIP archive with a ZIP64 record in the archive comment causes a post-buffer operation in zip_source_supports.c due to a length parameter inconsistency.

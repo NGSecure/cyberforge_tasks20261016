@@ -1,0 +1,1 @@
+if (PERFETTO_UNLIKELY(data_.empty() || offset + length > end_offset_)) {

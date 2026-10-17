@@ -1,0 +1,1 @@
+if(!msg->to && (parse_headers(msg, HDR_TO_F, 0) == -1 || !msg->to)) {

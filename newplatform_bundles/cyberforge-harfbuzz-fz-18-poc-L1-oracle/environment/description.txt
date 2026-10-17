@@ -1,0 +1,1 @@
+In HarfBuzz, an unchecked index in VARC.hh's get_path() causes a segmentation violation when processing crafted font files.

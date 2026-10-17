@@ -1,0 +1,1 @@
+Heap-buffer-overflow in lcms parser (src/cmscgats.c) via cmsIT8LoadFromMem when loading IT8 data allows out-of-bounds access due to a removed copy size constraint.

@@ -1,0 +1,1 @@
+A heap-buffer-overflow in Brotli's c/dec/decode.c can be triggered by malformed compressed input, resulting in memory corruption and potential code execution.

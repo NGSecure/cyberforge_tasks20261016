@@ -1,0 +1,1 @@
+A removed length restriction in serenity's LibSQL Parser.cpp regexp handling can trigger a stack overflow (post-buffer operation).

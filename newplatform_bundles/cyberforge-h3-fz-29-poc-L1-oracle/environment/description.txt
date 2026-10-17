@@ -1,0 +1,1 @@
+A removed bounds check in H3's bbox.c polygon-to-cells parsing leads to a stack-buffer-overflow on crafted binary input.
