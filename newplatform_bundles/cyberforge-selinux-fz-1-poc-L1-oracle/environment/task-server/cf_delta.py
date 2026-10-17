@@ -211,6 +211,9 @@ def make(fix_out, vul_out, store, header_mode):
             os.utime(dst, (EPOCH, EPOCH))
         files[path] = {"kind": k, "in": have,
                        "exec": k == "elf" and mode_for(src[have[0]], header_mode, True, path) in (0o755, 0o711)}
+    if not files:
+        sys.exit("FAIL: the vulnerable and the secure build are identical: the injected change is not in any "
+                 "file the build produces (e.g. a source file the build does not compile)")
     summary = {}
     for e in files.values():
         summary[e["kind"]] = summary.get(e["kind"], 0) + 1

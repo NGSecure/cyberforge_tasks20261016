@@ -29,7 +29,10 @@ python3 -I convert.py         <inner_root> records.json <out_dir>    # one bundl
                                                                      #   B in <out_dir>2, C in <out_dir>3 (--out-b/--out-c)
 python3 -I validate.py        <out_dir>                              # static checks of all three, no Docker
 python3 -I verify_bundles.py  verification/plan.json verification/results.jsonl   # build.sh for many bundles,
-                                                                     #   plus alternative ground truths / judge settings
+                                                                     #   plus alternative ground truths / judge settings,
+                                                                     #   verify_diag.py / verify_exploit.py on failures
+python3 -I choose_gt.py       <inner_root> records.json verification/results*.jsonl   # ground truths the runs settle
+python3 -I classify.py        <inner_root> records.json              # again (reads gt_choice.json), then convert.py
 bash <dir>/<bundle>/build.sh      # public network: build both images + 3 blocking self-checks
 bash <dir>/<bundle>/push.sh       # upload network: push + backfill task.toml [environment]
 ```
@@ -85,6 +88,19 @@ the injected build and not on the clean build.
   pov.bin is an unrelated 2.6 MB file). `replay_exploits.py` runs each exploit.sh in a
   no-network container where every `/out/<name>` is a stub that records its file
   argument; a captured input outranks pov.bin (fuzz crash artifacts still come first).
+  That container is not the project's image (no /src, no seed corpora in /out), so an
+  exploit that branches on project files takes another path there (libzip WF_RAG_0 used
+  `/out/zip_read_fuzzer_seed_corpus.zip` as its payload; the stub run captured the
+  fallback), and an exploit that draws its input at random is captured once. The
+  verification settles both (`choose_gt.py`, below).
+- **Verification decides between candidate ground truths** (`choose_gt.py` →
+  `gt_choice.json`, read by classify.py). For a one-harness bundle whose ground truth is
+  not the dataset's verified fuzz replay or a file the report names: the dataset's
+  pov.bin is used when it is differential in the bundle's builds and our ground truth is
+  no file of the task's (fewer of our own steps); when our ground truth failed, the input
+  exploit.sh fed the harness in the project's image (`verify_exploit.py`, against the two
+  builds; up to 20 draws for random exploits) is used when it crashed the vulnerable build
+  and not the secure one (`exploit_live/`). Nothing else is changed by verification.
 - **Secrets stay in `build/`** (diff, ground truth, setup copy, residue list, secure
   lines, the files a recorded command line needs); `environment/` holds only what the
   platform may upload. Both Dockerfiles build with the bundle root as context.
@@ -160,7 +176,9 @@ when the diff touches a header (`recipe.diff_touches_headers` in cyberforge_sour
   compile put in /out), and — unless the PoV comes from a replay — the recorded
   report satisfies exploit.sh's own grep (when it greps). libFuzzer's own
   out-of-memory report (exit 71) counts as a crash; timeouts do not. Tasks first
-  flagged as B whose deep replay shows a single harness input are A too.
+  flagged as B whose deep replay shows a single harness input are A too, except when the
+  exploit runs a process in the background beside the harness (a server, a loop that
+  truncates the file the input imports): no recorded input alone reproduces that.
 - **B → `<out_dir>2`** (newplatform_bundles2/): crash evidence, and a CLI/program recipe from the deep replay.
 - **C → `<out_dir>3`** (newplatform_bundles3/): no usable crash evidence (empty report, no crash, timeout, report
   contradicts exploit.sh) but a ground truth and a way to run it (dataset PoV +
@@ -213,6 +231,20 @@ when the diff touches a header (`recipe.diff_touches_headers` in cyberforge_sour
 A bundle whose self-check 3 fails has a ground truth that does not reproduce in the
 rebuilt images: do not push it; record it.
 
+## Verifying bundles in bulk (verify_bundles.py)
+
+Per bundle: build.sh (both images, three self-checks), the self-check report, each
+alternative ground truth / judge.json of the plan, and on a failure `verify_diag.py`
+(each input on both builds through the judge, as root without the sandbox, and with the
+image's own environment instead of the judge's sanitizer options: shows whether the
+judge's isolation suppresses a crash). For harness bundles whose ground truth came from
+an exploit run, `verify_exploit.py` runs the dataset's exploit.sh in the task-server
+image against both builds (wrapped harnesses record each call) and records whether the
+harness got our ground truth; crashing inputs land in `verification/exploit_inputs/`.
+Failures are labelled `needs network` (rerun with `--ca <proxy CA>` where outbound TLS
+is intercepted; verification only) or `out of disk` (the rest of that project is then
+skipped). Results are appended to a JSONL file and the run resumes where it stopped.
+
 ## Gotchas
 
 - `file` and `guetzli` have no published image: build.sh builds one from
@@ -223,3 +255,9 @@ rebuilt images: do not push it; record it.
   not needed) to run PoVs as other users; without them every run fails closed (no crash).
 - Never `pkill -f <pattern>` from a shell whose own command line contains the
   pattern (it kills that shell).
+- In a cloud session the container (dockerd and every detached job with it) is stopped
+  when the session goes idle; a long verification has to run while the session is
+  active, in windows (`--max-seconds`), and dockerd has to be started again after a
+  restart.
+- wireshark's base image (12 GB) and two concurrent compiles do not fit a ~38 GB disk;
+  guetzli's setup downloads from lcamtuf.coredump.cx: verify those where that works.

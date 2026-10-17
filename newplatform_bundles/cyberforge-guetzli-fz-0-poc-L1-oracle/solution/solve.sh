@@ -1,6 +1,6 @@
 #!/bin/bash
 # Reference solution (oracle): materialize the CyberForge ground-truth PoV for
-# guetzli / vulnerability_FZ_0 (dataset file: newplatform_bundles/conversion/replay/guetzli/vulnerability_FZ_0/input-002 (replayed guetzli/vulnerabilities/vulnerability_FZ_0/exploit_files/exploit.sh)) at /workspace/poc.
+# guetzli / vulnerability_FZ_0 (dataset file: guetzli/vulnerabilities/vulnerability_FZ_0/exploit_files/poc.bin) at /workspace/poc.
 # It does not build anything: grading runs on the task-server's own builds.
 set -euo pipefail
 

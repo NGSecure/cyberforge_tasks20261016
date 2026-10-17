@@ -33,8 +33,8 @@
   "pov_kind": "harness",
   "ground_truth_evidence": "crash evidence in the dataset",
   "ground_truth": {
-    "dataset_file": "report_inputs/libsrtp/vulnerability_FZ_10/builtin_2005_01093511ce21ba2143348f1eb6cdc390b9d900ce_c5775d6fd4.bin",
-    "how_found": "fuzz_exact_seed (built-in corpus member fuzzer/corpus/01093511ce21ba2143348f1eb6cdc390b9d900ce of /out/srtp-fuzzer_seed_corpus.zip, copied from the image)",
+    "dataset_file": "../vulnerability_FZ_0/exploit_files/generated_inputs/builtin_2005_01093511ce21ba2143348f1eb6cdc390b9d900ce_c5775d6fd4.bin",
+    "how_found": "fuzz_exact_seed (same-named seed of a sibling task)",
     "bytes": 108,
     "exploit_replay_inputs": 0,
     "dataset_report_matches_exploit_check": null,

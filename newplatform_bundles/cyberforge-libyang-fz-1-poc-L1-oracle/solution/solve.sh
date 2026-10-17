@@ -1,6 +1,6 @@
 #!/bin/bash
 # Reference solution (oracle): materialize the CyberForge ground-truth PoV for
-# libyang / vulnerability_FZ_1 (dataset file: newplatform_bundles/conversion/replay/libyang/vulnerability_FZ_1/input-000 (replayed libyang/vulnerabilities/vulnerability_FZ_1/exploit_files/exploit.sh)) at /workspace/poc.
+# libyang / vulnerability_FZ_1 (dataset file: libyang/vulnerabilities/vulnerability_FZ_1/exploit_files/poc.yang) at /workspace/poc.
 # It does not build anything: grading runs on the task-server's own builds.
 set -euo pipefail
 

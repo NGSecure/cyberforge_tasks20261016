@@ -33,13 +33,13 @@
   "pov_kind": "harness",
   "ground_truth_evidence": "crash evidence in the dataset",
   "ground_truth": {
-    "dataset_file": "replay/libzip/vulnerability_WF_RAG_0/input-000",
-    "how_found": "exploit_replay",
-    "bytes": 82,
+    "dataset_file": "exploit_live/libzip/vulnerability_WF_RAG_0/input",
+    "how_found": "exploit_live (what exploit.sh fed zip_read_fuzzer in the project's image: it crashed the vulnerable build and not the secure one)",
+    "bytes": 3623669,
     "exploit_replay_inputs": 1,
     "dataset_report_matches_exploit_check": true,
-    "sha256": "c65fcdde78ddec6532455948e8ae063111c5dc865fab2f170ee8b695f8ac75ee",
-    "solve_sh": "inline"
+    "sha256": "3ee3d79f9659fbbe4dc79295309d131f7366741f52fe4caaaae28b4abef7cab6",
+    "solve_sh": "fetch /solve"
   },
   "harness": {
     "candidates": [

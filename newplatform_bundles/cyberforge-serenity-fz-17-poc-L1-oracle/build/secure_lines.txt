@@ -1,1 +1,0 @@
-if (index_size > frame_data.size())

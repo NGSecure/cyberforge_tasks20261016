@@ -1,1 +1,0 @@
-if (!_hasChildAtRes(h, childRes)) return E_RES_DOMAIN;

@@ -36,10 +36,10 @@
   "ground_truth": {
     "dataset_file": "exploit_files/generated_inputs/curated_vulnerable_crash_aca7f70b548c9292d3a8790538cc596804faaf71b93a34ffeeb0e07808bcfde0.bin",
     "how_found": "fuzz_exact_seed",
-    "bytes": 126,
+    "bytes": 4,
     "exploit_replay_inputs": 0,
     "dataset_report_matches_exploit_check": null,
-    "sha256": "6a540ef450db19fe35c0b5e998f91467641280e417a634053dd22779edb41355",
+    "sha256": "aca7f70b548c9292d3a8790538cc596804faaf71b93a34ffeeb0e07808bcfde0",
     "solve_sh": "inline"
   },
   "harness": {

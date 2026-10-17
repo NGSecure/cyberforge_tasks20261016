@@ -33,12 +33,12 @@
   "pov_kind": "harness",
   "ground_truth_evidence": "crash evidence in the dataset",
   "ground_truth": {
-    "dataset_file": "replay/libzip/vulnerability_FZ_4/input-000",
-    "how_found": "exploit_replay",
+    "dataset_file": "exploit_files/poc.zip",
+    "how_found": "report_running (the file the report shows crashing, shipped with the exploit)",
     "bytes": 214,
     "exploit_replay_inputs": 1,
     "dataset_report_matches_exploit_check": true,
-    "sha256": "0a95d19b0686a94162d5ea6acace52cfa1cc8f332ebbc6ffc55a56e96d1787c3",
+    "sha256": "23169a6a1723f50e7ab91063992d13e79bd92628b6da8226ccf5a9ede3abbc0c",
     "solve_sh": "inline"
   },
   "harness": {

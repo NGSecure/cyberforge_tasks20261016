@@ -34,12 +34,12 @@
   "pov_kind": "harness",
   "ground_truth_evidence": "crash evidence in the dataset",
   "ground_truth": {
-    "dataset_file": "replay/assimp/vulnerability_WF_RAG_3/input-000",
-    "how_found": "exploit_replay",
+    "dataset_file": "exploit_files/pov.bin",
+    "how_found": "dataset_pov (the dataset's pov.bin: in this bundle's builds it crashes the vulnerable build and not the secure one)",
     "bytes": 149,
     "exploit_replay_inputs": 1,
     "dataset_report_matches_exploit_check": false,
-    "sha256": "0e3692b126ef0d9e6f0486f9cb708f39749a7c88e9e947c327088c63b8ed8b03",
+    "sha256": "61cafad797eec03133aa2fd4665245c3527a78bbc3cb25a7cabbddef17f4fa2c",
     "solve_sh": "inline"
   },
   "harness": {

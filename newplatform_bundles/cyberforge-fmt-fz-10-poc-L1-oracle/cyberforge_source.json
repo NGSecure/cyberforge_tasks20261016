@@ -35,10 +35,10 @@
   "ground_truth": {
     "dataset_file": "exploit_files/generated_inputs/curated_seed_07001aff47eb43fad3b51d398a96b0e8cd693be395c1fbe87e01e512d494d3ce.bin",
     "how_found": "fuzz_exact_seed",
-    "bytes": 127,
+    "bytes": 21,
     "exploit_replay_inputs": 0,
     "dataset_report_matches_exploit_check": null,
-    "sha256": "5a83251d4e7c079e193cae543de9ccfd1c3d9612b9a13e7e4fbf8ab6eac15ada",
+    "sha256": "07001aff47eb43fad3b51d398a96b0e8cd693be395c1fbe87e01e512d494d3ce",
     "solve_sh": "inline"
   },
   "harness": {

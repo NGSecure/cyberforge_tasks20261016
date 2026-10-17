@@ -1,6 +1,6 @@
 #!/bin/bash
 # Reference solution (oracle): materialize the CyberForge ground-truth PoV for
-# libsrtp / vulnerability_FZ_10 (dataset file: newplatform_bundles/conversion/report_inputs/libsrtp/vulnerability_FZ_10/builtin_2005_01093511ce21ba2143348f1eb6cdc390b9d900ce_c5775d6fd4.bin (copied from the project image by report_inputs.py)) at /workspace/poc.
+# libsrtp / vulnerability_FZ_10 (dataset file: libsrtp/vulnerabilities/vulnerability_FZ_10/../vulnerability_FZ_0/exploit_files/generated_inputs/builtin_2005_01093511ce21ba2143348f1eb6cdc390b9d900ce_c5775d6fd4.bin) at /workspace/poc.
 # It does not build anything: grading runs on the task-server's own builds.
 set -euo pipefail
 

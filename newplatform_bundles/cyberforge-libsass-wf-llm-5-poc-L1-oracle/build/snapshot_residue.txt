@@ -1,5 +1,0 @@
-/opt/src_snapshot.tar
-/out/data_context_fuzzer
-/out/llvm-symbolizer
-/workspace/run/unit_tests/parse_results.py
-/workspace/run/unit_tests/test.sh

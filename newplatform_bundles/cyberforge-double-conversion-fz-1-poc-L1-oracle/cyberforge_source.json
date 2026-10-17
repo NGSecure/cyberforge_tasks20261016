@@ -36,10 +36,10 @@
   "ground_truth": {
     "dataset_file": "exploit_files/generated_inputs/edge_mix.bin",
     "how_found": "fuzz_exact_seed",
-    "bytes": 126,
+    "bytes": 8,
     "exploit_replay_inputs": 0,
     "dataset_report_matches_exploit_check": null,
-    "sha256": "00a5093e31f7100d3130e6adc8c6b8918e29ecdd1f81af838bd161c1a9817dcb",
+    "sha256": "b3d29ad8db7d1ffa5ee50b51eb47fb4401a315032bb5b82023e40afbd0f1dd75",
     "solve_sh": "inline"
   },
   "harness": {

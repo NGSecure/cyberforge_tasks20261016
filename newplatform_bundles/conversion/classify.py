@@ -220,6 +220,21 @@ def snapshot_out(project):
             if x.startswith("/out/")}
 
 
+LFS_PTR_RE = re.compile(rb"^version https://git-lfs\.github\.com/spec/v1\noid sha256:([0-9a-f]{64})\nsize \d+\n$")
+
+
+def lfs_pointer(path):
+    """The oid when the file is a Git LFS pointer (the dataset copy lacks its content), else ''.
+    lfs_restore.py replaces the pointers it can resolve; the rest count as missing files."""
+    try:
+        if os.path.getsize(path) > 200:
+            return ""
+        m = LFS_PTR_RE.match(open(path, "rb").read())
+    except OSError:
+        return ""
+    return m.group(1).decode() if m else ""
+
+
 def exact_seed(vd, project, crep):
     """(path relative to vd, how) of the seed crash_report.json says crashed the vulnerable
     build. Seeds drawn from the built-in corpus are not always shipped with the task; then
@@ -229,13 +244,13 @@ def exact_seed(vd, project, crep):
     rel = sp.get("relative_path") or ""
     if "exploit_files/" in rel:
         f = os.path.join(vd, "exploit_files", rel.split("exploit_files/", 1)[1])
-        if os.path.isfile(f):
+        if os.path.isfile(f) and not lfs_pointer(f):
             return os.path.relpath(f, vd), "fuzz_exact_seed"
     name = crep.get("seed") or sp.get("name") or ""
     if not name or "/" in name:
         return "", ""
-    hits = sorted(glob.glob(os.path.join(PROJ, project, "vulnerabilities", "*", "exploit_files",
-                                         "generated_inputs", name)))
+    hits = sorted(h for h in glob.glob(os.path.join(PROJ, project, "vulnerabilities", "*", "exploit_files",
+                                                    "generated_inputs", name)) if not lfs_pointer(h))
     if hits and len({hashlib.sha256(open(h, "rb").read()).hexdigest() for h in hits}) == 1:
         return os.path.relpath(hits[0], vd), "fuzz_exact_seed (same-named seed of a sibling task)"
     # a member of the harness's built-in corpus: fuzz_poc.py read it from
@@ -249,11 +264,17 @@ def exact_seed(vd, project, crep):
 
 
 def poc_path(vd, poc, poc_src):
-    """Ground truths of the replays and of report_inputs.py are relative to this script's
-    directory, the dataset's own files to the task directory."""
+    """Ground truths of the replays, of report_inputs.py and of choose_gt.py's exploit runs
+    are relative to this script's directory, the dataset's own files to the task directory."""
     return (os.path.join(os.path.dirname(REPLAY_DIR), poc)
-            if poc_src.startswith(("exploit_replay", "project_file")) or poc.startswith("report_inputs/")
+            if poc_src.startswith(("exploit_replay", "project_file")) or poc.startswith(("report_inputs/", "exploit_live/"))
             else os.path.join(vd, poc))
+
+
+# choose_gt.py: ground truths picked by running the bundles (verify_bundles.py): the
+# dataset's pov.bin where it is differential in the bundle's builds, or what exploit.sh fed
+# the harness in the project's image where our first ground truth failed
+GT_CHOICE = jl(os.path.join(os.path.dirname(os.path.abspath(__file__)), "gt_choice.json"))
 
 
 REPORT_INPUTS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "report_inputs")
@@ -386,8 +407,9 @@ for r in rows:
     if re.search(r"\b(gcc|g\+\+|clang\+\+|clang|cc)\b[^\n]*\s-o\s", es):
         custom.append("exploit.sh compiles code")
     code = "\n".join(l for l in es.splitlines() if not l.strip().startswith("#"))
+    RACE = "exploit races a background process (not a single-input PoV)"
     if re.search(r"(\)|[\w\"'])[ \t]*&[ \t]*$", code, re.M):
-        custom.append("exploit races a background process (not a single-input PoV)")
+        custom.append(RACE)
     for f in top_files:
         b = os.path.basename(f)
         if b in ("driver", "attack.sh", "attack") or b.endswith((".c", ".cc", ".cpp")):
@@ -406,25 +428,36 @@ for r in rows:
         seed, how = exact_seed(vd, p, crep)
         if seed:
             poc, poc_src = seed, how
+    # the seed crash_report.json names is shipped as a Git LFS pointer whose content was not
+    # found: the dataset's verified crashing input exists but is not in this copy; nothing
+    # else stands in for it
+    lfs_seed = ""
+    if not poc and crep.get("mode") == "replay" and crep.get("attribution_kind") == "exact_seed" \
+            and crep.get("returncode") not in (0, None):
+        rel_s = (crep.get("seed_provenance") or {}).get("relative_path") or ""
+        if "exploit_files/" in rel_s:
+            lfs_seed = lfs_pointer(os.path.join(ef, rel_s.split("exploit_files/", 1)[1]))
     rp, rinfo = replayed(r["path"], [os.path.join(vd, f) for f in ef_files])
+    if lfs_seed:
+        rp = None
     if not poc and rp:
         # what the exploit really ran; the harvested pov.bin is often something else
         poc, poc_src = rp, "exploit_replay"
-    if not poc:
+    if not poc and not lfs_seed:
         rel = hints.get("successful_seed_relative_path") or ""
         if rel and os.path.isfile(os.path.join(vd, rel)):
             poc, poc_src = rel, "hints.successful_seed"
-    if not poc:
+    if not poc and not lfs_seed:
         for cand in ("exploit_files/pov.bin", "exploit_files/crash_poc.bin"):
             if os.path.isfile(os.path.join(vd, cand)):
                 poc, poc_src = cand, "named_file"
                 break
-    if not poc and es:
+    if not poc and not lfs_seed and es:
         refd = [f for f in top_files if not f.endswith(POC_SKIP_EXT)
                 and os.path.basename(f) not in ("driver", "attack") and os.path.basename(f) in es]
         if len(refd) == 1:
             poc, poc_src = refd[0], "referenced_by_exploit.sh"
-    if not poc:
+    if not poc and not lfs_seed:
         lone = [f for f in top_files if not f.endswith(POC_SKIP_EXT)
                 and os.path.basename(f) not in ("driver", "attack")]
         if len(lone) == 1:
@@ -455,6 +488,17 @@ for r in rows:
     elif "fuzz_poc.py" in es and meta_fz:
         fuzzer, fuzzer_src = meta_fz[0], "metadata (fuzz_poc.py)"
     mismatch = bool(fuzzer and meta_fz and fuzzer not in meta_fz)
+
+    # The report shows libFuzzer running a file the task ships, right before the crash, on
+    # this harness: that file is the dataset's crashing input, and it outranks what our
+    # replay of exploit.sh captured (the exploit may pick its input from the project tree,
+    # which the replay container does not have).
+    if poc_src in ("exploit_replay", "hints.successful_seed", "named_file", "referenced_by_exploit.sh",
+                   "single_input_file") and fuzzer:
+        got = report_input(vd, r["path"], p, report, es, ef_files, {fuzzer}, [fuzzer])
+        if got and got[1].startswith("report_running") and got[2] == fuzzer \
+                and not lfs_pointer(os.path.join(vd, got[0])) and got[0] != poc:
+            poc, poc_src = got[0], got[1]
 
     # A name exploit.sh runs from /out that the dataset's own compile of this image never
     # put in /out (snapshot_scan/) is the project's CLI/test binary, not a fuzz harness.
@@ -489,7 +533,9 @@ for r in rows:
     elif sig not in crash_sigs:
         tier, reason = "C", "report shows no sanitizer crash"
     elif not poc:
-        tier, reason = "C", ("crash input not saved (fuzz-campaign replay; seed unrecorded)"
+        tier, reason = "C", ("the dataset's crashing seed %s is a Git LFS pointer in this copy: its content "
+                             "(sha256 %s) is missing" % (os.path.basename(crep.get("seed") or ""), lfs_seed[:16])
+                             if lfs_seed else "crash input not saved (fuzz-campaign replay; seed unrecorded)"
                              if crep else "no concrete PoC file (payload only inline / missing)")
     elif not fuzzer:
         tier, reason = "C", note or "fuzz harness not identifiable"
@@ -523,6 +569,12 @@ for r in rows:
         if sig == "behavioral":
             # the exploit compares outputs and nothing crashes: a crash-based judge cannot score it
             tier, reason = "B", "behavioral-divergence oracle (the exploit compares outputs; nothing crashes)"
+        elif RACE in custom:
+            # what crashed depended on a process running beside the recorded call (a server, a
+            # file being truncated meanwhile): no single recorded input reproduces it
+            tier, reason = "B", RACE
+        elif lfs_seed:
+            pass  # the verified crashing seed is known, only missing from this copy: no stand-in
         elif deep and deep_kind == "harness":
             poc = os.path.relpath(os.path.join(DEEP_DIR, p, r["vuln"], deep["gt_file"]),
                                   os.path.dirname(DEEP_DIR))
@@ -555,7 +607,7 @@ for r in rows:
             reason = "the exploit's real payload is larger than 16 MB (too large to bundle)"
 
     # ---- still nothing: the dataset's own report may pin down input and harness ----
-    if not converted and evidence and sig_src == "sanitizer_report.txt":
+    if not converted and evidence and sig_src == "sanitizer_report.txt" and RACE not in custom:
         known = outs if outs is not None else used_out.get(p, set())
         got = report_input(vd, r["path"], p, report, es, ef_files, known, ex_h or [fuzzer])
         rh = report_harness(report_run(report)[0], report, known)
@@ -571,6 +623,22 @@ for r in rows:
             tier, reason, bundle, converted = "A", "", "harness", True
             degenerate = os.path.getsize(poc_path(vd, poc, poc_src)) == 0
 
+    # a choice applies only to the ground truth it was made against (choose_gt.py's "was")
+    ch, gt_base = GT_CHOICE.get(r["path"]), None
+    if ch and converted and bundle == "harness" and ch.get("was") == poc_src \
+            and os.path.isfile(poc_path(vd, ch["poc"], ch["poc_src"])):
+        gt_base = {"poc": poc, "poc_src": poc_src}
+        poc, poc_src = ch["poc"], ch["poc_src"]
+        if ch.get("fuzzer") and ch["fuzzer"] != fuzzer:
+            fuzzer, fuzzer_src, ex_h = ch["fuzzer"], "exploit.sh, run in the project's image", [ch["fuzzer"]]
+        degenerate = os.path.getsize(poc_path(vd, poc, poc_src)) == 0
+
+    if converted and poc and lfs_pointer(poc_path(vd, poc, poc_src)):
+        # the dataset copy holds a Git LFS pointer, not the file (lfs_restore.py could not find it)
+        tier, reason, converted, bundle = tier, ("the dataset's PoV file %s is a Git LFS pointer in this copy: its "
+                                                 "content (sha256 %s) is missing" % (os.path.basename(poc),
+                                                 lfs_pointer(poc_path(vd, poc, poc_src))[:16])), False, ""
+
     vj = jl(os.path.join(vd, "bug_description_variants.json"))
     variants = vj.get("variants") or []
     records.append({
@@ -580,7 +648,7 @@ for r in rows:
         "deep_replay": deep_kind or deep_why,
         "signal": sig, "signal_detail": sig_detail, "signal_src": sig_src,
         "report_matches_exploit_check": report_ok,
-        "poc": poc, "poc_src": poc_src, "fuzzer": fuzzer, "fuzzer_src": fuzzer_src,
+        "poc": poc, "poc_src": poc_src, "gt_base": gt_base, "fuzzer": fuzzer, "fuzzer_src": fuzzer_src,
         "replay_captured": len(rinfo.get("captured") or []),
         "replay_distinct_inputs": len(rinfo.get("inputs") or []),
         "fuzzer_candidates": ex_h if len(ex_h) > 1 else ([fuzzer] if fuzzer else []),

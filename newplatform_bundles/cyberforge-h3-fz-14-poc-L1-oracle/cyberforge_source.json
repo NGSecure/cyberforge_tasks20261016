@@ -35,10 +35,10 @@
   "ground_truth": {
     "dataset_file": "exploit_files/generated_inputs/poc_orig_58bb119c35.bin",
     "how_found": "fuzz_exact_seed",
-    "bytes": 126,
+    "bytes": 2,
     "exploit_replay_inputs": 0,
     "dataset_report_matches_exploit_check": null,
-    "sha256": "458573ab0f4a239920c95c387856ae33083c8f24515d1301e0ccc5e88e3b8bb0",
+    "sha256": "58bb119c35513a451d24dc20ef0e9031ec85b35bfc919d263e7e5d9868909cb5",
     "solve_sh": "inline"
   },
   "harness": {

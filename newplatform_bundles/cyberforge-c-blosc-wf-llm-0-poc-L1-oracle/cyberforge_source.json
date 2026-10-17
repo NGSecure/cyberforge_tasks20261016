@@ -33,12 +33,12 @@
   "pov_kind": "harness",
   "ground_truth_evidence": "crash evidence in the dataset",
   "ground_truth": {
-    "dataset_file": "replay/c-blosc/vulnerability_WF_LLM_0/input-000",
-    "how_found": "exploit_replay",
+    "dataset_file": "exploit_files/pov.bin",
+    "how_found": "dataset_pov (the dataset's pov.bin: in this bundle's builds it crashes the vulnerable build and not the secure one)",
     "bytes": 1024,
     "exploit_replay_inputs": 1,
     "dataset_report_matches_exploit_check": null,
-    "sha256": "8b0dee6a5082c0c2f8e1b6892b1654f00a3b2e3a5fe19a181623f44cbbf09abd",
+    "sha256": "a88d9627c9b5f23b48042ec2b38d6abcc181542300550dad4e11684b57014712",
     "solve_sh": "inline"
   },
   "harness": {

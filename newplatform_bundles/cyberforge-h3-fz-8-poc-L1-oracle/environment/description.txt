@@ -1,1 +1,0 @@
-Integer overflow in h3Index.c allows calloc size to wrap, leading to memory corruption in the H3 parser.

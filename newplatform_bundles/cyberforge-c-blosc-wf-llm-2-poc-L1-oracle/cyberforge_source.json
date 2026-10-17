@@ -33,12 +33,12 @@
   "pov_kind": "harness",
   "ground_truth_evidence": "crash evidence in the dataset",
   "ground_truth": {
-    "dataset_file": "replay/c-blosc/vulnerability_WF_LLM_2/input-000",
-    "how_found": "exploit_replay",
+    "dataset_file": "exploit_live/c-blosc/vulnerability_WF_LLM_2/input",
+    "how_found": "exploit_live (what exploit.sh fed compress_fuzzer in the project's image (draw 2 of 2: the exploit draws its input at random): it crashed the vulnerable build and not the secure one)",
     "bytes": 10240,
     "exploit_replay_inputs": 1,
     "dataset_report_matches_exploit_check": null,
-    "sha256": "ab17d5d7dc2d93c0a1f1660cc167b2a874ad64dfa15dadf2da6baa00abe3b8e3",
+    "sha256": "db95c2d4c831cdf1cfe9ee5430a47373f2edbfe3123024080da6db431941f53f",
     "solve_sh": "inline"
   },
   "harness": {

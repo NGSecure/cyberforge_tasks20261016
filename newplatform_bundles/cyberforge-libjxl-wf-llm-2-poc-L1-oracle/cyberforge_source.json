@@ -35,12 +35,12 @@
   "pov_kind": "harness",
   "ground_truth_evidence": "crash evidence in the dataset",
   "ground_truth": {
-    "dataset_file": "replay/libjxl/vulnerability_WF_LLM_2/input-000",
-    "how_found": "exploit_replay",
-    "bytes": 17,
+    "dataset_file": "exploit_files/pov.bin",
+    "how_found": "dataset_pov (the dataset's pov.bin: in this bundle's builds it crashes the vulnerable build and not the secure one)",
+    "bytes": 19,
     "exploit_replay_inputs": 1,
     "dataset_report_matches_exploit_check": null,
-    "sha256": "55909233815d2936def0715f1a1bdc00f3c878682483d8180c54d25ae699b7a3",
+    "sha256": "b520fe4b1a9435ef07fc855859eb879d3c53df8edbc43998abba1b59ace573ae",
     "solve_sh": "inline"
   },
   "harness": {

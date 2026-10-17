@@ -1,6 +1,6 @@
 #!/bin/bash
 # Reference solution (oracle): materialize the CyberForge ground-truth PoV for
-# wuffs / vulnerability_WF_RAG_0 (dataset file: newplatform_bundles/conversion/replay/wuffs/vulnerability_WF_RAG_0/input-000 (replayed wuffs/vulnerabilities/vulnerability_WF_RAG_0/exploit_files/exploit.sh)) at /workspace/poc.
+# wuffs / vulnerability_WF_RAG_0 (dataset file: wuffs/vulnerabilities/vulnerability_WF_RAG_0/exploit_files/payload.bin) at /workspace/poc.
 # It does not build anything: grading runs on the task-server's own builds.
 set -euo pipefail
 

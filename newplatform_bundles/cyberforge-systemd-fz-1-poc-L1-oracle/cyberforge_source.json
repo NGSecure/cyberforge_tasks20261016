@@ -36,12 +36,12 @@
   "pov_kind": "harness",
   "ground_truth_evidence": "crash evidence in the dataset",
   "ground_truth": {
-    "dataset_file": "exploit_files/generated_inputs/builtin_04_oss-fuzz-6897_e18089f00b.bin",
-    "how_found": "fuzz_exact_seed (same-named seed of a sibling task)",
-    "bytes": 127,
+    "dataset_file": "report_inputs/systemd/vulnerability_FZ_1/builtin_04_oss-fuzz-6897_e18089f00b.bin",
+    "how_found": "fuzz_exact_seed (built-in corpus member oss-fuzz-6897 of /out/fuzz-unit-file_seed_corpus.zip, copied from the image)",
+    "bytes": 55,
     "exploit_replay_inputs": 0,
     "dataset_report_matches_exploit_check": null,
-    "sha256": "a78c39bf8007f01d83f6aff204bf13fe7f846b7b58089f78668393c7131044a6",
+    "sha256": "9a5941ec5b85a69cdf317758a8f6053192c5d7f2b389ea1663d5082432b69bb5",
     "solve_sh": "inline"
   },
   "harness": {

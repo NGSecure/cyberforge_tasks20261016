@@ -33,12 +33,12 @@
   "pov_kind": "harness",
   "ground_truth_evidence": "crash evidence in the dataset",
   "ground_truth": {
-    "dataset_file": "replay/hunspell/vulnerability_FZ_1/input-000",
-    "how_found": "exploit_replay",
+    "dataset_file": "exploit_files/poc.zip",
+    "how_found": "report_running (the file the report shows crashing, shipped with the exploit)",
     "bytes": 814,
     "exploit_replay_inputs": 1,
     "dataset_report_matches_exploit_check": true,
-    "sha256": "1c30222ae2379d5e3ddd3eb5f277a3dd5f40245c2255ea0d65cf801146defd0c",
+    "sha256": "2e26ad506e7f08fed7d903103f6af491b64482bde241ea3ad3c6d514c42b5b6f",
     "solve_sh": "inline"
   },
   "harness": {

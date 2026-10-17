@@ -53,6 +53,10 @@
    "category": "unit-test",
    "note": "runs the project's unit tests (/workspace/run/unit_tests/test.sh)"
   },
+  "brotli/vulnerabilities/vulnerability_FZ_4": {
+   "category": "lfs-missing",
+   "note": "crash_report.json names curated_seed_060ecfec9584456\u2026 (curated_carryover, 67 bytes) as the seed that crashed the vulnerable build; the dataset copy has only its Git LFS pointer"
+  },
   "c-blosc/vulnerabilities/vulnerability_WF_LLM_1": {
    "category": "candidates",
    "note": "runs compat/filegen decompress twice (a traversal path, a missing file); select_candidates.py ran both on the rebuilt vulnerable build: neither crashed"
@@ -88,6 +92,10 @@
   "cjson/vulnerabilities/vulnerability_WF_RAG_3": {
    "category": "behavioral",
    "note": "output differs (EXPLOIT_TRIGGERED vs NO_TRIGGER), no crash"
+  },
+  "coturn/vulnerabilities/vulnerability_WF_LLM_2": {
+   "category": "race",
+   "note": "starts turnutils_peer in the background and calls it triggered if it is still running 2 s later; sanitizer_report.txt is empty"
   },
   "coturn/vulnerabilities/vulnerability_WF_RAG_0": {
    "category": "behavioral",
@@ -128,6 +136,10 @@
   "double-conversion/vulnerabilities/vulnerability_FZ_11": {
    "category": "unit-test",
    "note": "runs the project's cctest binary"
+  },
+  "double-conversion/vulnerabilities/vulnerability_FZ_12": {
+   "category": "lfs-missing",
+   "note": "crash_report.json names curated_seed_dcd5943ced96826\u2026 (curated_carryover, 4 bytes) as the seed that crashed the vulnerable build; the dataset copy has only its Git LFS pointer"
   },
   "double-conversion/vulnerabilities/vulnerability_FZ_13": {
    "category": "unit-test",
@@ -185,6 +197,10 @@
    "category": "unit-test",
    "note": "runs the test program testPolyfillInternal"
   },
+  "h3/vulnerabilities/vulnerability_FZ_4": {
+   "category": "lfs-missing",
+   "note": "crash_report.json names curated_seed_0bff19072fa99da\u2026 (curated_carryover, 2048 bytes) as the seed that crashed the vulnerable build; the dataset copy has only its Git LFS pointer"
+  },
   "h3/vulnerabilities/vulnerability_FZ_5": {
    "category": "unit-test",
    "note": "runs the test program testCellsToMultiPoly"
@@ -196,6 +212,10 @@
   "h3/vulnerabilities/vulnerability_FZ_7": {
    "category": "unit-test",
    "note": "runs one of the project's test programs"
+  },
+  "h3/vulnerabilities/vulnerability_FZ_8": {
+   "category": "lfs-missing",
+   "note": "crash_report.json names curated_seed_4ceec3009d51e60\u2026 (curated_carryover, 1027 bytes) as the seed that crashed the vulnerable build; the dataset copy has only its Git LFS pointer"
   },
   "h3/vulnerabilities/vulnerability_WF_LLM_5": {
    "category": "candidates",
@@ -293,6 +313,14 @@
    "category": "unit-test",
    "note": "runs prog/barcodetest on an image of the project tree"
   },
+  "libjxl/vulnerabilities/vulnerability_FZ_3": {
+   "category": "lfs-missing",
+   "note": "crash_report.json names poc_trim_1de39256c7.png (source_template_variant, 10 bytes) as the seed that crashed the vulnerable build; the dataset copy has only its Git LFS pointer"
+  },
+  "libpng/vulnerabilities/vulnerability_FZ_13": {
+   "category": "lfs-missing",
+   "note": "crash_report.json names curated_seed_1010a3053d41019\u2026 (curated_carryover, 2073 bytes) as the seed that crashed the vulnerable build; the dataset copy has only its Git LFS pointer"
+  },
   "libsass/vulnerabilities/vulnerability_FZ_7": {
    "category": "technical",
    "note": "the exploit's program reads the payload from a shipped data file (crash_poc.bin)"
@@ -300,6 +328,14 @@
   "libsass/vulnerabilities/vulnerability_WF_LLM_2": {
    "category": "technical",
    "note": "the exploit's program reads the payload from a shipped data file (crash_poc.bin)"
+  },
+  "libsass/vulnerabilities/vulnerability_WF_LLM_5": {
+   "category": "race",
+   "note": "a background loop truncates trigger.scss while data_context_fuzzer @imports it, so a short read leaks the buffer; the leak needs that race (verify_exploit.py: exploit.sh leaks the vulnerable build, its 23-byte input alone does not)"
+  },
+  "libsass/vulnerabilities/vulnerability_WF_LLM_6": {
+   "category": "race",
+   "note": "a background loop creates and deletes the file the payload @imports, beside 200 harness runs; sanitizer_report.txt is empty"
   },
   "libsass/vulnerabilities/vulnerability_WF_LLM_8": {
    "category": "weak-oracle",
@@ -393,6 +429,10 @@
    "category": "fake-exploit",
    "note": "only greps the source for the injected code"
   },
+  "protobuf-c/vulnerabilities/vulnerability_FZ_11": {
+   "category": "lfs-missing",
+   "note": "crash_report.json names curated_seed_4b0ba71ad53bd38\u2026 (curated_carryover, 102 bytes) as the seed that crashed the vulnerable build; the dataset copy has only its Git LFS pointer"
+  },
   "quickjs/vulnerabilities/vulnerability_WF_LLM_0": {
    "category": "fake-exploit",
    "note": "only checks the source for the removed bound check"
@@ -420,6 +460,14 @@
   "relic/vulnerabilities/vulnerability_WF_RAG_0": {
    "category": "unit-test",
    "note": "runs the test program test_cp"
+  },
+  "serenity/vulnerabilities/vulnerability_FZ_16": {
+   "category": "lfs-missing",
+   "note": "crash_report.json names poc_orig_291fd302e9.bin (source_template_variant, 8 bytes) as the seed that crashed the vulnerable build; the dataset copy has only its Git LFS pointer"
+  },
+  "serenity/vulnerabilities/vulnerability_FZ_17": {
+   "category": "lfs-missing",
+   "note": "crash_report.json names poc_orig_81c2a21c99.bin (source_template_variant, 2 bytes) as the seed that crashed the vulnerable build; the dataset copy has only its Git LFS pointer"
   },
   "wireshark/vulnerabilities/vulnerability_WF_RAG_10": {
    "category": "fake-exploit",

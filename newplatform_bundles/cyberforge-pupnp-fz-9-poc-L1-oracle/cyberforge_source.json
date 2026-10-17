@@ -33,8 +33,8 @@
   "pov_kind": "harness",
   "ground_truth_evidence": "crash evidence in the dataset",
   "ground_truth": {
-    "dataset_file": "replay/pupnp/vulnerability_FZ_9/input-000",
-    "how_found": "exploit_replay",
+    "dataset_file": "exploit_files/poc.xml",
+    "how_found": "report_running (the file the report shows crashing, shipped with the exploit)",
     "bytes": 74,
     "exploit_replay_inputs": 1,
     "dataset_report_matches_exploit_check": true,

@@ -1,1 +1,0 @@
-A crafted PNG file causes an off-by-one iteration in png_handle_cHRM within pngrutil.c, resulting in a stack-buffer-overflow during parsing.

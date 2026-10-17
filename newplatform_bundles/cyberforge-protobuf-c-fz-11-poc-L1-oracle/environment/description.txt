@@ -1,1 +1,0 @@
-A removed length restriction in protobuf-c's parser (protobuf-c.c) during binary unpacking can trigger a heap buffer overflow when parsing crafted messages.

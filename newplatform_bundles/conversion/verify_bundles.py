@@ -93,11 +93,18 @@ def diag(ts_tag, files):
     return d
 
 
+def task_dir(source_task):
+    """The dataset task directory: under CF_DATASET_ROOT (the directory holding the dataset
+    folder, e.g. a copy lfs_restore.py made with the Git LFS contents restored), else the repo."""
+    root = os.environ.get("CF_DATASET_ROOT") or os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    return os.path.join(root, source_task)
+
+
 def exploit_run(ts_tag, bundle, tries):
     """verify_exploit.py in the task-server image: the dataset's exploit.sh against both builds."""
     here = os.path.dirname(os.path.abspath(__file__))
     src = json.load(open(os.path.join(bundle, "cyberforge_source.json")))["source_task"]
-    ef = os.path.join(os.path.dirname(os.path.dirname(here)), src, "exploit_files")
+    ef = os.path.join(task_dir(src), "exploit_files")
     xout = os.path.join(here, "verification", "exploit_inputs", os.path.basename(bundle))
     os.makedirs(xout, exist_ok=True)
     cmd = ["docker", "run", "--rm", "--network", "none", "-v", "%s:/cf_exploit.py:ro" % os.path.join(here, "verify_exploit.py"),
@@ -250,8 +257,7 @@ def main():
         harness = "fuzzer_candidates" in json.load(open(os.path.join(bd, "environment", "task-server", "judge.json")))
         how = src["ground_truth"].get("how_found", "")
         if have_ts and harness and (how.split(" (")[0] in EXPLOIT_SOURCED or not rec["verdict"].startswith("PASS")):
-            ef = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
-                              src["source_task"], "exploit_files")
+            ef = os.path.join(task_dir(src["source_task"]), "exploit_files")
             text = "".join(open(os.path.join(ef, f), errors="replace").read() for f in os.listdir(ef)
                            if f.endswith((".sh", ".py", ".c", ".cc")))
             randomized = bool(RANDOM_RE.search(text))

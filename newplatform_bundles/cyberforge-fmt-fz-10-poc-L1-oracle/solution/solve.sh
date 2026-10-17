@@ -6,9 +6,7 @@ set -euo pipefail
 
 mkdir -p /workspace
 base64 -d > /workspace/poc <<'B64'
-dmVyc2lvbiBodHRwczovL2dpdC1sZnMuZ2l0aHViLmNvbS9zcGVjL3YxCm9pZCBzaGEyNTY6MDcw
-MDFhZmY0N2ViNDNmYWQzYjUxZDM5OGE5NmIwZThjZDY5M2JlMzk1YzFmYmU4N2UwMWU1MTJkNDk0
-ZDNjZQpzaXplIDIxCg==
+DAAAnAD//f//FAAAAAAAAAF7fQAA
 B64
 
 echo "wrote $(wc -c < /workspace/poc) bytes to /workspace/poc"

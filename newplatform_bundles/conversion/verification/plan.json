@@ -589,15 +589,6 @@
   "project": "libjxl"
  },
  {
-  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-libsass-wf-llm-5-poc-L1-oracle",
-  "alts": {
-   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/libsass/vulnerabilities/vulnerability_WF_LLM_5/exploit_files/pov.bin"
-  },
-  "judge_alts": {},
-  "priority": 1,
-  "project": "libsass"
- },
- {
   "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-libucl-wf-rag-5-poc-L1-oracle",
   "alts": {
    "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/libucl/vulnerabilities/vulnerability_WF_RAG_5/exploit_files/pov.bin"
@@ -2125,13 +2116,6 @@
   "project": "h3"
  },
  {
-  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-h3-fz-4-poc-L1-oracle",
-  "alts": {},
-  "judge_alts": {},
-  "priority": 5,
-  "project": "h3"
- },
- {
   "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-h3-fz-42-poc-L1-oracle",
   "alts": {},
   "judge_alts": {},
@@ -2287,13 +2271,6 @@
  },
  {
   "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-h3-fz-66-poc-L1-oracle",
-  "alts": {},
-  "judge_alts": {},
-  "priority": 5,
-  "project": "h3"
- },
- {
-  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-h3-fz-8-poc-L1-oracle",
   "alts": {},
   "judge_alts": {},
   "priority": 5,
@@ -2776,13 +2753,6 @@
   "project": "libpng"
  },
  {
-  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-libpng-fz-13-poc-L1-oracle",
-  "alts": {},
-  "judge_alts": {},
-  "priority": 5,
-  "project": "libpng"
- },
- {
   "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-libpng-fz-14-poc-L1-oracle",
   "alts": {},
   "judge_alts": {},
@@ -2910,13 +2880,6 @@
  },
  {
   "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles3/cyberforge-libsass-wf-llm-0-poc-L1-oracle",
-  "alts": {},
-  "judge_alts": {},
-  "priority": 4,
-  "project": "libsass"
- },
- {
-  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles3/cyberforge-libsass-wf-llm-6-poc-L1-oracle",
   "alts": {},
   "judge_alts": {},
   "priority": 4,
@@ -3350,13 +3313,6 @@
   "project": "protobuf-c"
  },
  {
-  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-protobuf-c-fz-11-poc-L1-oracle",
-  "alts": {},
-  "judge_alts": {},
-  "priority": 5,
-  "project": "protobuf-c"
- },
- {
   "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-protobuf-c-fz-13-poc-L1-oracle",
   "alts": {},
   "judge_alts": {},
@@ -3729,20 +3685,6 @@
  },
  {
   "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-serenity-fz-15-poc-L1-oracle",
-  "alts": {},
-  "judge_alts": {},
-  "priority": 5,
-  "project": "serenity"
- },
- {
-  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-serenity-fz-16-poc-L1-oracle",
-  "alts": {},
-  "judge_alts": {},
-  "priority": 5,
-  "project": "serenity"
- },
- {
-  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-serenity-fz-17-poc-L1-oracle",
   "alts": {},
   "judge_alts": {},
   "priority": 5,
@@ -4211,13 +4153,6 @@
   "project": "brotli"
  },
  {
-  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-brotli-fz-4-poc-L1-oracle",
-  "alts": {},
-  "judge_alts": {},
-  "priority": 5,
-  "project": "brotli"
- },
- {
   "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-brotli-fz-5-poc-L1-oracle",
   "alts": {},
   "judge_alts": {},
@@ -4463,13 +4398,6 @@
   "project": "coturn"
  },
  {
-  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles3/cyberforge-coturn-wf-llm-2-poc-L1-oracle",
-  "alts": {},
-  "judge_alts": {},
-  "priority": 4,
-  "project": "coturn"
- },
- {
   "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-coturn-fz-1-poc-L1-oracle",
   "alts": {},
   "judge_alts": {},
@@ -4548,13 +4476,6 @@
  },
  {
   "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-double-conversion-fz-10-poc-L1-oracle",
-  "alts": {},
-  "judge_alts": {},
-  "priority": 5,
-  "project": "double-conversion"
- },
- {
-  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-double-conversion-fz-12-poc-L1-oracle",
   "alts": {},
   "judge_alts": {},
   "priority": 5,
@@ -5388,13 +5309,6 @@
  },
  {
   "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-libjxl-fz-2-poc-L1-oracle",
-  "alts": {},
-  "judge_alts": {},
-  "priority": 5,
-  "project": "libjxl"
- },
- {
-  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-libjxl-fz-3-poc-L1-oracle",
   "alts": {},
   "judge_alts": {},
   "priority": 5,

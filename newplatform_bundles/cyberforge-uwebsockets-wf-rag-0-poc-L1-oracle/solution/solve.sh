@@ -1,6 +1,6 @@
 #!/bin/bash
 # Reference solution (oracle): materialize the CyberForge ground-truth PoV for
-# uwebsockets / vulnerability_WF_RAG_0 (dataset file: newplatform_bundles/conversion/replay/uwebsockets/vulnerability_WF_RAG_0/input-000 (replayed uwebsockets/vulnerabilities/vulnerability_WF_RAG_0/exploit_files/exploit.sh)) at /workspace/poc.
+# uwebsockets / vulnerability_WF_RAG_0 (dataset file: uwebsockets/vulnerabilities/vulnerability_WF_RAG_0/exploit_files/pov.bin) at /workspace/poc.
 # It does not build anything: grading runs on the task-server's own builds.
 set -euo pipefail
 

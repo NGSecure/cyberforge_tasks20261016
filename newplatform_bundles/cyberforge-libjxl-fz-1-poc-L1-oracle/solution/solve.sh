@@ -1,6 +1,6 @@
 #!/bin/bash
 # Reference solution (oracle): materialize the CyberForge ground-truth PoV for
-# libjxl / vulnerability_FZ_1 (dataset file: newplatform_bundles/conversion/replay/libjxl/vulnerability_FZ_1/input-000 (replayed libjxl/vulnerabilities/vulnerability_FZ_1/exploit_files/exploit.sh)) at /workspace/poc.
+# libjxl / vulnerability_FZ_1 (dataset file: libjxl/vulnerabilities/vulnerability_FZ_1/exploit_files/poc.png) at /workspace/poc.
 # It does not build anything: grading runs on the task-server's own builds.
 set -euo pipefail
 

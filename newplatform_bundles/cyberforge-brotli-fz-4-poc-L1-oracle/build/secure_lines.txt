@@ -1,1 +1,0 @@
-for (bits_count = count[bits]; bits_count != 0; --bits_count) {

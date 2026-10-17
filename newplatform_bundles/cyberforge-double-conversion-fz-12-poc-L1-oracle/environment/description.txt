@@ -1,1 +1,0 @@
-An off-by-one iteration in double_conversion::TrimTrailingZeros can cause out-of-bounds access while parsing strings with trailing zeros.

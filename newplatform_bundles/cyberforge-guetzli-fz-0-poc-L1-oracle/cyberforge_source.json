@@ -14,8 +14,8 @@
   "pov_kind": "harness",
   "ground_truth_evidence": "crash evidence in the dataset",
   "ground_truth": {
-    "dataset_file": "replay/guetzli/vulnerability_FZ_0/input-002",
-    "how_found": "exploit_replay",
+    "dataset_file": "exploit_files/poc.bin",
+    "how_found": "report_running (the file the report shows crashing, shipped with the exploit)",
     "bytes": 5,
     "exploit_replay_inputs": 3,
     "dataset_report_matches_exploit_check": true,

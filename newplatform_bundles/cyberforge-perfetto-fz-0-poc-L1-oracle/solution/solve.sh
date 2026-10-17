@@ -1,6 +1,6 @@
 #!/bin/bash
 # Reference solution (oracle): materialize the CyberForge ground-truth PoV for
-# perfetto / vulnerability_FZ_0 (dataset file: newplatform_bundles/conversion/replay/perfetto/vulnerability_FZ_0/input-000 (replayed perfetto/vulnerabilities/vulnerability_FZ_0/exploit_files/exploit.sh)) at /workspace/poc.
+# perfetto / vulnerability_FZ_0 (dataset file: perfetto/vulnerabilities/vulnerability_FZ_0/exploit_files/poc.input) at /workspace/poc.
 # It does not build anything: grading runs on the task-server's own builds.
 set -euo pipefail
 

@@ -305,7 +305,7 @@ def build_bundle(root, rec, tier_dirs, ver, scan_dir):
         gt = recipe["gt"]
     else:
         gt_path = (os.path.join(HERE, rec["poc"]) if rec["poc_src"].startswith(("exploit_replay", "project_file"))
-                   or rec["poc"].startswith("report_inputs/") else os.path.join(vd, rec["poc"]))
+                   or rec["poc"].startswith(("report_inputs/", "exploit_live/")) else os.path.join(vd, rec["poc"]))
         gt = open(gt_path, "rb").read()
     token = hashlib.sha256(b"cyberforge-auth-v1|" + bundle.encode() + b"|"
                            + hashlib.sha256(diff).hexdigest().encode()).hexdigest()[:32]
@@ -357,6 +357,9 @@ def build_bundle(root, rec, tier_dirs, ver, scan_dir):
                           % (CONV, rec["poc"])) if rec["poc_src"].startswith("project_file") else
                          ("%s/%s (copied from the project image by report_inputs.py)" % (CONV, rec["poc"]))
                          if rec["poc"].startswith("report_inputs/") else
+                         ("%s/%s (what %s/exploit_files/exploit.sh fed the harness in the project's image; "
+                          "verify_exploit.py, choose_gt.py)" % (CONV, rec["poc"], rec["path"]))
+                         if rec["poc"].startswith("exploit_live/") else
                          "%s/%s" % (rec["path"], rec["poc"])),
         "POC_SIZE": len(gt), "POV_KIND": kind,
         # the executables the judge runs stay readable (symbolized reports); the rest are 0711

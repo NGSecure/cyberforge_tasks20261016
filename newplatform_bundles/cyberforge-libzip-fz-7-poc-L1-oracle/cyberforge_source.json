@@ -33,12 +33,12 @@
   "pov_kind": "harness",
   "ground_truth_evidence": "crash evidence in the dataset",
   "ground_truth": {
-    "dataset_file": "../vulnerability_FZ_2/exploit_files/generated_inputs/builtin_00_test.zip_d92d882491.zip",
-    "how_found": "fuzz_exact_seed (same-named seed of a sibling task)",
-    "bytes": 128,
+    "dataset_file": "report_inputs/libzip/vulnerability_FZ_7/builtin_00_test.zip_d92d882491.zip",
+    "how_found": "fuzz_exact_seed (built-in corpus member test.zip of /out/zip_write_encrypt_pkware_file_fuzzer_seed_corpus.zip, copied from the image)",
+    "bytes": 840,
     "exploit_replay_inputs": 0,
     "dataset_report_matches_exploit_check": null,
-    "sha256": "5c369f2348295d78556c9c73627ddc70d818f5e57015c1f61fad2d75877ba289",
+    "sha256": "bffb8684d2b7fc4af851f2f9f2466412b24c052c68a95d92efdffe4468e5b8fd",
     "solve_sh": "inline"
   },
   "harness": {

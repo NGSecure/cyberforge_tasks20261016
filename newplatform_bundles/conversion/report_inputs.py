@@ -11,7 +11,8 @@
   of the harness's built-in corpus (seed_provenance.provenance "builtin_corpus_member"),
   which fuzz_poc.py read from /out/<fuzzer>_seed_corpus.zip; that member is copied from
   the zip in the image's /out, and kept only when its size is the one the report records
-  (and, for corpus files named by their SHA-1, when the content has that SHA-1).
+  (and, for corpus files named by their SHA-1, when the content has that SHA-1; when the
+  task ships the seed as a Git LFS pointer, when the content has the pointer's SHA-256).
 
 Output: report_inputs/<project>/<vuln>/<basename or seed name>, where classify.py looks
 for it. Existing files are kept. Needs Docker; a pull falls back to mirror.gcr.io like
@@ -35,9 +36,26 @@ def crashing_file(report):
     return runs[-1] if runs and runs[-1].startswith("/src/") else ""
 
 
+LFS_PTR_RE = re.compile(rb"^version https://git-lfs\.github\.com/spec/v1\noid sha256:([0-9a-f]{64})\nsize \d+\n$")
+
+
+def shipped_oid(vd, sp):
+    """The sha256 a Git LFS pointer gives for the seed file the task ships (its content is
+    missing from the dataset copy), or None."""
+    rel = sp.get("relative_path") or ""
+    if "exploit_files/" not in rel:
+        return None
+    f = os.path.join(vd, "exploit_files", rel.split("exploit_files/", 1)[1])
+    try:
+        m = LFS_PTR_RE.match(open(f, "rb").read(256)) if os.path.getsize(f) <= 200 else None
+    except OSError:
+        return None
+    return m.group(1).decode() if m else None
+
+
 def corpus_seed(vd):
-    """(fuzzer, archive member, seed name, size) of a built-in corpus seed crash_report.json
-    names as the exact seed that crashed the vulnerable build, or None."""
+    """(fuzzer, archive member, seed name, size, sha256 or None) of a built-in corpus seed
+    crash_report.json names as the exact seed that crashed the vulnerable build, or None."""
     f = os.path.join(vd, "exploit_files", "fuzz_results", "vulnerable", "crash_report.json")
     if not os.path.isfile(f):
         return None
@@ -46,7 +64,7 @@ def corpus_seed(vd):
     if c.get("mode") != "replay" or c.get("attribution_kind") != "exact_seed" or c.get("returncode") in (0, None) \
             or sp.get("provenance") != "builtin_corpus_member" or not sp.get("archive_member") or not c.get("fuzzer"):
         return None
-    return c["fuzzer"], sp["archive_member"], c.get("seed") or sp.get("name"), sp.get("size")
+    return c["fuzzer"], sp["archive_member"], c.get("seed") or sp.get("name"), sp.get("size"), shipped_oid(vd, sp)
 
 
 def main():
@@ -64,11 +82,11 @@ def main():
             if not os.path.isfile(dst):
                 by_project.setdefault(rel.split("/")[0], []).append((rel, ("tar", src, None), dst))
         if seed:
-            fuzzer, member, name, size = seed
+            fuzzer, member, name, size, oid = seed
             dst = os.path.join(out_root, *rel.split("/vulnerabilities/"), name)
             if not os.path.isfile(dst):
                 by_project.setdefault(rel.split("/")[0], []).append(
-                    (rel, ("zip", "/out/%s_seed_corpus.zip" % fuzzer, member, size), dst))
+                    (rel, ("zip", "/out/%s_seed_corpus.zip" % fuzzer, member, size, oid), dst))
     for project, tasks in sorted(by_project.items()):
         scan = json.load(open(os.path.join(scan_dir, project + ".json")))
         image = "%s@%s" % (scan["image"], scan["digest"])
@@ -100,6 +118,10 @@ def main():
                     continue
                 if re.fullmatch(r"[0-9a-f]{40}", base) and hashlib.sha1(data).hexdigest() != base:
                     print(rel, "%s: content does not have the SHA-1 its name says; not kept" % label, flush=True)
+                    continue
+                if what[4] and hashlib.sha256(data).hexdigest() != what[4]:
+                    print(rel, "%s: content does not have the SHA-256 the task's LFS pointer gives; not kept"
+                          % label, flush=True)
                     continue
             os.makedirs(os.path.dirname(dst), exist_ok=True)
             with open(dst, "wb") as f:

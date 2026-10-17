@@ -1,6 +1,6 @@
 #!/bin/bash
 # Reference solution (oracle): fetch the CyberForge ground-truth PoV for
-# c-blosc2 / vulnerability_WF_RAG_0 (dataset file: newplatform_bundles/conversion/replay/c-blosc2/vulnerability_WF_RAG_0/input-000 (replayed c-blosc2/vulnerabilities/vulnerability_WF_RAG_0/exploit_files/exploit.sh), 1048576 bytes — too
+# c-blosc2 / vulnerability_WF_RAG_0 (dataset file: c-blosc2/vulnerabilities/vulnerability_WF_RAG_0/exploit_files/pov.bin, 1048576 bytes — too
 # large to inline) from the task-server and write it to /workspace/poc.
 set -euo pipefail
 

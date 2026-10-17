@@ -1,2 +1,0 @@
-if (setsockopt(fd, SOL_SOCKET, SO_RCVBUF, (const void *)&sz, (socklen_t)sizeof(sz)) < 0) {
-if (setsockopt(fd, SOL_SOCKET, SO_SNDBUF, (const void *)&sz, (socklen_t)sizeof(sz)) < 0) {
