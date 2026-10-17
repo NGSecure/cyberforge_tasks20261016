@@ -1,0 +1,1 @@
+cJSON suffers from a heap-buffer-overflow in cJSON_ParseWithLengthOpts (cJSON.c), allowing an out-of-bounds read of one byte during parsing.

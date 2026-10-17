@@ -21,7 +21,9 @@
 #
 # Build context = the bundle root (see build.sh). Secrets live in build/, never in
 # environment/, and only the builder stage below ever sees the injected diff.
-FROM --platform=linux/amd64 @@BASE_IMAGE@@ AS vulsrc
+# build.sh may pass the same digest from a registry mirror (--build-arg BASE_IMAGE=...).
+ARG BASE_IMAGE=@@BASE_IMAGE@@
+FROM --platform=linux/amd64 ${BASE_IMAGE} AS vulsrc
 COPY build/inject_vulnerability.diff /tmp/inject_vulnerability.diff
 COPY build/snapshot_residue.txt /tmp/snapshot_residue.txt
 # 1) restore the pristine /src (or, without a snapshot tarball, drop the snapshot's
@@ -49,7 +51,7 @@ RUN set -eux; \
     cd /src && tar --exclude-vcs --sort=name --mtime=@1577836800 --owner=0 --group=0 --numeric-owner \
       -czf /tmp/repo-vul.tar.gz @@TARGET_DIR@@
 
-FROM --platform=linux/amd64 @@BASE_IMAGE@@
+FROM --platform=linux/amd64 ${BASE_IMAGE}
 # OSS-Fuzz's helper.py normally passes these to `compile`; without FUZZING_LANGUAGE it aborts.
 ENV FUZZING_LANGUAGE=@@FUZZ_LANG@@ PROJECT_NAME=@@PROJECT@@
 # Leave the base image's WORKDIR before deleting anything under it.

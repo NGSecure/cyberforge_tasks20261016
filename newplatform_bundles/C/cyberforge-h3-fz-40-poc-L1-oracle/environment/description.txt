@@ -1,0 +1,1 @@
+h3 has an out-of-bounds read in mathExtensions.h.

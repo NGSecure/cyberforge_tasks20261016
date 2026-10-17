@@ -1,0 +1,17 @@
+#include <fmt/os.h>
+#include <unistd.h>
+#include <cstring>
+#include <cstdlib>
+#include <exception>
+int main() {
+  fmt::file f("/tmp/wf_probe_rw", fmt::file::RDWR | fmt::file::CREATE | fmt::file::TRUNC);
+  ::close(f.descriptor());
+  char* heap = static_cast<char*>(malloc(16));
+  char buf[8] = {0};
+  try {
+    size_t n = f.write(buf, sizeof(buf));
+    memset(heap, 'A', n);
+  } catch (const std::exception&) { free(heap); return 0; }
+  free(heap);
+  return 0;
+}

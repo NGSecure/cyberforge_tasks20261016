@@ -1,0 +1,1 @@
+kamailio's src/core/hashes.h contains an off-by-one calculation (CWE-193) in hash length handling that could lead to out-of-bounds memory access during hashing operations.

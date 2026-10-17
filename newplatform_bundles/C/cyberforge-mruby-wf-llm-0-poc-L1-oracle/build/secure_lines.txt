@@ -1,0 +1,4 @@
+mrb_raisef(mrb, mrb_class_get_id(mrb, MRB_SYM(ArgumentError)),
+"too long unix socket path (max: %d bytes)",
+if (pathlen > sizeof(sunp->sun_path) - 1) {
+(int)sizeof(sunp->sun_path) - 1);

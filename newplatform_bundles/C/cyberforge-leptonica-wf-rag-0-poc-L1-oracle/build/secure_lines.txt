@@ -1,0 +1,1 @@
+if (by + i < 0 || by + i >= h) continue;

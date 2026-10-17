@@ -1,0 +1,1 @@
+A heap-buffer-overflow in BrotliBuildMetaBlock in brotli's metablock.c allows out-of-bounds read when adding distance histograms.

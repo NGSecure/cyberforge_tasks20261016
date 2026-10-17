@@ -1,0 +1,1 @@
+A heap-buffer-overflow in double-conversion's ieee.h can occur when processing crafted string-to-double input.

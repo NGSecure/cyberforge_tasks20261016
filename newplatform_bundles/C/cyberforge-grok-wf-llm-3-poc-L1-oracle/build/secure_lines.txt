@@ -1,0 +1,1 @@
+inputFolder->imgdirpath = (char*)malloc(imageDirectory.length() + 1);

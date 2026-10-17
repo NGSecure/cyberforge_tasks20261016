@@ -1,0 +1,1 @@
+An unchecked return value in fmt's file::read can pass a negative value to an assertion, causing an abort.

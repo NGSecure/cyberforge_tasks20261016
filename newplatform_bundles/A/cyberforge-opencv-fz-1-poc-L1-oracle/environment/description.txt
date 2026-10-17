@@ -1,0 +1,1 @@
+Off-by-one calculation in OpenCV's 3rdparty/protobuf/src/google/protobuf/extension_set.h can cause incorrect size computation and potentially trigger buffer overflow or memory corruption when processing extensions.

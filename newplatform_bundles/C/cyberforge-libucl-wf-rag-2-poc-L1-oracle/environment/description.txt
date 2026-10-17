@@ -1,0 +1,1 @@
+A heap-buffer-overflow in libucl's ucl_object_emit_funcs_free leads to an out-of-bounds read via malformed input.

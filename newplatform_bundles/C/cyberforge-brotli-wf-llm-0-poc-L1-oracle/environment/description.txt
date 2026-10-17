@@ -1,0 +1,1 @@
+In Brotli, ParseBase64 in c/tools/brotli.c performs a 1-byte out-of-bounds write when processing a crafted --comment argument, resulting in improper input validation.

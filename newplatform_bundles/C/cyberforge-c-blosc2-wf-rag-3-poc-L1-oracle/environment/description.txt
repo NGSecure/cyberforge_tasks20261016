@@ -1,0 +1,1 @@
+A heap-buffer-overflow in c-blosc2's read_chunk_header in blosc2.c can be triggered by a crafted chunk header, causing memory corruption.

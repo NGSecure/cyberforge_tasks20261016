@@ -1,0 +1,1 @@
+A stack buffer underflow in make_ioa_addr in ns_turn_ioaddr.c can be triggered by an integer calculation error.

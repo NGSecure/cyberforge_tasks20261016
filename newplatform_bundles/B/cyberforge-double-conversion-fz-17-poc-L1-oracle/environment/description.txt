@@ -1,0 +1,1 @@
+double-conversion bignum.cc triggers an assertion failure in MultiplyByPowerOfTen for non-positive exponents.

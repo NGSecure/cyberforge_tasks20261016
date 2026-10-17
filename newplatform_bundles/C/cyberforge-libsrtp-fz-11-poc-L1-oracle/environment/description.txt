@@ -1,0 +1,1 @@
+libsrtp may perform a post-buffer operation in crypto/hash/auth.c, allowing out-of-bounds access during authentication processing.

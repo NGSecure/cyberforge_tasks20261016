@@ -1,0 +1,1 @@
+libsrtp may dereference an invalid pointer in crypto/cipher/cipher.c, potentially causing a crash.

@@ -1,0 +1,1 @@
+aRecordInfo.mDataBufferSize = Min(aRecordInfo.mRecordLength, aRecordInfo.mDataBufferSize);

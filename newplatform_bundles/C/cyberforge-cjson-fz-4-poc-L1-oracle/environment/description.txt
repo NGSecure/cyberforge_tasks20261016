@@ -1,0 +1,1 @@
+cJSON's cJSON.c contains an invalid pointer (CWE-476) vulnerability that can cause NULL pointer dereference and crash when parsing crafted JSON input.

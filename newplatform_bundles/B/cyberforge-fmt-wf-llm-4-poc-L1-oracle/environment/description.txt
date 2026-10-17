@@ -1,0 +1,1 @@
+A heap-buffer-overflow in fmt's vprintf function can be triggered by crafted input, causing a read past the end of a buffer.

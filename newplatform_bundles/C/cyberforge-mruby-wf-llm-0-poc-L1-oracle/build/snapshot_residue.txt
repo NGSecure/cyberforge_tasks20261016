@@ -1,0 +1,10 @@
+/opt/src_snapshot.tar
+/out/llvm-symbolizer
+/out/mruby.dict
+/out/mruby_fuzzer
+/out/mruby_fuzzer.options
+/out/mruby_fuzzer_seed_corpus.zip
+/out/mruby_proto_fuzzer
+/out/mruby_proto_fuzzer.options
+/workspace/run/unit_tests/parse_results.py
+/workspace/run/unit_tests/test.sh

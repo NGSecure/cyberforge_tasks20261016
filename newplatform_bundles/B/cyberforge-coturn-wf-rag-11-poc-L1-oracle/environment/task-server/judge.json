@@ -1,0 +1,79 @@
+{
+  "kind": "program",
+  "steps": [
+    {
+      "role": "compile",
+      "argv": [
+        "/usr/bin/gcc",
+        "-g",
+        "-fsanitize=address",
+        "-c",
+        "/tmp/attack/stubs.c",
+        "-o",
+        "/tmp/attack/stubs.o"
+      ],
+      "cwd": "/src/coturn",
+      "env": {
+        "UBSAN_OPTIONS": "silence_unsigned_overflow=1",
+        "HWASAN_OPTIONS": "random_tags=0",
+        "DFSAN_OPTIONS": "warn_unimplemented=0"
+      },
+      "stdin": null
+    },
+    {
+      "role": "compile",
+      "argv": [
+        "/usr/bin/gcc",
+        "-g",
+        "-fsanitize=address",
+        "-o",
+        "/tmp/attack/driver",
+        "{poc}",
+        "/src/coturn/my_build/src/apps/relay/CMakeFiles/turnserver.dir/http_server.c.o",
+        "/tmp/attack/stubs.o",
+        "-pthread"
+      ],
+      "cwd": "/src/coturn",
+      "env": {
+        "UBSAN_OPTIONS": "silence_unsigned_overflow=1",
+        "HWASAN_OPTIONS": "random_tags=0",
+        "DFSAN_OPTIONS": "warn_unimplemented=0"
+      },
+      "stdin": null
+    },
+    {
+      "role": "run",
+      "argv": [
+        "/tmp/attack/driver"
+      ],
+      "cwd": "/src/coturn",
+      "env": {
+        "UBSAN_OPTIONS": "silence_unsigned_overflow=1",
+        "HWASAN_OPTIONS": "random_tags=0",
+        "DFSAN_OPTIONS": "warn_unimplemented=0"
+      },
+      "stdin": null
+    }
+  ],
+  "poc_path": "/tmp/attack/attack.c",
+  "aux_files": {
+    "/tmp/attack/stubs.c": "aux-0-stubs.c"
+  },
+  "dirs": [
+    "/tmp/attack"
+  ],
+  "touched_files": [
+    "src/apps/relay/http_server.c"
+  ],
+  "target_dir": "coturn",
+  "leak_task": false,
+  "leak_detection": "off: the injected bug is not a leak",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "normalized": [],
+  "cyberforge": {
+    "project": "coturn",
+    "vulnerability_id": "vulnerability_WF_RAG_11",
+    "pipeline": "WF_RAG"
+  }
+}

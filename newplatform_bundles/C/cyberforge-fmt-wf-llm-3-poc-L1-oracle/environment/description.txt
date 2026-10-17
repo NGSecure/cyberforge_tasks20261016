@@ -1,0 +1,1 @@
+In fmt/src/os.cc, file::write aborts with an assertion failure when passed a negative value.

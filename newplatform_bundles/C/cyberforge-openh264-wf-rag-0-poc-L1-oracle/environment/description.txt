@@ -1,0 +1,1 @@
+An initialization issue in CWelsH264SVCEncoder::SetOption in welsEncoderExt.cpp can lead to an AddressSanitizer CHECK failure.

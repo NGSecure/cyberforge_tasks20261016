@@ -1,0 +1,1 @@
+Libsass contains an out-of-bounds read vulnerability in Sass::Parser::parseCompoundSelector in parser_selectors.cpp that can cause a crash.

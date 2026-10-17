@@ -1,0 +1,1 @@
+Improper input validation in double-conversion's bignum.cc RawBigit function causes an AddressSanitizer fatal CHECK failure during string-to-double conversion.

@@ -1,0 +1,15 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "cJSON.h"
+/* Serialise a record whose optional "label" field may be absent (NULL). */
+int main(void)
+{
+    cJSON *root  = cJSON_CreateObject();
+    cJSON *label = cJSON_CreateStringReference(NULL); /* absent label -> NULL valuestring */
+    cJSON_AddItemToObject(root, "label", label);
+
+    char *text = cJSON_Print(root);
+    if (text != NULL) { printf("%s\n", text); free(text); }
+    cJSON_Delete(root);
+    return 0;
+}

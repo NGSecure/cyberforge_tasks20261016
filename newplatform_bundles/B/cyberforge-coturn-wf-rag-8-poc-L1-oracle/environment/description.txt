@@ -1,0 +1,1 @@
+A post-buffer operation in coturn's ns_turn_ioaddr.c causes a segmentation fault, leading to a denial of service.

@@ -1,0 +1,1 @@
+A use-after-free vulnerability in JS_DefineProperty within quickjs.c can be triggered by crafted JavaScript, leading to a crash.

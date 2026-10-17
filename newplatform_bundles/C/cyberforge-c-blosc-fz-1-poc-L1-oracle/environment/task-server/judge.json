@@ -1,0 +1,63 @@
+{
+  "kind": "program",
+  "steps": [
+    {
+      "role": "compile",
+      "argv": [
+        "/usr/bin/gcc",
+        "-I/src/c-blosc/internal-complibs/zlib-1.3.1",
+        "{poc}",
+        "/src/c-blosc/internal-complibs/zlib-1.3.1/inflate.c",
+        "/src/c-blosc/internal-complibs/zlib-1.3.1/adler32.c",
+        "/src/c-blosc/internal-complibs/zlib-1.3.1/zutil.c",
+        "-o",
+        "/tmp/exploit/trigger",
+        "-I/src/c-blosc/internal-complibs/zlib-1.3.1",
+        "-fsanitize=address",
+        "-g"
+      ],
+      "cwd": "/src/c-blosc",
+      "env": {
+        "UBSAN_OPTIONS": "silence_unsigned_overflow=1",
+        "HWASAN_OPTIONS": "random_tags=0",
+        "DFSAN_OPTIONS": "warn_unimplemented=0"
+      },
+      "stdin": null
+    },
+    {
+      "role": "run",
+      "argv": [
+        "/tmp/exploit/trigger"
+      ],
+      "cwd": "/src/c-blosc",
+      "env": {
+        "UBSAN_OPTIONS": "silence_unsigned_overflow=1",
+        "HWASAN_OPTIONS": "random_tags=0",
+        "DFSAN_OPTIONS": "warn_unimplemented=0"
+      },
+      "stdin": null
+    }
+  ],
+  "poc_path": "/tmp/exploit/trigger.c",
+  "aux_files": {},
+  "dirs": [
+    "/tmp/exploit"
+  ],
+  "touched_files": [
+    "internal-complibs/zlib-1.3.1/inflate.c"
+  ],
+  "target_dir": "c-blosc",
+  "leak_task": false,
+  "leak_detection": "off: the injected bug is not a leak",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "normalized": [
+    "step 1: added -fsanitize=address",
+    "step 1: added -g"
+  ],
+  "cyberforge": {
+    "project": "c-blosc",
+    "vulnerability_id": "vulnerability_FZ_1",
+    "pipeline": "FZ"
+  }
+}

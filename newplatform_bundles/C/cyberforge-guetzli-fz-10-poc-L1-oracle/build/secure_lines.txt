@@ -1,0 +1,1 @@
+if (jpg.components.size() == 1 ||

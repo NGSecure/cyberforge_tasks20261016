@@ -1,0 +1,1 @@
+memcpy(cmapd->array, cmaps->array, cmaps->n * sizeof(RGBA_QUAD));

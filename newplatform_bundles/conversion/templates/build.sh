@@ -19,19 +19,24 @@ MAIN_TAG="@@TAG_PREFIX@@_main:${VER}"
 TS_TAG="@@TAG_PREFIX@@_task_server:${VER}"
 
 echo "==> base image $BASE"
-if ! docker image inspect "$BASE" >/dev/null 2>&1; then
-  if [ "$HAS_HUB_IMAGE" = 1 ]; then
-    docker pull "$BASE"
-  else
-    echo "    not published for this project: building it from build/setup (the project's OSS-Fuzz setup)"
-    docker build -t "$BASE" build/setup
-  fi
+# The same digest is also served by Google's Docker Hub mirror, which is not subject to
+# Docker Hub's anonymous pull limit; content is identical (the digest pins it).
+MIRROR="mirror.gcr.io/${BASE#docker.io/}"
+if docker image inspect "$BASE" >/dev/null 2>&1; then
+  :
+elif [ "$HAS_HUB_IMAGE" = 1 ] && docker image inspect "$MIRROR" >/dev/null 2>&1; then
+  BASE="$MIRROR"
+elif [ "$HAS_HUB_IMAGE" = 1 ]; then
+  docker pull "$BASE" || { echo "    Docker Hub pull failed; trying $MIRROR"; docker pull "$MIRROR"; BASE="$MIRROR"; }
+else
+  echo "    not published for this project: building it from build/setup (the project's OSS-Fuzz setup)"
+  docker build -t "$BASE" build/setup
 fi
 
 echo "==> build main sandbox  $MAIN_TAG"
-docker build -t "$MAIN_TAG" -f environment/Dockerfile .
-echo "==> build task-server   $TS_TAG  (compiles the secure + the vulnerable harness)"
-docker build -t "$TS_TAG" -f environment/task-server/Dockerfile .
+docker build -t "$MAIN_TAG" --build-arg BASE_IMAGE="$BASE" -f environment/Dockerfile .
+echo "==> build task-server   $TS_TAG  (compiles the secure and the vulnerable build)"
+docker build -t "$TS_TAG" --build-arg BASE_IMAGE="$BASE" -f environment/task-server/Dockerfile .
 
 echo "==> self-check 1/3: the agent sandbox holds no clean source, history or snapshot residue"
 # With /opt/src_snapshot.tar in the base image, environment/Dockerfile replaced /src by the

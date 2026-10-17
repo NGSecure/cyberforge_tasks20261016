@@ -1,0 +1,1 @@
+htslib sam.c has an integer overflow in a calculation that may produce incorrect results.

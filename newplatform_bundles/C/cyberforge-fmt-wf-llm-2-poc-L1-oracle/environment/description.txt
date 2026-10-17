@@ -1,0 +1,1 @@
+Unchecked return value in fmt's file::write (src/os.cc) triggers an assertion failure when a negative value is returned.

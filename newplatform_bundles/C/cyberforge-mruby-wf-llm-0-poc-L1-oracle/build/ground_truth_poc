@@ -1,0 +1,6 @@
+begin
+  # Path longer than 108 bytes will trigger the heap buffer overflow
+  Socket.sockaddr_un("A" * 200)
+rescue => e
+  puts "Caught exception: #{e}"
+end

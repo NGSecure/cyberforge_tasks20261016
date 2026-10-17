@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Static checks over generated CyberForge bundles (no Docker needed).
 
-    python3 -I validate.py <out_dir> [bundle ...]
+    python3 -I validate.py <out_dir> [A/bundle ...]
 
 Checks per bundle: required files, no unfilled @@placeholders@@, task.toml /
 judge.json / cyberforge_source.json parse, `bash -n` on every script, in-memory
@@ -10,6 +10,9 @@ the ground truth matches its recorded sha256 (and solve.sh decodes to it), the
 build inputs referenced by the Dockerfiles exist, every FROM is the recorded
 (digest-pinned) base image, the snapshot residue list is consistent and covers
 /opt/src_snapshot.tar, and environment/ holds only the expected non-secret files.
+Bundles live in <out_dir>/A, B and C; a bundle's folder must be its recorded tier.
+CLI/program bundles (tier-B templates) also need a recorded recipe whose placeholders
+fit its kind and whose extra files exist in build/aux/.
 Exits non-zero if any bundle fails.
 """
 import base64
@@ -21,29 +24,69 @@ import subprocess
 import sys
 import tomllib
 
-ENV_ALLOWED = {"Dockerfile", "docker-compose.yaml", "submit.sh", "description.txt",
-               "task-server/Dockerfile", "task-server/task_server.py", "task-server/judge.json"}
+ENV_ALLOWED = {"Dockerfile", "docker-compose.yaml", "submit.sh", "description.txt", "task-server/Dockerfile",
+               "task-server/task_server.py", "task-server/judge.json", "task-server/cf_delta.py"}
 REQUIRED = ["instruction.md", "task.toml", "build.sh", "push.sh", "cyberforge_source.json",
             "tests/test.sh", "tests/verify.py", "solution/solve.sh",
             "build/inject_vulnerability.diff", "build/ground_truth_poc", "build/setup/Dockerfile",
-            "build/snapshot_residue.txt", "build/secure_lines.txt"] + \
-    ["environment/" + f for f in sorted(ENV_ALLOWED)]
+            "build/snapshot_residue.txt", "build/secure_lines.txt"]
+B_KINDS = ("cli-file", "cli-stdin", "cli-argv", "program")
+
+
+def check_recipe(bd, judge):
+    """The tier-B judge.json: steps fit the kind, extra files are in build/aux/."""
+    errs = []
+    kind, steps = judge.get("kind"), judge.get("steps") or []
+    runs = [st for st in steps if st.get("role") == "run"]
+    if kind not in B_KINDS or not runs or steps[-1].get("role") != "run":
+        return ["judge.json: bad kind %r or no final run step" % kind]
+    flat = [a for st in steps for a in st["argv"]]
+    if kind == "cli-file" and not any("{poc}" in a for a in runs[0]["argv"]):
+        errs.append("cli-file run step does not name {poc}")
+    if kind == "cli-stdin" and runs[0].get("stdin") != "poc":
+        errs.append("cli-stdin run step does not read the PoC on stdin")
+    if kind == "cli-argv" and runs[0]["argv"][1:] != ["{args}"]:
+        errs.append("cli-argv run step is not <program> {args}")
+    if kind == "program":
+        comp = [st for st in steps if st.get("role") == "compile"]
+        if not comp or not any("{poc}" in st["argv"] for st in comp):
+            errs.append("program recipe has no compile step that takes {poc}")
+        if not judge.get("touched_files"):
+            errs.append("program recipe without touched_files (its crash check needs them)")
+    if kind in ("cli-file", "program") and not (judge.get("poc_path") or "").startswith(("/tmp/", "/workspace/", "/exploit")):
+        errs.append("poc_path %r is not a scratch path" % judge.get("poc_path"))
+    if kind not in ("cli-file", "program") and judge.get("poc_path"):
+        errs.append("poc_path set for %s" % kind)
+    if any("{poc}" in a for a in flat) and kind not in ("cli-file", "program"):
+        errs.append("{poc} in a %s recipe" % kind)
+    for dst, n in (judge.get("aux_files") or {}).items():
+        if not os.path.isfile(os.path.join(bd, "build", "aux", n)):
+            errs.append("aux file missing: build/aux/" + n)
+    return errs
 
 
 def check(bd):
     errs = []
     name = os.path.basename(bd)
-    for f in REQUIRED:
+    try:
+        src = json.load(open(os.path.join(bd, "cyberforge_source.json")))
+    except Exception as e:
+        return ["cyberforge_source.json: %s" % e]
+    b = src.get("pov_kind") in B_KINDS
+    env_allowed = ENV_ALLOWED
+    for f in REQUIRED + ["environment/" + f for f in sorted(env_allowed)] + (["build/aux/README.txt"] if b else []):
         if not os.path.isfile(os.path.join(bd, f)):
             errs.append("missing " + f)
     if errs:
         return errs
+    if os.path.basename(os.path.dirname(bd)) != src.get("tier"):
+        errs.append("bundle is in folder %s but its tier is %s" % (os.path.basename(os.path.dirname(bd)), src.get("tier")))
     env_files = set()
     for dp, _, fn in os.walk(os.path.join(bd, "environment")):
         for f in fn:
             env_files.add(os.path.relpath(os.path.join(dp, f), os.path.join(bd, "environment")))
-    if env_files != ENV_ALLOWED:
-        errs.append("environment/ has unexpected files: %s" % sorted(env_files ^ ENV_ALLOWED))
+    if env_files != env_allowed:
+        errs.append("environment/ has unexpected files: %s" % sorted(env_files ^ env_allowed))
     for dp, dn, fn in os.walk(bd):
         if "__pycache__" in dn or any(f.endswith(".pyc") for f in fn):
             errs.append("bytecode under " + os.path.relpath(dp, bd))
@@ -67,18 +110,19 @@ def check(bd):
         errs.append("task.toml: %s" % e)
     try:
         judge = json.load(open(os.path.join(bd, "environment/task-server/judge.json")))
-        if not judge.get("fuzzer_candidates"):
-            errs.append("judge.json has no fuzzer candidates")
-        src = json.load(open(os.path.join(bd, "cyberforge_source.json")))
     except Exception as e:
-        return errs + ["json: %s" % e]
+        return errs + ["judge.json: %s" % e]
+    if b:
+        errs += check_recipe(bd, judge)
+    elif not judge.get("fuzzer_candidates"):
+        errs.append("judge.json has no fuzzer candidates")
     for f in ("build.sh", "push.sh", "tests/test.sh", "solution/solve.sh", "environment/submit.sh"):
         r = subprocess.run(["bash", "-n", os.path.join(bd, f)], capture_output=True, text=True)
         if r.returncode:
             errs.append("bash -n %s: %s" % (f, r.stderr.strip()[:200]))
         if not os.access(os.path.join(bd, f), os.X_OK):
             errs.append("not executable: " + f)
-    for f in ("environment/task-server/task_server.py", "tests/verify.py"):
+    for f in ("environment/task-server/task_server.py", "tests/verify.py", "environment/task-server/cf_delta.py"):
         try:
             compile(open(os.path.join(bd, f), encoding="utf-8").read(), f, "exec")
         except SyntaxError as e:
@@ -104,9 +148,11 @@ def check(bd):
         for ref in re.findall(r"^COPY\s+(?!--from)(\S+)\s", t, re.M):
             if not os.path.exists(os.path.join(bd, ref)):
                 errs.append("%s copies missing %s" % (df, ref))
+        arg = re.search(r"^ARG BASE_IMAGE=(\S+)$", t, re.M)
         froms = re.findall(r"^FROM\s+(?:--platform=\S+\s+)?(\S+)(?:\s+AS\s+(\S+))?", t, re.M | re.I)
         stages = {s for _, s in froms if s}
-        images = [f for f, _ in froms if f not in stages]  # `FROM base AS fix` reuses a stage
+        images = [arg.group(1) if arg and f == "${BASE_IMAGE}" else f
+                  for f, _ in froms if f not in stages]  # `FROM base AS fix` reuses a stage
         if not images or any(f != src["base_image"] for f in images):
             errs.append(df + " does not build FROM the recorded base image")
     if src["base_image_published"] and "@sha256:" not in src["base_image"]:
@@ -118,7 +164,7 @@ def check(bd):
         if lines[-1] != "" or any(not x.strip() for x in lines[:-1]):
             errs.append(f + " must be newline-terminated with no blank lines")
     residue = open(os.path.join(bd, "build/snapshot_residue.txt"), encoding="utf-8").read().splitlines()
-    if src["harness"].get("built_by_dataset_snapshot_compile") == []:
+    if not b and src["harness"].get("built_by_dataset_snapshot_compile") == []:
         errs.append("no harness candidate exists in the base image's own compile (/out)")
     snap = src.get("base_image_snapshot")
     if (snap or {}).get("scrubbed_from_agent_image", 0) != len(residue):
@@ -135,8 +181,13 @@ def check(bd):
 
 def main():
     out = sys.argv[1]
-    names = sys.argv[2:] or sorted(d for d in os.listdir(out)
-                                   if os.path.isdir(os.path.join(out, d)) and d.startswith("cyberforge-"))
+    names = sys.argv[2:] or sorted(os.path.join(t, d) for t in ("A", "B", "C") if os.path.isdir(os.path.join(out, t))
+                                   for d in os.listdir(os.path.join(out, t))
+                                   if os.path.isdir(os.path.join(out, t, d)) and d.startswith("cyberforge-"))
+    stray = [d for d in os.listdir(out) if d.startswith("cyberforge-")]
+    if stray:
+        print("FAIL: bundles outside A/, B/, C/:", stray[:5])
+        return 1
     bad = 0
     for n in names:
         e = check(os.path.join(out, n))

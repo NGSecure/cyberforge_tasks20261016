@@ -1,0 +1,1 @@
+A null pointer dereference in the addr_set_port function of coturn's ns_turn_ioaddr.c causes a segmentation violation and denial of service.

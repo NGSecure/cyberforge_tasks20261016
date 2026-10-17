@@ -1,0 +1,1 @@
+A post-buffer operation in guetzli's JPEG data decoder can cause the fuzzer target to exit.

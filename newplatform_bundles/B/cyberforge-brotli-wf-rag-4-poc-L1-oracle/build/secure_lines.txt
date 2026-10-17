@@ -1,0 +1,1 @@
+mb->distance_split.num_types << BROTLI_DISTANCE_CONTEXT_BITS;

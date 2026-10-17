@@ -1,0 +1,1 @@
+A stack-buffer-overflow vulnerability in double-conversion's utilities header allows attackers to trigger memory corruption via crafted input.

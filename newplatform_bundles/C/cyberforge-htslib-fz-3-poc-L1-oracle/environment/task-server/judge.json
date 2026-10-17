@@ -1,0 +1,69 @@
+{
+  "kind": "program",
+  "steps": [
+    {
+      "role": "compile",
+      "argv": [
+        "/usr/bin/gcc",
+        "-O2",
+        "{poc}",
+        "-o",
+        "/tmp/exploit/driver",
+        "-I/src/htslib",
+        "/src/htslib/libhts.a",
+        "-lz",
+        "-lpthread",
+        "-lcurl",
+        "-lbz2",
+        "-llzma",
+        "-lm",
+        "-lcrypto",
+        "-fsanitize=address",
+        "-g"
+      ],
+      "cwd": "/src/htslib",
+      "env": {
+        "UBSAN_OPTIONS": "silence_unsigned_overflow=1",
+        "HWASAN_OPTIONS": "random_tags=0",
+        "DFSAN_OPTIONS": "warn_unimplemented=0"
+      },
+      "stdin": null
+    },
+    {
+      "role": "run",
+      "argv": [
+        "/tmp/exploit/driver"
+      ],
+      "cwd": "/src/htslib",
+      "env": {
+        "UBSAN_OPTIONS": "silence_unsigned_overflow=1",
+        "HWASAN_OPTIONS": "random_tags=0",
+        "DFSAN_OPTIONS": "warn_unimplemented=0"
+      },
+      "stdin": null
+    }
+  ],
+  "poc_path": "/tmp/exploit/driver.c",
+  "aux_files": {},
+  "dirs": [
+    "/tmp/exploit"
+  ],
+  "touched_files": [
+    "sam.c",
+    "test/test.pl"
+  ],
+  "target_dir": "htslib",
+  "leak_task": false,
+  "leak_detection": "off: the injected bug is not a leak",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "normalized": [
+    "step 1: added -fsanitize=address",
+    "step 1: added -g"
+  ],
+  "cyberforge": {
+    "project": "htslib",
+    "vulnerability_id": "vulnerability_FZ_3",
+    "pipeline": "FZ"
+  }
+}

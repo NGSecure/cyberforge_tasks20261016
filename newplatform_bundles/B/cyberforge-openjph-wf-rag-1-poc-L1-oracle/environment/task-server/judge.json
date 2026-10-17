@@ -1,0 +1,41 @@
+{
+  "kind": "cli-file",
+  "steps": [
+    {
+      "role": "run",
+      "argv": [
+        "/src/build/src/apps/ojph_compress/ojph_compress",
+        "-i",
+        "{poc}",
+        "-o",
+        "output.j2c"
+      ],
+      "cwd": "/tmp/exploit_work",
+      "env": {
+        "UBSAN_OPTIONS": "silence_unsigned_overflow=1",
+        "HWASAN_OPTIONS": "random_tags=0",
+        "DFSAN_OPTIONS": "warn_unimplemented=0"
+      },
+      "stdin": null
+    }
+  ],
+  "poc_path": "/tmp/exploit_work/input.ppm",
+  "aux_files": {},
+  "dirs": [
+    "/tmp/exploit_work"
+  ],
+  "touched_files": [
+    "src/core/others/ojph_file.cpp"
+  ],
+  "target_dir": "OpenJPH",
+  "leak_task": false,
+  "leak_detection": "off: the injected bug is not a leak",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "normalized": [],
+  "cyberforge": {
+    "project": "openjph",
+    "vulnerability_id": "vulnerability_WF_RAG_1",
+    "pipeline": "WF_RAG"
+  }
+}

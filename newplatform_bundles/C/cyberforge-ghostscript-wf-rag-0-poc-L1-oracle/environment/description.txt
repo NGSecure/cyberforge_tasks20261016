@@ -1,0 +1,1 @@
+In Ghostscript, the copy_existing_file function in base/genarch.c fails to restrict file access, leading to information disclosure when processing crafted files.

@@ -1,0 +1,1 @@
+libjxl's jxl::BitReader::Consume in dec_bit_reader.h contains a numeric error.

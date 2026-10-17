@@ -1,0 +1,1 @@
+An unhandled error in xz's alone_decode function results in a memory leak when index hash initialization fails in alone_decoder.c.

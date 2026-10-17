@@ -1,0 +1,1 @@
+In quickjs.c, JS_DefineProperty can be triggered with an invalid pointer, causing a crash due to an invalid memory access.

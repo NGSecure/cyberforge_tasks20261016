@@ -1,0 +1,1 @@
+if ((pstate = g72x_state_new ()) == NULL)

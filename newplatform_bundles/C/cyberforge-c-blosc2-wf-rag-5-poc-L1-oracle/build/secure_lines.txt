@@ -1,0 +1,1 @@
+ebsize = context->blocksize + context->typesize * (signed)sizeof(int32_t);

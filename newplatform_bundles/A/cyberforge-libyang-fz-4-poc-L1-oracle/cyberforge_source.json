@@ -1,0 +1,76 @@
+{
+  "bundle": "cyberforge-libyang-fz-4-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/libyang/vulnerabilities/vulnerability_FZ_4",
+  "base_image": "vuljector/libyang:setup@sha256:e298b875e4ae40db67d4684427dccc90385f0705adaf3325466a877f1d4ab619",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-04-18T17:40:17.935554999Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T16:24:25.743076538Z",
+        "created_by": "sleep infinity",
+        "bytes": 459138305
+      }
+    ],
+    "post_setup_files": 1656,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 1647,
+    "scrubbed_from_agent_image": 7,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out": 4,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 1,
+  "image_tags": {
+    "docker_image": "cyberforge_libyang_fz_4_main:v0.0.2",
+    "task_server_image": "cyberforge_libyang_fz_4_task_server:v0.0.2"
+  },
+  "tier": "A",
+  "pov_kind": "harness",
+  "ground_truth_evidence": "crash evidence in the dataset",
+  "ground_truth": {
+    "dataset_file": "exploit_files/generated_inputs/poc_orig_4c13ab2dc3.yang",
+    "how_found": "fuzz_exact_seed",
+    "bytes": 201,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": null,
+    "sha256": "4c13ab2dc33d2d414a09856ecf571542c6381381bd1d668ef8bdf7d4171d78c9",
+    "solve_sh": "inline"
+  },
+  "harness": {
+    "candidates": [
+      "lyd_parse_mem_xml"
+    ],
+    "how_found": "crash_report.json",
+    "built_by_dataset_snapshot_compile": [
+      "lyd_parse_mem_xml"
+    ],
+    "dataset_metadata_said": [
+      "lyd_parse_mem_xml"
+    ],
+    "metadata_disagrees": false
+  },
+  "recipe": null,
+  "trigger_evidence": {
+    "signal": "asan",
+    "detail": "SEGV",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": {
+      "unit_tests": "passed",
+      "exploit_on_vulnerable": "passed",
+      "exploit_on_secure": "passed"
+    }
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": true
+  },
+  "asan_options_from_exploit": null,
+  "cwe_id": "CWE-193",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "3d07c3a71534a580c3960907da17568eff7e5c64"
+}

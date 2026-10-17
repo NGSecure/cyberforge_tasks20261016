@@ -1,0 +1,39 @@
+{
+  "kind": "cli-file",
+  "steps": [
+    {
+      "role": "run",
+      "argv": [
+        "/src/h2o/h2o",
+        "-c",
+        "{poc}"
+      ],
+      "cwd": "/tmp",
+      "env": {
+        "UBSAN_OPTIONS": "silence_unsigned_overflow=1",
+        "HWASAN_OPTIONS": "random_tags=0",
+        "DFSAN_OPTIONS": "warn_unimplemented=0"
+      },
+      "stdin": null
+    }
+  ],
+  "poc_path": "/tmp/exploit_work/h2o.conf",
+  "aux_files": {},
+  "dirs": [
+    "/tmp/exploit_work"
+  ],
+  "touched_files": [
+    "src/main.c"
+  ],
+  "target_dir": "h2o",
+  "leak_task": false,
+  "leak_detection": "off: the injected bug is not a leak",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "normalized": [],
+  "cyberforge": {
+    "project": "h2o",
+    "vulnerability_id": "vulnerability_WF_LLM_1",
+    "pipeline": "WF_LLM"
+  }
+}

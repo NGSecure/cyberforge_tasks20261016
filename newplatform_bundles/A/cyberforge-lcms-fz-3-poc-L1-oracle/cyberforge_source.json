@@ -1,0 +1,78 @@
+{
+  "bundle": "cyberforge-lcms-fz-3-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/lcms/vulnerabilities/vulnerability_FZ_3",
+  "base_image": "vuljector/lcms:setup@sha256:40628d64de8891ec9d4656221c40f19857e957dd9beb28f8e195b6b7f16758ac",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-04-18T17:35:50.531617005Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T16:05:30.336756075Z",
+        "created_by": "sleep infinity",
+        "bytes": 79442297
+      }
+    ],
+    "post_setup_files": 213,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 171,
+    "scrubbed_from_agent_image": 40,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out": 37,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 1,
+  "image_tags": {
+    "docker_image": "cyberforge_lcms_fz_3_main:v0.0.2",
+    "task_server_image": "cyberforge_lcms_fz_3_task_server:v0.0.2"
+  },
+  "tier": "A",
+  "pov_kind": "harness",
+  "ground_truth_evidence": "crash evidence in the dataset",
+  "ground_truth": {
+    "dataset_file": "exploit_files/fuzz_results/vulnerable/crash-3d2f94a99c496cb5987e751c1e2f497c276129d0",
+    "how_found": "fuzz_crash_artifact",
+    "bytes": 3666,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": null,
+    "sha256": "10069ad895d9bf5f8f58bb799ee04dffc1dd3b76f9665fc4ee532f5a1b70bf2b",
+    "solve_sh": "inline"
+  },
+  "harness": {
+    "candidates": [
+      "cms_overwrite_transform_fuzzer"
+    ],
+    "how_found": "crash_report.json",
+    "built_by_dataset_snapshot_compile": [
+      "cms_overwrite_transform_fuzzer"
+    ],
+    "dataset_metadata_said": [
+      "cms_overwrite_transform_fuzzer",
+      "cms_overwrite_transform_fuzzer",
+      "cms_overwrite_transform_fuzzer"
+    ],
+    "metadata_disagrees": false
+  },
+  "recipe": null,
+  "trigger_evidence": {
+    "signal": "asan",
+    "detail": "SEGV",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": {
+      "unit_tests": "passed",
+      "exploit_on_vulnerable": "passed",
+      "exploit_on_secure": "passed"
+    }
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": true
+  },
+  "asan_options_from_exploit": null,
+  "cwe_id": "CWE-476",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "fb48851f48f505fc938312dbc2dbe1cab56da7ec"
+}

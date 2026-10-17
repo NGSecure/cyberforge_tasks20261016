@@ -1,0 +1,1 @@
+In libarchive, a heap-buffer-overflow in archive_entry_clear causes an invalid read while clearing an archive entry.

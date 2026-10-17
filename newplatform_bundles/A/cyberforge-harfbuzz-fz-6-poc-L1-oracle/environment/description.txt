@@ -1,0 +1,1 @@
+A buffer over-read in HarfBuzz's hb-ot-map.cc triggers a segmentation violation, allowing potential denial of service.

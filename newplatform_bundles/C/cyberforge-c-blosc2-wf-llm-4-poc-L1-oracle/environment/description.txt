@@ -1,0 +1,1 @@
+Improper input validation in c-blosc2's blosc2_stdio_mmap_read allows a crafted file to cause an AddressSanitizer check failure, resulting in a denial of service.

@@ -1,0 +1,1 @@
+In jq, jq_set_colors in jv_print.c has a heap-buffer-overflow that may be triggered by crafted input, leading to a crash.

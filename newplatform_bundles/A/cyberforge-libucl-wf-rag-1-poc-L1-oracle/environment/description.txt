@@ -1,0 +1,1 @@
+A heap-buffer-overflow in libucl's parser (src/ucl_parser.c) allows out-of-bounds read via crafted input.

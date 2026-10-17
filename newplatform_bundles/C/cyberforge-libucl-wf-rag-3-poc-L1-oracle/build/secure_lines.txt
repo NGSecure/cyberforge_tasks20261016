@@ -1,0 +1,2 @@
+ucl_create_err(err, "file %s is not a regular file", filename);
+if (!S_ISREG(st.st_mode)) {

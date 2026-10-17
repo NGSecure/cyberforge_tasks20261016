@@ -1,0 +1,1 @@
+libucl's src/ucl_parser.c has an off-by-one calculation that results in a 64-byte memory leak when parsing crafted UCL input.

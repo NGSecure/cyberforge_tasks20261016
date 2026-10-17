@@ -1,0 +1,1 @@
+while ((done == 0) && (rc == IXML_SUCCESS)) {

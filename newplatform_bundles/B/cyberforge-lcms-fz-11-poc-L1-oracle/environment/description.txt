@@ -1,0 +1,1 @@
+A NULL or invalid pointer dereference in lcms' src/cmsgamma.c can cause a crash or memory corruption when processing crafted color profiles.

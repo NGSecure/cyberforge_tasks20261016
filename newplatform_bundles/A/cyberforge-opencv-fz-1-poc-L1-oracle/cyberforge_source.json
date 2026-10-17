@@ -1,0 +1,75 @@
+{
+  "bundle": "cyberforge-opencv-fz-1-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/opencv/vulnerabilities/vulnerability_FZ_1",
+  "base_image": "vuljector/opencv:setup@sha256:7b8cd30490eb73903683864beaaf8a0133a5c082af91fb1d7a5606f5be4df0a7",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-04-17T13:54:04.091309885Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T16:40:06.772848002Z",
+        "created_by": "sleep infinity",
+        "bytes": 828552068
+      }
+    ],
+    "post_setup_files": 6839,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 6,
+    "scrubbed_from_agent_image": 6831,
+    "scrubbed_by_location": {
+      "/ccache/cache": 2760,
+      "/opt/src_snapshot.tar": 1,
+      "/out": 10,
+      "/work/build-address": 3627,
+      "/work/install-address": 431,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 1,
+  "image_tags": {
+    "docker_image": "cyberforge_opencv_fz_1_main:v0.0.2",
+    "task_server_image": "cyberforge_opencv_fz_1_task_server:v0.0.2"
+  },
+  "tier": "A",
+  "pov_kind": "harness",
+  "ground_truth_evidence": "crash evidence in the dataset",
+  "ground_truth": {
+    "dataset_file": "replay_deep/opencv/vulnerability_FZ_1/call-000-arg-0",
+    "how_found": "exploit_replay_deep",
+    "bytes": 23,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": true,
+    "sha256": "20012ae27497ecb66710132df013ae76309250988d318b0ef379e62ca5b73951",
+    "solve_sh": "inline"
+  },
+  "harness": {
+    "candidates": [
+      "readnetfromtensorflow_fuzzer"
+    ],
+    "how_found": "replay_deep",
+    "built_by_dataset_snapshot_compile": [
+      "readnetfromtensorflow_fuzzer"
+    ],
+    "dataset_metadata_said": [],
+    "metadata_disagrees": false
+  },
+  "recipe": null,
+  "trigger_evidence": {
+    "signal": "asan",
+    "detail": "SEGV",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": false
+  },
+  "asan_options_from_exploit": null,
+  "cwe_id": "CWE-193",
+  "cwe_in_description_variants": [
+    "CWE-193"
+  ],
+  "secure_base_commit": "723670c33d748f481ebead9d7f12a6a83382b043"
+}

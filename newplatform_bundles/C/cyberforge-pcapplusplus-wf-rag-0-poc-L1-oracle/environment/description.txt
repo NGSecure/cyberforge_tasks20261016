@@ -1,0 +1,1 @@
+A heap-based buffer overflow in pcpp::SnoopFileReaderDevice::readNextPacket in PcapFileDevice.cpp can be triggered while reading a crafted snoop file.

@@ -1,0 +1,1 @@
+A resource management flaw in libsass's parser.cpp parse_arguments causes an AddressSanitizer fatal check failure during argument parsing, leading to denial of service.

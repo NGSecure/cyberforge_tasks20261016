@@ -1,0 +1,73 @@
+{
+  "bundle": "cyberforge-wireshark-wf-rag-11-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/wireshark/vulnerabilities/vulnerability_WF_RAG_11",
+  "base_image": "vuljector/wireshark:setup@sha256:c1f4c3b10159e0fe51f75ab03f4c046cd7480c4308a526af65e9ce3605ba825b",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-05-10T17:48:38.985789078Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T18:01:19.584534657Z",
+        "created_by": "sleep infinity",
+        "bytes": 3309697189
+      }
+    ],
+    "post_setup_files": 7995,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 5396,
+    "scrubbed_from_agent_image": 2597,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out": 19,
+      "/usr/local": 179,
+      "/work/build": 2332,
+      "/work/samples": 64,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 0,
+  "image_tags": {
+    "docker_image": "cyberforge_wireshark_wf_rag_11_main:v0.0.2",
+    "task_server_image": "cyberforge_wireshark_wf_rag_11_task_server:v0.0.2"
+  },
+  "tier": "A",
+  "pov_kind": "harness",
+  "ground_truth_evidence": "crash evidence in the dataset",
+  "ground_truth": {
+    "dataset_file": "replay_deep/wireshark/vulnerability_WF_RAG_11/call-000-arg-1",
+    "how_found": "exploit_replay_deep",
+    "bytes": 194,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": null,
+    "sha256": "cbbb4d4b070e8b622fbab91050675f2ac7947d5f03b8c02f657dcf489017f816",
+    "solve_sh": "inline"
+  },
+  "harness": {
+    "candidates": [
+      "fuzzshark_tcp_port-bgp"
+    ],
+    "how_found": "replay_deep",
+    "built_by_dataset_snapshot_compile": [
+      "fuzzshark_tcp_port-bgp"
+    ],
+    "dataset_metadata_said": [],
+    "metadata_disagrees": false
+  },
+  "recipe": null,
+  "trigger_evidence": {
+    "signal": "asan",
+    "detail": "stack-buffer-overflow",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": true
+  },
+  "asan_options_from_exploit": null,
+  "cwe_id": "CWE-354",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "450c9f457dbebfc375ea302ac8ab600d5fed93e4"
+}

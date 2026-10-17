@@ -1,0 +1,1 @@
+A malformed regexp escape in QuickJS's lre_parse_escape can trigger an AddressSanitizer CHECK failure, resulting in a denial of service.

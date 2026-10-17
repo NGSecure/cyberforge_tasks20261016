@@ -1,0 +1,1 @@
+A heap use-after-free in coturn's OAuth setup_ikm_key function may cause memory corruption or crash.

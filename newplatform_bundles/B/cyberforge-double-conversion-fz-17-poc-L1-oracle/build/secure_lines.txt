@@ -1,0 +1,1 @@
+DOUBLE_CONVERSION_ASSERT(exponent >= 0);

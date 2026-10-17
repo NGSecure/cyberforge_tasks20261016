@@ -1,0 +1,13 @@
+#include <fmt/os.h>
+#include <unistd.h>
+#include <exception>
+int main() {
+  fmt::file f("/tmp/wf_probe_fd", fmt::file::RDWR | fmt::file::CREATE | fmt::file::TRUNC);
+  ::close(f.descriptor());
+  try {
+    fmt::buffered_file bf = f.fdopen("r");
+    volatile int d = bf.descriptor();
+    (void)d;
+  } catch (const std::exception&) { return 0; }
+  return 0;
+}

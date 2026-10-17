@@ -1,0 +1,1 @@
+A stack-based buffer overflow in Sass::Parser::parse_pseudo_selector in parser.cpp can be triggered by crafted input.

@@ -1,0 +1,1 @@
+A buffer over-read in cr_regexp_canonicalize in libunicode.c in QuickJS could lead to a crash.

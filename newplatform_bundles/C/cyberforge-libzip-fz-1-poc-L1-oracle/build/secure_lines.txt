@@ -1,0 +1,1 @@
+if ((zs = _zip_source_new(error)) == NULL) {

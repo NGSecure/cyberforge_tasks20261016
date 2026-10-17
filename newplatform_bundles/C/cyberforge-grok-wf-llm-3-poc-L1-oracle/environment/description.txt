@@ -1,0 +1,1 @@
+A stack-buffer-overflow in GrkDump's parseCommandLine allows an out-of-bounds write via crafted input.

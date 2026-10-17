@@ -1,0 +1,62 @@
+{
+  "kind": "program",
+  "steps": [
+    {
+      "role": "compile",
+      "argv": [
+        "/usr/bin/gcc",
+        "-g",
+        "-O0",
+        "-I/src/coturn/src",
+        "-I/src/coturn/src/client",
+        "-o",
+        "/tmp/attack/test_prog",
+        "{poc}",
+        "/src/coturn/src/client/ns_turn_ioaddr.c",
+        "-pthread",
+        "-fsanitize=address"
+      ],
+      "cwd": "/src/coturn",
+      "env": {
+        "UBSAN_OPTIONS": "silence_unsigned_overflow=1",
+        "HWASAN_OPTIONS": "random_tags=0",
+        "DFSAN_OPTIONS": "warn_unimplemented=0"
+      },
+      "stdin": null
+    },
+    {
+      "role": "run",
+      "argv": [
+        "/tmp/attack/test_prog"
+      ],
+      "cwd": "/src/coturn",
+      "env": {
+        "UBSAN_OPTIONS": "silence_unsigned_overflow=1",
+        "HWASAN_OPTIONS": "random_tags=0",
+        "DFSAN_OPTIONS": "warn_unimplemented=0"
+      },
+      "stdin": null
+    }
+  ],
+  "poc_path": "/tmp/attack/test.c",
+  "aux_files": {},
+  "dirs": [
+    "/tmp/attack"
+  ],
+  "touched_files": [
+    "src/client/ns_turn_ioaddr.c"
+  ],
+  "target_dir": "coturn",
+  "leak_task": false,
+  "leak_detection": "off: the injected bug is not a leak",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "normalized": [
+    "step 1: added -fsanitize=address"
+  ],
+  "cyberforge": {
+    "project": "coturn",
+    "vulnerability_id": "vulnerability_WF_RAG_8",
+    "pipeline": "WF_RAG"
+  }
+}

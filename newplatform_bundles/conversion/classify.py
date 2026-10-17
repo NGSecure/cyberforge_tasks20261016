@@ -1,14 +1,19 @@
 #!/usr/bin/env python3
 """Classify every CyberForge task for conversion to a new-platform PoC bundle.
 
-Tier A  convertible: crash evidence + a concrete ground-truth PoC file that the
-        task's own exploit is shown to feed to a fuzz harness (`/out/<fuzzer> <poc>`).
-Tier B  needs a different bundle type: the PoV is a custom program/script, drives a
-        project CLI/test binary instead of a harness, or the oracle is a
-        behavioral divergence (no sanitizer crash by nature).
-Tier C  insufficient ground truth: empty report, no saved PoC, harness ambiguous,
-        a timeout/OOM signal the exit-code judge cannot score, or a recorded report
-        that does not satisfy exploit.sh's own trigger check.
+Tier A  crash evidence + a concrete ground-truth PoC file that the task's own exploit
+        is shown to feed to a fuzz harness (`/out/<fuzzer> <poc>`): harness bundle.
+Tier B  crash evidence, but the PoV drives a project CLI/test binary or is a program
+        compiled against the project: CLI/program bundle (templates/task_server_b.py),
+        when replay_deep.py recorded one unambiguous way the exploit ran it.
+Tier C  no usable crash evidence (empty report, no sanitizer crash, a timeout, a report
+        that does not show what exploit.sh checks for): bundles are still made when a
+        ground truth and a way to run it are known, but nothing in the dataset shows
+        that this ground truth triggers the bug; build.sh's self-check decides.
+A task is converted ("converted" in the record) only when its tier's bundle can be made;
+the rest stay listed with the reason: a behavioral oracle (the exploit compares outputs,
+nothing crashes), a recording that is ambiguous (several inputs, races, unit tests,
+mixed programs), or a missing / empty / oversized ground truth.
 
 Harness resolution trusts what the exploit actually executes (literal /out/<x> or a
 FUZZER="x" ... /out/${FUZZER} indirection) and crash_report.json for libFuzzer
@@ -18,7 +23,8 @@ scan_snapshots.py) is present next to this script, a harness name must also be o
 the dataset's own compile of the base image put in /out.
 
 Usage: python3 -I classify.py <inner_root> <out_records.json>
-       (run it again after scan_snapshots.py so the /out check applies)
+       (run it again after scan_snapshots.py so the /out check applies, and after
+       replay_exploits.py / replay_deep.py so their recordings are used)
 """
 import csv
 import glob
@@ -28,6 +34,10 @@ import os
 import re
 import sys
 from collections import Counter
+
+sys.dont_write_bytecode = True
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import deep_recipe  # noqa: E402
 
 ROOT, OUT = sys.argv[1], sys.argv[2]
 PROJ = os.path.join(ROOT, "projects")
@@ -114,6 +124,8 @@ def exploit_harnesses(es):
     return keep, renamed
 
 
+MISMATCH = ("sanitizer report does not show what exploit.sh checks for "
+            "(recorded run did not trigger; ground truth unverified)")
 GREP_RE = re.compile(r"grep\s+((?:-[a-zA-Z]+\s+)*)(?:-e\s+)?(['\"])(.+?)\2")
 TRIGGER_WORDS = re.compile(r"Sanitizer|SUMMARY|heap-|stack-|SEGV|overflow|use-after|double-free|leak|"
                            r"Segmentation|abort|ERROR", re.I)
@@ -139,6 +151,7 @@ def report_satisfies_exploit(es, report):
 
 SCAN_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "snapshot_scan")
 REPLAY_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "replay")
+DEEP_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "replay_deep")
 
 
 def replayed(rel, dataset_files):
@@ -197,7 +210,8 @@ def exact_seed(vd, project, crep):
 
 
 def poc_path(vd, poc, poc_src):
-    return os.path.join(os.path.dirname(REPLAY_DIR), poc) if poc_src == "exploit_replay" else os.path.join(vd, poc)
+    return (os.path.join(os.path.dirname(REPLAY_DIR), poc) if poc_src.startswith("exploit_replay")
+            else os.path.join(vd, poc))
 
 
 def asan_options_of(es):
@@ -344,16 +358,66 @@ for r in rows:
             not poc_src.startswith(("fuzz_crash_artifact", "fuzz_exact_seed")):
         tier, reason = "C", "the exploit's real payload is larger than 16 MB (too large to bundle; pov.bin is not it)"
     elif sig_src == "sanitizer_report.txt" and report_ok is False and poc_src != "exploit_replay":
-        tier, reason = "C", ("sanitizer report does not show what exploit.sh checks for "
-                             "(recorded run did not trigger; ground truth unverified)")
+        tier, reason = "C", MISMATCH
     else:
         tier, reason = "A", ""
+
+    # ---- B/C: what the exploit really ran in the project's own image (replay_deep.py) ----
+    # Evidence-first: B needs crash evidence like A; without it a task is C, whose
+    # bundles carry a ground truth the dataset never showed to trigger the bug.
+    evidence = sig in crash_sigs and not (sig_src == "sanitizer_report.txt" and report_ok is False)
+    no_evidence = {"empty": "sanitizer_report.txt is empty (no trigger evidence)",
+                   "timeout": "timeout signal (the judge treats timeouts as no crash)",
+                   "behavioral": "behavioral-divergence oracle"}.get(
+        sig, MISMATCH if sig in crash_sigs else "report shows no sanitizer crash")
+    bundle, deep_kind, deep_why, converted = "", "", "", tier == "A"
+    if tier == "A":
+        bundle = "harness"
+    else:
+        deep, deep_why = deep_recipe.recipe_or_reason(os.path.join(DEEP_DIR, p, r["vuln"]), es,
+                                                      [os.path.basename(f) for f in ef_files])
+        deep_why = deep_why or ""
+        deep_kind = deep["kind"] if deep else ""
+        if sig == "behavioral":
+            # the exploit compares outputs and nothing crashes: a crash-based judge cannot score it
+            tier, reason = "B", "behavioral-divergence oracle (the exploit compares outputs; nothing crashes)"
+        elif deep and deep_kind == "harness" and not deep["gt"]:
+            reason = "the input the exploit fed its harness is empty"
+        elif deep and deep_kind == "harness":
+            poc = os.path.relpath(os.path.join(DEEP_DIR, p, r["vuln"], deep["gt_file"]),
+                                  os.path.dirname(DEEP_DIR))
+            poc_src = "exploit_replay_deep" + (" (made by the exploit's own program)" if deep["generated"] else "")
+            fuzzer, fuzzer_src, ex_h = deep["fuzzer"], "replay_deep", [deep["fuzzer"]]
+            mismatch = bool(meta_fz and fuzzer not in meta_fz)
+            tier, reason = ("A", "") if evidence else ("C", no_evidence)
+            bundle, converted = "harness", True
+        elif deep:
+            mains = re.findall(r"#\d+ 0x[0-9a-f]+ in main (/\S+?):\d+", report)
+            if deep_kind == "program" and evidence and mains and \
+                    not any(os.path.basename(m) == os.path.basename(deep["poc_path"]) for m in mains):
+                # the dataset's crash came from another program than the one the exploit ships
+                evidence, no_evidence = False, ("the dataset's report comes from another program (%s), "
+                                                "not the exploit's %s" % (os.path.basename(mains[0]),
+                                                                          os.path.basename(deep["poc_path"])))
+            tier, reason = ("B", "") if evidence else ("C", no_evidence)
+            bundle, converted = deep_kind, True
+        elif tier == "C" and reason == no_evidence and poc and fuzzer \
+                and os.path.getsize(poc_path(vd, poc, poc_src)) > 0 \
+                and "file size limit" not in (rinfo.get("problems") or []) and "larger than 16 MB" not in deep_why:
+            # the dataset's own PoC + harness, unconfirmed (not when a replay showed the
+            # exploit's real payload is larger than 16 MB: then that file is not it)
+            bundle, converted = "harness", True
+        if not converted and deep_why and tier == "B":
+            reason = "%s; replay: %s" % (reason, deep_why)
+        elif not converted and "larger than 16 MB" in deep_why:
+            reason = "the exploit's real payload is larger than 16 MB (too large to bundle)"
 
     vj = jl(os.path.join(vd, "bug_description_variants.json"))
     variants = vj.get("variants") or []
     records.append({
         "seq": int(r["seq"]), "type": t, "project": p, "vuln": r["vuln"], "path": r["path"],
-        "tier": tier, "reason": reason,
+        "tier": tier, "reason": reason, "converted": converted, "bundle_type": bundle,
+        "deep_replay": deep_kind or deep_why,
         "signal": sig, "signal_detail": sig_detail, "signal_src": sig_src,
         "report_matches_exploit_check": report_ok,
         "poc": poc, "poc_src": poc_src, "fuzzer": fuzzer, "fuzzer_src": fuzzer_src,
@@ -375,9 +439,14 @@ json.dump(records, open(OUT, "w"), indent=1)
 
 print("total:", len(records))
 print("tier:", dict(Counter(x["tier"] for x in records)))
+print("converted:", dict(Counter("%s:%s" % (x["tier"], x["bundle_type"]) for x in records if x["converted"])))
+print("not converted:", dict(Counter(x["tier"] for x in records if not x["converted"])))
 print("tier x type:", dict(sorted(Counter(f"{x['tier']}:{x['type']}" for x in records).items())))
-print("\nreasons (B/C):")
-for k, v in Counter(x["reason"] for x in records if x["tier"] != "A").most_common():
+print("\nreasons (not converted):")
+for k, v in Counter("%s  %s" % (x["tier"], x["reason"]) for x in records if not x["converted"]).most_common():
+    print(f"  {v:4d}  {k}")
+print("\nreasons (C, converted):")
+for k, v in Counter(x["reason"] for x in records if x["converted"] and x["tier"] == "C").most_common():
     print(f"  {v:4d}  {k}")
 A = [x for x in records if x["tier"] == "A"]
 print("\nTier A: poc source:", dict(Counter(x["poc_src"] for x in A)))

@@ -1,0 +1,1 @@
+if (it == end) report_error("invalid format string");

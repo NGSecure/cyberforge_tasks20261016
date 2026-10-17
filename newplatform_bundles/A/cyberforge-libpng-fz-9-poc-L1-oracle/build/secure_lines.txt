@@ -1,0 +1,1 @@
+png_byte v[8]; /* SAFE; pixel_depth does not exceed 64 */

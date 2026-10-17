@@ -1,0 +1,1 @@
+Heap buffer overflow in JxlBoxContentDecoder::Process in libjxl could allow a crafted JPEG XL file to cause memory corruption.

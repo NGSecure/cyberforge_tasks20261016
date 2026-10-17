@@ -1,0 +1,1 @@
+mruby contains a post-buffer operation (CWE-125) in src/object.c that can trigger out-of-bounds memory access and lead to memory corruption when handling objects.

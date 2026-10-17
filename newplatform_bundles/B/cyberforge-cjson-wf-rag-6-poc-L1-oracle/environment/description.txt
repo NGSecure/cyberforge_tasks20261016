@@ -1,0 +1,1 @@
+A heap-buffer-overflow in cJSONUtils_strdup during sort_object in cJSON_Utils.c allows improper handling of malformed JSON input to cause memory corruption.

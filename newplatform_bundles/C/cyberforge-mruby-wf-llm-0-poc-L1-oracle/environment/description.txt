@@ -1,0 +1,1 @@
+mruby hal-posix-socket socket_hal.c has a resource management flaw that may allow excessive resource consumption.

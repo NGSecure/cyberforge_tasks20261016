@@ -1,0 +1,1 @@
+uint32_t huffman_tree_histogram[BROTLI_CODE_LENGTH_CODES] = { 0 };

@@ -1,0 +1,1 @@
+A heap-buffer-overflow in libucl's ucl_fetch_file function allows remote attackers to read sensitive memory via a crafted UCL document.

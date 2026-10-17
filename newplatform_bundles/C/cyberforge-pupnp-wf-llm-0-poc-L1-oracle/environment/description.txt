@@ -1,0 +1,1 @@
+In pupnp, ixmlDocument_createElementEx in ixml/src/document.c mishandles an invalid pointer, triggering an AddressSanitizer failure and causing a crash.

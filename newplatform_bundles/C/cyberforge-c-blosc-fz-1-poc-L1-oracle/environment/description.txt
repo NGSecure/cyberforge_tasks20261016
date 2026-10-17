@@ -1,0 +1,1 @@
+Out-of-bounds read in c-blosc's bundled zlib inflate.c after a buffer operation.

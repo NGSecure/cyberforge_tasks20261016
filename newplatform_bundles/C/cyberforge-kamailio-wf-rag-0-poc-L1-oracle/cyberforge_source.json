@@ -1,0 +1,73 @@
+{
+  "bundle": "cyberforge-kamailio-wf-rag-0-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/kamailio/vulnerabilities/vulnerability_WF_RAG_0",
+  "base_image": "vuljector/kamailio:setup@sha256:9068c7fbb221e7d2bb3e6036d9fb9dc36758e37519db6b344ec64ef0744e6071",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-04-17T13:45:06.829102063Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T16:08:16.037922199Z",
+        "created_by": "sleep infinity",
+        "bytes": 211269622
+      }
+    ],
+    "post_setup_files": 566,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 558,
+    "scrubbed_from_agent_image": 6,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out": 3,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 1,
+  "image_tags": {
+    "docker_image": "cyberforge_kamailio_wf_rag_0_main:v0.0.2",
+    "task_server_image": "cyberforge_kamailio_wf_rag_0_task_server:v0.0.2"
+  },
+  "tier": "C",
+  "pov_kind": "harness",
+  "ground_truth_evidence": "none: report shows no sanitizer crash (build.sh self-check 3 decides)",
+  "ground_truth": {
+    "dataset_file": "replay_deep/kamailio/vulnerability_WF_RAG_0/call-000-arg-0",
+    "how_found": "exploit_replay_deep",
+    "bytes": 166,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": false,
+    "sha256": "89c2449c1fee48cffa58b272be8aad5351de25791b5ac53adc6432d09cbe88d7",
+    "solve_sh": "inline"
+  },
+  "harness": {
+    "candidates": [
+      "fuzz_parse_msg"
+    ],
+    "how_found": "replay_deep",
+    "built_by_dataset_snapshot_compile": [
+      "fuzz_parse_msg"
+    ],
+    "dataset_metadata_said": [
+      "fuzz_parse_msg",
+      "fuzz_parse_msg"
+    ],
+    "metadata_disagrees": false
+  },
+  "recipe": null,
+  "trigger_evidence": {
+    "signal": "nocrash",
+    "detail": "",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": null
+  },
+  "asan_options_from_exploit": null,
+  "cwe_id": "CWE-122",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "74015a784fdbd1e4b30ef5895127ee40282bacd4"
+}

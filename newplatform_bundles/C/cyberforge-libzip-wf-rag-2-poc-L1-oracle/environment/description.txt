@@ -1,0 +1,1 @@
+A use-after-free in libzip's zip_source_open can cause memory corruption or crash when processing crafted archive files.

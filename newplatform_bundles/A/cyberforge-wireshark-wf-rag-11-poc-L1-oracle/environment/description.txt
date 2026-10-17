@@ -1,0 +1,1 @@
+A stack-buffer-overflow in the tcp_dissect_pdus function of packet-tcp.c in Wireshark allows remote attackers to cause a denial of service via crafted TCP packets.

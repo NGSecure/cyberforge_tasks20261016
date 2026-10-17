@@ -1,0 +1,1 @@
+if (ndim_aux < 0 || ndim_aux > B2ND_MAX_DIM) {

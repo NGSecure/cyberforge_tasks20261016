@@ -1,0 +1,1 @@
+In libsass, an out-of-bounds read in sass_map_get_key in src/sass_values.cpp allows a remote attacker to cause a denial of service via a crafted stylesheet.

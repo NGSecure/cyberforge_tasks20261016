@@ -1,0 +1,1 @@
+A numeric error in jq's parse_slice function may lead to a heap-buffer-overflow when processing crafted input.

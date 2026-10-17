@@ -1,0 +1,1 @@
+In QuickJS, a numeric error in dbuf_put in cutils.c can lead to a segmentation violation.

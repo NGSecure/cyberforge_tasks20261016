@@ -1,0 +1,1 @@
+A CWE-20 input validation flaw in h2o's configure_quic_forward_node causes a heap-buffer-overflow in h2o_strdup_slashed.

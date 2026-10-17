@@ -1,0 +1,1 @@
+cJSON's cJSON.c contains an invalid pointer usage that can lead to a NULL pointer dereference when parsing crafted JSON.

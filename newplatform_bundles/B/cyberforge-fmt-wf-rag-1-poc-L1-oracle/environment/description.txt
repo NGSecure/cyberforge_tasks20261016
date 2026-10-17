@@ -1,0 +1,1 @@
+fmt's file::read in os.cc contains a heap-buffer-overflow that can be triggered while reading file data.

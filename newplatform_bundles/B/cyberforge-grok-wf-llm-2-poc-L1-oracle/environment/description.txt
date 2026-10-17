@@ -1,0 +1,1 @@
+In grok, GrkDump.cpp parseCommandLine lacks proper input validation, leading to a stack-buffer-overflow via crafted command-line options.

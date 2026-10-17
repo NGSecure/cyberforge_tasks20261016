@@ -1,0 +1,2 @@
+if (mstream->offset + amount < amount ||  /* overflow */
+mstream->offset + amount > mstream->hw) {

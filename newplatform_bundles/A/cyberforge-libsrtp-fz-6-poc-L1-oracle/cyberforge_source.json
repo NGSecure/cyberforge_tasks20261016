@@ -1,0 +1,70 @@
+{
+  "bundle": "cyberforge-libsrtp-fz-6-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/libsrtp/vulnerabilities/vulnerability_FZ_6",
+  "base_image": "vuljector/libsrtp:setup@sha256:308382b1d09cffafbf3bd7795f1afac4273765eb1cb266ad246e7b6d978fded1",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-04-18T17:38:52.843368196Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T16:16:24.628690384Z",
+        "created_by": "sleep infinity",
+        "bytes": 37046163
+      }
+    ],
+    "post_setup_files": 65,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 57,
+    "scrubbed_from_agent_image": 6,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out": 3,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 1,
+  "image_tags": {
+    "docker_image": "cyberforge_libsrtp_fz_6_main:v0.0.2",
+    "task_server_image": "cyberforge_libsrtp_fz_6_task_server:v0.0.2"
+  },
+  "tier": "A",
+  "pov_kind": "harness",
+  "ground_truth_evidence": "crash evidence in the dataset",
+  "ground_truth": {
+    "dataset_file": "exploit_files/poc.bin",
+    "how_found": "referenced_by_exploit.sh",
+    "bytes": 754,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": true,
+    "sha256": "809914af7ac674baccd85de5757d3ee5078d190214a77eafd0e6d5e594897ccf",
+    "solve_sh": "inline"
+  },
+  "harness": {
+    "candidates": [
+      "srtp-fuzzer"
+    ],
+    "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "srtp-fuzzer"
+    ],
+    "dataset_metadata_said": [],
+    "metadata_disagrees": false
+  },
+  "recipe": null,
+  "trigger_evidence": {
+    "signal": "asan",
+    "detail": "heap-buffer-overflow",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": true
+  },
+  "asan_options_from_exploit": null,
+  "cwe_id": "CWE-193",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "9073dfe9eea29ebd75ea747278e997924f3988bd"
+}

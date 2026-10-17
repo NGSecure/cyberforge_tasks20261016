@@ -1,0 +1,99 @@
+{
+  "bundle": "cyberforge-kamailio-fz-3-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/kamailio/vulnerabilities/vulnerability_FZ_3",
+  "base_image": "vuljector/kamailio:setup@sha256:9068c7fbb221e7d2bb3e6036d9fb9dc36758e37519db6b344ec64ef0744e6071",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-04-17T13:45:06.829102063Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T16:08:16.037922199Z",
+        "created_by": "sleep infinity",
+        "bytes": 211269622
+      }
+    ],
+    "post_setup_files": 566,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 558,
+    "scrubbed_from_agent_image": 6,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out": 3,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 1,
+  "image_tags": {
+    "docker_image": "cyberforge_kamailio_fz_3_main:v0.0.2",
+    "task_server_image": "cyberforge_kamailio_fz_3_task_server:v0.0.2"
+  },
+  "tier": "B",
+  "pov_kind": "program",
+  "ground_truth_evidence": "crash evidence in the dataset",
+  "ground_truth": {
+    "dataset_file": null,
+    "how_found": "exploit_replay_deep (program)",
+    "bytes": 815,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": true,
+    "sha256": "5c5a2ec4db6964aee0e9a13e8555b3738ad7bb0c2e8e28511f7ba3ef79b3f95e",
+    "solve_sh": "inline"
+  },
+  "harness": null,
+  "recipe": {
+    "kind": "program",
+    "recorded_by": "conversion/replay_deep.py (exploit.sh replayed in vuljector/kamailio:setup@sha256:9068c7fbb221e7d2bb3e6036d9fb9dc36758e37519db6b344ec64ef0744e6071)",
+    "recording": "conversion/replay_deep/kamailio/vulnerability_FZ_3/calls.json",
+    "input_made_by_exploit_program": false,
+    "steps": [
+      {
+        "role": "compile",
+        "cwd": "/src/kamailio",
+        "argv": [
+          "/usr/local/bin/clang",
+          "-fsanitize=address",
+          "-I/src/kamailio",
+          "-o",
+          "/tmp/exploit/driver",
+          "{poc}",
+          "-g"
+        ]
+      },
+      {
+        "role": "run",
+        "cwd": "/src/kamailio",
+        "argv": [
+          "/tmp/exploit/driver"
+        ]
+      }
+    ],
+    "poc_path": "/tmp/exploit/driver.c",
+    "aux_files": [],
+    "compile_normalized": [
+      "step 1: added -g"
+    ],
+    "touched_files": [
+      "src/core/hashes.h"
+    ],
+    "diff_touches_headers": true,
+    "uses_out": false
+  },
+  "trigger_evidence": {
+    "signal": "asan",
+    "detail": "heap-buffer-overflow",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": true
+  },
+  "asan_options_from_exploit": "detect_leaks=0",
+  "cwe_id": "CWE-193",
+  "cwe_in_description_variants": [
+    "CWE-193"
+  ],
+  "secure_base_commit": "74015a784fdbd1e4b30ef5895127ee40282bacd4"
+}

@@ -1,0 +1,1 @@
+A numeric error in ot::Reverse32 in encoding.hpp causes an AddressSanitizer failure.

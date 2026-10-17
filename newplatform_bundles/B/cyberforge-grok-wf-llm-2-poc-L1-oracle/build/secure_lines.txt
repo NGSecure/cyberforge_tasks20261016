@@ -1,0 +1,1 @@
+if(grk::strcpy_s(parameters->infile, sizeof(parameters->infile), infile) != 0)

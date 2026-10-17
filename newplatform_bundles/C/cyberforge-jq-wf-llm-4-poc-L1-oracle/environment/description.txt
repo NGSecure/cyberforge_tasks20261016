@@ -1,0 +1,1 @@
+A heap-buffer-overflow in jq's color-setting function jq_set_colors can be exploited by a crafted file to corrupt memory.

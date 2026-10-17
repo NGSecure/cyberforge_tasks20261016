@@ -1,0 +1,15 @@
+#include <png.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+void trigger_vuln() {
+    // Call the public API function png_set_mem_fn with NULL as first arg
+    png_set_mem_fn(NULL, NULL, NULL, NULL);
+}
+
+int main() {
+    printf("Driving call chain: main() -> trigger_vuln() -> png_set_mem_fn(NULL, ...)\\n");
+    trigger_vuln();
+    printf("Finished without crashing!\\n");
+    return 0;
+}

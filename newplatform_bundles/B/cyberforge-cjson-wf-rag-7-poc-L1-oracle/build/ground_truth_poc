@@ -1,0 +1,25 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "cJSON.h"
+
+int main() {
+    cJSON *root = cJSON_CreateObject();
+    if (!root) return 0;
+
+    cJSON *child = cJSON_CreateString("dummy");
+    if (!child) {
+        cJSON_Delete(root);
+        return 0;
+    }
+    cJSON_AddItemToObject(root, "key1", child);
+
+    // Manually corrupt the child to have a NULL string
+    child->string = NULL;
+
+    printf("Calling cJSON_GetObjectItemCaseSensitive...\n");
+    cJSON_GetObjectItemCaseSensitive(root, "any_key");
+    printf("Finished without crashing.\n");
+
+    cJSON_Delete(root);
+    return 0;
+}

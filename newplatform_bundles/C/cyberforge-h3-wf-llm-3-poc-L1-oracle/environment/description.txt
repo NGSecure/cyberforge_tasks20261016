@@ -1,0 +1,1 @@
+An out-of-bounds read in describeH3Error in h3Index.c causes a heap-buffer-overflow when processing an invalid H3 index.

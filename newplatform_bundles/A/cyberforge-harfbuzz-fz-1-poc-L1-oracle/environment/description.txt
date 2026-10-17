@@ -1,0 +1,1 @@
+HarfBuzz contains an out-of-bounds access in the OpenType shaping code (hb-ot-shape.hh) caused by an unchecked array index.

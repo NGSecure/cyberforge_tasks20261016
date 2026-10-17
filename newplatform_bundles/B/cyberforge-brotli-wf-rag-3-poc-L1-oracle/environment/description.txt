@@ -1,0 +1,1 @@
+A stack-buffer-overflow in BrotliStoreHuffmanTree in brotli_bit_stream.c leads to out-of-bounds read due to numeric error in Huffman tree construction.

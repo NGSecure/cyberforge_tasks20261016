@@ -1,0 +1,1 @@
+A heap-based buffer overflow in libjxl's low_memory_render_pipeline.cc PrepareForThreadsInternal causes an AddressSanitizer CHECK failure.

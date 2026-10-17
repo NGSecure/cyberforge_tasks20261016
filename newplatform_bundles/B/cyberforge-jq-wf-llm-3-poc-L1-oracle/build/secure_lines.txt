@@ -1,0 +1,4 @@
+start = dstart > INT_MAX ? INT_MAX : (int)dstart; // Rounds down
+end = dend > INT_MAX ? INT_MAX : (int)dend;
+if (dstart > len)  dstart = len;
+if (end > len)     end = len;

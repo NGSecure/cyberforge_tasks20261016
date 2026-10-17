@@ -1,0 +1,1 @@
+A null/invalid pointer dereference in HarfBuzz's OpenType parsing code (hb-open-type.hh) can cause a heap-buffer-overflow when handling crafted fonts.

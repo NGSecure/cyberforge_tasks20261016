@@ -1,0 +1,1 @@
+A post buffer operation in json-c linkhash.h may allow an off-by-one error.

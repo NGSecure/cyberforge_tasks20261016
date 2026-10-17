@@ -1,0 +1,1 @@
+A post-buffer operation in H3's _getBaseCellNeighbor (baseCells.c) is triggered by crafted local IJ coordinates and causes an AddressSanitizer failure.

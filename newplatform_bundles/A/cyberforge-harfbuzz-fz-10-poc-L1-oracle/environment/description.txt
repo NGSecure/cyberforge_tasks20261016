@@ -1,0 +1,1 @@
+A post-buffer operation in HarfBuzz's SVG utilities can cause a segmentation violation.

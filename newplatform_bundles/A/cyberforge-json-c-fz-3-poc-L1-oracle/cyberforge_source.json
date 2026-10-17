@@ -1,0 +1,78 @@
+{
+  "bundle": "cyberforge-json-c-fz-3-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/json-c/vulnerabilities/vulnerability_FZ_3",
+  "base_image": "vuljector/json-c:setup@sha256:684c6d1567e91fbc5bb489fd5d27d50cbabcc564af4495725679f1eb6cac55db",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-04-18T18:56:59.90802755Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T16:00:18.869271473Z",
+        "created_by": "sleep infinity",
+        "bytes": 68486641
+      }
+    ],
+    "post_setup_files": 639,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 625,
+    "scrubbed_from_agent_image": 12,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out": 9,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 5,
+  "image_tags": {
+    "docker_image": "cyberforge_json_c_fz_3_main:v0.0.2",
+    "task_server_image": "cyberforge_json_c_fz_3_task_server:v0.0.2"
+  },
+  "tier": "A",
+  "pov_kind": "harness",
+  "ground_truth_evidence": "crash evidence in the dataset",
+  "ground_truth": {
+    "dataset_file": "exploit_files/generated_inputs/curated_seed_3cdc509139af2228fb116d40a4ef9864fe43e04330e862817e8c7e0823645036.bin",
+    "how_found": "fuzz_exact_seed",
+    "bytes": 58,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": null,
+    "sha256": "3cdc509139af2228fb116d40a4ef9864fe43e04330e862817e8c7e0823645036",
+    "solve_sh": "inline"
+  },
+  "harness": {
+    "candidates": [
+      "json_object_fuzzer"
+    ],
+    "how_found": "crash_report.json",
+    "built_by_dataset_snapshot_compile": [
+      "json_object_fuzzer"
+    ],
+    "dataset_metadata_said": [
+      "json_object_fuzzer",
+      "json_object_fuzzer",
+      "json_object_fuzzer"
+    ],
+    "metadata_disagrees": false
+  },
+  "recipe": null,
+  "trigger_evidence": {
+    "signal": "asan",
+    "detail": "heap-buffer-overflow",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": {
+      "unit_tests": "passed",
+      "exploit_on_vulnerable": "passed",
+      "exploit_on_secure": "passed"
+    }
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": true
+  },
+  "asan_options_from_exploit": null,
+  "cwe_id": "CWE-120",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "52ddfb35f1cc7e337edb6b1939a043140b42cf5a"
+}

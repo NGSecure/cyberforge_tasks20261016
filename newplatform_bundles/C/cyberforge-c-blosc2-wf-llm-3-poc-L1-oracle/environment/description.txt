@@ -1,0 +1,1 @@
+In c-blosc2, the b2nd_deserialize_meta function in b2nd.c lacks proper input validation, causing an AddressSanitizer error when processing a crafted compressed chunk, resulting in a crash.

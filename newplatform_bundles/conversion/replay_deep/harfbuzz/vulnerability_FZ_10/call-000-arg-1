@@ -1,0 +1,2 @@
+#!/bin/sh
+exec /cf_rec/py /cf_rec/rec.py cli "$0" "$@"

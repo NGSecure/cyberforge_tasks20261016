@@ -1,0 +1,1 @@
+A NULL pointer dereference in overwrite_item in cJSON_Utils.c can cause a segmentation violation via crafted JSON patch input.

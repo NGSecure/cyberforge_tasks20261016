@@ -1,0 +1,1 @@
+An out-of-bounds read in WelsDec::NeedErrorCon in openh264's error_concealment.cpp could lead to a crash or memory disclosure when decoding a crafted stream.

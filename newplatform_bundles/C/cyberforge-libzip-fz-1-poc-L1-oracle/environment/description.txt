@@ -1,0 +1,1 @@
+libzip: invalid pointer dereference in zip_source_function.c can lead to crash or memory corruption.

@@ -1,0 +1,1 @@
+In flac_snprintf(), a stack-buffer-overflow occurs when formatting an output path, allowing memory corruption.

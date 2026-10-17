@@ -1,0 +1,1 @@
+A heap buffer overflow in Kamailio's strutils.c can lead to an out-of-bounds read.

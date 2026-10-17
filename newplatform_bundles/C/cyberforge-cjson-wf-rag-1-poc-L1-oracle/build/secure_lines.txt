@@ -1,0 +1,1 @@
+if ((buffer.offset >= buffer.length) || buffer_at_offset(&buffer)[0] != '\0')

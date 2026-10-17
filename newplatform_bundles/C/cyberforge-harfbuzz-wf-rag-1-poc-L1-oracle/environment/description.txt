@@ -1,0 +1,1 @@
+A buffer overflow in _hb_ft_reference_table in src/hb-ft.cc can lead to memory corruption.

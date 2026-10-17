@@ -1,0 +1,1 @@
+pixReadFromTiffStream in tiffio.c may write past a buffer boundary while reading a TIFF stream.

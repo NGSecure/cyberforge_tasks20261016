@@ -1,0 +1,106 @@
+{
+  "bundle": "cyberforge-quickjs-wf-rag-5-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/quickjs/vulnerabilities/vulnerability_WF_RAG_5",
+  "base_image": "vuljector/quickjs:setup@sha256:50716922f4e19865a3e6a87415d6f5e9a70d7c2d5b5de6b4ed025a4ed490522a",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-04-15T18:31:43.316664812Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T17:02:55.42411512Z",
+        "created_by": "sleep infinity",
+        "bytes": 62747317
+      }
+    ],
+    "post_setup_files": 46,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 33,
+    "scrubbed_from_agent_image": 11,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out": 8,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 1,
+  "image_tags": {
+    "docker_image": "cyberforge_quickjs_wf_rag_5_main:v0.0.2",
+    "task_server_image": "cyberforge_quickjs_wf_rag_5_task_server:v0.0.2"
+  },
+  "tier": "B",
+  "pov_kind": "program",
+  "ground_truth_evidence": "crash evidence in the dataset",
+  "ground_truth": {
+    "dataset_file": null,
+    "how_found": "exploit_replay_deep (program)",
+    "bytes": 1080,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": true,
+    "sha256": "07f3914a1d8fc7513ec766fd1a709d739e3fb4683eed56a9903fb08db18e31b6",
+    "solve_sh": "inline"
+  },
+  "harness": null,
+  "recipe": {
+    "kind": "program",
+    "recorded_by": "conversion/replay_deep.py (exploit.sh replayed in vuljector/quickjs:setup@sha256:50716922f4e19865a3e6a87415d6f5e9a70d7c2d5b5de6b4ed025a4ed490522a)",
+    "recording": "conversion/replay_deep/quickjs/vulnerability_WF_RAG_5/calls.json",
+    "input_made_by_exploit_program": false,
+    "steps": [
+      {
+        "role": "compile",
+        "cwd": "/tmp/exploit_work.qfQRPd",
+        "argv": [
+          "/usr/local/bin/clang",
+          "-O1",
+          "-fno-omit-frame-pointer",
+          "-gline-tables-only",
+          "-Wno-error=incompatible-function-pointer-types",
+          "-Wno-error=int-conversion",
+          "-Wno-error=deprecated-declarations",
+          "-Wno-error=implicit-function-declaration",
+          "-Wno-error=implicit-int",
+          "-Wno-error=unknown-warning-option",
+          "-Wno-error=vla-cxx-extension",
+          "-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION",
+          "-I/src/quickjs",
+          "-fsanitize=undefined",
+          "{poc}",
+          "/src/quickjs/cutils.c",
+          "-o",
+          "harness"
+        ]
+      },
+      {
+        "role": "run",
+        "cwd": "/tmp/exploit_work.qfQRPd",
+        "argv": [
+          "/tmp/exploit_work.qfQRPd/harness"
+        ]
+      }
+    ],
+    "poc_path": "/tmp/exploit_work.qfQRPd/harness.c",
+    "aux_files": [],
+    "compile_normalized": [],
+    "touched_files": [
+      "cutils.c"
+    ],
+    "diff_touches_headers": false,
+    "uses_out": false
+  },
+  "trigger_evidence": {
+    "signal": "ubsan",
+    "detail": "SEGV",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": true
+  },
+  "asan_options_from_exploit": null,
+  "cwe_id": "CWE-189",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "f1139494d18a2053630c5ed3384a42bb70db3c53"
+}

@@ -1,0 +1,1 @@
+A heap-buffer-overflow in jq's jv_load_file function can cause a denial of service via a crafted input.

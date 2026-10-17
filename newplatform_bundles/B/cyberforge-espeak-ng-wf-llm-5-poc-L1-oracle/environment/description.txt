@@ -1,0 +1,1 @@
+espeak-ng: stack-buffer-overflow in espeak_ng_SetVoiceByName when strncpy reads past a stack buffer.

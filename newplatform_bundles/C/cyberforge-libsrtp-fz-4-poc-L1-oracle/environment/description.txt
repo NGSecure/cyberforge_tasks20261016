@@ -1,0 +1,1 @@
+libsrtp's crypto/hash/sha1.c contains a post-buffer write in the SHA-1 implementation that can lead to out-of-bounds memory modification and potential code execution or crash.

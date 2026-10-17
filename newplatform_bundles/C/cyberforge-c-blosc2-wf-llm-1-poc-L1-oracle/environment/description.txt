@@ -1,0 +1,1 @@
+A path traversal vulnerability in c-blosc2's sframe_open_chunk function within blosc/sframe.c allows crafted frame paths to access files outside the intended directory.

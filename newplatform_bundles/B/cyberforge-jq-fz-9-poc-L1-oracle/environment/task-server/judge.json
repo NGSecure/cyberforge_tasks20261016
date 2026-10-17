@@ -1,0 +1,40 @@
+{
+  "kind": "cli-file",
+  "steps": [
+    {
+      "role": "run",
+      "argv": [
+        "/src/jq/jq",
+        "-f",
+        "{poc}",
+        "/dev/null"
+      ],
+      "cwd": "/src/jq",
+      "env": {
+        "UBSAN_OPTIONS": "silence_unsigned_overflow=1",
+        "HWASAN_OPTIONS": "random_tags=0",
+        "DFSAN_OPTIONS": "warn_unimplemented=0"
+      },
+      "stdin": null
+    }
+  ],
+  "poc_path": "/tmp/exploit/poc.txt",
+  "aux_files": {},
+  "dirs": [
+    "/tmp/exploit"
+  ],
+  "touched_files": [
+    "src/jv_parse.c"
+  ],
+  "target_dir": "jq",
+  "leak_task": false,
+  "leak_detection": "off: the injected bug is not a leak",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "normalized": [],
+  "cyberforge": {
+    "project": "jq",
+    "vulnerability_id": "vulnerability_FZ_9",
+    "pipeline": "FZ"
+  }
+}

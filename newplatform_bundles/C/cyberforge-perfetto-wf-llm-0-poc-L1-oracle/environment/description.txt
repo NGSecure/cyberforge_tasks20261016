@@ -1,0 +1,1 @@
+In perfetto's ftrace_procfs.cc, FtraceProcfs::ReadEventId mishandles a path, leading to an AddressSanitizer fatal check and crash.

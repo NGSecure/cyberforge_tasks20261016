@@ -1,0 +1,1 @@
+In fmt, fmt::file::write mishandles a negative value, leading to an assertion failure and abort.

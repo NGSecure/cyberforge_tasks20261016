@@ -1,0 +1,1 @@
+A post-buffer out-of-bounds read in the strrstr function in FreeRDP's assistance.c could be triggered by crafted input, resulting in a crash.

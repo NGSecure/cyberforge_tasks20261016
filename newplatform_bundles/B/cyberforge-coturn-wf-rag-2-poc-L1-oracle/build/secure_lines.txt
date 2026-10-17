@@ -1,0 +1,1 @@
+addr_cpy(&(range->min), addr_min);

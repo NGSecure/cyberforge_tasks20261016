@@ -1,0 +1,5 @@
+/tmp/exploit_work/in
+/tmp/exploit_work/out; touch /tmp/exploit_work/pwned
+title
+200
+600

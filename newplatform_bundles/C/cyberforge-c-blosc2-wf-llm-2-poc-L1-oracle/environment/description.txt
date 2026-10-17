@@ -1,0 +1,1 @@
+In c-blosc2's b2nd.c, b2nd_deserialize_meta does not properly validate serialized metadata, resulting in an AddressSanitizer check failure.

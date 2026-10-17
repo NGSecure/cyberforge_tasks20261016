@@ -1,0 +1,1 @@
+A post-buffer operation in OpenCV's TIFF decoder (grfmt_tiff.cpp) inside cv::TiffDecoderBufHelper::map triggers an AddressSanitizer failure.

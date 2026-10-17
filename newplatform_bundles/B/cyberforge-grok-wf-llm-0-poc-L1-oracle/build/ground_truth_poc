@@ -1,0 +1,4 @@
+-i
+/dev/null
+-o
+output_no_extension

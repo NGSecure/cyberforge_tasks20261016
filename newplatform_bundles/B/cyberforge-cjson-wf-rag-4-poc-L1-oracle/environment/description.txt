@@ -1,0 +1,1 @@
+A null pointer dereference in overwrite_item in cJSON_Utils.c leads to a segmentation violation when processing crafted JSON input.

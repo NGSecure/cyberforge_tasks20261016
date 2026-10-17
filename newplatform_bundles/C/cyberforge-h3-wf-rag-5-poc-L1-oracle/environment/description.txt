@@ -1,0 +1,1 @@
+A post-buffer operation in iterStepPolygonCompact in polyfill.c leads to an out-of-bounds read when converting polygons to cells.

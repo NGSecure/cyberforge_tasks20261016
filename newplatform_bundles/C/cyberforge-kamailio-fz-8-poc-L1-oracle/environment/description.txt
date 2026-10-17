@@ -1,0 +1,1 @@
+A post-buffer operation in parser_f.h may access memory outside the intended buffer.

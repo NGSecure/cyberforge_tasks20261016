@@ -1,0 +1,1 @@
+HarfBuzz may read out of bounds in CFF dictionary parsing in hb-cff-interp-dict-common.hh.

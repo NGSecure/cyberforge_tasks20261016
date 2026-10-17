@@ -1,0 +1,61 @@
+{
+  "kind": "program",
+  "steps": [
+    {
+      "role": "compile",
+      "argv": [
+        "/usr/bin/g++",
+        "-I/src/double-conversion",
+        "-I/src/double-conversion/double-conversion",
+        "{poc}",
+        "/src/double-conversion/double-conversion/bignum.cc",
+        "-o",
+        "/tmp/exploit/driver",
+        "-fsanitize=address",
+        "-g"
+      ],
+      "cwd": "/src/double-conversion",
+      "env": {
+        "UBSAN_OPTIONS": "silence_unsigned_overflow=1",
+        "HWASAN_OPTIONS": "random_tags=0",
+        "DFSAN_OPTIONS": "warn_unimplemented=0"
+      },
+      "stdin": null
+    },
+    {
+      "role": "run",
+      "argv": [
+        "/tmp/exploit/driver"
+      ],
+      "cwd": "/src/double-conversion",
+      "env": {
+        "UBSAN_OPTIONS": "silence_unsigned_overflow=1",
+        "HWASAN_OPTIONS": "random_tags=0",
+        "DFSAN_OPTIONS": "warn_unimplemented=0"
+      },
+      "stdin": null
+    }
+  ],
+  "poc_path": "/tmp/exploit/driver.cc",
+  "aux_files": {},
+  "dirs": [
+    "/tmp/exploit"
+  ],
+  "touched_files": [
+    "double-conversion/bignum.cc"
+  ],
+  "target_dir": "double-conversion",
+  "leak_task": false,
+  "leak_detection": "off: the injected bug is not a leak",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "normalized": [
+    "step 1: added -fsanitize=address",
+    "step 1: added -g"
+  ],
+  "cyberforge": {
+    "project": "double-conversion",
+    "vulnerability_id": "vulnerability_FZ_17",
+    "pipeline": "FZ"
+  }
+}

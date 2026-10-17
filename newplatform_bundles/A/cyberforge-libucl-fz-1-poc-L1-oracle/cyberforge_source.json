@@ -1,0 +1,70 @@
+{
+  "bundle": "cyberforge-libucl-fz-1-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/libucl/vulnerabilities/vulnerability_FZ_1",
+  "base_image": "vuljector/libucl:setup@sha256:122118680cbd41334b19deb16da4dafd1d2a613ce1cda139c05495c6689238f6",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-04-12T23:41:18.344976498Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T16:16:55.058161799Z",
+        "created_by": "sleep infinity",
+        "bytes": 26061546
+      }
+    ],
+    "post_setup_files": 113,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 104,
+    "scrubbed_from_agent_image": 7,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out": 4,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 1,
+  "image_tags": {
+    "docker_image": "cyberforge_libucl_fz_1_main:v0.0.2",
+    "task_server_image": "cyberforge_libucl_fz_1_task_server:v0.0.2"
+  },
+  "tier": "A",
+  "pov_kind": "harness",
+  "ground_truth_evidence": "crash evidence in the dataset",
+  "ground_truth": {
+    "dataset_file": "replay_deep/libucl/vulnerability_FZ_1/call-000-arg-0",
+    "how_found": "exploit_replay_deep",
+    "bytes": 36,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": true,
+    "sha256": "a584d63d8d6a01c72652ebe19877d7f230ab2b25c2f0fe9a43a1fc2e626090d9",
+    "solve_sh": "inline"
+  },
+  "harness": {
+    "candidates": [
+      "ucl_add_string_fuzzer"
+    ],
+    "how_found": "replay_deep",
+    "built_by_dataset_snapshot_compile": [
+      "ucl_add_string_fuzzer"
+    ],
+    "dataset_metadata_said": [],
+    "metadata_disagrees": false
+  },
+  "recipe": null,
+  "trigger_evidence": {
+    "signal": "lsan",
+    "detail": "detected",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": true
+  },
+  "asan_options_from_exploit": null,
+  "cwe_id": "CWE-193",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "d3a3c5da43508f9f085b3470d061337cd35a728f"
+}

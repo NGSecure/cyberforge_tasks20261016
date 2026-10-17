@@ -1,0 +1,1 @@
+In h2o, improper validation of the temp buffer path configuration in on_config_temp_buffer_path causes a heap-buffer-overflow via an out-of-bounds write in h2o_strdup_slashed.

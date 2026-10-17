@@ -1,0 +1,1 @@
+pixCountArbInRect in pix3.c performs an out-of-bounds write.

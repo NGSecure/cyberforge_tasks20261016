@@ -1,0 +1,1 @@
+if (TCG_TARGET_REG_BITS == 32 && type != TCG_TYPE_I32) {

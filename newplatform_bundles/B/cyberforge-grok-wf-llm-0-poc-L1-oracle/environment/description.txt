@@ -1,0 +1,1 @@
+A malformed file extension can trigger a segmentation violation in the grk_transcode utility's formatFromExtension function, which passes an invalid pointer to strcasecmp.

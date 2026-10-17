@@ -1,0 +1,1 @@
+A heap buffer overflow in BlendingStage::ProcessPaddingRow in stage_blending.cc allows an out-of-bounds write via a crafted image.

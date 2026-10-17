@@ -1,0 +1,1 @@
+A heap-based buffer overflow in c-blosc2's init_thread_context function can corrupt memory when processing crafted compressed data.

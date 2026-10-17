@@ -1,0 +1,1 @@
+if (WUFFS_BASE__LIKELY(io2_a_src - iop_a_src >= 8)) {

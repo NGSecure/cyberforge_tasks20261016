@@ -1,0 +1,1 @@
+A heap-buffer-overflow in cJSONUtils_strdup in cJSON_Utils.c can be triggered by crafted JSON input, leading to a crash.

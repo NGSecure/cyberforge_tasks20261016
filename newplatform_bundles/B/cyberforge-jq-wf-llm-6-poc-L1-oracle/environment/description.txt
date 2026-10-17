@@ -1,0 +1,1 @@
+A heap-buffer-overflow in jq's parse_slice function allows an out-of-bounds write when processing crafted slice indices.

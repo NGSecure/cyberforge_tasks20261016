@@ -1,0 +1,1 @@
+In coturn, add_relay_addr() in netengine.c dereferences a NULL pointer because a return value is not checked, resulting in a segmentation fault.

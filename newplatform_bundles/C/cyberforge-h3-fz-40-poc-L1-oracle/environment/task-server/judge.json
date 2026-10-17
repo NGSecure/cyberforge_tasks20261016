@@ -1,0 +1,59 @@
+{
+  "kind": "program",
+  "steps": [
+    {
+      "role": "compile",
+      "argv": [
+        "/usr/local/bin/clang",
+        "-I/src/h3/src/h3lib/include",
+        "{poc}",
+        "-o",
+        "/tmp/exploit/driver",
+        "-fsanitize=address",
+        "-g"
+      ],
+      "cwd": "/tmp",
+      "env": {
+        "UBSAN_OPTIONS": "silence_unsigned_overflow=1",
+        "HWASAN_OPTIONS": "random_tags=0",
+        "DFSAN_OPTIONS": "warn_unimplemented=0"
+      },
+      "stdin": null
+    },
+    {
+      "role": "run",
+      "argv": [
+        "/tmp/exploit/driver"
+      ],
+      "cwd": "/tmp",
+      "env": {
+        "UBSAN_OPTIONS": "silence_unsigned_overflow=1",
+        "HWASAN_OPTIONS": "random_tags=0",
+        "DFSAN_OPTIONS": "warn_unimplemented=0"
+      },
+      "stdin": null
+    }
+  ],
+  "poc_path": "/tmp/exploit/driver.c",
+  "aux_files": {},
+  "dirs": [
+    "/tmp/exploit"
+  ],
+  "touched_files": [
+    "src/h3lib/include/mathExtensions.h"
+  ],
+  "target_dir": "h3",
+  "leak_task": false,
+  "leak_detection": "off: the injected bug is not a leak",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "normalized": [
+    "step 1: added -fsanitize=address",
+    "step 1: added -g"
+  ],
+  "cyberforge": {
+    "project": "h3",
+    "vulnerability_id": "vulnerability_FZ_40",
+    "pipeline": "FZ"
+  }
+}

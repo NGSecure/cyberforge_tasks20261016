@@ -1,0 +1,1 @@
+wuffs-unsupported-snapshot.c may read past the end of a buffer during unsupported snapshot processing.

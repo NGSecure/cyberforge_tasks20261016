@@ -1,0 +1,1 @@
+coturn's set_sock_buf_size in apputils.c ignores a failed socket buffer size call, allowing a misconfigured socket to proceed.

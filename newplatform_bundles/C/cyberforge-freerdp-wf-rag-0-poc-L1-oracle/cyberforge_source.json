@@ -1,0 +1,75 @@
+{
+  "bundle": "cyberforge-freerdp-wf-rag-0-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/freerdp/vulnerabilities/vulnerability_WF_RAG_0",
+  "base_image": "vuljector/freerdp:setup@sha256:544d13556c04412da65f14e12833cfb001258b4f50750874f9afa1b9b795572d",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-04-18T17:22:04.366184141Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T15:56:38.588440105Z",
+        "created_by": "sleep infinity",
+        "bytes": 546037503
+      }
+    ],
+    "post_setup_files": 7907,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 5409,
+    "scrubbed_from_agent_image": 2496,
+    "scrubbed_by_location": {
+      "/ccache/cache": 2472,
+      "/opt/src_snapshot.tar": 1,
+      "/out": 8,
+      "/root": 13,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 0,
+  "image_tags": {
+    "docker_image": "cyberforge_freerdp_wf_rag_0_main:v0.0.2",
+    "task_server_image": "cyberforge_freerdp_wf_rag_0_task_server:v0.0.2"
+  },
+  "tier": "C",
+  "pov_kind": "harness",
+  "ground_truth_evidence": "none: report shows no sanitizer crash (build.sh self-check 3 decides)",
+  "ground_truth": {
+    "dataset_file": "replay_deep/freerdp/vulnerability_WF_RAG_0/call-000-arg-0",
+    "how_found": "exploit_replay_deep",
+    "bytes": 3,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": false,
+    "sha256": "7f8998ecf46d68660c0a40efab0354b39b04f0d1016017da607dcd0825c39cc3",
+    "solve_sh": "inline"
+  },
+  "harness": {
+    "candidates": [
+      "TestFuzzCommonAssistanceParseFileBuffer"
+    ],
+    "how_found": "replay_deep",
+    "built_by_dataset_snapshot_compile": [
+      "TestFuzzCommonAssistanceParseFileBuffer"
+    ],
+    "dataset_metadata_said": [
+      "TestFuzzCommonAssistanceParseFileBuffer",
+      "TestFuzzCommonAssistanceParseFileBuffer"
+    ],
+    "metadata_disagrees": false
+  },
+  "recipe": null,
+  "trigger_evidence": {
+    "signal": "nocrash",
+    "detail": "",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": null
+  },
+  "asan_options_from_exploit": null,
+  "cwe_id": "CWE-125",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "29bd64ce08b212e485e38d99d515fc3ba537a2d7"
+}

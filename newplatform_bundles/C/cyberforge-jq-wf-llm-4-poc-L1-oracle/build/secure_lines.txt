@@ -1,0 +1,1 @@
+if (fstat(fd, &sb) == -1 || S_ISDIR(sb.st_mode)) {

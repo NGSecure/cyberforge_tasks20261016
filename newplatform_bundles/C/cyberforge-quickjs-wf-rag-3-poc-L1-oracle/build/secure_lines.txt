@@ -1,0 +1,1 @@
+assert(idx < countof(case_conv_table1));

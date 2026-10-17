@@ -1,0 +1,1 @@
+In coturn, the ioa_addr_range_set function in src/client/ns_turn_ioaddr.c contains a stack-based buffer overflow, allowing an attacker to trigger memory corruption via specially crafted input.

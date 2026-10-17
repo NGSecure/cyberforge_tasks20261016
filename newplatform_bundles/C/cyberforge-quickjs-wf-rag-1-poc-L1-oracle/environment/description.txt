@@ -1,0 +1,1 @@
+A numeric overflow in the to_digit function of QuickJS's dtoa.c triggers a crash.

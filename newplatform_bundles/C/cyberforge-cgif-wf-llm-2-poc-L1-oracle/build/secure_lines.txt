@@ -1,0 +1,1 @@
+pGIF->config.pGlobalPalette = malloc(pConfig->numGlobalPaletteEntries * 3);

@@ -1,0 +1,1 @@
+BrotliOptimizeHuffmanCountsForRle in entropy_encode.c suffers from a numeric error that leads to a stack-buffer-underflow memory write when optimizing Huffman counts for RLE.

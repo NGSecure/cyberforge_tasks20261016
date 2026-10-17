@@ -1,0 +1,1 @@
+A missing return-value check in jv_load_file (src/jv_file.c) causes a heap-buffer-overflow when processing crafted input.

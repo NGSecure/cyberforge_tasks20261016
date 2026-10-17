@@ -1,0 +1,1 @@
+Sass::permutate in libsass's permutate.hpp performs an out-of-bounds read after a buffer operation, causing a crash.

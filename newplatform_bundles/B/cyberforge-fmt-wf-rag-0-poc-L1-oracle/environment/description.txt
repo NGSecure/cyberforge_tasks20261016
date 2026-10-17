@@ -1,0 +1,1 @@
+A heap-use-after-free in the fmt library's ostream destructor (src/os.cc) can cause a crash during stream write operations.

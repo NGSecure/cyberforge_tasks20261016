@@ -1,0 +1,1 @@
+parser_f.h: an incorrect buffer-size calculation in the parser component can cause an off-by-one memory overwrite when handling input tokens.

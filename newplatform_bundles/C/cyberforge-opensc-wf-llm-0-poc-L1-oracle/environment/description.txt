@@ -1,0 +1,1 @@
+OpenSC asn1.c may read out of bounds when processing ASN.1 data.

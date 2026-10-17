@@ -1,0 +1,51 @@
+{
+  "bundle": "cyberforge-guetzli-wf-llm-2-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/guetzli/vulnerabilities/vulnerability_WF_LLM_2",
+  "base_image": "vuljector/guetzli:setup",
+  "base_image_published": false,
+  "base_image_snapshot": null,
+  "secure_lines_checked": 1,
+  "image_tags": {
+    "docker_image": "cyberforge_guetzli_wf_llm_2_main:v0.0.2",
+    "task_server_image": "cyberforge_guetzli_wf_llm_2_task_server:v0.0.2"
+  },
+  "tier": "A",
+  "pov_kind": "harness",
+  "ground_truth_evidence": "crash evidence in the dataset",
+  "ground_truth": {
+    "dataset_file": "replay/guetzli/vulnerability_WF_LLM_2/input-000",
+    "how_found": "exploit_replay",
+    "bytes": 17,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": null,
+    "sha256": "d4516cf6cfd6c66f530365868f9cf5f9e372163bb69662f30a6cc86c599de1d5",
+    "solve_sh": "inline"
+  },
+  "harness": {
+    "candidates": [
+      "guetzli_fuzzer"
+    ],
+    "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": null,
+    "dataset_metadata_said": [
+      "guetzli_fuzzer"
+    ],
+    "metadata_disagrees": false
+  },
+  "recipe": null,
+  "trigger_evidence": {
+    "signal": "asan",
+    "detail": "heap-buffer-overflow",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": true
+  },
+  "asan_options_from_exploit": null,
+  "cwe_id": "CWE-20",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "214f2bb42abf5a577c079d00add5d6cc470620d3"
+}

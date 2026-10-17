@@ -1,0 +1,1 @@
+memcpy(g_page, data, std::min(size_t(base::GetSysPageSize()), size));

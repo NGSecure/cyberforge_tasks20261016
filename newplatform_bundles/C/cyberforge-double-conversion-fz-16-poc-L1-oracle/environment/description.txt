@@ -1,0 +1,1 @@
+double-conversion utils.h has a post-buffer operation that may read out of bounds.

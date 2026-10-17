@@ -1,0 +1,39 @@
+{
+  "kind": "cli-file",
+  "steps": [
+    {
+      "role": "run",
+      "argv": [
+        "/src/ghostpdl/obj/aux/genarch",
+        "output.txt",
+        "{poc}"
+      ],
+      "cwd": "/tmp/exploit_work",
+      "env": {
+        "UBSAN_OPTIONS": "silence_unsigned_overflow=1",
+        "HWASAN_OPTIONS": "random_tags=0",
+        "DFSAN_OPTIONS": "warn_unimplemented=0"
+      },
+      "stdin": null
+    }
+  ],
+  "poc_path": "/tmp/exploit_work/input.txt",
+  "aux_files": {},
+  "dirs": [
+    "/tmp/exploit_work"
+  ],
+  "touched_files": [
+    "base/genarch.c"
+  ],
+  "target_dir": "ghostpdl",
+  "leak_task": false,
+  "leak_detection": "off: the injected bug is not a leak",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "normalized": [],
+  "cyberforge": {
+    "project": "ghostscript",
+    "vulnerability_id": "vulnerability_WF_RAG_0",
+    "pipeline": "WF_RAG"
+  }
+}

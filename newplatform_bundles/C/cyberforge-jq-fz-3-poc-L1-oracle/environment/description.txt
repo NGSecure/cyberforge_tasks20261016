@@ -1,0 +1,1 @@
+An out-of-bounds post-buffer operation in jq's src/builtin.c (CWE-125) can cause memory corruption or crashes when builtin functions process crafted input.

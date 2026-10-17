@@ -1,0 +1,1 @@
+if (iter->_polygon->geoloop.numVerts == 0) {

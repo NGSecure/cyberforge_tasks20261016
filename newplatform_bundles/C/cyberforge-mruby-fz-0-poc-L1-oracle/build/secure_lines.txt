@@ -1,0 +1,1 @@
+mrb_raise(mrb, E_TYPE_ERROR, "can't convert nil into Float");

@@ -1,0 +1,1 @@
+libsass src/backtrace.cpp contains a CWE-125 post-buffer operation that can read past a buffer boundary, potentially causing crashes or data leakage.

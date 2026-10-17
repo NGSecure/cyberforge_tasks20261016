@@ -1,0 +1,1 @@
+A stack-buffer-overflow in simdjson's serialization.h allows a crafted JSON input to trigger a 400-byte write past the end of a stack buffer.

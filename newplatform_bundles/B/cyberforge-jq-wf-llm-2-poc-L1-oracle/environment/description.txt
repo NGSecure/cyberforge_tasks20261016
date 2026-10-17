@@ -1,0 +1,1 @@
+In jq, the unchecked return value of jv_load_file in src/jv_file.c leads to a heap-buffer-overflow when processing a crafted file.

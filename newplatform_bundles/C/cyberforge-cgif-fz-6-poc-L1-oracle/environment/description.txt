@@ -1,0 +1,1 @@
+An out-of-bounds read in cgif_raw.c can be triggered by a crafted GIF file, potentially causing a denial of service.

@@ -1,0 +1,1 @@
+A post-buffer write in gz_comp in file_compressed.c causes an out-of-bounds access.

@@ -1,0 +1,1 @@
+A concurrency flaw in coturn's addr_bind function in http_server.c can lead to a use-after-free, allowing memory corruption.

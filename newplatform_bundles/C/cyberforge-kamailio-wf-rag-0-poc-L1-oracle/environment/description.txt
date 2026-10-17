@@ -1,0 +1,1 @@
+A buffer overflow in Kamailio's SDP parser extract_rtpmap function allows remote attackers to cause memory corruption via a crafted message.

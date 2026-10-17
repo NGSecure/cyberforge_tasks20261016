@@ -1,0 +1,1 @@
+A heap-buffer-overflow in mruby's shaped_to_iv_tbl (src/variable.c) arises from an off-by-one calculation during instance variable assignment, causing an out-of-bounds read.

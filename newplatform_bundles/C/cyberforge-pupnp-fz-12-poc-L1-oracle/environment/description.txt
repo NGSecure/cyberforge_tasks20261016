@@ -1,0 +1,1 @@
+ixmlparser.c may read past the end of a buffer while parsing XML.

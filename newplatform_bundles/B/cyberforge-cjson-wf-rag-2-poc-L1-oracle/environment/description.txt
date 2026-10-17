@@ -1,0 +1,1 @@
+A format string flaw in cJSON_Utils.c leads to a segmentation violation when processing a specially crafted string.

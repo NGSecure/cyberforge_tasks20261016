@@ -1,0 +1,1 @@
+Perfetto's filter_bytecode_parser_fuzzer.cc contains a post-buffer operation (CWE-130) that can lead to memory corruption when parsing crafted filter bytecode.

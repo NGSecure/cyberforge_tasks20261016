@@ -1,0 +1,1 @@
+A heap-buffer-overflow vulnerability in HarfBuzz's OpenType table parsing (src/hb-open-type.hh) results from an invalid pointer, potentially leading to memory corruption.

@@ -1,0 +1,36 @@
+{
+  "kind": "cli-argv",
+  "steps": [
+    {
+      "role": "run",
+      "argv": [
+        "/src/h3/build/bin/h3",
+        "{args}"
+      ],
+      "cwd": "/tmp",
+      "env": {
+        "UBSAN_OPTIONS": "silence_unsigned_overflow=1",
+        "HWASAN_OPTIONS": "random_tags=0",
+        "DFSAN_OPTIONS": "warn_unimplemented=0"
+      },
+      "stdin": null
+    }
+  ],
+  "poc_path": null,
+  "aux_files": {},
+  "dirs": [],
+  "touched_files": [
+    "src/apps/filters/h3.c"
+  ],
+  "target_dir": "h3",
+  "leak_task": false,
+  "leak_detection": "off: the injected bug is not a leak",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "normalized": [],
+  "cyberforge": {
+    "project": "h3",
+    "vulnerability_id": "vulnerability_WF_LLM_2",
+    "pipeline": "WF_LLM"
+  }
+}

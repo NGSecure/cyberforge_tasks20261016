@@ -1,0 +1,1 @@
+A heap-buffer-overflow in fmt's parse_format_specs function in include/fmt/base.h allows a crafted format string to read out of bounds.

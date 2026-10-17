@@ -1,0 +1,1 @@
+errno, FMT_STRING("cannot associate stream with file descriptor")));

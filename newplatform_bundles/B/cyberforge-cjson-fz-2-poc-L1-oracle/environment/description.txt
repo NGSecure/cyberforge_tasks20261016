@@ -1,0 +1,1 @@
+cJSON.c contains an off-by-one calculation error that miscomputes buffer length and can lead to incorrect memory bounds handling.

@@ -1,0 +1,1 @@
+An invalid pointer dereference in libsndfile's G72x module (src/G72x/g72x.c) causes a crash during audio file processing.

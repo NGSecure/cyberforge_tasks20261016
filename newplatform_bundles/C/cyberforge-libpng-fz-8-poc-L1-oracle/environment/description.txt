@@ -1,0 +1,1 @@
+libpng may dereference an invalid pointer in pngtrans.c, potentially causing a crash.

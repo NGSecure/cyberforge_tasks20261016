@@ -1,0 +1,1 @@
+An unchecked return value from fdopen in fmt's os.cc file leads to a null pointer dereference and segmentation fault in file::fdopen, potentially causing a denial of service.

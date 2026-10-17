@@ -116,8 +116,9 @@ def main():
     out = sys.argv[2]
     only = set(sys.argv[3:])
     os.makedirs(out, exist_ok=True)
+    # named projects are scanned whatever their tier (tier-B/C conversion needs them too)
     todo = sorted({(r["project"], r["dockerhub_image"]) for r in recs
-                   if r["tier"] == "A" and r["dockerhub_image"] and (not only or r["project"] in only)
+                   if (r["project"] in only if only else r["tier"] == "A") and r["dockerhub_image"]
                    and not os.path.exists(os.path.join(out, r["project"] + ".json"))})
     print("to scan:", len(todo), flush=True)
 

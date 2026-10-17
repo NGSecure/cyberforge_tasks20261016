@@ -1,0 +1,1 @@
+A post-buffer operation in polygonToCellsExperimental in polyfill.c can overflow a heap buffer, causing a crash.

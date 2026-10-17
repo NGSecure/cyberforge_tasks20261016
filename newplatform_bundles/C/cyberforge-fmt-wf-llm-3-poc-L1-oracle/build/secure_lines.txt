@@ -1,0 +1,1 @@
+FMT_THROW(system_error(errno, FMT_STRING("cannot write to file")));

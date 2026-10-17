@@ -1,0 +1,1 @@
+jq's jv_load_file in src/jv_file.c is vulnerable to a heap-buffer-overflow, allowing a crafted input to cause memory corruption.

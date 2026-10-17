@@ -1,0 +1,1 @@
+OpenCV's bundled protobuf message_lite.cc can dereference an invalid pointer.

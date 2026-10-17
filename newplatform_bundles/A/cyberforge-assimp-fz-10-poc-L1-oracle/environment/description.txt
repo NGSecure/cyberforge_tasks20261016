@@ -1,0 +1,1 @@
+Assimp's code/AssetLib/FBX/FBXConverter.cpp contains an off-by-one calculation (CWE-193) when sizing FBX data buffers, which can lead to out-of-bounds memory access.

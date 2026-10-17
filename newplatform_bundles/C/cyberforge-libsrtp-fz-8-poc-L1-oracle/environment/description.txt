@@ -1,0 +1,1 @@
+libsrtp may perform a post-buffer operation in the SHA-1 hash implementation, potentially causing out-of-bounds access in crypto/hash/sha1.c.

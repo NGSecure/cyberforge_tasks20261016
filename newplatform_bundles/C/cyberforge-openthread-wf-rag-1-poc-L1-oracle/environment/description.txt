@@ -1,0 +1,1 @@
+A post-buffer operation overflow in OpenThread's DNS client response parsing function ReadRecordInfo could allow a remote attacker to cause a denial of service via a crafted DNS response.

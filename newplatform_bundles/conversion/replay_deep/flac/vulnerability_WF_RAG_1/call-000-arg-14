@@ -1,0 +1,20 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "share/compat.h"
+
+int main() {
+    char buffer[5000];
+    memset(buffer, 0, sizeof(buffer));
+    
+    size_t len = 4990;
+    const char *arg = "123456789012345";
+    
+    printf("Triggering flac_snprintf with buffer size %zu, available %zu, arg length %zu\n", 
+           sizeof(buffer), sizeof(buffer) - len, strlen(arg));
+    
+    flac_snprintf(buffer + len, sizeof(buffer) - len, "%s;", arg);
+    
+    printf("Done without crashing\n");
+    return 0;
+}

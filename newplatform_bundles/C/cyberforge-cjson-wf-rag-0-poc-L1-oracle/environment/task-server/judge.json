@@ -1,0 +1,61 @@
+{
+  "kind": "program",
+  "steps": [
+    {
+      "role": "compile",
+      "argv": [
+        "/usr/local/bin/clang",
+        "-o",
+        "/tmp/attack/attack",
+        "{poc}",
+        "/src/cjson/cJSON.c",
+        "/src/cjson/cJSON_Utils.c",
+        "-I/src/cjson",
+        "-fsanitize=address",
+        "-g"
+      ],
+      "cwd": "/src/cjson",
+      "env": {
+        "UBSAN_OPTIONS": "silence_unsigned_overflow=1",
+        "HWASAN_OPTIONS": "random_tags=0",
+        "DFSAN_OPTIONS": "warn_unimplemented=0"
+      },
+      "stdin": null
+    },
+    {
+      "role": "run",
+      "argv": [
+        "/tmp/attack/attack"
+      ],
+      "cwd": "/src/cjson",
+      "env": {
+        "UBSAN_OPTIONS": "silence_unsigned_overflow=1",
+        "HWASAN_OPTIONS": "random_tags=0",
+        "DFSAN_OPTIONS": "warn_unimplemented=0"
+      },
+      "stdin": null
+    }
+  ],
+  "poc_path": "/tmp/attack/attack.c",
+  "aux_files": {},
+  "dirs": [
+    "/tmp/attack"
+  ],
+  "touched_files": [
+    "cJSON_Utils.c"
+  ],
+  "target_dir": "cjson",
+  "leak_task": false,
+  "leak_detection": "off: the injected bug is not a leak",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "normalized": [
+    "step 1: added -fsanitize=address",
+    "step 1: added -g"
+  ],
+  "cyberforge": {
+    "project": "cjson",
+    "vulnerability_id": "vulnerability_WF_RAG_0",
+    "pipeline": "WF_RAG"
+  }
+}

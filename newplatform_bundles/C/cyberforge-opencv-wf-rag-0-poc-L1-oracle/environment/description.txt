@@ -1,0 +1,1 @@
+An off-by-one calculation in OpenCV's PNG encoder animation writing can trigger an AddressSanitizer failure, causing a crash.

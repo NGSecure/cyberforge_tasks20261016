@@ -1,0 +1,1 @@
+std::memcpy(data_ptr, str_.data(), str_.size());

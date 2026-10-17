@@ -1,0 +1,3 @@
+if (!convert_oauth_key_data(&okd, key, err_msg, err_msg_size)) {
+convert_oauth_key_data_raw(&okdr, &okd);
+memset(&okd, 0, sizeof(okd));

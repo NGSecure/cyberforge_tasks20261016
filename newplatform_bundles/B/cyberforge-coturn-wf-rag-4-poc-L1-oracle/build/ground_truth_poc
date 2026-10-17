@@ -1,0 +1,13 @@
+-i
+server
+-j
+kid
+-k
+key
+-l
+12345678
+-m
+3600
+-d
+-t
+token

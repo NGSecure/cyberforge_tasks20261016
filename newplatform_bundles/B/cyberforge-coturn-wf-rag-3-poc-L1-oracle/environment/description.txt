@@ -1,0 +1,1 @@
+A stack-buffer-overflow in coturn's convert_string_key_to_binary (dbdriver.c) allows an out-of-bounds write and potential denial of service.

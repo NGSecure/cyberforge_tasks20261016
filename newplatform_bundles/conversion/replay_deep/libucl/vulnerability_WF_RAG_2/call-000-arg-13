@@ -1,0 +1,23 @@
+#include <ucl.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    ucl_object_t *obj = ucl_object_new();
+    if (!obj) {
+        fprintf(stderr, "Failed to create object\n");
+        return 0;
+    }
+    
+    // Trigger the UAF via ucl_object_emit
+    unsigned char *out = ucl_object_emit(obj, UCL_EMIT_JSON);
+    
+    if (out) {
+        free(out);
+    }
+    
+    // Cleanup object using the correct API function found in ucl.h
+    ucl_object_free(obj);
+    
+    return 0;
+}

@@ -1,0 +1,1 @@
+return srtp_cipher_type_test(ct, ct->test_data);

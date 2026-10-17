@@ -1,0 +1,1 @@
+fwrite(buffer, 1, l, f);

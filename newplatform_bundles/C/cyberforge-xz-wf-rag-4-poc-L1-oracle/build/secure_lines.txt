@@ -1,0 +1,1 @@
+return_if_error(lzma_next_filter_init(&coder->next,

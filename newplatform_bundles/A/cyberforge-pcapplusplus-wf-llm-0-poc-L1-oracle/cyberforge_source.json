@@ -1,0 +1,71 @@
+{
+  "bundle": "cyberforge-pcapplusplus-wf-llm-0-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/pcapplusplus/vulnerabilities/vulnerability_WF_LLM_0",
+  "base_image": "vuljector/pcapplusplus:setup@sha256:144f004d5b66872e02416b8b86fec7ffaa6d421db5e727624606f8a65f35033a",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-04-17T16:51:45.300745986Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T16:56:21.385450777Z",
+        "created_by": "sleep infinity",
+        "bytes": 256812155
+      }
+    ],
+    "post_setup_files": 3598,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 3029,
+    "scrubbed_from_agent_image": 567,
+    "scrubbed_by_location": {
+      "/ccache/cache": 541,
+      "/opt/src_snapshot.tar": 1,
+      "/out": 23,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 2,
+  "image_tags": {
+    "docker_image": "cyberforge_pcapplusplus_wf_llm_0_main:v0.0.2",
+    "task_server_image": "cyberforge_pcapplusplus_wf_llm_0_task_server:v0.0.2"
+  },
+  "tier": "A",
+  "pov_kind": "harness",
+  "ground_truth_evidence": "crash evidence in the dataset",
+  "ground_truth": {
+    "dataset_file": "replay/pcapplusplus/vulnerability_WF_LLM_0/input-000",
+    "how_found": "exploit_replay",
+    "bytes": 16424,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": true,
+    "sha256": "99208a05b9d7ec576f1954d0a4f7d79cb74699d45da09505b64c6633a0391b73",
+    "solve_sh": "inline"
+  },
+  "harness": {
+    "candidates": [
+      "FuzzTargetSnoop"
+    ],
+    "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "FuzzTargetSnoop"
+    ],
+    "dataset_metadata_said": [],
+    "metadata_disagrees": false
+  },
+  "recipe": null,
+  "trigger_evidence": {
+    "signal": "asan",
+    "detail": "heap-buffer-overflow",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": true
+  },
+  "asan_options_from_exploit": "detect_leaks=1",
+  "cwe_id": "CWE-120",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "c3cc787829b794b84c6a63734d324c1c487cb696"
+}

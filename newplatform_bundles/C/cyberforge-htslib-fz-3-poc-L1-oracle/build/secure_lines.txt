@@ -1,0 +1,1 @@
+if (HTS_POS_MAX - rlen <= pos) {

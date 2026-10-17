@@ -1,0 +1,29 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdint.h>
+#include "cgif.h"
+
+int main() {
+    uint16_t entries = 22000;
+    uint8_t* palette = malloc(entries * 3);
+    if (!palette) return 0;
+    memset(palette, 0x41, entries * 3);
+
+    CGIF_Config config = {0};
+    config.width = 1;
+    config.height = 1;
+    config.attrFlags = 0;
+    config.numGlobalPaletteEntries = entries;
+    config.pGlobalPalette = palette;
+
+    printf("Calling cgif_newgif...\n");
+    CGIF* gif = cgif_newgif(&config);
+    
+    if (gif) {
+        cgif_close(gif);
+    }
+
+    free(palette);
+    return 0;
+}

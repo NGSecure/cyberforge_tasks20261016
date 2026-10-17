@@ -1,0 +1,1 @@
+A post-buffer write (CWE-120) in simdjson's include/simdjson/padded_string-inl.h can lead to memory corruption when processing padded strings.

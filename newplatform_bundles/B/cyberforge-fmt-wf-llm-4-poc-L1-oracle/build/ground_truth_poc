@@ -1,0 +1,19 @@
+#include <fmt/printf.h>
+#include <cstring>
+#include <cstdlib>
+#include <string>
+#include <cstdio>
+#include <exception>
+int main() {
+  const size_t N = 64;
+  char* fbuf = static_cast<char*>(malloc(N));
+  memset(fbuf, 'x', N);
+  fbuf[N - 2] = '%';
+  fbuf[N - 1] = 'l';
+  try {
+    std::string s = fmt::sprintf(fmt::string_view(fbuf, N), 42);
+    fprintf(stderr, "formatted %zu bytes\n", s.size());
+  } catch (const std::exception&) { free(fbuf); return 0; }
+  free(fbuf);
+  return 0;
+}

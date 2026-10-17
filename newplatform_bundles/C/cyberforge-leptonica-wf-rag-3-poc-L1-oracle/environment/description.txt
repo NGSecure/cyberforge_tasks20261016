@@ -1,0 +1,1 @@
+A heap buffer overflow in tiffReadCallback in Leptonica's src/tiffio.c can be triggered via a crafted TIFF image, causing a crash.

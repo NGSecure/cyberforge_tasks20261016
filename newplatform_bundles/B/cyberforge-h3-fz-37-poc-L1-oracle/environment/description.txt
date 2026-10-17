@@ -1,0 +1,1 @@
+Stack-buffer-overflow in gridDisksUnsafe in src/h3lib/lib/algos.c due to a CWE-193 calculation error.

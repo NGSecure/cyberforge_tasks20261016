@@ -1,0 +1,5 @@
+if ((a->valueint != b->valueint) || (!compare_double(a->valuedouble, b->valuedouble)))
+static cJSON_bool compare_json(cJSON *a, cJSON *b, const cJSON_bool case_sensitive)
+if ((a == NULL) || (b == NULL) || ((a->type & 0xFF) != (b->type & 0xFF)))
+object->child = sort_list(object->child, case_sensitive);
+if (strcmp(a->valuestring, b->valuestring) != 0)

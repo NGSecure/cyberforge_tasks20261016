@@ -1,0 +1,1 @@
+A double-free vulnerability in H3's _parseArgsList function in args.c causes the polygon-to-cells path to free the same allocation twice, leading to memory corruption.

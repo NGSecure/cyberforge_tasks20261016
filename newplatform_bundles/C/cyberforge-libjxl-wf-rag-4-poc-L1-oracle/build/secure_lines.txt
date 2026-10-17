@@ -1,0 +1,1 @@
+size_t to_write = std::min<size_t>(can_read, *avail_out);

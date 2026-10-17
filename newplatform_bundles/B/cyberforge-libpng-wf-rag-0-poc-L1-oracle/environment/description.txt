@@ -1,0 +1,1 @@
+Null pointer dereference in png_set_mem_fn in libpng's pngmem.c triggers a segmentation violation on a write to address zero.

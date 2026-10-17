@@ -1,0 +1,2 @@
+h2o_configurator_errprintf(cmd, node, "path is too long");
+if (len >= sizeof(buf)) {

@@ -1,0 +1,70 @@
+{
+  "bundle": "cyberforge-pupnp-fz-12-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/pupnp/vulnerabilities/vulnerability_FZ_12",
+  "base_image": "vuljector/pupnp:setup@sha256:2e03b25fef12829a35862abb982ba1c4c05543cd9bc22c2dff175f4cd7dbc343",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-04-05T21:10:11.988434343Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T17:00:49.219784014Z",
+        "created_by": "sleep infinity",
+        "bytes": 62106956
+      }
+    ],
+    "post_setup_files": 598,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 590,
+    "scrubbed_from_agent_image": 6,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out": 3,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 1,
+  "image_tags": {
+    "docker_image": "cyberforge_pupnp_fz_12_main:v0.0.2",
+    "task_server_image": "cyberforge_pupnp_fz_12_task_server:v0.0.2"
+  },
+  "tier": "C",
+  "pov_kind": "harness",
+  "ground_truth_evidence": "none: sanitizer_report.txt is empty (no trigger evidence) (build.sh self-check 3 decides)",
+  "ground_truth": {
+    "dataset_file": "replay_deep/pupnp/vulnerability_FZ_12/call-000-arg-0",
+    "how_found": "exploit_replay_deep",
+    "bytes": 29,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": false,
+    "sha256": "4e47be99ee7cf5de7267da22f74ee6e56bb15416916bd831bd2bc009ace3ea63",
+    "solve_sh": "inline"
+  },
+  "harness": {
+    "candidates": [
+      "FuzzIxml"
+    ],
+    "how_found": "replay_deep",
+    "built_by_dataset_snapshot_compile": [
+      "FuzzIxml"
+    ],
+    "dataset_metadata_said": [],
+    "metadata_disagrees": false
+  },
+  "recipe": null,
+  "trigger_evidence": {
+    "signal": "empty",
+    "detail": "",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": null
+  },
+  "asan_options_from_exploit": null,
+  "cwe_id": "CWE-125",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "fb0e6889e738af69a95413da0f28c991d38558c9"
+}

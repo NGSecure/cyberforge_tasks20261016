@@ -1,0 +1,1 @@
+uint32_t num_frames = (int)animation.frames.size();

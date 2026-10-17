@@ -1,0 +1,1 @@
+A stack buffer overflow in libpng's pngrutil.c can be triggered by crafted PNG data, leading to memory corruption.

@@ -1,0 +1,1 @@
+A stack buffer overflow in parseWindowBounds in grok's common.cpp allows an out-of-bounds write during window bound parsing.

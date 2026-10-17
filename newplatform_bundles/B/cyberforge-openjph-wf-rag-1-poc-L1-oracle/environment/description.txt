@@ -1,0 +1,1 @@
+A heap-buffer-overflow in j2c_outfile::close in openjph's ojph_file.cpp leads to an out-of-bounds read during file closure.

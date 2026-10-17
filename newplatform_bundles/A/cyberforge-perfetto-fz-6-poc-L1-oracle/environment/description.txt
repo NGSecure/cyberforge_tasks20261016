@@ -1,0 +1,1 @@
+A heap-buffer-overflow in the Perfetto CPU reader fuzzer allows out-of-bounds access due to improper length handling after a buffer operation.

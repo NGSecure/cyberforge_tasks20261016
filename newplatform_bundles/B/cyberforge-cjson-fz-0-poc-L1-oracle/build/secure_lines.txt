@@ -1,0 +1,2 @@
+output = ensure(output_buffer, sizeof("\"\""));
+strcpy((char*)output, "\"\"");

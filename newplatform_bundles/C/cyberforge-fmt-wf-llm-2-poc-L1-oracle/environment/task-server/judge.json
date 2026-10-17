@@ -1,0 +1,69 @@
+{
+  "kind": "program",
+  "steps": [
+    {
+      "role": "compile",
+      "argv": [
+        "/usr/local/bin/clang++",
+        "-O1",
+        "-fno-omit-frame-pointer",
+        "-gline-tables-only",
+        "-Wno-error=incompatible-function-pointer-types",
+        "-Wno-error=int-conversion",
+        "-Wno-error=deprecated-declarations",
+        "-Wno-error=implicit-function-declaration",
+        "-Wno-error=implicit-int",
+        "-Wno-error=unknown-warning-option",
+        "-Wno-error=vla-cxx-extension",
+        "-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION",
+        "-stdlib=libc++",
+        "-fsanitize=address",
+        "-I/src/fmt/include",
+        "{poc}",
+        "/src/fmt/src/os.cc",
+        "/src/fmt/src/format.cc",
+        "-o",
+        "d"
+      ],
+      "cwd": "/tmp/fmt_wf",
+      "env": {
+        "UBSAN_OPTIONS": "silence_unsigned_overflow=1",
+        "HWASAN_OPTIONS": "random_tags=0",
+        "DFSAN_OPTIONS": "warn_unimplemented=0"
+      },
+      "stdin": null
+    },
+    {
+      "role": "run",
+      "argv": [
+        "/tmp/fmt_wf/d"
+      ],
+      "cwd": "/tmp/fmt_wf",
+      "env": {
+        "UBSAN_OPTIONS": "silence_unsigned_overflow=1",
+        "HWASAN_OPTIONS": "random_tags=0",
+        "DFSAN_OPTIONS": "warn_unimplemented=0"
+      },
+      "stdin": null
+    }
+  ],
+  "poc_path": "/tmp/fmt_wf/d.cc",
+  "aux_files": {},
+  "dirs": [
+    "/tmp/fmt_wf"
+  ],
+  "touched_files": [
+    "src/os.cc"
+  ],
+  "target_dir": "fmt",
+  "leak_task": false,
+  "leak_detection": "off: the injected bug is not a leak",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "normalized": [],
+  "cyberforge": {
+    "project": "fmt",
+    "vulnerability_id": "vulnerability_WF_LLM_2",
+    "pipeline": "WF_LLM"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "kind": "cli-file",
+  "steps": [
+    {
+      "role": "run",
+      "argv": [
+        "/src/brotli/brotli",
+        "{poc}"
+      ],
+      "cwd": "/tmp/exploit_work",
+      "env": {
+        "UBSAN_OPTIONS": "halt_on_error=1:print_stacktrace=1",
+        "HWASAN_OPTIONS": "random_tags=0",
+        "ASAN_OPTIONS": "halt_on_error=1:print_stacktrace=1",
+        "DFSAN_OPTIONS": "warn_unimplemented=0"
+      },
+      "stdin": null
+    }
+  ],
+  "poc_path": "/tmp/exploit_work/trigger.bin",
+  "aux_files": {},
+  "dirs": [
+    "/tmp/exploit_work"
+  ],
+  "touched_files": [
+    "c/enc/brotli_bit_stream.c"
+  ],
+  "target_dir": "brotli",
+  "leak_task": false,
+  "leak_detection": "off: the injected bug is not a leak",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "normalized": [],
+  "cyberforge": {
+    "project": "brotli",
+    "vulnerability_id": "vulnerability_WF_RAG_3",
+    "pipeline": "WF_RAG"
+  }
+}

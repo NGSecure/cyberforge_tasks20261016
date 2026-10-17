@@ -1,0 +1,68 @@
+{
+  "kind": "program",
+  "steps": [
+    {
+      "role": "compile",
+      "argv": [
+        "/usr/local/bin/clang",
+        "-O1",
+        "-fno-omit-frame-pointer",
+        "-gline-tables-only",
+        "-Wno-error=incompatible-function-pointer-types",
+        "-Wno-error=int-conversion",
+        "-Wno-error=deprecated-declarations",
+        "-Wno-error=implicit-function-declaration",
+        "-Wno-error=implicit-int",
+        "-Wno-error=unknown-warning-option",
+        "-Wno-error=vla-cxx-extension",
+        "-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION",
+        "-I/src/libucl/include",
+        "-fsanitize=address",
+        "{poc}",
+        "-o",
+        "harness",
+        "/src/libucl/src/.libs/libucl.a"
+      ],
+      "cwd": "/tmp/exploit_work",
+      "env": {
+        "UBSAN_OPTIONS": "silence_unsigned_overflow=1",
+        "HWASAN_OPTIONS": "random_tags=0",
+        "DFSAN_OPTIONS": "warn_unimplemented=0"
+      },
+      "stdin": null
+    },
+    {
+      "role": "run",
+      "argv": [
+        "/tmp/exploit_work/harness"
+      ],
+      "cwd": "/tmp/exploit_work",
+      "env": {
+        "UBSAN_OPTIONS": "silence_unsigned_overflow=1",
+        "HWASAN_OPTIONS": "random_tags=0",
+        "ASAN_OPTIONS": "halt_on_error=1:detect_leaks=0",
+        "DFSAN_OPTIONS": "warn_unimplemented=0"
+      },
+      "stdin": null
+    }
+  ],
+  "poc_path": "/tmp/exploit_work/harness.c",
+  "aux_files": {},
+  "dirs": [
+    "/tmp/exploit_work"
+  ],
+  "touched_files": [
+    "src/ucl_emitter_utils.c"
+  ],
+  "target_dir": "libucl",
+  "leak_task": false,
+  "leak_detection": "per exploit.sh",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "normalized": [],
+  "cyberforge": {
+    "project": "libucl",
+    "vulnerability_id": "vulnerability_WF_RAG_2",
+    "pipeline": "WF_RAG"
+  }
+}

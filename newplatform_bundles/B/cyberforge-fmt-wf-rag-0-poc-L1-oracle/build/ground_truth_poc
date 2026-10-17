@@ -1,0 +1,6 @@
+#include <fmt/os.h>
+int main() {
+  auto out = fmt::output_file("fmt416_out.txt");
+  out.print("record pending flush: {}", 1234567);  // buffered, not flushed
+  return 0;                                          // ~ostream runs here
+}

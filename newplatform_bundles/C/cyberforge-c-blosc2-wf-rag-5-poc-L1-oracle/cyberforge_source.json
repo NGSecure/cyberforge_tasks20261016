@@ -1,0 +1,73 @@
+{
+  "bundle": "cyberforge-c-blosc2-wf-rag-5-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/c-blosc2/vulnerabilities/vulnerability_WF_RAG_5",
+  "base_image": "vuljector/c-blosc2:setup@sha256:0fb950828c56d1c0c02a1f817b397672f3b083fa28f87c8293d9c29fc23e9197",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-05-10T15:41:16.54083957Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T16:00:15.990445096Z",
+        "created_by": "sleep infinity",
+        "bytes": 553178529
+      }
+    ],
+    "post_setup_files": 2349,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 2337,
+    "scrubbed_from_agent_image": 10,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out": 7,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 1,
+  "image_tags": {
+    "docker_image": "cyberforge_c_blosc2_wf_rag_5_main:v0.0.2",
+    "task_server_image": "cyberforge_c_blosc2_wf_rag_5_task_server:v0.0.2"
+  },
+  "tier": "C",
+  "pov_kind": "harness",
+  "ground_truth_evidence": "none: report shows no sanitizer crash (build.sh self-check 3 decides)",
+  "ground_truth": {
+    "dataset_file": "replay_deep/c-blosc2/vulnerability_WF_RAG_5/call-000-arg-0",
+    "how_found": "exploit_replay_deep",
+    "bytes": 131072,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": false,
+    "sha256": "12cfd2e7623915c11c98500f0a4eaf6c1be3055286db9e55dfc64de8e2d768b3",
+    "solve_sh": "inline"
+  },
+  "harness": {
+    "candidates": [
+      "compress_chunk_fuzzer"
+    ],
+    "how_found": "replay_deep",
+    "built_by_dataset_snapshot_compile": [
+      "compress_chunk_fuzzer"
+    ],
+    "dataset_metadata_said": [
+      "compress_chunk_fuzzer",
+      "compress_chunk_fuzzer"
+    ],
+    "metadata_disagrees": false
+  },
+  "recipe": null,
+  "trigger_evidence": {
+    "signal": "nocrash",
+    "detail": "",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": null
+  },
+  "asan_options_from_exploit": null,
+  "cwe_id": "CWE-122",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "243df5c7fb5888538d2f1518343925bb9d451770"
+}

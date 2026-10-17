@@ -1,0 +1,1 @@
+if (NEVER(originBaseCell < 0) || originBaseCell >= NUM_BASE_CELLS) {
