@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Static checks over generated CyberForge bundles (no Docker needed).
 
-    python3 -I validate.py <out_dir> [A/bundle ...]
+    python3 -I validate.py <out_dir> [--out-b DIR] [--out-c DIR] [bundle ...]
 
 Checks per bundle: required files, no unfilled @@placeholders@@, task.toml /
 judge.json / cyberforge_source.json parse, `bash -n` on every script, in-memory
@@ -10,7 +10,8 @@ the ground truth matches its recorded sha256 (and solve.sh decodes to it), the
 build inputs referenced by the Dockerfiles exist, every FROM is the recorded
 (digest-pinned) base image, the snapshot residue list is consistent and covers
 /opt/src_snapshot.tar, and environment/ holds only the expected non-secret files.
-Bundles live in <out_dir>/A, B and C; a bundle's folder must be its recorded tier.
+Tier-A bundles live in <out_dir>, tier B in <out_dir>2 and tier C in <out_dir>3 (as
+convert.py writes them); a bundle's directory must match its recorded tier.
 CLI/program bundles (tier-B templates) also need a recorded recipe whose placeholders
 fit its kind and whose extra files exist in build/aux/.
 Exits non-zero if any bundle fails.
@@ -65,7 +66,7 @@ def check_recipe(bd, judge):
     return errs
 
 
-def check(bd):
+def check(bd, tier):
     errs = []
     name = os.path.basename(bd)
     try:
@@ -79,8 +80,8 @@ def check(bd):
             errs.append("missing " + f)
     if errs:
         return errs
-    if os.path.basename(os.path.dirname(bd)) != src.get("tier"):
-        errs.append("bundle is in folder %s but its tier is %s" % (os.path.basename(os.path.dirname(bd)), src.get("tier")))
+    if src.get("tier") != tier:
+        errs.append("bundle is in the tier-%s directory but its tier is %s" % (tier, src.get("tier")))
     env_files = set()
     for dp, _, fn in os.walk(os.path.join(bd, "environment")):
         for f in fn:
@@ -180,23 +181,38 @@ def check(bd):
 
 
 def main():
-    out = sys.argv[1]
-    names = sys.argv[2:] or sorted(os.path.join(t, d) for t in ("A", "B", "C") if os.path.isdir(os.path.join(out, t))
-                                   for d in os.listdir(os.path.join(out, t))
-                                   if os.path.isdir(os.path.join(out, t, d)) and d.startswith("cyberforge-"))
-    stray = [d for d in os.listdir(out) if d.startswith("cyberforge-")]
+    args = sys.argv[1:]
+    opts = {}
+    for flag in ("--out-b", "--out-c"):
+        if flag in args:
+            i = args.index(flag)
+            opts[flag] = args[i + 1]
+            del args[i:i + 2]
+    out = os.path.abspath(args[0])
+    dirs = {"A": out, "B": os.path.abspath(opts.get("--out-b", out + "2")),
+            "C": os.path.abspath(opts.get("--out-c", out + "3"))}
+    todo = []
+    for tier, d in dirs.items():
+        if not os.path.isdir(d):
+            continue
+        for n in sorted(os.listdir(d)):
+            if os.path.isdir(os.path.join(d, n)) and n.startswith("cyberforge-") and (len(args) == 1 or n in args[1:]):
+                todo.append((tier, os.path.join(d, n)))
+    stray = [x for x in ("A", "B", "C") if os.path.isdir(os.path.join(out, x))]
     if stray:
-        print("FAIL: bundles outside A/, B/, C/:", stray[:5])
+        print("FAIL: leftover tier subdirectories in %s: %s" % (out, stray))
         return 1
     bad = 0
-    for n in names:
-        e = check(os.path.join(out, n))
+    for tier, bd in todo:
+        e = check(bd, tier)
         if e:
             bad += 1
-            print("FAIL", n)
+            print("FAIL", os.path.relpath(bd, os.path.dirname(out)))
             for x in e:
                 print("    -", x)
-    print("checked %d bundles: %d ok, %d failed" % (len(names), len(names) - bad, bad))
+    by = {t: sum(1 for x, _ in todo if x == t) for t in dirs}
+    print("checked %d bundles (%s): %d ok, %d failed" % (len(todo), ", ".join(
+        "%s %d in %s" % (t, by[t], os.path.basename(dirs[t])) for t in dirs), len(todo) - bad, bad))
     return 1 if bad else 0
 
 

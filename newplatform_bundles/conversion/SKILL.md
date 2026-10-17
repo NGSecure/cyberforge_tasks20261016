@@ -22,10 +22,11 @@ python3 -I scan_snapshots.py  records.json snapshot_scan/ [project ...]   # base
 python3 -I replay_deep.py     <inner_root> snapshot_scan/ replay_deep/ <task> ...   # B/C tasks, in the real image
 python3 -I classify.py        <inner_root> records.json              # again: uses the scans and both replays
 python3 -I prune_replay_deep.py <inner_root> records.json replay_deep/  # optional: stub captures no result needs
-python3 -I convert.py         <inner_root> records.json <out_dir>    # one bundle per converted task, in <out_dir>/{A,B,C}/
-python3 -I validate.py        <out_dir>                              # static checks, no Docker
-bash <out_dir>/<tier>/<bundle>/build.sh   # public network: build both images + 3 blocking self-checks
-bash <out_dir>/<tier>/<bundle>/push.sh    # upload network: push + backfill task.toml [environment]
+python3 -I convert.py         <inner_root> records.json <out_dir>    # one bundle per converted task: A in <out_dir>,
+                                                                     #   B in <out_dir>2, C in <out_dir>3 (--out-b/--out-c)
+python3 -I validate.py        <out_dir>                              # static checks of all three, no Docker
+bash <dir>/<bundle>/build.sh      # public network: build both images + 3 blocking self-checks
+bash <dir>/<bundle>/push.sh       # upload network: push + backfill task.toml [environment]
 ```
 
 `<inner_root>` is the directory holding `manifest.csv` and `projects/`. Every step
@@ -134,7 +135,7 @@ when the diff touches a header (`recipe.diff_touches_headers` in cyberforge_sour
 
 ## Tiers (classify.py)
 
-- **A → `A/`**: crash evidence (sanitizer report, or crash_report.json for fuzz
+- **A → `<out_dir>`** (newplatform_bundles/): crash evidence (sanitizer report, or crash_report.json for fuzz
   artifacts), a concrete non-empty PoV (fuzz crash artifact > the seed crash_report.json
   names for a replay-mode run (`attribution_kind: exact_seed`; a same-named seed of a
   sibling task only if every copy is identical) > replayed exploit input > pov.bin and
@@ -143,8 +144,8 @@ when the diff touches a header (`recipe.diff_touches_headers` in cyberforge_sour
   report satisfies exploit.sh's own grep (when it greps). libFuzzer's own
   out-of-memory report (exit 71) counts as a crash; timeouts do not. Tasks first
   flagged as B whose deep replay shows a single harness input are A too.
-- **B → `B/`**: crash evidence, and a CLI/program recipe from the deep replay.
-- **C → `C/`**: no usable crash evidence (empty report, no crash, timeout, report
+- **B → `<out_dir>2`** (newplatform_bundles2/): crash evidence, and a CLI/program recipe from the deep replay.
+- **C → `<out_dir>3`** (newplatform_bundles3/): no usable crash evidence (empty report, no crash, timeout, report
   contradicts exploit.sh) but a ground truth and a way to run it (dataset PoV +
   harness, or a deep-replay recipe). Nothing shows this ground truth triggers the bug:
   build.sh's self-check 3 decides.

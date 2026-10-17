@@ -7,7 +7,8 @@ The sidecar holds the secure and the vulnerable build of the project. /src, /wor
 (environment/task-server/cf_delta.py). Each run copies one build's files into place, so
 both are seen at the same paths, with the same modes and sizes and fresh inodes, then
 replays the commands the dataset's exploit ran (judge.json "steps", recorded by
-conversion/replay_deep.py) with the PoC in place of the exploit's own input:
+newplatform_bundles/conversion/replay_deep.py) with the PoC in place of the exploit's own
+input:
 
   cli-file   PoC = an input file, put where the exploit put its input
   cli-stdin  PoC = data fed on standard input

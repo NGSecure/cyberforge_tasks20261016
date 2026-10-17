@@ -9,8 +9,8 @@
 # builds share in place and the files that differ under /cybergym (root only,
 # cf_delta.py); task_server.py copies one build's files into place before each run and
 # replays the commands the exploit ran (judge.json, recorded by
-# conversion/replay_deep.py) with the PoC. The agent container never sees these builds,
-# the diff or the ground truth.
+# newplatform_bundles/conversion/replay_deep.py) with the PoC. The agent container
+# never sees these builds, the diff or the ground truth.
 #
 # Build context = the bundle root (see build.sh).
 # build.sh may pass the same digest from a registry mirror (--build-arg BASE_IMAGE=...).

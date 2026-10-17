@@ -1,0 +1,83 @@
+{
+  "bundle": "cyberforge-h3-wf-llm-3-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/h3/vulnerabilities/vulnerability_WF_LLM_3",
+  "base_image": "vuljector/h3:setup@sha256:0e00ee6039a428a03437f90a40e3a6ae448c02a4214cd911cb6592bbfff022de",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-04-18T17:25:34.177619309Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T15:43:26.585517974Z",
+        "created_by": "sleep infinity",
+        "bytes": 300081134
+      }
+    ],
+    "post_setup_files": 2782,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 2752,
+    "scrubbed_from_agent_image": 28,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out": 25,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 1,
+  "image_tags": {
+    "docker_image": "cyberforge_h3_wf_llm_3_main:v0.0.2",
+    "task_server_image": "cyberforge_h3_wf_llm_3_task_server:v0.0.2"
+  },
+  "tier": "C",
+  "pov_kind": "cli-argv",
+  "ground_truth_evidence": "none: sanitizer report does not show what exploit.sh checks for (recorded run did not trigger; ground truth unverified) (build.sh self-check 3 decides)",
+  "ground_truth": {
+    "dataset_file": null,
+    "how_found": "exploit_replay_deep (cli-argv)",
+    "bytes": 24,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": false,
+    "sha256": "ab401c625c5935634e73d5d922cd64efc7d12cbf361fa650dc16ec3f3bca3c7e",
+    "solve_sh": "inline"
+  },
+  "harness": null,
+  "recipe": {
+    "kind": "cli-argv",
+    "recorded_by": "newplatform_bundles/conversion/replay_deep.py (exploit.sh replayed in vuljector/h3:setup@sha256:0e00ee6039a428a03437f90a40e3a6ae448c02a4214cd911cb6592bbfff022de)",
+    "recording": "newplatform_bundles/conversion/replay_deep/h3/vulnerability_WF_LLM_3/calls.json",
+    "input_made_by_exploit_program": false,
+    "steps": [
+      {
+        "role": "run",
+        "cwd": "/tmp",
+        "argv": [
+          "/src/h3/build/bin/h3",
+          "{args}"
+        ]
+      }
+    ],
+    "poc_path": null,
+    "aux_files": [],
+    "compile_normalized": [],
+    "touched_files": [
+      "src/h3lib/lib/h3Index.c"
+    ],
+    "diff_touches_headers": false,
+    "uses_out": false
+  },
+  "trigger_evidence": {
+    "signal": "asan",
+    "detail": "heap-buffer-overflow",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": true
+  },
+  "asan_options_from_exploit": null,
+  "cwe_id": "CWE-129",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "006ba2c73a944691777e6bbf08e3754bf5cc9212"
+}

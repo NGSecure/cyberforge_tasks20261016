@@ -4,12 +4,14 @@
     python3 -I classify.py       <inner_root> records.json
     python3 -I scan_snapshots.py records.json snapshot_scan/
     python3 -I convert.py        <inner_root> records.json <out_dir> [--scan snapshot_scan/]
-                                 [--ver v0.0.1] [--only NAME ...]
+                                 [--out-b DIR] [--out-c DIR] [--ver v0.0.2] [--only NAME ...]
 
 <inner_root> holds manifest.csv + projects/. One bundle is written per converted
-record (see classify.py for the tiers), into <out_dir>/<tier>/: A and C harness bundles
-use the tier-A templates (judge: the fuzz harness), B and C CLI/program bundles the
-tier-B ones (judge: the commands replay_deep.py recorded, task_server_b.py). Each bundle
+record (see classify.py for the tiers): tier A into <out_dir>, tier B into --out-b
+(default <out_dir>2), tier C into --out-c (default <out_dir>3); conversion_manifest.csv
+(all tasks) goes to <out_dir>. Harness bundles use the tier-A templates (judge: the fuzz
+harness), CLI/program bundles the tier-B ones (judge: the commands replay_deep.py
+recorded, task_server_b.py). Each bundle
 is self-contained: its build inputs (the injected diff, the ground-truth PoV, a copy of
 the project's OSS-Fuzz setup/, the list of base-image snapshot files to scrub from the
 agent image, files the recorded commands read) live in build/, outside environment/,
@@ -30,6 +32,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 TPL = os.path.join(HERE, "templates")
+CONV = os.path.basename(os.path.dirname(HERE)) + "/conversion"  # e.g. newplatform_bundles/conversion
 sys.dont_write_bytecode = True
 sys.path.insert(0, HERE)
 import deep_recipe  # noqa: E402
@@ -271,7 +274,7 @@ def b_text(kind, recipe, steps, judge_opts):
 
 
 
-def build_bundle(root, rec, out_dir, ver, scan_dir):
+def build_bundle(root, rec, tier_dirs, ver, scan_dir):
     proj = rec["project"]
     n = rec["vuln"].rsplit("_", 1)[-1]
     pipe = PIPE[rec["type"]]
@@ -279,7 +282,7 @@ def build_bundle(root, rec, out_dir, ver, scan_dir):
     tag_prefix = "cyberforge_%s_%s_%s" % (re.sub(r"[^a-z0-9]+", "_", proj.lower()).strip("_"),
                                           pipe.replace("-", "_"), n)
     vd = os.path.join(root, "projects", rec["path"])
-    bd = os.path.join(out_dir, rec["tier"], bundle)
+    bd = os.path.join(tier_dirs[rec["tier"]], bundle)
     if os.path.isdir(bd):
         shutil.rmtree(bd)
     kind = rec["bundle_type"]
@@ -341,8 +344,8 @@ def build_bundle(root, rec, out_dir, ver, scan_dir):
         "COMMIT": rec["secure_base_commit"], "COMMIT_SHORT": rec["secure_base_commit"][:12],
         "BASE_IMAGE": base_image, "BASE_IMAGE_NAME": base_name, "HAS_HUB_IMAGE": has_hub, "VER": ver,
         "TAG_PREFIX": tag_prefix, "AUTH_TOKEN": token,
-        "POC_SRC_PATH": (("conversion/replay_deep/%s/%s (%s)" % (proj, rec["vuln"], kind)) if recipe else
-                         ("conversion/" + rec["poc"] + " (replayed " + rec["path"] + "/exploit_files/exploit.sh)")
+        "POC_SRC_PATH": (("%s/replay_deep/%s/%s (%s)" % (CONV, proj, rec["vuln"], kind)) if recipe else
+                         ("%s/%s (replayed %s/exploit_files/exploit.sh)" % (CONV, rec["poc"], rec["path"]))
                          if rec["poc_src"].startswith("exploit_replay") else "%s/%s" % (rec["path"], rec["poc"])),
         "POC_SIZE": len(gt), "POV_KIND": kind,
         # the executables the judge runs stay readable (symbolized reports); the rest are 0711
@@ -395,8 +398,8 @@ def build_bundle(root, rec, out_dir, ver, scan_dir):
                  "leak_task": leak_task(rec), "leak_detection": leak_note,
                  "timeout_sec": 60, "compile_timeout_sec": 600,
                  "normalized": notes, "cyberforge": cf}
-        b_info = {"kind": kind, "recorded_by": "conversion/replay_deep.py (exploit.sh replayed in %s)" % base_image,
-                  "recording": "conversion/replay_deep/%s/%s/calls.json" % (proj, rec["vuln"]),
+        b_info = {"kind": kind, "recorded_by": "%s/replay_deep.py (exploit.sh replayed in %s)" % (CONV, base_image),
+                  "recording": "%s/replay_deep/%s/%s/calls.json" % (CONV, proj, rec["vuln"]),
                   "input_made_by_exploit_program": bool(recipe.get("generated")),
                   "steps": [{"role": st["role"], "cwd": st.get("cwd"), "argv": st["argv"]} for st in steps],
                   "poc_path": recipe.get("poc_path"), "aux_files": sorted(aux_names),
@@ -486,14 +489,19 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("root")
     ap.add_argument("records")
-    ap.add_argument("out_dir")
+    ap.add_argument("out_dir", help="tier-A bundles and conversion_manifest.csv")
+    ap.add_argument("--out-b", default=None, help="tier-B bundles (default: <out_dir>2)")
+    ap.add_argument("--out-c", default=None, help="tier-C bundles (default: <out_dir>3)")
     ap.add_argument("--scan", default=os.path.join(HERE, "snapshot_scan"),
                     help="scan_snapshots.py output (default: snapshot_scan/ next to this script)")
     ap.add_argument("--ver", default="v0.0.2")  # v0.0.2: isolated judges (see SKILL.md)
     ap.add_argument("--only", nargs="*", default=None, help="bundle names or dataset paths to (re)build")
     a = ap.parse_args()
     recs = json.load(open(a.records, encoding="utf-8"))
-    os.makedirs(a.out_dir, exist_ok=True)
+    out = os.path.abspath(a.out_dir)  # "." must still give <name>2 / <name>3 next to it
+    tier_dirs = {"A": out, "B": os.path.abspath(a.out_b or out + "2"), "C": os.path.abspath(a.out_c or out + "3")}
+    for d in tier_dirs.values():
+        os.makedirs(d, exist_ok=True)
 
     rows, built = [], collections.Counter()
     for rec in sorted(recs, key=lambda r: r["seq"]):
@@ -502,14 +510,14 @@ def main():
             n = rec["vuln"].rsplit("_", 1)[-1]
             name = "cyberforge-%s-%s-%s-poc-L1-oracle" % (rec["project"].lower(), PIPE[rec["type"]], n)
             if a.only is None or name in a.only or rec["path"] in a.only:
-                bundle, desc_src, desc_mismatch = build_bundle(a.root, rec, a.out_dir, a.ver, a.scan)
+                bundle, desc_src, desc_mismatch = build_bundle(a.root, rec, tier_dirs, a.ver, a.scan)
                 built["%s/%s" % (rec["tier"], rec["bundle_type"])] += 1
             else:
                 bundle = name
         rows.append({
             "seq": rec["seq"], "pipeline": rec["type"], "project": rec["project"], "vulnerability": rec["vuln"],
             "source_path": rec["path"], "tier": rec["tier"], "converted": rec["converted"],
-            "folder": rec["tier"] if rec["converted"] else "", "bundle": bundle,
+            "folder": os.path.basename(tier_dirs[rec["tier"]]) if rec["converted"] else "", "bundle": bundle,
             "pov_kind": rec["bundle_type"], "reason": rec["reason"], "deep_replay": rec.get("deep_replay") or "",
             "harness": rec["fuzzer"] if rec["bundle_type"] == "harness" else "",
             "harness_found_by": rec["fuzzer_src"] if rec["bundle_type"] == "harness" else "",
@@ -524,7 +532,7 @@ def main():
             "exploit_asan_options": rec.get("asan_options") or "", "cwe_id": rec["cwe_meta"],
         })
     if a.only is None:
-        with open(os.path.join(a.out_dir, "conversion_manifest.csv"), "w", newline="", encoding="utf-8") as f:
+        with open(os.path.join(out, "conversion_manifest.csv"), "w", newline="", encoding="utf-8") as f:
             w = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
             w.writeheader()
             w.writerows(rows)

@@ -1,0 +1,106 @@
+{
+  "bundle": "cyberforge-libucl-wf-rag-2-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/libucl/vulnerabilities/vulnerability_WF_RAG_2",
+  "base_image": "vuljector/libucl:setup@sha256:122118680cbd41334b19deb16da4dafd1d2a613ce1cda139c05495c6689238f6",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-04-12T23:41:18.344976498Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T16:16:55.058161799Z",
+        "created_by": "sleep infinity",
+        "bytes": 26061546
+      }
+    ],
+    "post_setup_files": 113,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 104,
+    "scrubbed_from_agent_image": 7,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out": 4,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 0,
+  "image_tags": {
+    "docker_image": "cyberforge_libucl_wf_rag_2_main:v0.0.2",
+    "task_server_image": "cyberforge_libucl_wf_rag_2_task_server:v0.0.2"
+  },
+  "tier": "C",
+  "pov_kind": "program",
+  "ground_truth_evidence": "none: sanitizer report does not show what exploit.sh checks for (recorded run did not trigger; ground truth unverified) (build.sh self-check 3 decides)",
+  "ground_truth": {
+    "dataset_file": null,
+    "how_found": "exploit_replay_deep (program)",
+    "bytes": 481,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": false,
+    "sha256": "461b526e2e60ca3222abbd948075db0c86f88ee4f7cfa5cb7b3f21d92c801265",
+    "solve_sh": "inline"
+  },
+  "harness": null,
+  "recipe": {
+    "kind": "program",
+    "recorded_by": "newplatform_bundles/conversion/replay_deep.py (exploit.sh replayed in vuljector/libucl:setup@sha256:122118680cbd41334b19deb16da4dafd1d2a613ce1cda139c05495c6689238f6)",
+    "recording": "newplatform_bundles/conversion/replay_deep/libucl/vulnerability_WF_RAG_2/calls.json",
+    "input_made_by_exploit_program": false,
+    "steps": [
+      {
+        "role": "compile",
+        "cwd": "/tmp/exploit_work",
+        "argv": [
+          "/usr/local/bin/clang",
+          "-O1",
+          "-fno-omit-frame-pointer",
+          "-gline-tables-only",
+          "-Wno-error=incompatible-function-pointer-types",
+          "-Wno-error=int-conversion",
+          "-Wno-error=deprecated-declarations",
+          "-Wno-error=implicit-function-declaration",
+          "-Wno-error=implicit-int",
+          "-Wno-error=unknown-warning-option",
+          "-Wno-error=vla-cxx-extension",
+          "-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION",
+          "-I/src/libucl/include",
+          "-fsanitize=address",
+          "{poc}",
+          "-o",
+          "harness",
+          "/src/libucl/src/.libs/libucl.a"
+        ]
+      },
+      {
+        "role": "run",
+        "cwd": "/tmp/exploit_work",
+        "argv": [
+          "/tmp/exploit_work/harness"
+        ]
+      }
+    ],
+    "poc_path": "/tmp/exploit_work/harness.c",
+    "aux_files": [],
+    "compile_normalized": [],
+    "touched_files": [
+      "src/ucl_emitter_utils.c"
+    ],
+    "diff_touches_headers": false,
+    "uses_out": false
+  },
+  "trigger_evidence": {
+    "signal": "asan",
+    "detail": "heap-buffer-overflow",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": true
+  },
+  "asan_options_from_exploit": "halt_on_error=1:detect_leaks=0",
+  "cwe_id": "CWE-125",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "d3a3c5da43508f9f085b3470d061337cd35a728f"
+}
