@@ -28,6 +28,8 @@ python3 -I prune_replay_deep.py <inner_root> records.json replay_deep/  # option
 python3 -I convert.py         <inner_root> records.json <out_dir>    # one bundle per converted task: A in <out_dir>,
                                                                      #   B in <out_dir>2, C in <out_dir>3 (--out-b/--out-c)
 python3 -I validate.py        <out_dir>                              # static checks of all three, no Docker
+python3 -I verify_bundles.py  verification/plan.json verification/results.jsonl   # build.sh for many bundles,
+                                                                     #   plus alternative ground truths / judge settings
 bash <dir>/<bundle>/build.sh      # public network: build both images + 3 blocking self-checks
 bash <dir>/<bundle>/push.sh       # upload network: push + backfill task.toml [environment]
 ```
