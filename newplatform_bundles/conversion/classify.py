@@ -223,6 +223,25 @@ def snapshot_out(project):
 LFS_PTR_RE = re.compile(rb"^version https://git-lfs\.github\.com/spec/v1\noid sha256:([0-9a-f]{64})\nsize \d+\n$")
 
 
+# environment the shell or the sanitizers use, not what the program under test reads
+# environment the shell, the sanitizers or a build use, not what the program under test reads
+SHELL_ENV = {"ASAN_OPTIONS", "UBSAN_OPTIONS", "MSAN_OPTIONS", "LSAN_OPTIONS", "HWASAN_OPTIONS", "TSAN_OPTIONS",
+             "ASAN_SYMBOLIZER_PATH", "LLVM_SYMBOLIZER_PATH", "PATH", "HOME", "LANG", "LC_ALL", "LANGUAGE", "TMPDIR",
+             "TERM", "PYTHONPATH", "PYTHONDONTWRITEBYTECODE", "SRC", "OUT", "WORK", "EXPLOIT_DIR",
+             "LD_LIBRARY_PATH", "CC", "CXX", "CFLAGS", "CXXFLAGS", "CPPFLAGS", "LDFLAGS"}
+
+
+def exploit_env(es):
+    """Environment variables exploit.sh exports for the programs it runs (or LD_PRELOAD it sets for one),
+    except plumbing: a value that only names the build's own files under /out (espeak-ng WF_LLM_5's
+    ESPEAK_DATA_PATH=${ESPEAK_DATA_PATH:-/out/espeak-ng-data})."""
+    code = "\n".join(l for l in es.splitlines() if not l.strip().startswith("#"))
+    names = [v for v, val in re.findall(r"(?m)(?:^|[;&|]\s*)export\s+([A-Za-z_]\w*)=(\S*)", code)
+             if v not in SHELL_ENV and not re.fullmatch(r'"?(\$\{\w+:-)?/out/[\w./-]*\}?"?', val)]
+    names += re.findall(r"(?m)(?:^|[;&|]\s*)(LD_PRELOAD)=\S+\s+\S", code)
+    return sorted(set(names))
+
+
 def lfs_pointer(path):
     """The oid when the file is a Git LFS pointer (the dataset copy lacks its content), else ''.
     lfs_restore.py replaces the pointers it can resolve; the rest count as missing files."""
@@ -632,6 +651,15 @@ for r in rows:
         if ch.get("fuzzer") and ch["fuzzer"] != fuzzer:
             fuzzer, fuzzer_src, ex_h = ch["fuzzer"], "exploit.sh, run in the project's image", [ch["fuzzer"]]
         degenerate = os.path.getsize(poc_path(vd, poc, poc_src)) == 0
+
+    env_set = exploit_env(es)
+    if converted and env_set:
+        # the exploit sets the environment of what it runs: what crashed depended on it, and a PoV is
+        # only an input (verification: harfbuzz FZ_5 crashes on any input with HB_SHAPER_LIST=harfbuzz
+        # and on none without; espeak-ng plants a voice file and points ESPEAK_DATA_PATH at it; jq's
+        # bug is in parsing JQ_COLORS)
+        tier, reason, converted, bundle = tier, ("the exploit sets %s for the program it runs; a PoV is only an input"
+                                                 % " and ".join(env_set)), False, ""
 
     if converted and poc and lfs_pointer(poc_path(vd, poc, poc_src)):
         # the dataset copy holds a Git LFS pointer, not the file (lfs_restore.py could not find it)

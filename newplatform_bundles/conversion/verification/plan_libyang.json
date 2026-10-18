@@ -1,0 +1,44 @@
+[
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-libyang-fz-3-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 3,
+  "project": "libyang"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-libyang-fz-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "libyang"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-libyang-fz-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "libyang"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-libyang-fz-2-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "libyang"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-libyang-fz-4-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "libyang"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-libyang-wf-llm-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "libyang"
+ }
+]

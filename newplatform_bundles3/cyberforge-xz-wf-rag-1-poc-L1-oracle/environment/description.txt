@@ -1,1 +1,0 @@
-In xz, the lzma_alone_decoder_init function in alone_decoder.c fails to handle an error from lzma_index_hash_init, leading to a memory leak.

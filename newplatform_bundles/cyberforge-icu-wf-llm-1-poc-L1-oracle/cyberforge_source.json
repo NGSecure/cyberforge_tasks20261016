@@ -34,13 +34,13 @@
   "pov_kind": "harness",
   "ground_truth_evidence": "crash evidence in the dataset",
   "ground_truth": {
-    "dataset_file": "replay/icu/vulnerability_WF_LLM_1/input-000",
-    "how_found": "exploit_replay",
-    "bytes": 1014,
+    "dataset_file": "exploit_files/pov.bin",
+    "how_found": "dataset_pov (the dataset's pov.bin: in this bundle's builds it crashes the vulnerable build and not the secure one)",
+    "bytes": 1300002,
     "exploit_replay_inputs": 1,
     "dataset_report_matches_exploit_check": null,
-    "sha256": "e1ca411af8f99c03c3ff3886d7f2bbf45e9ef5513cbbedd7e9d47880d5d3630d",
-    "solve_sh": "inline"
+    "sha256": "c5ed301e9ef191d53f09f7d279c1217dd8b9f7d40a5d0769b8b2238fd330763b",
+    "solve_sh": "fetch /solve"
   },
   "harness": {
     "candidates": [

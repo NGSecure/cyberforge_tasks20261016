@@ -29,6 +29,9 @@ COPY build/snapshot_residue.txt /tmp/snapshot_residue.txt
 # 1) restore the pristine /src (or, without a snapshot tarball, drop the snapshot's
 #    untracked build products from the target tree), 2) pin secure_base_commit (the
 #    snapshot is normally already there), 3) apply the injected change, 4) pack the tree
+# This diff's file names begin with /src/jsonnet/ or jsonnet/ (relative to /src, or absolute, in a few
+# of the dataset's diffs): where it does not apply in /src/jsonnet, it is applied from /src, else
+# from / (patch -p1 strips the b/ or the leading /).
 RUN set -eux; \
     if [ -f /opt/src_snapshot.tar ]; then cd / && rm -rf /src && tar -xf /opt/src_snapshot.tar -C /; fi; \
     cd /src/jsonnet; \
@@ -47,7 +50,11 @@ RUN set -eux; \
       fi; \
     else echo "WARN: /src/jsonnet is not a git checkout; using the image tree as-is"; fi; \
     git apply --whitespace=nowarn /tmp/inject_vulnerability.diff \
-      || patch -p1 --forward --batch --no-backup-if-mismatch < /tmp/inject_vulnerability.diff; \
+      || patch -p1 --forward --batch --no-backup-if-mismatch < /tmp/inject_vulnerability.diff \
+    || { patch -d /src -p1 --dry-run --forward --batch < /tmp/inject_vulnerability.diff >/dev/null \
+         && patch -d /src -p1 --forward --batch --no-backup-if-mismatch < /tmp/inject_vulnerability.diff; } \
+    || { patch -d / -p1 --dry-run --forward --batch < /tmp/inject_vulnerability.diff >/dev/null \
+         && patch -d / -p1 --forward --batch --no-backup-if-mismatch < /tmp/inject_vulnerability.diff; }; \
     cd /src && tar --exclude-vcs --sort=name --mtime=@1577836800 --owner=0 --group=0 --numeric-owner \
       -czf /tmp/repo-vul.tar.gz jsonnet
 

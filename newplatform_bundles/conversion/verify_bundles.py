@@ -19,7 +19,8 @@ truth failed) and records whether the harness got our ground truth; the input of
 that crashed is saved in verification/exploit_inputs/.
 
 Results already in results.jsonl are kept (the run can be resumed); when a build runs out
-of disk, the project's remaining bundles are recorded as not built; --max-seconds stops
+of disk or needs the network (without --ca), the project's remaining bundles are recorded
+as not built; --max-seconds stops
 after the bundle that crosses the limit. --ca builds each bundle from a copy of its base
 image that also trusts the given CA, for machines whose outbound TLS goes through an
 intercepting proxy (a build step that clones or downloads otherwise fails); the bundles
@@ -38,9 +39,10 @@ import time
 
 NETWORK_RE = re.compile(r"Could not resolve host|unable to access 'https?://|server certificate verification failed|"
                         r"Temporary failure in name resolution|Failed to connect to|Network is unreachable|"
-                        r"cannot verify \S+'s certificate|CERTIFICATE_VERIFY_FAILED")
-DISK_RE = re.compile(r"No space left on device")
-LOW_DISK = 15 << 30  # bytes free below which the build cache is cleared between two bundles of a project
+                        r"cannot verify \S+'s certificate|CERTIFICATE_VERIFY_FAILED|Failed to download")
+DISK_RE = re.compile(r"no space left on device", re.I)  # BuildKit says it in lower case
+PROXY_DOWN_RE = re.compile(r"proxyconnect tcp: dial tcp [0-9.]+:\d+: connect: connection refused")
+LOW_DISK = 8 << 30  # bytes free below which the build cache is cleared between two bundles of a project
 
 
 def verdict_of(text):
@@ -105,7 +107,9 @@ def exploit_run(ts_tag, bundle, tries):
     here = os.path.dirname(os.path.abspath(__file__))
     src = json.load(open(os.path.join(bundle, "cyberforge_source.json")))["source_task"]
     ef = os.path.join(task_dir(src), "exploit_files")
-    xout = os.path.join(here, "verification", "exploit_inputs", os.path.basename(bundle))
+    # a directory per run: a later run of the same bundle must not overwrite what an earlier one saved
+    xout = os.path.join(here, "verification", "exploit_inputs", os.path.basename(bundle),
+                        time.strftime("%Y%m%dT%H%M%S", time.gmtime()) + "-%d" % os.getpid())
     os.makedirs(xout, exist_ok=True)
     cmd = ["docker", "run", "--rm", "--network", "none", "-v", "%s:/cf_exploit.py:ro" % os.path.join(here, "verify_exploit.py"),
            "-v", "%s:/cf_exploit_src:ro" % ef, "-v", "%s:/cf_xout" % xout,
@@ -115,12 +119,16 @@ def exploit_run(ts_tag, bundle, tries):
                            timeout=tries * 1200)
     except subprocess.TimeoutExpired:
         return {"error": "timeout"}
-    if not os.listdir(xout):
+    saved = os.path.relpath(xout, here) if os.listdir(xout) else None
+    if not saved:
         os.rmdir(xout)
     try:
-        return json.loads(p.stdout.strip().splitlines()[-1])
+        out = json.loads(p.stdout.strip().splitlines()[-1])
     except (ValueError, IndexError):
         return {"error": p.stdout[-1000:]}
+    if saved:
+        out["saved_to"] = saved
+    return out
 
 
 EXPLOIT_SOURCED = ("exploit_replay", "hints.successful_seed", "named_file", "referenced_by_exploit.sh",
@@ -178,16 +186,18 @@ def main():
     done = set()
     if os.path.isfile(results_f):
         done = {json.loads(l)["bundle"] for l in open(results_f) if l.strip()}
-    start, last_project, no_disk = time.monotonic(), None, set()
+    start, last_project, no_disk, no_net = time.monotonic(), None, set(), {}
     for item in plan:
         bd = os.path.abspath(item["bundle"])
         name = os.path.basename(bd)
         if name in done:
             continue
         project = project_of(bd)
-        if project in no_disk:  # a build of this project already ran out of disk with the cache cleared
+        if project in no_disk or project in no_net:  # an earlier build of this project could not finish here
             rec = {"bundle": name, "project": project, "exit": 1, "verdict": "", "seconds": 0,
-                   "failure": "out of disk (this machine): not built, an earlier build of this project ran out of disk"}
+                   "failure": "out of disk (this machine): not built, an earlier build of this project ran out of disk"
+                   if project in no_disk else
+                   "needs network: not built, an earlier build of this project needed the network (%s)" % no_net[project]}
             with open(results_f, "a") as f:
                 f.write(json.dumps(rec) + "\n")
             print("%s - skipped: %s" % (name, rec["failure"]), flush=True)
@@ -213,17 +223,40 @@ def main():
         finally:
             if ca and script and os.path.isfile(script):
                 os.remove(script)
+        if PROXY_DOWN_RE.search(log):
+            # dockerd cannot reach its HTTP(S) proxy (e.g. the proxy moved): nothing can be pulled
+            # or built until it is restarted; stop rather than record a failure for every bundle
+            print("%s: docker cannot reach its proxy; stopping (restart dockerd, then resume)" % name, flush=True)
+            sys.exit(3)
         rec = {"bundle": name, "project": project, "exit": rc, "verdict": verdict_of(log),
-               "seconds": int(time.monotonic() - t0)}
+               "seconds": int(time.monotonic() - t0),
+               # the ground truth this result is evidence for (choose_gt.py)
+               "gt_sha256": hashlib.sha256(open(os.path.join(bd, "build", "ground_truth_poc"), "rb").read()).hexdigest()}
         if ca:
             rec["built_with_proxy_ca"] = True
         if report_of(log):
             rec["selfcheck"] = report_of(log)
+        # what the task-server build log says about the two builds: a compile that exited non-zero
+        # but made the harness (the Dockerfile goes on, as the dataset did), and the files that differ
+        # step numbers restart with each `docker build`; the task-server image is build.sh's last one
+        starts = [m.start() for m in re.finditer(r"(?m)^#1 \[internal\] load build definition", log)]
+        ts_log = log[starts[-1]:] if starts else log
+        stage = dict(re.findall(r"(?m)^#(\d+) \[(fix|vul) ", ts_log))
+        tolerated = {stage[n]: "cached" for n in re.findall(r"(?m)^#(\d+) CACHED$", ts_log) if n in stage}
+        tolerated.update({stage[n]: int(c) for n, c in re.findall(r"(?m)^#(\d+) [\d.]+ WARN: compile exited (\d+)", ts_log)
+                          if n in stage})
+        if any(v != "cached" for v in tolerated.values()):
+            rec["compile_exit_tolerated"] = tolerated
+        m = re.search(r"(?m)^#\d+ [\d.]+ (builds differ in \d+ file\(s\): [^\n]*)", ts_log)
+        if m:
+            rec["builds_differ"] = m.group(1)[:300]
         if rc != 0:
             net = NETWORK_RE.search(log)
             disk = DISK_RE.search(log)
             if disk and not net:
                 no_disk.add(project)
+            if net and not ca:
+                no_net[project] = net.group(0)[:80]
             rec["failure"] = ("needs network: " + net.group(0)) if net else \
                 "out of disk (this machine): No space left on device" if disk else \
                 ("self-check 3: " + rec["verdict"]) if rec["verdict"] else \
@@ -268,6 +301,8 @@ def main():
                 v[0] == gt for c in runs[0].get("calls", []) for v in list(c["inputs"].values()) + [c["stdin"] or [""]])})
         if ts_tag:
             subprocess.run(["docker", "rmi", "-f", ts_tag, ts_tag.replace("_task_server:", "_main:")], capture_output=True)
+        # BuildKit's build history keeps each build's exported layers (~50 builds, GBs of disk)
+        subprocess.run(["docker", "buildx", "history", "rm", "--all"], capture_output=True)
         with open(results_f, "a") as f:
             f.write(json.dumps(rec) + "\n")
         print("%s %s exit=%d %ds %s" % (name, rec["verdict"] or "-", rc, rec["seconds"], rec.get("failure", "")), flush=True)

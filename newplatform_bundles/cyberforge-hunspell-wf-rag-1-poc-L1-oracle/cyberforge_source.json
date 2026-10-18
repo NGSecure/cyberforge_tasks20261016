@@ -69,5 +69,6 @@
   "asan_options_from_exploit": "halt_on_error=1:abort_on_error=1",
   "cwe_id": "CWE-125",
   "cwe_in_description_variants": [],
-  "secure_base_commit": "9fb84c230f845ddcdc71ba59e5c9626639565ae9"
+  "secure_base_commit": "9fb84c230f845ddcdc71ba59e5c9626639565ae9",
+  "harness_cwd": "/out (the dataset's exploit runs the harness from /out, or copies /out's files into its working directory first)"
 }

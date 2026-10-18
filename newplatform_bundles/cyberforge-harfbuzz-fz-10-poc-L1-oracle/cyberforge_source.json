@@ -34,12 +34,12 @@
   "pov_kind": "harness",
   "ground_truth_evidence": "crash evidence in the dataset",
   "ground_truth": {
-    "dataset_file": "replay_deep/harfbuzz/vulnerability_FZ_10/call-000-arg-1",
-    "how_found": "exploit_replay_deep",
-    "bytes": 55,
+    "dataset_file": "exploit_live/harfbuzz/vulnerability_FZ_10/input",
+    "how_found": "exploit_live (what exploit.sh fed hb-vector-fuzzer in the project's image: it crashed the vulnerable build and not the secure one)",
+    "bytes": 44877,
     "exploit_replay_inputs": 0,
     "dataset_report_matches_exploit_check": true,
-    "sha256": "bc7622c57bd18bdba11a30463fab25e3c288f17f716ae196d53832f238e7d82c",
+    "sha256": "a12dc8a9844fd629ca7a6b43fbed09e37f010d0b65f89ec09d21c1d0bfb31667",
     "solve_sh": "inline"
   },
   "harness": {

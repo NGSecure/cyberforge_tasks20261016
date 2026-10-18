@@ -36,16 +36,26 @@ RUN set -eux; \
     else echo "WARN: /src/double-conversion is not a git checkout; using the image tree as-is"; fi
 COPY environment/task-server/cf_delta.py /cf_delta.py
 
+# As in the dataset, a build is used when `compile` exits non-zero after making what the PoC
+# runs (e.g. pcapplusplus: its build.sh builds the fuzzers, then fails in a unit-test build);
+# it fails when the harness was not made.
 FROM base AS fix
-RUN set -eux; rm -rf /out/*; compile; mkdir -p /cf/root && cp -a /out /cf/root/out && : > /cf/deleted.txt
+RUN set -eux; rm -rf /out/*; compile || echo "WARN: compile exited $?"; { [ -e /out/string_to_double_fuzzer ]; } || { echo "FAIL: compile made none of /out/string_to_double_fuzzer"; exit 1; }; mkdir -p /cf/root && cp -a /out /cf/root/out && : > /cf/deleted.txt
 
 FROM base AS vul
 COPY build/inject_vulnerability.diff /tmp/inject_vulnerability.diff
+# This diff's file names begin with /src/double-conversion/ or double-conversion/ (relative to /src, or absolute, in a few
+# of the dataset's diffs): where it does not apply in /src/double-conversion, it is applied from /src, else
+# from / (patch -p1 strips the b/ or the leading /).
 # `compile` runs the project's build.sh from the image WORKDIR (/src/double-conversion), so patch in a subshell.
 RUN set -eux; \
     ( cd /src/double-conversion && { git apply --whitespace=nowarn /tmp/inject_vulnerability.diff \
-        || patch -p1 --forward --batch --no-backup-if-mismatch < /tmp/inject_vulnerability.diff; } ); \
-    rm -rf /out/*; compile; mkdir -p /cf/root && cp -a /out /cf/root/out && : > /cf/deleted.txt
+        || patch -p1 --forward --batch --no-backup-if-mismatch < /tmp/inject_vulnerability.diff; } ) \
+    || { patch -d /src -p1 --dry-run --forward --batch < /tmp/inject_vulnerability.diff >/dev/null \
+         && patch -d /src -p1 --forward --batch --no-backup-if-mismatch < /tmp/inject_vulnerability.diff; } \
+    || { patch -d / -p1 --dry-run --forward --batch < /tmp/inject_vulnerability.diff >/dev/null \
+         && patch -d / -p1 --forward --batch --no-backup-if-mismatch < /tmp/inject_vulnerability.diff; }; \
+    rm -rf /out/*; compile || echo "WARN: compile exited $?"; { [ -e /out/string_to_double_fuzzer ]; } || { echo "FAIL: compile made none of /out/string_to_double_fuzzer"; exit 1; }; mkdir -p /cf/root && cp -a /out /cf/root/out && : > /cf/deleted.txt
 
 FROM base AS delta
 COPY --from=fix /cf /cf_fix

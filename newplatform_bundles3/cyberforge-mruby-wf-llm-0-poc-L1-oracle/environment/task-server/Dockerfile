@@ -33,8 +33,11 @@ RUN set -eux; \
 COPY environment/task-server/cf_delta.py /cf_delta.py
 
 # Each build records the files it creates, changes or removes (cf_delta.py mark/save).
+# As in the dataset, a build is used when `compile` exits non-zero after making what the PoC
+# runs (e.g. pcapplusplus: its build.sh builds the fuzzers, then fails in a unit-test build);
+# it fails when the program the PoC runs was not made.
 FROM base AS fix
-RUN set -eux; python3 /cf_delta.py mark /cf_mark; compile; rm -rf /out/*; python3 /cf_delta.py save /cf_mark /cf
+RUN set -eux; python3 /cf_delta.py mark /cf_mark; compile || echo "WARN: compile exited $?"; [ -e /src/mruby/bin/mruby ] || { echo "FAIL: compile did not make /src/mruby/bin/mruby"; exit 1; }; rm -rf /out/*; python3 /cf_delta.py save /cf_mark /cf
 
 FROM base AS vul
 COPY build/inject_vulnerability.diff /tmp/inject_vulnerability.diff
@@ -42,7 +45,7 @@ COPY build/inject_vulnerability.diff /tmp/inject_vulnerability.diff
 RUN set -eux; python3 /cf_delta.py mark /cf_mark; \
     ( cd /src/mruby && { git apply --whitespace=nowarn /tmp/inject_vulnerability.diff \
         || patch -p1 --forward --batch --no-backup-if-mismatch < /tmp/inject_vulnerability.diff; } ); \
-    compile; rm -rf /out/*; python3 /cf_delta.py save /cf_mark /cf
+    compile || echo "WARN: compile exited $?"; [ -e /src/mruby/bin/mruby ] || { echo "FAIL: compile did not make /src/mruby/bin/mruby"; exit 1; }; rm -rf /out/*; python3 /cf_delta.py save /cf_mark /cf
 
 FROM base AS delta
 COPY --from=fix /cf /cf_fix

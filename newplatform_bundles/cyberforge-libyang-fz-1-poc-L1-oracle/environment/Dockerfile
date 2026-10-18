@@ -57,11 +57,15 @@ ENV FUZZING_LANGUAGE=c PROJECT_NAME=libyang
 # Leave the base image's WORKDIR before deleting anything under it.
 WORKDIR /
 COPY build/snapshot_residue.txt /tmp/snapshot_residue.txt
+# The project's clean_build_command (project.json), which the dataset runs before each
+# build, runs here too, so /src/build.sh is the one the dataset builds with (what it
+# does in the target's checkout goes with the checkout):
+#   sed -i 's|^git checkout devel|true|' /src/build.sh; cd /src/libyang && git add -A && git -c user.email=v@x -c user.name=v commit -m vuljector-patch --allow-empty -q
 RUN set -eux; \
     if [ -f /opt/src_snapshot.tar ]; then \
       rm -rf /src && tar -xf /opt/src_snapshot.tar -C / && grep -v '^/src/' /tmp/snapshot_residue.txt; \
     else cat /tmp/snapshot_residue.txt; fi | tr '\n' '\0' | xargs -0 -r rm -f; \
-    rm -rf /src/libyang /workspace /testcase /out/* /tmp/snapshot_residue.txt \
+    ( sed -i 's|^git checkout devel|true|' /src/build.sh; cd /src/libyang && git add -A && git -c user.email=v@x -c user.name=v commit -m vuljector-patch --allow-empty -q ); rm -rf /src/libyang /workspace /testcase /out/* /tmp/snapshot_residue.txt \
       /root/.bash_history /root/.python_history /root/.lesshst; \
     mkdir -p /workspace /out; \
     command -v curl >/dev/null 2>&1 || { apt-get update && apt-get install -y --no-install-recommends curl ca-certificates \

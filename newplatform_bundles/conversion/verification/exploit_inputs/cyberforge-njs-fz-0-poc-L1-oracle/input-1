@@ -1,0 +1,2 @@
+var e = new Error(Array(200001).join('A'));
+e.toString();

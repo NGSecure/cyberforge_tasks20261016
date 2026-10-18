@@ -33,12 +33,12 @@
   "pov_kind": "harness",
   "ground_truth_evidence": "crash evidence in the dataset",
   "ground_truth": {
-    "dataset_file": "exploit_files/pov.bin",
-    "how_found": "hints.successful_seed",
-    "bytes": 8,
+    "dataset_file": "exploit_live/cjson/vulnerability_WF_LLM_12/input",
+    "how_found": "exploit_live (what exploit.sh fed cjson_read_fuzzer in the project's image: it crashed the vulnerable build and not the secure one)",
+    "bytes": 27,
     "exploit_replay_inputs": 0,
     "dataset_report_matches_exploit_check": null,
-    "sha256": "1a6ac5e0f20942fa7378c8ea996eaca31947f04d906dca490727fad2754e0535",
+    "sha256": "2861694df402d9f753299c715ac0df51412ecd0ccfe844473711f8cd3cb731ae",
     "solve_sh": "inline"
   },
   "harness": {

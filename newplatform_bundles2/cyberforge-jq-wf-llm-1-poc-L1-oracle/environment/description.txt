@@ -1,1 +1,0 @@
-A heap-buffer-overflow in jq's jq_set_colors function in src/jv_print.c allows writing beyond allocated memory via a crafted color configuration.

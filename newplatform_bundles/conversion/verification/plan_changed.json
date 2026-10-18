@@ -1,0 +1,409 @@
+[
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-assimp-wf-rag-3-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/assimp/vulnerabilities/vulnerability_WF_RAG_3/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "assimp"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-c-blosc-wf-llm-0-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/c-blosc/vulnerabilities/vulnerability_WF_LLM_0/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "c-blosc"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-c-blosc-wf-llm-2-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/c-blosc/vulnerabilities/vulnerability_WF_LLM_2/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "c-blosc"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-c-blosc2-wf-rag-0-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/c-blosc2/vulnerabilities/vulnerability_WF_RAG_0/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "c-blosc2"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-flac-wf-llm-0-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/flac/vulnerabilities/vulnerability_WF_LLM_0/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "flac"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles3/cyberforge-harfbuzz-wf-rag-1-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/harfbuzz/vulnerabilities/vulnerability_WF_RAG_1/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "harfbuzz"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-icu-wf-llm-1-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/icu/vulnerabilities/vulnerability_WF_LLM_1/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "icu"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-libjxl-wf-llm-1-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/libjxl/vulnerabilities/vulnerability_WF_LLM_1/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "libjxl"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-libjxl-wf-llm-2-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/libjxl/vulnerabilities/vulnerability_WF_LLM_2/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "libjxl"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-libjxl-wf-llm-3-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/libjxl/vulnerabilities/vulnerability_WF_LLM_3/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "libjxl"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-libzip-wf-rag-0-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/libzip/vulnerabilities/vulnerability_WF_RAG_0/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "libzip"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-assimp-fz-3-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "assimp"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-cjson-wf-llm-12-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "cjson"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-fmt-fz-10-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "fmt"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-h3-fz-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-h3-fz-11-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-h3-fz-14-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-h3-fz-20-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-h3-fz-24-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-h3-fz-27-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-h3-fz-29-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-h3-fz-3-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-h3-fz-32-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-h3-fz-33-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-h3-fz-39-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-h3-fz-45-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-h3-wf-llm-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-h3-wf-llm-4-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-h3-wf-llm-7-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-harfbuzz-fz-10-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "harfbuzz"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-harfbuzz-fz-5-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "harfbuzz"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-libpng-fz-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "libpng"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-quickjs-fz-22-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "quickjs"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-brotli-wf-llm-2-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "brotli"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-double-conversion-fz-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "double-conversion"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-double-conversion-fz-18-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "double-conversion"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-double-conversion-fz-2-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "double-conversion"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-double-conversion-fz-20-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "double-conversion"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-double-conversion-fz-21-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "double-conversion"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-double-conversion-wf-llm-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "double-conversion"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-double-conversion-wf-llm-2-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "double-conversion"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-h2o-wf-llm-3-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "h2o"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-libzip-fz-2-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "libzip"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-libzip-fz-3-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "libzip"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-libzip-fz-4-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "libzip"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-libzip-fz-7-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "libzip"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-opencv-fz-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "opencv"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-hunspell-fz-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "hunspell"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-hunspell-wf-llm-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "hunspell"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-hunspell-wf-llm-3-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "hunspell"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-hunspell-wf-llm-6-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "hunspell"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-hunspell-wf-rag-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "hunspell"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-hunspell-wf-rag-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "hunspell"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-hunspell-wf-rag-2-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "hunspell"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-icu-fz-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 5,
+  "project": "icu"
+ }
+]

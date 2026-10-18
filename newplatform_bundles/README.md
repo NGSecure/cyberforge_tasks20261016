@@ -8,15 +8,15 @@
 
 | 目录 | bundle 数 | 内容 |
 |---|---|---|
-| `newplatform_bundles/`（本目录，A 类） | 755 | 有崩溃证据；PoV 是喂给 OSS-Fuzz harness 的一个输入文件（`/out/<harness> <poc>`），与 ARVO bundle 同一范式 |
-| `newplatform_bundles2/`（B 类） | 64 | 有崩溃证据；PoV 交给项目自己的程序：CLI 的输入文件 / 标准输入 / 命令行参数（29 个），或者是一个链接项目代码的 C/C++ 程序（35 个） |
-| `newplatform_bundles3/`（C 类） | 89 | 数据集里没有触发证据（报告为空、报告里没有崩溃、超时、或报告与 exploit.sh 自己的判定条件矛盾）。标准答案没有经过验证，以 `build.sh` 自检 3 为准；其中 58 个是 harness 型，31 个是 CLI / 程序型 |
+| `newplatform_bundles/`（本目录，A 类） | 751 | 有崩溃证据；PoV 是喂给 OSS-Fuzz harness 的一个输入文件（`/out/<harness> <poc>`），与 ARVO bundle 同一范式 |
+| `newplatform_bundles2/`（B 类） | 61 | 有崩溃证据；PoV 交给项目自己的程序：CLI 的输入文件 / 标准输入 / 命令行参数（26 个），或者是一个链接项目代码的 C/C++ 程序（35 个） |
+| `newplatform_bundles3/`（C 类） | 88 | 数据集里没有触发证据（报告为空、报告里没有崩溃、超时、或报告与 exploit.sh 自己的判定条件矛盾）。标准答案没有经过验证，以 `build.sh` 自检 3 为准；其中 57 个是 harness 型，31 个是 CLI / 程序型 |
 
 A 类 bundle 的位置与上一版相同（本目录下的 `cyberforge-*`），但和 B、C 一起按新模板重新生成了：镜像标签升为 `v0.0.2`，判定服务做了隔离（原因见 `CONVERSION_REPORT.md` 4.7），已推送过旧版本的请用新版本替换。
 
 本目录还有（三个目录共用）：
 
-- `conversion_manifest.csv`：全部 1034 个任务的去向（tier、是否转换、所在目录、bundle、PoV 类型、原因、标准答案来源等）。另有 126 个任务没有生成 bundle，逐个人工复核过，原因记录在这里的 `review`、`review_note` 列（exploit 根本没有执行注入的代码、行为差异型 oracle、只跑单元测试、触发输入没有保存或是空文件等，见 `CONVERSION_REPORT.md` 第 5 节）
+- `conversion_manifest.csv`：全部 1034 个任务的去向（tier、是否转换、所在目录、bundle、PoV 类型、原因、标准答案来源等）。另有 134 个任务没有生成 bundle，逐个人工复核过，原因记录在这里的 `review`、`review_note` 列（exploit 根本没有执行注入的代码、行为差异型 oracle、只跑单元测试、触发输入没有保存或是空文件等，见 `CONVERSION_REPORT.md` 第 5 节）
 - `CONVERSION_REPORT.md`：转换方法、分级统计、验证情况、发现的问题
 - `conversion/`：转换工具（`SKILL.md` 说明原理与流程）。`replay_exploits.py`、`replay_deep.py` 负责重放 exploit 并记录它实际运行的命令和输入，`report_inputs.py` 从镜像里取出报告指明崩溃的项目文件，`select_candidates.py` 在重建的漏洞版上实际运行 exploit 的候选输入、找出触发的那一个，`classify.py`、`deep_recipe.py`、`convert.py`、`validate.py`、`scan_snapshots.py` 和 `templates/` 负责分级与生成。`replay/`、`replay_deep/` 是两种重放的记录，`report_inputs/` 是从镜像源码快照里取出的、报告指明崩溃的项目文件，`candidates/` 是候选输入的实测结果，`snapshot_scan/` 是基础镜像快照层的扫描结果，`records.json` 是分级结果，`unconverted_review.json` 是未转换任务的人工复核
 

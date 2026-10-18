@@ -301,6 +301,13 @@ def build_bundle(root, rec, tier_dirs, ver, scan_dir):
             raise SystemExit("%s: replay_deep recipe changed (%s); re-run classify.py" % (bundle, why))
 
     diff = open(os.path.join(vd, "inject_vulnerability.diff"), "rb").read()
+    # The dataset's diffs name files relative to the target dir (b/<path>), except a few that are
+    # relative to /src (b/<target_dir>/<path>) or absolute (/src/<target_dir>/<path>). A diff whose
+    # names all begin so (some repos do have a subdirectory named like the target dir) is applied
+    # from /src, else from /, when it does not apply in the target dir.
+    new_names = [m.decode("utf-8", "replace") for m in re.findall(rb"(?m)^\+\+\+ (\S+)", diff)]
+    new_names = [x for x in new_names if x != "/dev/null"]
+    elsewhere = bool(new_names) and all(x.startswith(("/", "b/%s/" % rec["target_dir"])) for x in new_names)
     if recipe:
         gt = recipe["gt"]
     else:
@@ -330,17 +337,29 @@ def build_bundle(root, rec, tier_dirs, ver, scan_dir):
     built = None if snap is None else [c for c in (rec.get("fuzzer_candidates") or [rec["fuzzer"]])
                                        if "/out/" + c in snap["post_setup_files"]]
     cands = rec.get("fuzzer_candidates") or [rec["fuzzer"]]
+    # Some harnesses open data files relative to their working directory, as OSS-Fuzz runs them
+    # (from $OUT): hunspell's `fuzzer` lists /out's *.aff names and opens them by bare name. The
+    # judge runs a harness from /out when the dataset's exploit does (`cd /out`), or copies /out's
+    # files into its own working directory first (`cp /out/*.aff /out/*.dic .`).
+    es_code = "\n".join(l for l in open(os.path.join(vd, "exploit_files", "exploit.sh"), encoding="utf-8",
+                                       errors="replace").read().splitlines() if not l.strip().startswith("#"))
+    from_out = not recipe and bool(re.search(r"(?m)(^|[;&|]\s*)cd /out/?(\s|;|$)", es_code) or re.search(
+        r"(?m)\bcp(\s+-\w+)*(\s+/out/\S+)+\s+\./?(\s|;|$)", es_code))
+    run_as = "cd /out && /out/%s <poc>" if from_out else "/out/%s <poc>"
     if len(cands) == 1:
-        phrase = "`%s`, i.e. it is run as `/out/%s <poc>`," % (cands[0], cands[0])
+        phrase = "`%s`, i.e. it is run as `%s`," % (cands[0], run_as % cands[0])
     else:
-        phrase = ("(built as %s, depending on the build), i.e. it is run as `/out/<harness> <poc>`,"
-                  % " or ".join("`%s`" % c for c in cands))
+        phrase = ("(built as %s, depending on the build), i.e. it is run as `%s`,"
+                  % (" or ".join("`%s`" % c for c in cands), run_as % "<harness>"))
     description, desc_src, desc_mismatch = choose_description(vd, rec)
     # OSS-Fuzz takes the language from project.yaml (project.json disagrees for openssl)
     yml = open(os.path.join(root, "projects", proj, "setup", "project.yaml"), encoding="utf-8").read()
     m = re.search(r"^language:\s*['\"]?([\w+]+)", yml, re.M)
     fuzz_lang = m.group(1) if m else (rec["language"] or "c++")
     build_workdir = setup_workdir(os.path.join(root, "projects", proj, "setup", "Dockerfile"))
+    # project.json's clean_build_command (libyang only): the dataset runs it before each build,
+    # after the injected change is applied (it commits the tree as "vuljector-patch")
+    clean = (jl(os.path.join(root, "projects", proj, "project.json")).get("clean_build_command") or "").strip()
 
     v = {
         "BUNDLE": bundle, "PROJECT": proj, "VULN_ID": rec["vuln"], "PIPELINE": rec["type"],
@@ -364,6 +383,28 @@ def build_bundle(root, rec, tier_dirs, ver, scan_dir):
         "POC_SIZE": len(gt), "POV_KIND": kind,
         # the executables the judge runs stay readable (symbolized reports); the rest are 0711
         "READABLE_EXES": " ".join("/out/" + c for c in cands) if not recipe else "",
+        "HARNESS_CWD": '"/out"' if from_out else "workdir",
+        "PRE_COMPILE": "( %s ); " % clean if clean else "",
+        # a build whose compile exits non-zero is used when it made the harness (as in the dataset)
+        "BUILT_CHECK": "{ %s; } || { echo \"FAIL: compile made none of %s\"; exit 1; }; " % (
+            " || ".join("[ -e /out/%s ]" % c for c in cands), " ".join("/out/" + c for c in cands)) if not recipe else "",
+        "APPLY_NOTE": ("# This diff's file names begin with /src/%s/ or %s/ (relative to /src, or absolute, in a few\n"
+                       "# of the dataset's diffs): where it does not apply in /src/%s, it is applied from /src, else\n"
+                       "# from / (patch -p1 strips the b/ or the leading /).\n"
+                       % (rec["target_dir"], rec["target_dir"], rec["target_dir"])) if elsewhere else "",
+        "APPLY_ELSEWHERE": (" \\\n"
+                            "    || { patch -d /src -p1 --dry-run --forward --batch < /tmp/inject_vulnerability.diff >/dev/null \\\n"
+                            "         && patch -d /src -p1 --forward --batch --no-backup-if-mismatch < /tmp/inject_vulnerability.diff; } \\\n"
+                            "    || { patch -d / -p1 --dry-run --forward --batch < /tmp/inject_vulnerability.diff >/dev/null \\\n"
+                            "         && patch -d / -p1 --forward --batch --no-backup-if-mismatch < /tmp/inject_vulnerability.diff; }"
+                            ) if elsewhere else "",
+        "PRE_COMPILE_NOTE": ("# The project's clean_build_command (project.json), which the dataset runs before each\n"
+                             "# build, runs before both builds' `compile` (in the vulnerable one after the injected\n"
+                             "# change is applied):\n#   %s\n" % clean) if clean else "",
+        "PRE_COMPILE_NOTE_MAIN": ("# The project's clean_build_command (project.json), which the dataset runs before each\n"
+                                  "# build, runs here too, so /src/build.sh is the one the dataset builds with (what it\n"
+                                  "# does in the target's checkout goes with the checkout):\n#   %s\n" % clean)
+                                 if clean else "",
     }
     if recipe:  # task.toml's `fuzzer`: what the PoC is fed to
         run0 = [st for st in recipe["steps"] if st["role"] == "run"][0]["argv"][0]
@@ -403,6 +444,9 @@ def build_bundle(root, rec, tier_dirs, ver, scan_dir):
         vb = dict(v, B_KIND=kind, B_WHAT=what, B_POC_SENTENCE=poc_s, B_TARGET=target_s, B_CRITERION=crit_s,
                   READABLE_EXES="" if kind == "program" else shlex.quote(run_exe),
                   B_DROP_OUT="" if uses_out else "rm -rf /out/*; ",
+                  # the build-tree program the PoC runs (a compiled program is checked by self-check 3)
+                  BUILT_CHECK="" if kind == "program" else "[ -e %s ] || { echo \"FAIL: compile did not make %s\"; exit 1; }; "
+                  % (shlex.quote(run_exe), run_exe.replace('"', '')),
                   B_HEADER_MODE="0644" if kind == "program" else "0600")
         write(os.path.join(bd, "instruction.md"), render("instruction_b.md", vb))
         write(os.path.join(bd, "environment", "task-server", "Dockerfile"), render("task-server-b.Dockerfile", vb))
@@ -498,6 +542,9 @@ def build_bundle(root, rec, tier_dirs, ver, scan_dir):
         "asan_options_from_exploit": rec.get("asan_options") or None,
         "cwe_id": rec["cwe_meta"], "cwe_in_description_variants": rec["cwe_variants"],
         "secure_base_commit": rec["secure_base_commit"],
+        **({"clean_build_command": clean} if clean else {}),
+        **({"harness_cwd": "/out (the dataset's exploit runs the harness from /out, or copies /out's files into its "
+                           "working directory first)"} if from_out else {}),
     }
     write(os.path.join(bd, "cyberforge_source.json"), json.dumps(src, indent=2) + "\n")
     return bundle, desc_src, desc_mismatch
@@ -522,6 +569,8 @@ def main():
         os.makedirs(d, exist_ok=True)
 
     # the manual review of the tasks no bundle is made for (why, by category)
+    vs = os.path.join(HERE, "verification", "summary.json")
+    verified = json.load(open(vs, encoding="utf-8"))["bundles"] if os.path.isfile(vs) else {}
     rv = os.path.join(HERE, "unconverted_review.json")
     review = json.load(open(rv, encoding="utf-8"))["tasks"] if os.path.isfile(rv) else {}
     rows, built = [], collections.Counter()
@@ -554,6 +603,9 @@ def main():
             "degenerate_empty_input": bool(rec.get("degenerate_empty_input")),
             "review": "" if rec["converted"] else review.get(rec["path"], {}).get("category", ""),
             "review_note": "" if rec["converted"] else review.get(rec["path"], {}).get("note", ""),
+            # verification/summary.json (verification_summary.py): build.sh run on this bundle
+            "verified": verified.get(bundle, {}).get("status", "") if rec["converted"] else "",
+            "verified_note": verified.get(bundle, {}).get("note", "") if rec["converted"] else "",
         })
     if a.only is None:
         with open(os.path.join(out, "conversion_manifest.csv"), "w", newline="", encoding="utf-8") as f:

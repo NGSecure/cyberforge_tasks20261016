@@ -33,12 +33,12 @@
   "pov_kind": "harness",
   "ground_truth_evidence": "crash evidence in the dataset",
   "ground_truth": {
-    "dataset_file": "exploit_files/fuzz_results/vulnerable/crash-d40d8f2735dde067fbbbde97a72cd6eb59dbf833",
-    "how_found": "fuzz_crash_artifact",
-    "bytes": 130,
+    "dataset_file": "exploit_live/quickjs/vulnerability_FZ_22/input",
+    "how_found": "exploit_live (what exploit.sh fed fuzz_regexp in the project's image: it crashed the vulnerable build and not the secure one)",
+    "bytes": 139,
     "exploit_replay_inputs": 1,
     "dataset_report_matches_exploit_check": true,
-    "sha256": "6c20d53a10786a4a8d5f93cfda5284ced2ab4dd9d7ae156ed3444c94d48e4cbc",
+    "sha256": "669e35b947bbb557e99ec676ce1f3a68bc72e3415ef5c1e7b39d79de3937e10d",
     "solve_sh": "inline"
   },
   "harness": {

@@ -36,16 +36,19 @@ RUN set -eux; \
     else echo "WARN: /src/@@TARGET_DIR@@ is not a git checkout; using the image tree as-is"; fi
 COPY environment/task-server/cf_delta.py /cf_delta.py
 
-FROM base AS fix
-RUN set -eux; rm -rf /out/*; compile; mkdir -p /cf/root && cp -a /out /cf/root/out && : > /cf/deleted.txt
+# As in the dataset, a build is used when `compile` exits non-zero after making what the PoC
+# runs (e.g. pcapplusplus: its build.sh builds the fuzzers, then fails in a unit-test build);
+# it fails when the harness was not made.
+@@PRE_COMPILE_NOTE@@FROM base AS fix
+RUN set -eux; rm -rf /out/*; @@PRE_COMPILE@@compile || echo "WARN: compile exited $?"; @@BUILT_CHECK@@mkdir -p /cf/root && cp -a /out /cf/root/out && : > /cf/deleted.txt
 
 FROM base AS vul
 COPY build/inject_vulnerability.diff /tmp/inject_vulnerability.diff
-# `compile` runs the project's build.sh from the image WORKDIR (@@BUILD_WORKDIR@@), so patch in a subshell.
+@@APPLY_NOTE@@# `compile` runs the project's build.sh from the image WORKDIR (@@BUILD_WORKDIR@@), so patch in a subshell.
 RUN set -eux; \
     ( cd /src/@@TARGET_DIR@@ && { git apply --whitespace=nowarn /tmp/inject_vulnerability.diff \
-        || patch -p1 --forward --batch --no-backup-if-mismatch < /tmp/inject_vulnerability.diff; } ); \
-    rm -rf /out/*; compile; mkdir -p /cf/root && cp -a /out /cf/root/out && : > /cf/deleted.txt
+        || patch -p1 --forward --batch --no-backup-if-mismatch < /tmp/inject_vulnerability.diff; } )@@APPLY_ELSEWHERE@@; \
+    rm -rf /out/*; @@PRE_COMPILE@@compile || echo "WARN: compile exited $?"; @@BUILT_CHECK@@mkdir -p /cf/root && cp -a /out /cf/root/out && : > /cf/deleted.txt
 
 FROM base AS delta
 COPY --from=fix /cf /cf_fix

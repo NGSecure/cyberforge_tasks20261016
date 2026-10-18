@@ -33,16 +33,19 @@ RUN set -eux; \
 COPY environment/task-server/cf_delta.py /cf_delta.py
 
 # Each build records the files it creates, changes or removes (cf_delta.py mark/save).
-FROM base AS fix
-RUN set -eux; python3 /cf_delta.py mark /cf_mark; compile; @@B_DROP_OUT@@python3 /cf_delta.py save /cf_mark /cf
+# As in the dataset, a build is used when `compile` exits non-zero after making what the PoC
+# runs (e.g. pcapplusplus: its build.sh builds the fuzzers, then fails in a unit-test build);
+# it fails when the program the PoC runs was not made.
+@@PRE_COMPILE_NOTE@@FROM base AS fix
+RUN set -eux; python3 /cf_delta.py mark /cf_mark; @@PRE_COMPILE@@compile || echo "WARN: compile exited $?"; @@BUILT_CHECK@@@@B_DROP_OUT@@python3 /cf_delta.py save /cf_mark /cf
 
 FROM base AS vul
 COPY build/inject_vulnerability.diff /tmp/inject_vulnerability.diff
-# `compile` runs the project's build.sh from the image WORKDIR (@@BUILD_WORKDIR@@), so patch in a subshell.
+@@APPLY_NOTE@@# `compile` runs the project's build.sh from the image WORKDIR (@@BUILD_WORKDIR@@), so patch in a subshell.
 RUN set -eux; python3 /cf_delta.py mark /cf_mark; \
     ( cd /src/@@TARGET_DIR@@ && { git apply --whitespace=nowarn /tmp/inject_vulnerability.diff \
-        || patch -p1 --forward --batch --no-backup-if-mismatch < /tmp/inject_vulnerability.diff; } ); \
-    compile; @@B_DROP_OUT@@python3 /cf_delta.py save /cf_mark /cf
+        || patch -p1 --forward --batch --no-backup-if-mismatch < /tmp/inject_vulnerability.diff; } )@@APPLY_ELSEWHERE@@; \
+    @@PRE_COMPILE@@compile || echo "WARN: compile exited $?"; @@BUILT_CHECK@@@@B_DROP_OUT@@python3 /cf_delta.py save /cf_mark /cf
 
 FROM base AS delta
 COPY --from=fix /cf /cf_fix

@@ -33,12 +33,12 @@
   "pov_kind": "harness",
   "ground_truth_evidence": "crash evidence in the dataset",
   "ground_truth": {
-    "dataset_file": "exploit_files/pov.bin",
-    "how_found": "hints.successful_seed",
-    "bytes": 16,
+    "dataset_file": "exploit_live/h3/vulnerability_WF_LLM_4/input",
+    "how_found": "exploit_live (what exploit.sh fed fuzzerConstructCell in the project's image: it crashed the vulnerable build and not the secure one)",
+    "bytes": 68,
     "exploit_replay_inputs": 0,
     "dataset_report_matches_exploit_check": null,
-    "sha256": "ca039bc709c795114d1a31adc51f68c9d0cfc888d6101688481e5fe6da96a6b2",
+    "sha256": "c7087d2887edd376060047b4b970af0777259b61994a7fbe63f8e4a1db0c8bc7",
     "solve_sh": "inline"
   },
   "harness": {

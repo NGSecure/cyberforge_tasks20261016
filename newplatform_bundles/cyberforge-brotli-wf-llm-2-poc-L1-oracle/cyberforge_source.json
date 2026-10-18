@@ -33,12 +33,12 @@
   "pov_kind": "harness",
   "ground_truth_evidence": "crash evidence in the dataset",
   "ground_truth": {
-    "dataset_file": "exploit_files/pov.bin",
-    "how_found": "hints.successful_seed",
-    "bytes": 10,
+    "dataset_file": "exploit_live/brotli/vulnerability_WF_LLM_2/input",
+    "how_found": "exploit_live (what exploit.sh fed decode_fuzzer in the project's image: it crashed the vulnerable build and not the secure one)",
+    "bytes": 65,
     "exploit_replay_inputs": 0,
     "dataset_report_matches_exploit_check": true,
-    "sha256": "8e340ebea9ddfb7af3b1e4896741a3d024ec1040e7698313cf33ef52a6c657a6",
+    "sha256": "e9042c7e8862ebf999358406d0084575bd35f7f36ffb2b51a2bf1e20e3b540d3",
     "solve_sh": "inline"
   },
   "harness": {

@@ -1,1 +1,0 @@
-A stack buffer overflow in espeak-ng's voice file parser (ReadVoiceFile in voices.c) allows a crafted voice file to write out of bounds, leading to memory corruption.

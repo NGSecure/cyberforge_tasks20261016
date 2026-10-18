@@ -1,1 +1,0 @@
-strcpy(path_home, PATH_ESPEAK_DATA);

@@ -1,1 +1,0 @@
-A heap-buffer-overflow in HarfBuzz's hb-shaper.cc due to an off-by-one calculation can lead to memory corruption when processing crafted fonts.

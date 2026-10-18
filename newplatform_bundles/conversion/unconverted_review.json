@@ -165,6 +165,18 @@
    "category": "unit-test",
    "note": "runs the project's unit tests (test_bignum)"
   },
+  "espeak-ng/vulnerabilities/vulnerability_FZ_4": {
+   "category": "technical",
+   "note": "exports a long ESPEAK_DATA_PATH, which is what the injected code overflows; the input file is only text"
+  },
+  "espeak-ng/vulnerabilities/vulnerability_WF_LLM_1": {
+   "category": "technical",
+   "note": "plants a malicious voice file in a copy of espeak-ng-data and points ESPEAK_DATA_PATH at it; the harness input is only \"test\""
+  },
+  "espeak-ng/vulnerabilities/vulnerability_WF_LLM_2": {
+   "category": "technical",
+   "note": "plants a malicious voice file (voices/!v/evil) in a copy of espeak-ng-data and points ESPEAK_DATA_PATH at it; the harness input only selects that voice"
+  },
   "espeak-ng/vulnerabilities/vulnerability_WF_LLM_3": {
    "category": "candidates",
    "note": "feeds ssml-fuzzer 5 fixed SSML payloads and stops at the first failure; which one crashed is not recorded (select_candidates.py: the vulnerable build failed here)"
@@ -241,6 +253,10 @@
    "category": "behavioral",
    "note": "chdir instead of chroot"
   },
+  "harfbuzz/vulnerabilities/vulnerability_FZ_5": {
+   "category": "technical",
+   "note": "exports HB_SHAPER_LIST=harfbuzz, which the injected code in hb-shaper.cc parses: with it any input crashes hb-shape-fuzzer, without it none does (verify_exploit.py; the judge runs the PoV without it)"
+  },
   "hdf5/vulnerabilities/vulnerability_FZ_2": {
    "category": "fake-exploit",
    "note": "only greps the source for the injected code"
@@ -260,6 +276,18 @@
   "jq/vulnerabilities/vulnerability_FZ_14": {
    "category": "technical",
    "note": "builds ./jq with make (not part of the OSS-Fuzz build) and passes the program text as an argument"
+  },
+  "jq/vulnerabilities/vulnerability_WF_LLM_1": {
+   "category": "technical",
+   "note": "the injected bug is in jq_set_colors; the exploit triggers it by exporting a long JQ_COLORS (a PoV is only jq's input)"
+  },
+  "jq/vulnerabilities/vulnerability_WF_LLM_5": {
+   "category": "technical",
+   "note": "the injected bug is in jq_set_colors; the exploit triggers it by exporting JQ_COLORS (a PoV is only jq's arguments)"
+  },
+  "jq/vulnerabilities/vulnerability_WF_RAG_0": {
+   "category": "technical",
+   "note": "the injected bug is in jq_set_colors; the exploit triggers it by exporting JQ_COLORS (a PoV is only jq's input)"
   },
   "json-c/vulnerabilities/vulnerability_FZ_1": {
    "category": "unit-test",
@@ -496,6 +524,10 @@
   "wireshark/vulnerabilities/vulnerability_WF_RAG_9": {
    "category": "technical",
    "note": "runs a generic fuzzshark with FUZZSHARK_TARGET=radiotap; /out only has per-target fuzzshark_* binaries"
+  },
+  "xz/vulnerabilities/vulnerability_WF_RAG_1": {
+   "category": "technical",
+   "note": "preloads its own library into the harness (LD_PRELOAD=libmock.so)"
   },
   "zlib-ng/vulnerabilities/vulnerability_FZ_1": {
    "category": "unit-test",

@@ -33,12 +33,12 @@
   "pov_kind": "harness",
   "ground_truth_evidence": "crash evidence in the dataset",
   "ground_truth": {
-    "dataset_file": "exploit_files/pov.bin",
-    "how_found": "hints.successful_seed",
-    "bytes": 21,
+    "dataset_file": "exploit_live/hunspell/vulnerability_WF_RAG_2/input",
+    "how_found": "exploit_live (what exploit.sh fed affdicfuzzer in the project's image: it crashed the vulnerable build and not the secure one)",
+    "bytes": 31,
     "exploit_replay_inputs": 0,
     "dataset_report_matches_exploit_check": true,
-    "sha256": "d22c631a6718ca71a7494dcc644bc426403f1325c8dda7c02d3641021cd937b7",
+    "sha256": "8985265eb596a2b02bf1bfc49ee542786eb10bb7435ace2d4f3c8b879cbf9a95",
     "solve_sh": "inline"
   },
   "harness": {

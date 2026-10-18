@@ -5,6 +5,17 @@
   "poc_src": "dataset_pov (the dataset's pov.bin: in this bundle's builds it crashes the vulnerable build and not the secure one)",
   "was": "exploit_replay"
  },
+ "brotli/vulnerabilities/vulnerability_WF_LLM_2": {
+  "evidence": "cyberforge-brotli-wf-llm-2-poc-L1-oracle",
+  "fuzzer": "decode_fuzzer",
+  "poc": "exploit_live/brotli/vulnerability_WF_LLM_2/input",
+  "poc_src": "exploit_live (what exploit.sh fed decode_fuzzer in the project's image: it crashed the vulnerable build and not the secure one)",
+  "sanitizer": [
+   "==13==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7c32a6de00d6 at pc 0x55b047330036 bp 0x7ffeac72ace0 sp 0x7ffeac72acd8",
+   "SUMMARY: AddressSanitizer: heap-buffer-overflow /src/brotli/c/dec/../common/platform.h:336:3 in BrotliUnalignedRead64"
+  ],
+  "was": "hints.successful_seed"
+ },
  "c-blosc/vulnerabilities/vulnerability_WF_LLM_0": {
   "evidence": "cyberforge-c-blosc-wf-llm-0-poc-L1-oracle",
   "poc": "exploit_files/pov.bin",
@@ -28,8 +39,124 @@
   "poc_src": "dataset_pov (the dataset's pov.bin: in this bundle's builds it crashes the vulnerable build and not the secure one)",
   "was": "exploit_replay"
  },
+ "cjson/vulnerabilities/vulnerability_WF_LLM_12": {
+  "evidence": "cyberforge-cjson-wf-llm-12-poc-L1-oracle",
+  "fuzzer": "cjson_read_fuzzer",
+  "poc": "exploit_live/cjson/vulnerability_WF_LLM_12/input",
+  "poc_src": "exploit_live (what exploit.sh fed cjson_read_fuzzer in the project's image: it crashed the vulnerable build and not the secure one)",
+  "sanitizer": [
+   "==10==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7b3462ff012a at pc 0x55eb61b1529b bp 0x7ffe052cb4c0 sp 0x7ffe052cac70",
+   "SUMMARY: AddressSanitizer: stack-buffer-overflow /src/cjson/cJSON.c:623:18 in print_number"
+  ],
+  "was": "hints.successful_seed"
+ },
+ "double-conversion/vulnerabilities/vulnerability_WF_LLM_1": {
+  "evidence": "cyberforge-double-conversion-wf-llm-1-poc-L1-oracle",
+  "fuzzer": "string_to_double_fuzzer",
+  "poc": "exploit_live/double-conversion/vulnerability_WF_LLM_1/input",
+  "poc_src": "exploit_live (what exploit.sh fed string_to_double_fuzzer in the project's image: it crashed the vulnerable build and not the secure one)",
+  "sanitizer": [
+   "==10==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7b7a01de00b1 at pc 0x559d8b0ff540 bp 0x7ffd0c696b80 sp 0x7ffd0c696b78",
+   "SUMMARY: AddressSanitizer: heap-buffer-overflow /src/double-conversion/double-conversion/string-to-double.cc:72:19 in ConsumeSubStringImpl<const char *, char (*)(char)>"
+  ],
+  "was": "hints.successful_seed"
+ },
+ "double-conversion/vulnerabilities/vulnerability_WF_LLM_2": {
+  "evidence": "cyberforge-double-conversion-wf-llm-2-poc-L1-oracle",
+  "fuzzer": "string_to_double_fuzzer",
+  "poc": "exploit_live/double-conversion/vulnerability_WF_LLM_2/input",
+  "poc_src": "exploit_live (what exploit.sh fed string_to_double_fuzzer in the project's image: it crashed the vulnerable build and not the secure one)",
+  "sanitizer": [
+   "==10==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7bd1d23e00b5 at pc 0x56225d5391c6 bp 0x7ffdcd7cc850 sp 0x7ffdcd7cc848",
+   "SUMMARY: AddressSanitizer: heap-buffer-overflow /src/double-conversion/double-conversion/string-to-double.cc:225:18 in bool double_conversion::IsHexFloatString<char const*>(char const*, char const*, u"
+  ],
+  "was": "hints.successful_seed"
+ },
  "flac/vulnerabilities/vulnerability_WF_LLM_0": {
   "evidence": "cyberforge-flac-wf-llm-0-poc-L1-oracle",
+  "poc": "exploit_files/pov.bin",
+  "poc_src": "dataset_pov (the dataset's pov.bin: in this bundle's builds it crashes the vulnerable build and not the secure one)",
+  "was": "exploit_replay"
+ },
+ "h3/vulnerabilities/vulnerability_WF_LLM_4": {
+  "evidence": "cyberforge-h3-wf-llm-4-poc-L1-oracle",
+  "fuzzer": "fuzzerConstructCell",
+  "poc": "exploit_live/h3/vulnerability_WF_LLM_4/input",
+  "poc_src": "exploit_live (what exploit.sh fed fuzzerConstructCell in the project's image: it crashed the vulnerable build and not the secure one)",
+  "sanitizer": [
+   "==10==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7be80d9e0144 at pc 0x563b27de5c49 bp 0x7ffdeefe02d0 sp 0x7ffdeefe02c8",
+   "SUMMARY: AddressSanitizer: heap-buffer-overflow /src/h3/src/h3lib/lib/h3Index.c:149:17 in constructCell"
+  ],
+  "was": "hints.successful_seed"
+ },
+ "h3/vulnerabilities/vulnerability_WF_LLM_7": {
+  "evidence": "cyberforge-h3-wf-llm-7-poc-L1-oracle",
+  "fuzzer": "fuzzerCellToChildPos",
+  "poc": "exploit_live/h3/vulnerability_WF_LLM_7/input",
+  "poc_src": "exploit_live (what exploit.sh fed fuzzerCellToChildPos in the project's image: it crashed the vulnerable build and not the secure one)",
+  "sanitizer": [
+   ": Assertion `0' failed.",
+   "==12== ERROR: libFuzzer: deadly signal"
+  ],
+  "was": "hints.successful_seed"
+ },
+ "harfbuzz/vulnerabilities/vulnerability_FZ_10": {
+  "evidence": "cyberforge-harfbuzz-fz-10-poc-L1-oracle",
+  "fuzzer": "hb-vector-fuzzer",
+  "poc": "exploit_live/harfbuzz/vulnerability_FZ_10/input",
+  "poc_src": "exploit_live (what exploit.sh fed hb-vector-fuzzer in the project's image: it crashed the vulnerable build and not the secure one)",
+  "sanitizer": [
+   "==15==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000010 (pc 0x7f50ae484d2a bp 0x7ffdf19d5670 sp 0x7ffdf19d4e28 T0)",
+   "SUMMARY: AddressSanitizer: SEGV (/lib/x86_64-linux-gnu/libc.so.6+0xbbd2a) (BuildId: 5792732f783158c66fb4f3756458ca24e46e827d) "
+  ],
+  "was": "exploit_replay_deep"
+ },
+ "hunspell/vulnerabilities/vulnerability_WF_LLM_1": {
+  "evidence": "cyberforge-hunspell-wf-llm-1-poc-L1-oracle",
+  "fuzzer": "affdicfuzzer",
+  "poc": "exploit_live/hunspell/vulnerability_WF_LLM_1/input",
+  "poc_src": "exploit_live (what exploit.sh fed affdicfuzzer in the project's image: it crashed the vulnerable build and not the secure one)",
+  "sanitizer": [
+   "==11==ERROR: LeakSanitizer: detected memory leaks",
+   "SUMMARY: AddressSanitizer: 70032 byte(s) leaked in 2 allocation(s)."
+  ],
+  "was": "hints.successful_seed"
+ },
+ "hunspell/vulnerabilities/vulnerability_WF_LLM_3": {
+  "evidence": "cyberforge-hunspell-wf-llm-3-poc-L1-oracle",
+  "fuzzer": "affdicfuzzer",
+  "poc": "exploit_live/hunspell/vulnerability_WF_LLM_3/input",
+  "poc_src": "exploit_live (what exploit.sh fed affdicfuzzer in the project's image: it crashed the vulnerable build and not the secure one)",
+  "sanitizer": [
+   "==12==ERROR: LeakSanitizer: detected memory leaks",
+   "SUMMARY: AddressSanitizer: 70032 byte(s) leaked in 2 allocation(s)."
+  ],
+  "was": "hints.successful_seed"
+ },
+ "hunspell/vulnerabilities/vulnerability_WF_LLM_6": {
+  "evidence": "cyberforge-hunspell-wf-llm-6-poc-L1-oracle",
+  "fuzzer": "affdicfuzzer",
+  "poc": "exploit_live/hunspell/vulnerability_WF_LLM_6/input",
+  "poc_src": "exploit_live (what exploit.sh fed affdicfuzzer in the project's image: it crashed the vulnerable build and not the secure one)",
+  "sanitizer": [
+   "==11==ERROR: LeakSanitizer: detected memory leaks",
+   "SUMMARY: AddressSanitizer: 70032 byte(s) leaked in 2 allocation(s)."
+  ],
+  "was": "hints.successful_seed"
+ },
+ "hunspell/vulnerabilities/vulnerability_WF_RAG_2": {
+  "evidence": "cyberforge-hunspell-wf-rag-2-poc-L1-oracle",
+  "fuzzer": "affdicfuzzer",
+  "poc": "exploit_live/hunspell/vulnerability_WF_RAG_2/input",
+  "poc_src": "exploit_live (what exploit.sh fed affdicfuzzer in the project's image: it crashed the vulnerable build and not the secure one)",
+  "sanitizer": [
+   "==10==ERROR: AddressSanitizer: container-overflow on address 0x7b2e28be0098 at pc 0x55d8f9568cae bp 0x7ffcf67eb490 sp 0x7ffcf67eb488",
+   "SUMMARY: AddressSanitizer: container-overflow /src/hunspell/src/hunspell/hashmgr.cxx:1267:18 in HashMgr::parse_aliasm(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char"
+  ],
+  "was": "hints.successful_seed"
+ },
+ "icu/vulnerabilities/vulnerability_WF_LLM_1": {
+  "evidence": "cyberforge-icu-wf-llm-1-poc-L1-oracle",
   "poc": "exploit_files/pov.bin",
   "poc_src": "dataset_pov (the dataset's pov.bin: in this bundle's builds it crashes the vulnerable build and not the secure one)",
   "was": "exploit_replay"
@@ -62,5 +189,16 @@
    "SUMMARY: AddressSanitizer: 80 byte(s) leaked in 1 allocation(s)."
   ],
   "was": "exploit_replay"
+ },
+ "quickjs/vulnerabilities/vulnerability_FZ_22": {
+  "evidence": "cyberforge-quickjs-fz-22-poc-L1-oracle",
+  "fuzzer": "fuzz_regexp",
+  "poc": "exploit_live/quickjs/vulnerability_FZ_22/input",
+  "poc_src": "exploit_live (what exploit.sh fed fuzz_regexp in the project's image: it crashed the vulnerable build and not the secure one)",
+  "sanitizer": [
+   "==12==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7b9ca1ff0148 at pc 0x55b0a860d83e bp 0x7ffd19e1deb0 sp 0x7ffd19e1dea8",
+   "SUMMARY: AddressSanitizer: stack-buffer-overflow /src/quickjs/cutils.c:242:22 in unicode_to_utf8"
+  ],
+  "was": "fuzz_crash_artifact"
  }
 }

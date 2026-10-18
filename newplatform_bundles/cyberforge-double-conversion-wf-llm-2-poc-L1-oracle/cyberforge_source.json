@@ -34,12 +34,12 @@
   "pov_kind": "harness",
   "ground_truth_evidence": "crash evidence in the dataset",
   "ground_truth": {
-    "dataset_file": "exploit_files/pov.bin",
-    "how_found": "hints.successful_seed",
-    "bytes": 2000,
+    "dataset_file": "exploit_live/double-conversion/vulnerability_WF_LLM_2/input",
+    "how_found": "exploit_live (what exploit.sh fed string_to_double_fuzzer in the project's image: it crashed the vulnerable build and not the secure one)",
+    "bytes": 5,
     "exploit_replay_inputs": 0,
     "dataset_report_matches_exploit_check": null,
-    "sha256": "b4ef1b0dc85167c3fea916b5b99d3a0c622129d920e74bf81b5bc19036fa4d39",
+    "sha256": "7f8a7963423985c50f75f6ad42a6cf4e7eac43a6c55e3c6fcd49d73f01c1471b",
     "solve_sh": "inline"
   },
   "harness": {

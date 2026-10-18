@@ -228,7 +228,7 @@ def _run_poc(variant, fuzzer, poc_path):
     try:
         _place(variant)
         p = subprocess.Popen(["/out/" + fuzzer, poc_path], stdin=subprocess.DEVNULL, stdout=fd, stderr=fd,
-                             env=dict(SANITIZER_ENV, HOME=workdir), cwd=workdir,
+                             env=dict(SANITIZER_ENV, HOME=workdir), cwd="/out",
                              start_new_session=True, preexec_fn=_sandbox(uid))
         try:
             code = p.wait(timeout=TIMEOUT_SEC)

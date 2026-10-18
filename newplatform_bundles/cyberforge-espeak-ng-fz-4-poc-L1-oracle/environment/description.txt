@@ -1,1 +1,0 @@
-A global-buffer-overflow in espeak-ng's speech.c can be triggered by crafted input, leading to a buffer overrun.

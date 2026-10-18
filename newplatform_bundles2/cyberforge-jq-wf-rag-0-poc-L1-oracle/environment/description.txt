@@ -1,1 +1,0 @@
-The `jq_set_colors` function in `src/jv_print.c` has a heap-buffer-overflow vulnerability that allows a one-byte write past the allocated buffer, leading to memory corruption.

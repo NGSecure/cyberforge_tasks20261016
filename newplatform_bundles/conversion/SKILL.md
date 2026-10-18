@@ -77,6 +77,44 @@ the injected build and not on the clean build.
     products (/work, /tmp, /ccache, /usr/local, /out) and the unit-test scripts;
   - FROM lines pin the scanned digest (`ARG BASE_IMAGE`, so build.sh can pass the
     mirror's copy of the same digest), so the residue list matches the image.
+- **Build each version as the dataset did, no stricter.** Three things the first
+  versions got wrong, all found by building every bundle (`verify_bundles.py`):
+  - `project.json` may carry a `clean_build_command` (libyang: neutralize build.sh's
+    `git checkout devel`, then commit the tree as "vuljector-patch"); the dataset runs
+    it before each build, after the diff. convert.py puts it before both builds'
+    `compile` and into the agent image (so the agent's /src/build.sh is the same one).
+    Without it the secure build compiled libyang's devel branch and the injected one
+    could not switch branches.
+  - Diff file names are relative to the target dir (`b/<path>`), except a few that are
+    relative to /src (`b/<target_dir>/<path>`, jsonnet WF_RAG_0/1) or absolute
+    (`/src/<target_dir>/<path>`, leptonica WF_RAG_6). A diff whose names all begin so
+    (some repos do have a subdirectory named like the target dir: double-conversion,
+    guetzli, libarchive, protobuf-c) is applied from /src, else from /, only when it does
+    not apply in the target dir (`@@APPLY_ELSEWHERE@@`; 101 bundles carry the fallback).
+  - `compile` may exit non-zero after making the harness (pcapplusplus: build.sh builds
+    the fuzzers, then its unit-test build fails, in the dataset's own snapshot too: the
+    image has the fuzzers but no `libPcap++.a`, and the dataset's reports come from
+    those fuzzers). The dataset went on; so do the task-server builds, and fail only
+    when the harness (tier B: the build-tree program the PoC runs) was not made.
+  These are no-ops for every bundle that built before (each only acts where the old
+  step failed), so earlier verification results stay valid for them.
+- **A PoV is only an input: an exploit that sets the environment is not converted.** When
+  exploit.sh exports a variable the program reads (not the sanitizers' options, the shell's or
+  a build's, and not a value that only names /out's own files) or LD_PRELOADs a library, what
+  crashed depended on it: harfbuzz FZ_5 crashes on any input with `HB_SHAPER_LIST=harfbuzz` (the
+  injected code parses it) and on none without; espeak-ng FZ_4 / WF_LLM_1 / WF_LLM_2 pass a long
+  or planted `ESPEAK_DATA_PATH`; jq WF_RAG_0 / WF_LLM_1 / WF_LLM_5 trigger `jq_set_colors` with
+  `JQ_COLORS`; xz WF_RAG_1 preloads a library. classify.py (`exploit_env`) makes these
+  `technical`, unconverted.
+- **Run a harness the way the dataset's exploit does when that matters.** The judge runs
+  `/out/<harness> <poc>` from a private per-run directory (libFuzzer writes crash files to
+  its cwd). hunspell's `fuzzer` lists `/out`'s `*.aff` names but opens them by bare name, so
+  it only finds its dictionaries when run from `/out` (as OSS-Fuzz runs fuzzers); the
+  dataset's exploits do exactly that (`cd /out`, WF_RAG_1) or copy them first (`cp /out/*.aff
+  /out/*.dic .`, WF_RAG_0). For such exploits (only these two) convert.py renders the
+  judge's cwd as `/out` (`@@HARNESS_CWD@@`; the instruction says `cd /out && ...`); every other
+  task_server.py is unchanged. Symptom to look for: the exploit's run crashes on exactly the
+  ground truth's bytes and the judge's does not (choose_gt.py prints a note).
 - **repo-vul.tar.gz** is packed from the restored pristine tree + the diff, with
   `--exclude-vcs` and one fixed mtime (patched files would otherwise be the newest).
 - **compile needs FUZZING_LANGUAGE** (helper.py normally passes it; from
@@ -94,13 +132,27 @@ the injected build and not on the clean build.
   fallback), and an exploit that draws its input at random is captured once. The
   verification settles both (`choose_gt.py`, below).
 - **Verification decides between candidate ground truths** (`choose_gt.py` →
-  `gt_choice.json`, read by classify.py). For a one-harness bundle whose ground truth is
-  not the dataset's verified fuzz replay or a file the report names: the dataset's
-  pov.bin is used when it is differential in the bundle's builds and our ground truth is
-  no file of the task's (fewer of our own steps); when our ground truth failed, the input
-  exploit.sh fed the harness in the project's image (`verify_exploit.py`, against the two
-  builds; up to 20 draws for random exploits) is used when it crashed the vulnerable build
-  and not the secure one (`exploit_live/`). Nothing else is changed by verification.
+  `gt_choice.json`, read by classify.py). For a one-harness bundle: when our ground truth
+  came from an exploit run (not the dataset's fuzz records or a file its report names), the
+  dataset's pov.bin is used when it is differential in the bundle's builds and our ground
+  truth is no file of the task's (fewer of our own steps); when our ground truth failed,
+  wherever it came from, the single input exploit.sh fed the harness in the project's image
+  (`verify_exploit.py`, against the two builds; up to 20 draws for random exploits) is used
+  when it crashed the vulnerable build and not the secure one (`exploit_live/`). That covers
+  fuzz-campaign crash files the dataset never replayed alone (`attribution_kind:
+  seeded_fuzz_run`, no crashing replay): quickjs FZ_22's exploit feeds the shipped
+  `poc_reauthored.bin`, which crashes with the report's exact SUMMARY while the campaign's
+  file does not; when the exploit itself is the campaign (fuzz_poc.py, no single input:
+  h3 FZ_26, FZ_30, double-conversion FZ_9, pcre2 FZ_10) nothing is chosen. Nothing else is
+  changed by verification.
+  - choose_gt reads every results file oldest first (`results_superseded`, then the order
+    below):
+    each result records the ground truth it tested (`gt_sha256`), so a choice whose own
+    re-verification passed is kept (the old "only when ours failed" rule dropped exactly
+    those), one whose re-verification failed is dropped, and the evidence for an input is
+    the latest run on the base ground truth. Each exploit run saves into its own
+    `exploit_inputs/<bundle>/<run>/` (`saved_to`); a shared directory let later runs
+    overwrite the inputs of earlier ones (h2o WF_LLM_3, h3 WF_LLM_1).
 - **Secrets stay in `build/`** (diff, ground truth, setup copy, residue list, secure
   lines, the files a recorded command line needs); `environment/` holds only what the
   platform may upload. Both Dockerfiles build with the bundle root as context.
@@ -244,6 +296,23 @@ harness got our ground truth; crashing inputs land in `verification/exploit_inpu
 Failures are labelled `needs network` (rerun with `--ca <proxy CA>` where outbound TLS
 is intercepted; verification only) or `out of disk` (the rest of that project is then
 skipped). Results are appended to a JSONL file and the run resumes where it stopped.
+A result also records a tolerated non-zero `compile` exit per build (`compile_exit_tolerated`)
+and the files the two builds differ in (`builds_differ`). An exploit-run call whose output is
+ASan failing to reserve its shadow memory at start-up (`ReserveShadowMemoryRange failed`,
+`failed to allocate 0x... bytes at address ... (errno: 12)`) is the environment, not a crash
+(pupnp WF_LLM_0 had one); verify_exploit.py and choose_gt.py ignore it.
+
+A result is only evidence for the bundle content it was built from: after anything that
+changes a bundle's ground truth, judge.json or build steps (a new choose_gt.py choice, an
+LFS object found), re-verify that bundle into a later results file
+(`verification_summary.py` lets later files override earlier ones, so pass them oldest
+first). The runs, in order: `results.jsonl` (main batch), `results_rerun.jsonl`,
+`results_retry.jsonl` (out of disk or a build failure the fixes above address),
+`results_changed.jsonl` (bundles whose ground truth or judge changed after the main batch was
+planned), `results_exploit.jsonl` (first-window bundles without an exploit run),
+`results_round2.jsonl` (bundles changed by the choices those runs led to), `results_ca.jsonl`
+(`--ca`, needed the network). `results_superseded.jsonl` holds results replaced by a rerun;
+choose_gt.py reads it first (it is evidence), verification_summary.py does not.
 
 ## Gotchas
 
