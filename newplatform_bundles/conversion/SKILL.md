@@ -98,6 +98,10 @@ the injected build and not on the clean build.
     when the harness (tier B: the build-tree program the PoC runs) was not made.
   These are no-ops for every bundle that built before (each only acts where the old
   step failed), so earlier verification results stay valid for them.
+- **Leak detection follows the dataset's oracle.** The judge turns `detect_leaks` on only
+  for leak tasks: the report shows LeakSanitizer and matches what exploit.sh greps for, or the
+  report contradicts exploit.sh and exploit.sh greps for leaks only (systemd WF_RAG_0: its report
+  is another task's DHCPv6 overflow, the injected LLDP change leaks; xz WF_RAG_0 / WF_RAG_2).
 - **A PoV is only an input: an exploit that sets the environment is not converted.** When
   exploit.sh exports a variable the program reads (not the sanitizers' options, the shell's or
   a build's, and not a value that only names /out's own files) or LD_PRELOADs a library, what
@@ -311,7 +315,7 @@ first). The runs, in order: `results.jsonl` (main batch), `results_rerun.jsonl`,
 `results_changed.jsonl` (bundles whose ground truth or judge changed after the main batch was
 planned), `results_exploit.jsonl` (first-window bundles without an exploit run),
 `results_round2.jsonl` (bundles changed by the choices those runs led to), `results_ca.jsonl`
-(`--ca`, needed the network). `results_superseded.jsonl` holds results replaced by a rerun;
+(`--ca`, needed the network), `results_round3.jsonl` (bundles changed by choices the CA runs led to). `results_superseded.jsonl` holds results replaced by a rerun;
 choose_gt.py reads it first (it is evidence), verification_summary.py does not.
 
 ## Gotchas
@@ -328,5 +332,13 @@ choose_gt.py reads it first (it is evidence), verification_summary.py does not.
   when the session goes idle; a long verification has to run while the session is
   active, in windows (`--max-seconds`), and dockerd has to be started again after a
   restart.
+- When the session's worker restarts, the agent proxy moves to a new port while a running
+  dockerd keeps the old one ("proxyconnect ... connection refused"; verify_bundles.py exits 3):
+  stop the runner, restart dockerd from a shell that has the new HTTPS_PROXY, resume the run.
+  When the whole container restarts, dockerd's image database can come back empty while
+  /var/lib/docker/overlay2 still holds the layers of the builds that were running (GBs no
+  `docker system df` shows): `docker builder prune -af`, then, with dockerd stopped, remove the
+  overlay2 entries nothing references; move results that failed for lack of disk then into
+  results_superseded.jsonl so the resumed run tries them again.
 - wireshark's base image (12 GB) and two concurrent compiles do not fit a ~38 GB disk;
   guetzli's setup downloads from lcamtuf.coredump.cx: verify those where that works.

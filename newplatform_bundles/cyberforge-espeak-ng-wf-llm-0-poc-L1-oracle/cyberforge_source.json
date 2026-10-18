@@ -33,12 +33,12 @@
   "pov_kind": "harness",
   "ground_truth_evidence": "crash evidence in the dataset",
   "ground_truth": {
-    "dataset_file": "replay/espeak-ng/vulnerability_WF_LLM_0/input-000",
-    "how_found": "exploit_replay",
-    "bytes": 220,
+    "dataset_file": "exploit_files/pov.bin",
+    "how_found": "dataset_pov (the dataset's pov.bin: in this bundle's builds it crashes the vulnerable build and not the secure one)",
+    "bytes": 219,
     "exploit_replay_inputs": 1,
     "dataset_report_matches_exploit_check": true,
-    "sha256": "61a5532f9d91d0da263a8e9bcc6aceef6d5a87a01a076c1ac3273589bb53e763",
+    "sha256": "5aa5511b298ef8b315c2d0bde57319337a81229a5dc58e9b9e1ae9305db1c27d",
     "solve_sh": "inline"
   },
   "harness": {

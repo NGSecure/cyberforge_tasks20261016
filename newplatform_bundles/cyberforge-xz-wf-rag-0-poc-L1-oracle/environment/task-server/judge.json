@@ -4,7 +4,7 @@
   ],
   "asan_options": "detect_leaks=1:detect_odr_violation=0",
   "asan_options_from_exploit": "detect_leaks=1:detect_odr_violation=0",
-  "leak_detection": "per exploit.sh",
+  "leak_detection": "on: the injected bug is a leak",
   "timeout_sec": 60,
   "cyberforge": {
     "project": "xz",

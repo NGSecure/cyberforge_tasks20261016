@@ -72,6 +72,12 @@
   ],
   "was": "hints.successful_seed"
  },
+ "espeak-ng/vulnerabilities/vulnerability_WF_LLM_0": {
+  "evidence": "cyberforge-espeak-ng-wf-llm-0-poc-L1-oracle",
+  "poc": "exploit_files/pov.bin",
+  "poc_src": "dataset_pov (the dataset's pov.bin: in this bundle's builds it crashes the vulnerable build and not the secure one)",
+  "was": "exploit_replay"
+ },
  "flac/vulnerabilities/vulnerability_WF_LLM_0": {
   "evidence": "cyberforge-flac-wf-llm-0-poc-L1-oracle",
   "poc": "exploit_files/pov.bin",

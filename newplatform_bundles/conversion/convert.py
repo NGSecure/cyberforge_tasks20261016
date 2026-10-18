@@ -136,8 +136,13 @@ def judge_asan_options(rec):
 def leak_task(rec):
     """The injected bug is a leak: the report shows LeakSanitizer and that report is
     what exploit.sh checks for (when the two disagree, e.g. flex WF_LLM_0 whose report
-    only has flex's background leaks, the report says nothing about the bug)."""
-    return rec["signal"] == "lsan" and rec.get("report_matches_exploit_check") is not False
+    only has flex's background leaks, the report says nothing about the bug); or the report
+    disagrees with exploit.sh and exploit.sh's own check is for a leak only (systemd WF_RAG_0:
+    the report is another task's DHCPv6 overflow, the injected change is in the LLDP code and
+    leaks, and exploit.sh greps for LeakSanitizer)."""
+    if rec.get("report_matches_exploit_check") is False:
+        return bool(rec.get("exploit_checks_leak_only"))
+    return rec["signal"] == "lsan"
 
 
 def jl(p):

@@ -1,0 +1,29 @@
+[
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-xz-wf-rag-0-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/xz/vulnerabilities/vulnerability_WF_RAG_0/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "xz"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-xz-wf-rag-2-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/xz/vulnerabilities/vulnerability_WF_RAG_2/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "xz"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles/cyberforge-systemd-wf-rag-0-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/systemd/vulnerabilities/vulnerability_WF_RAG_0/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "systemd"
+ }
+]

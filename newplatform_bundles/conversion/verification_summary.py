@@ -9,10 +9,25 @@ Later files override earlier ones for the same bundle. Status:
                            note says what the judge-free runs and the dataset's own exploit did;
   not-built                the build did not finish here: needs network, out of disk, or the
                            build itself fails (e.g. the injected diff does not compile).
+  stale                    the result tested another ground truth than the bundle has now
+                           (results record it as gt_sha256): verify the bundle again.
 Bundles without a result are absent (not verified yet).
 """
+import hashlib
 import json
+import os
 import sys
+
+REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+
+def current_gt(name):
+    """SHA-256 of the bundle's ground truth as it is now, or None."""
+    for d in ("newplatform_bundles", "newplatform_bundles2", "newplatform_bundles3"):
+        f = os.path.join(REPO, d, name, "build", "ground_truth_poc")
+        if os.path.isfile(f):
+            return hashlib.sha256(open(f, "rb").read()).hexdigest()
+    return None
 
 
 def note(r):
@@ -52,6 +67,12 @@ def main():
     out = {}
     for name, r in sorted(res.items()):
         v = r.get("verdict") or ""
+        cur = current_gt(name)
+        if cur is None:
+            continue  # the bundle is no longer made (e.g. a task found unconvertible)
+        if v and r.get("gt_sha256") and r["gt_sha256"] != cur:
+            out[name] = {"status": "stale", "note": "verified with another ground truth (%s...)" % r["gt_sha256"][:12]}
+            continue
         if v.startswith("PASS-DEGENERATE"):
             out[name] = {"status": "pass-degenerate", "note": ""}
         elif v.startswith("PASS"):

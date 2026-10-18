@@ -163,6 +163,13 @@ TRIGGER_WORDS = re.compile(r"Sanitizer|SUMMARY|heap-|stack-|SEGV|overflow|use-af
                            r"Segmentation|abort|ERROR", re.I)
 
 
+def exploit_checks_leak_only(es):
+    """exploit.sh's sanitizer greps all look for a leak (its own trigger condition is a leak)."""
+    pats = [p for _, _, p in GREP_RE.findall(es) if TRIGGER_WORDS.search(p)]
+    return bool(pats) and all(re.search(r"leak", p, re.I) and not re.search(
+        r"SEGV|overflow|use-after|double-free|AddressSanitizer(?!.*leak)", p, re.I) for p in pats)
+
+
 def report_satisfies_exploit(es, report):
     """None when exploit.sh decides by exit code only; otherwise whether the recorded
     sanitizer report matches at least one sanitizer pattern exploit.sh greps for (the
@@ -676,6 +683,7 @@ for r in rows:
         "deep_replay": deep_kind or deep_why,
         "signal": sig, "signal_detail": sig_detail, "signal_src": sig_src,
         "report_matches_exploit_check": report_ok,
+        "exploit_checks_leak_only": exploit_checks_leak_only(es),
         "poc": poc, "poc_src": poc_src, "gt_base": gt_base, "fuzzer": fuzzer, "fuzzer_src": fuzzer_src,
         "replay_captured": len(rinfo.get("captured") or []),
         "replay_distinct_inputs": len(rinfo.get("inputs") or []),

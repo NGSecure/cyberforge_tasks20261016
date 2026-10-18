@@ -2,9 +2,9 @@
   "fuzzer_candidates": [
     "fuzz-lldp-rx"
   ],
-  "asan_options": "halt_on_error=1:abort_on_error=1:symbolize=1:print_stacktrace=1:detect_leaks=0",
+  "asan_options": "halt_on_error=1:abort_on_error=1:symbolize=1:print_stacktrace=1:detect_leaks=1",
   "asan_options_from_exploit": "halt_on_error=1:abort_on_error=1:symbolize=1:print_stacktrace=1",
-  "leak_detection": "off: the injected bug is not a leak",
+  "leak_detection": "on: the injected bug is a leak",
   "timeout_sec": 60,
   "cyberforge": {
     "project": "systemd",

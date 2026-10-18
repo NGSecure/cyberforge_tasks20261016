@@ -2,7 +2,7 @@
  "_about": "verify_bundles.py results per bundle (verification_summary.py)",
  "bundles": {
   "cyberforge-arrow-wf-llm-0-poc-L1-oracle": {
-   "note": "ERROR: failed to build: failed to solve: process \"/bin/sh -c set -eux; rm -rf /out/*; compile; mkdir -p /cf/root && cp -a /out /cf/root/out && : > /cf/deleted.txt\" did not complete successfully: exit ",
+   "note": "built with this machine's proxy CA added (verification only); needs network: Could not resolve host",
    "status": "not-built"
   },
   "cyberforge-assimp-fz-0-poc-L1-oracle": {
@@ -706,64 +706,52 @@
    "status": "pass"
   },
   "cyberforge-espeak-ng-fz-0-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass-degenerate"
   },
   "cyberforge-espeak-ng-fz-1-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-espeak-ng-fz-2-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass-degenerate"
   },
   "cyberforge-espeak-ng-fz-3-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
-  },
-  "cyberforge-espeak-ng-fz-4-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-espeak-ng-fz-5-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-espeak-ng-fz-6-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-espeak-ng-fz-7-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-espeak-ng-wf-llm-0-poc-L1-oracle": {
-   "note": "needs network: unable to access 'https://",
-   "status": "not-built"
-  },
-  "cyberforge-espeak-ng-wf-llm-1-poc-L1-oracle": {
-   "note": "needs network: unable to access 'https://",
-   "status": "not-built"
-  },
-  "cyberforge-espeak-ng-wf-llm-2-poc-L1-oracle": {
-   "note": "needs network: unable to access 'https://",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-espeak-ng-wf-llm-4-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-espeak-ng-wf-llm-5-poc-L1-oracle": {
-   "note": "needs network: unable to access 'https://",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only); same result without the judge's sandbox and with the image's own environment",
+   "status": "fail"
   },
   "cyberforge-espeak-ng-wf-rag-0-poc-L1-oracle": {
-   "note": "needs network: unable to access 'https://",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-espeak-ng-wf-rag-1-poc-L1-oracle": {
-   "note": "needs network: unable to access 'https://",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-exiv2-fz-0-poc-L1-oracle": {
    "note": "",
@@ -782,7 +770,7 @@
    "status": "pass"
   },
   "cyberforge-file-fz-0-poc-L1-oracle": {
-   "note": "needs network: unable to access 'https://",
+   "note": "built with this machine's proxy CA added (verification only); --ca: could not prepare a base image that trusts the proxy CA",
    "status": "not-built"
   },
   "cyberforge-flac-fz-0-poc-L1-oracle": {
@@ -1034,32 +1022,32 @@
    "status": "fail"
   },
   "cyberforge-grok-wf-llm-0-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-grok-wf-llm-1-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only); same result without the judge's sandbox and with the image's own environment",
+   "status": "fail"
   },
   "cyberforge-grok-wf-llm-2-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only); same result without the judge's sandbox and with the image's own environment",
+   "status": "fail"
   },
   "cyberforge-grok-wf-llm-3-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-grok-wf-llm-4-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass-degenerate"
   },
   "cyberforge-grok-wf-rag-0-poc-L1-oracle": {
-   "note": "needs network: unable to access 'https://",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-grok-wf-rag-1-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-fz-0-poc-L1-oracle": {
    "note": "needs network: not built, an earlier build of this project needed the network (Could not resolve host)",
@@ -1641,10 +1629,6 @@
    "note": "",
    "status": "pass-degenerate"
   },
-  "cyberforge-harfbuzz-fz-5-poc-L1-oracle": {
-   "note": "same result without the judge's sandbox and with the image's own environment; the dataset's exploit.sh crashed the vulnerable build, not the secure one (try 1 of 1); its harness input was not our ground truth",
-   "status": "fail"
-  },
   "cyberforge-harfbuzz-fz-6-poc-L1-oracle": {
    "note": "",
    "status": "pass-degenerate"
@@ -1818,11 +1802,11 @@
    "status": "pass"
   },
   "cyberforge-icu-wf-llm-0-poc-L1-oracle": {
-   "note": "out of disk (this machine): No space left on device",
+   "note": "out of disk (this machine): not built, an earlier build of this project ran out of disk",
    "status": "not-built"
   },
   "cyberforge-icu-wf-llm-1-poc-L1-oracle": {
-   "note": "ERROR: failed to build: failed to solve: ResourceExhausted: failed to copy files: copy file range failed: no space left on device",
+   "note": "out of disk (this machine): No space left on device",
    "status": "not-built"
   },
   "cyberforge-icu-wf-rag-0-poc-L1-oracle": {
@@ -1830,128 +1814,116 @@
    "status": "pass"
   },
   "cyberforge-jq-fz-0-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-jq-fz-1-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-jq-fz-10-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass-degenerate"
   },
   "cyberforge-jq-fz-11-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-jq-fz-12-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-jq-fz-15-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-jq-fz-16-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-jq-fz-17-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-jq-fz-18-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-jq-fz-19-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-jq-fz-2-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass-degenerate"
   },
   "cyberforge-jq-fz-3-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-jq-fz-4-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-jq-fz-5-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-jq-fz-6-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-jq-fz-7-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-jq-fz-8-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-jq-fz-9-poc-L1-oracle": {
-   "note": "needs network: unable to access 'https://",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-jq-wf-llm-0-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
-  },
-  "cyberforge-jq-wf-llm-1-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-jq-wf-llm-10-poc-L1-oracle": {
-   "note": "needs network: unable to access 'https://",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only); same result without the judge's sandbox and with the image's own environment; the dataset's exploit.sh crashed neither build (1 run); its harness input was our ground truth; dataset exploit_files/pov.bin: fails",
+   "status": "fail"
   },
   "cyberforge-jq-wf-llm-11-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only); same result without the judge's sandbox and with the image's own environment",
+   "status": "fail"
   },
   "cyberforge-jq-wf-llm-2-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only); same result without the judge's sandbox and with the image's own environment",
+   "status": "fail"
   },
   "cyberforge-jq-wf-llm-3-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-jq-wf-llm-4-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
-  },
-  "cyberforge-jq-wf-llm-5-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only); same result without the judge's sandbox and with the image's own environment",
+   "status": "fail"
   },
   "cyberforge-jq-wf-llm-6-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-jq-wf-llm-7-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-jq-wf-llm-8-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only); same result without the judge's sandbox and with the image's own environment",
+   "status": "fail"
   },
   "cyberforge-jq-wf-llm-9-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
-  },
-  "cyberforge-jq-wf-rag-0-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only); same result without the judge's sandbox and with the image's own environment",
+   "status": "fail"
   },
   "cyberforge-json-c-fz-0-poc-L1-oracle": {
    "note": "same result without the judge's sandbox and with the image's own environment",
@@ -2006,12 +1978,12 @@
    "status": "pass"
   },
   "cyberforge-jsonnet-wf-rag-0-poc-L1-oracle": {
-   "note": "needs network: unable to access 'https://",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass-degenerate"
   },
   "cyberforge-jsonnet-wf-rag-1-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-kamailio-fz-1-poc-L1-oracle": {
    "note": "",
@@ -2178,28 +2150,28 @@
    "status": "pass"
   },
   "cyberforge-libarchive-wf-llm-0-poc-L1-oracle": {
-   "note": "needs network: unable to access 'https://",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-libarchive-wf-llm-1-poc-L1-oracle": {
-   "note": "needs network: unable to access 'https://",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-libarchive-wf-llm-2-poc-L1-oracle": {
-   "note": "needs network: unable to access 'https://",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-libarchive-wf-llm-3-poc-L1-oracle": {
-   "note": "needs network: unable to access 'https://",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-libarchive-wf-rag-0-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass-degenerate"
   },
   "cyberforge-libarchive-wf-rag-1-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass-degenerate"
   },
   "cyberforge-libdwarf-wf-llm-0-poc-L1-oracle": {
    "note": "same result without the judge's sandbox and with the image's own environment",
@@ -2722,48 +2694,48 @@
    "status": "fail"
   },
   "cyberforge-open5gs-fz-0-poc-L1-oracle": {
-   "note": "needs network: unable to access 'https://",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-open5gs-fz-1-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-open5gs-fz-2-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-open5gs-fz-3-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-open5gs-fz-4-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-open5gs-fz-5-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-open5gs-fz-6-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-open5gs-fz-7-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-open5gs-fz-8-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-open5gs-fz-9-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-open5gs-wf-rag-0-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-opencv-fz-0-poc-L1-oracle": {
    "note": "",
@@ -2830,12 +2802,12 @@
    "status": "pass"
   },
   "cyberforge-opensc-wf-llm-0-poc-L1-oracle": {
-   "note": "needs network: unable to access 'https://",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-opensc-wf-rag-0-poc-L1-oracle": {
-   "note": "needs network: unable to access 'https://",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-openssl-fz-0-poc-L1-oracle": {
    "note": "out of disk (this machine): not built, an earlier build of this project ran out of disk",
@@ -2886,16 +2858,16 @@
    "status": "not-built"
   },
   "cyberforge-openthread-wf-rag-0-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-openthread-wf-rag-1-poc-L1-oracle": {
-   "note": "needs network: unable to access 'https://",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only); same result without the judge's sandbox and with the image's own environment; the dataset's exploit.sh crashed neither build (1 run); its harness input was our ground truth",
+   "status": "fail"
   },
   "cyberforge-openthread-wf-rag-2-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only); same result without the judge's sandbox and with the image's own environment; the dataset's exploit.sh crashed neither build (1 run); its harness input was our ground truth",
+   "status": "fail"
   },
   "cyberforge-pcapplusplus-wf-llm-0-poc-L1-oracle": {
    "note": "",
@@ -2942,43 +2914,43 @@
    "status": "pass"
   },
   "cyberforge-perfetto-fz-0-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
+   "note": "built with this machine's proxy CA added (verification only); needs network: unable to access 'https://",
    "status": "not-built"
   },
   "cyberforge-perfetto-fz-1-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
+   "note": "built with this machine's proxy CA added (verification only); needs network: unable to access 'https://",
    "status": "not-built"
   },
   "cyberforge-perfetto-fz-2-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
+   "note": "built with this machine's proxy CA added (verification only); needs network: unable to access 'https://",
    "status": "not-built"
   },
   "cyberforge-perfetto-fz-3-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
+   "note": "built with this machine's proxy CA added (verification only); needs network: unable to access 'https://",
    "status": "not-built"
   },
   "cyberforge-perfetto-fz-4-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
+   "note": "built with this machine's proxy CA added (verification only); needs network: unable to access 'https://",
    "status": "not-built"
   },
   "cyberforge-perfetto-fz-5-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
+   "note": "built with this machine's proxy CA added (verification only); needs network: unable to access 'https://",
    "status": "not-built"
   },
   "cyberforge-perfetto-fz-6-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
+   "note": "built with this machine's proxy CA added (verification only); needs network: unable to access 'https://",
    "status": "not-built"
   },
   "cyberforge-perfetto-fz-7-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
+   "note": "built with this machine's proxy CA added (verification only); needs network: unable to access 'https://",
    "status": "not-built"
   },
   "cyberforge-perfetto-fz-8-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
+   "note": "built with this machine's proxy CA added (verification only); needs network: unable to access 'https://",
    "status": "not-built"
   },
   "cyberforge-perfetto-wf-llm-0-poc-L1-oracle": {
-   "note": "needs network: unable to access 'https://",
+   "note": "built with this machine's proxy CA added (verification only); needs network: unable to access 'https://",
    "status": "not-built"
   },
   "cyberforge-protobuf-c-fz-0-poc-L1-oracle": {
@@ -3286,11 +3258,11 @@
    "status": "fail"
   },
   "cyberforge-radare2-wf-rag-0-poc-L1-oracle": {
-   "note": "needs network: unable to access 'https://",
+   "note": "built with this machine's proxy CA added (verification only); out of disk (this machine): No space left on device",
    "status": "not-built"
   },
   "cyberforge-radare2-wf-rag-1-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
+   "note": "out of disk (this machine): not built, an earlier build of this project ran out of disk",
    "status": "not-built"
   },
   "cyberforge-selinux-fz-0-poc-L1-oracle": {
@@ -3322,107 +3294,107 @@
    "status": "fail"
   },
   "cyberforge-serenity-fz-0-poc-L1-oracle": {
-   "note": "ERROR: failed to build: failed to solve: process \"/bin/sh -c set -eux;     ( cd /src/serenity && { git apply --whitespace=nowarn /tmp/inject_vulnerability.diff         || patch -p1 --forward --batch -",
+   "note": "built with this machine's proxy CA added (verification only); needs network: Failed to download",
    "status": "not-built"
   },
   "cyberforge-serenity-fz-1-poc-L1-oracle": {
-   "note": "ERROR: failed to build: failed to solve: process \"/bin/sh -c set -eux;     ( cd /src/serenity && { git apply --whitespace=nowarn /tmp/inject_vulnerability.diff         || patch -p1 --forward --batch -",
+   "note": "built with this machine's proxy CA added (verification only); needs network: Failed to download",
    "status": "not-built"
   },
   "cyberforge-serenity-fz-10-poc-L1-oracle": {
-   "note": "ERROR: failed to build: failed to solve: process \"/bin/sh -c set -eux;     ( cd /src/serenity && { git apply --whitespace=nowarn /tmp/inject_vulnerability.diff         || patch -p1 --forward --batch -",
+   "note": "built with this machine's proxy CA added (verification only); needs network: Failed to download",
    "status": "not-built"
   },
   "cyberforge-serenity-fz-11-poc-L1-oracle": {
-   "note": "ERROR: failed to build: failed to solve: process \"/bin/sh -c set -eux;     ( cd /src/serenity && { git apply --whitespace=nowarn /tmp/inject_vulnerability.diff         || patch -p1 --forward --batch -",
+   "note": "built with this machine's proxy CA added (verification only); needs network: Failed to download",
    "status": "not-built"
   },
   "cyberforge-serenity-fz-12-poc-L1-oracle": {
-   "note": "ERROR: failed to build: failed to solve: process \"/bin/sh -c set -eux;     ( cd /src/serenity && { git apply --whitespace=nowarn /tmp/inject_vulnerability.diff         || patch -p1 --forward --batch -",
+   "note": "built with this machine's proxy CA added (verification only); needs network: Failed to download",
    "status": "not-built"
   },
   "cyberforge-serenity-fz-13-poc-L1-oracle": {
-   "note": "ERROR: failed to build: failed to solve: process \"/bin/sh -c set -eux; rm -rf /out/*; compile; mkdir -p /cf/root && cp -a /out /cf/root/out && : > /cf/deleted.txt\" did not complete successfully: exit ",
+   "note": "built with this machine's proxy CA added (verification only); needs network: Failed to download",
    "status": "not-built"
   },
   "cyberforge-serenity-fz-14-poc-L1-oracle": {
-   "note": "ERROR: failed to build: failed to solve: process \"/bin/sh -c set -eux;     ( cd /src/serenity && { git apply --whitespace=nowarn /tmp/inject_vulnerability.diff         || patch -p1 --forward --batch -",
+   "note": "built with this machine's proxy CA added (verification only); needs network: Failed to download",
    "status": "not-built"
   },
   "cyberforge-serenity-fz-15-poc-L1-oracle": {
-   "note": "ERROR: failed to build: failed to solve: process \"/bin/sh -c set -eux;     ( cd /src/serenity && { git apply --whitespace=nowarn /tmp/inject_vulnerability.diff         || patch -p1 --forward --batch -",
+   "note": "built with this machine's proxy CA added (verification only); needs network: Failed to download",
    "status": "not-built"
   },
   "cyberforge-serenity-fz-18-poc-L1-oracle": {
-   "note": "ERROR: failed to build: failed to solve: process \"/bin/sh -c set -eux; rm -rf /out/*; compile; mkdir -p /cf/root && cp -a /out /cf/root/out && : > /cf/deleted.txt\" did not complete successfully: exit ",
+   "note": "built with this machine's proxy CA added (verification only); needs network: Failed to download",
    "status": "not-built"
   },
   "cyberforge-serenity-fz-19-poc-L1-oracle": {
-   "note": "ERROR: failed to build: failed to solve: process \"/bin/sh -c set -eux; rm -rf /out/*; compile; mkdir -p /cf/root && cp -a /out /cf/root/out && : > /cf/deleted.txt\" did not complete successfully: exit ",
+   "note": "built with this machine's proxy CA added (verification only); needs network: Failed to download",
    "status": "not-built"
   },
   "cyberforge-serenity-fz-2-poc-L1-oracle": {
-   "note": "ERROR: failed to build: failed to solve: process \"/bin/sh -c set -eux; rm -rf /out/*; compile; mkdir -p /cf/root && cp -a /out /cf/root/out && : > /cf/deleted.txt\" did not complete successfully: exit ",
+   "note": "built with this machine's proxy CA added (verification only); needs network: Failed to download",
    "status": "not-built"
   },
   "cyberforge-serenity-fz-20-poc-L1-oracle": {
-   "note": "ERROR: failed to build: failed to solve: process \"/bin/sh -c set -eux; rm -rf /out/*; compile; mkdir -p /cf/root && cp -a /out /cf/root/out && : > /cf/deleted.txt\" did not complete successfully: exit ",
+   "note": "built with this machine's proxy CA added (verification only); needs network: Failed to download",
    "status": "not-built"
   },
   "cyberforge-serenity-fz-21-poc-L1-oracle": {
-   "note": "ERROR: failed to build: failed to solve: process \"/bin/sh -c set -eux;     ( cd /src/serenity && { git apply --whitespace=nowarn /tmp/inject_vulnerability.diff         || patch -p1 --forward --batch -",
+   "note": "built with this machine's proxy CA added (verification only); needs network: Failed to download",
    "status": "not-built"
   },
   "cyberforge-serenity-fz-22-poc-L1-oracle": {
-   "note": "ERROR: failed to build: failed to solve: process \"/bin/sh -c set -eux; rm -rf /out/*; compile; mkdir -p /cf/root && cp -a /out /cf/root/out && : > /cf/deleted.txt\" did not complete successfully: exit ",
+   "note": "built with this machine's proxy CA added (verification only); needs network: Failed to download",
    "status": "not-built"
   },
   "cyberforge-serenity-fz-23-poc-L1-oracle": {
-   "note": "ERROR: failed to build: failed to solve: process \"/bin/sh -c set -eux; rm -rf /out/*; compile; mkdir -p /cf/root && cp -a /out /cf/root/out && : > /cf/deleted.txt\" did not complete successfully: exit ",
+   "note": "built with this machine's proxy CA added (verification only); needs network: Failed to download",
    "status": "not-built"
   },
   "cyberforge-serenity-fz-24-poc-L1-oracle": {
-   "note": "ERROR: failed to build: failed to solve: process \"/bin/sh -c set -eux;     ( cd /src/serenity && { git apply --whitespace=nowarn /tmp/inject_vulnerability.diff         || patch -p1 --forward --batch -",
+   "note": "built with this machine's proxy CA added (verification only); needs network: Failed to download",
    "status": "not-built"
   },
   "cyberforge-serenity-fz-25-poc-L1-oracle": {
-   "note": "ERROR: failed to build: failed to solve: process \"/bin/sh -c set -eux;     ( cd /src/serenity && { git apply --whitespace=nowarn /tmp/inject_vulnerability.diff         || patch -p1 --forward --batch -",
+   "note": "built with this machine's proxy CA added (verification only); needs network: Failed to download",
    "status": "not-built"
   },
   "cyberforge-serenity-fz-3-poc-L1-oracle": {
-   "note": "ERROR: failed to build: failed to solve: process \"/bin/sh -c set -eux; rm -rf /out/*; compile; mkdir -p /cf/root && cp -a /out /cf/root/out && : > /cf/deleted.txt\" did not complete successfully: exit ",
+   "note": "built with this machine's proxy CA added (verification only); needs network: Failed to download",
    "status": "not-built"
   },
   "cyberforge-serenity-fz-4-poc-L1-oracle": {
-   "note": "ERROR: failed to build: failed to solve: process \"/bin/sh -c set -eux;     ( cd /src/serenity && { git apply --whitespace=nowarn /tmp/inject_vulnerability.diff         || patch -p1 --forward --batch -",
+   "note": "built with this machine's proxy CA added (verification only); needs network: Failed to download",
    "status": "not-built"
   },
   "cyberforge-serenity-fz-5-poc-L1-oracle": {
-   "note": "ERROR: failed to build: failed to solve: process \"/bin/sh -c set -eux; rm -rf /out/*; compile; mkdir -p /cf/root && cp -a /out /cf/root/out && : > /cf/deleted.txt\" did not complete successfully: exit ",
+   "note": "built with this machine's proxy CA added (verification only); needs network: Failed to download",
    "status": "not-built"
   },
   "cyberforge-serenity-fz-6-poc-L1-oracle": {
-   "note": "ERROR: failed to build: failed to solve: process \"/bin/sh -c set -eux;     ( cd /src/serenity && { git apply --whitespace=nowarn /tmp/inject_vulnerability.diff         || patch -p1 --forward --batch -",
+   "note": "built with this machine's proxy CA added (verification only); needs network: Failed to download",
    "status": "not-built"
   },
   "cyberforge-serenity-fz-7-poc-L1-oracle": {
-   "note": "ERROR: failed to build: failed to solve: process \"/bin/sh -c set -eux;     ( cd /src/serenity && { git apply --whitespace=nowarn /tmp/inject_vulnerability.diff         || patch -p1 --forward --batch -",
+   "note": "built with this machine's proxy CA added (verification only); needs network: Failed to download",
    "status": "not-built"
   },
   "cyberforge-serenity-fz-8-poc-L1-oracle": {
-   "note": "ERROR: failed to build: failed to solve: process \"/bin/sh -c set -eux; rm -rf /out/*; compile; mkdir -p /cf/root && cp -a /out /cf/root/out && : > /cf/deleted.txt\" did not complete successfully: exit ",
+   "note": "built with this machine's proxy CA added (verification only); needs network: Failed to download",
    "status": "not-built"
   },
   "cyberforge-serenity-fz-9-poc-L1-oracle": {
-   "note": "ERROR: failed to build: failed to solve: process \"/bin/sh -c set -eux; rm -rf /out/*; compile; mkdir -p /cf/root && cp -a /out /cf/root/out && : > /cf/deleted.txt\" did not complete successfully: exit ",
+   "note": "built with this machine's proxy CA added (verification only); needs network: Failed to download",
    "status": "not-built"
   },
   "cyberforge-serenity-wf-rag-0-poc-L1-oracle": {
-   "note": "ERROR: failed to build: failed to solve: process \"/bin/sh -c set -eux; rm -rf /out/*; compile; mkdir -p /cf/root && cp -a /out /cf/root/out && : > /cf/deleted.txt\" did not complete successfully: exit ",
+   "note": "built with this machine's proxy CA added (verification only); needs network: Failed to download",
    "status": "not-built"
   },
   "cyberforge-serenity-wf-rag-1-poc-L1-oracle": {
-   "note": "ERROR: failed to build: failed to solve: process \"/bin/sh -c set -eux; rm -rf /out/*; compile; mkdir -p /cf/root && cp -a /out /cf/root/out && : > /cf/deleted.txt\" did not complete successfully: exit ",
+   "note": "built with this machine's proxy CA added (verification only); needs network: Failed to download",
    "status": "not-built"
   },
   "cyberforge-simdjson-fz-0-poc-L1-oracle": {
@@ -3498,44 +3470,44 @@
    "status": "pass"
   },
   "cyberforge-systemd-fz-0-poc-L1-oracle": {
-   "note": "needs network: CERTIFICATE_VERIFY_FAILED",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-systemd-fz-1-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (CERTIFICATE_VERIFY_FAILED)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-systemd-fz-2-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (CERTIFICATE_VERIFY_FAILED)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-systemd-fz-3-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (CERTIFICATE_VERIFY_FAILED)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-systemd-fz-4-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (CERTIFICATE_VERIFY_FAILED)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-systemd-fz-5-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (CERTIFICATE_VERIFY_FAILED)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-systemd-fz-6-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (CERTIFICATE_VERIFY_FAILED)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-systemd-wf-rag-0-poc-L1-oracle": {
-   "note": "needs network: CERTIFICATE_VERIFY_FAILED",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-systemd-wf-rag-1-poc-L1-oracle": {
-   "note": "needs network: CERTIFICATE_VERIFY_FAILED",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-systemd-wf-rag-2-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (CERTIFICATE_VERIFY_FAILED)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-unicorn-fz-0-poc-L1-oracle": {
    "note": "out of disk (this machine): No space left on device",
@@ -3594,15 +3566,11 @@
    "status": "fail"
   },
   "cyberforge-xz-wf-rag-0-poc-L1-oracle": {
-   "note": "",
+   "note": "built with this machine's proxy CA added (verification only)",
    "status": "pass-degenerate"
   },
-  "cyberforge-xz-wf-rag-1-poc-L1-oracle": {
-   "note": "same result without the judge's sandbox and with the image's own environment; the dataset's exploit.sh crashed neither build (1 run); its harness input was not our ground truth; leaks on: fails",
-   "status": "fail"
-  },
   "cyberforge-xz-wf-rag-2-poc-L1-oracle": {
-   "note": "",
+   "note": "built with this machine's proxy CA added (verification only)",
    "status": "pass"
   },
   "cyberforge-xz-wf-rag-3-poc-L1-oracle": {
@@ -3618,20 +3586,20 @@
    "status": "pass"
   },
   "cyberforge-zlib-ng-fz-0-poc-L1-oracle": {
-   "note": "needs network: unable to access 'https://",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-zlib-ng-fz-2-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only); same result without the judge's sandbox and with the image's own environment; the dataset's exploit.sh crashed neither build (20 runs); its harness input was not our ground truth",
+   "status": "fail"
   },
   "cyberforge-zlib-ng-fz-4-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-zlib-ng-fz-5-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (unable to access 'https://)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   }
  }
 }
