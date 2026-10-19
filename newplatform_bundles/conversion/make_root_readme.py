@@ -241,8 +241,10 @@ for k, v in {"N_ENV": len(env), "N_NET": sum(1 for e in env if "磁盘" not in e
              "N_DISK": sum(1 for e in env if "磁盘" in e["problem"]),
              "N_DEGEN": sum(1 for e in Q.values() if e["verification"] == "pass-degenerate"),
              "N_LFS": LFS["missing_objects"], "N_NOGT": N_NOGT, "NOGT_WHERE": NOGT_WHERE,
-             "ENV_PROJECTS": "、".join("%s %d 个" % kv for kv in collections.Counter(
-                 e["source"].split("/projects/")[1].split("/")[0] for e in env).most_common())}.items():
+             "DISK_PROJECTS": "、".join("%s %d 个" % kv for kv in collections.Counter(
+                 e["source"].split("/projects/")[1].split("/")[0] for e in env if "磁盘" in e["problem"]).most_common()),
+             "NET_TASKS": "、".join(sorted(e["source"].split("/projects/")[1].replace("/vulnerabilities/vulnerability_", " ")
+                                          for e in env if "磁盘" not in e["problem"]))}.items():
     sugg = sugg.replace("@@%s@@" % k, str(v))
 md.append(sugg + "\n")
 open(os.path.join(REPO, "README.md"), "w", encoding="utf-8").write("\n".join(md) + "\n")
