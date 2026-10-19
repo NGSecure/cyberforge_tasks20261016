@@ -277,7 +277,7 @@ def exploit_env(es):
 
 
 def lfs_pointer(path):
-    """The oid when the file is a Git LFS pointer (the dataset copy lacks its content), else ''.
+    """The oid when the file is a Git LFS pointer (its content is not in the dataset, nor upstream), else ''.
     lfs_restore.py replaces the pointers it can resolve; the rest count as missing files."""
     try:
         if os.path.getsize(path) > 200:
@@ -599,7 +599,7 @@ for r in rows:
     elif sig not in crash_sigs:
         tier, reason = "C", "report shows no sanitizer crash"
     elif not poc:
-        tier, reason = "C", ("the dataset's crashing seed %s is a Git LFS pointer in this copy: its content "
+        tier, reason = "C", ("the dataset's crashing seed %s is only a Git LFS pointer, as upstream has it: its content "
                              "(sha256 %s) is missing" % (os.path.basename(crep.get("seed") or ""), lfs_seed[:16])
                              if lfs_seed else "crash input not saved (fuzz-campaign replay; seed unrecorded)"
                              if crep else "no concrete PoC file (payload only inline / missing)")
@@ -709,8 +709,8 @@ for r in rows:
                                                  % " and ".join(env_set)), False, ""
 
     if converted and poc and lfs_pointer(poc_path(vd, poc, poc_src)):
-        # the dataset copy holds a Git LFS pointer, not the file (lfs_restore.py could not find it)
-        tier, reason, converted, bundle = tier, ("the dataset's PoV file %s is a Git LFS pointer in this copy: its "
+        # the dataset holds a Git LFS pointer, not the file (lfs_restore.py could not find it)
+        tier, reason, converted, bundle = tier, ("the dataset's PoV file %s is only a Git LFS pointer, as upstream has it: its "
                                                  "content (sha256 %s) is missing" % (os.path.basename(poc),
                                                  lfs_pointer(poc_path(vd, poc, poc_src))[:16])), False, ""
 

@@ -77,10 +77,16 @@ md.append("- **上传后没有被修改过**：它由提交 %s 上传（当时�
           % (upload.split(" ", 1)[0] if upload else "?", log[-1].split(" ", 1)[0] if log else "?", DATA, tree_head[:12],
              "，与上传时一致" if tree_head == tree_upload else "，**与上传时不同**",
              "" if not dirty else "（**有未提交改动**）"))
-md.append("- **上传的副本缺 Git LFS 内容**：%d 个文件（%d 个不同对象）在上传时就只是 Git LFS 指针（几百字节的文本，记录内容的 SHA-256），"
-          "仓库里没有 `.gitattributes`，LFS 存储里也没有这些对象。转换时按 SHA-256 从数据集其他位置（同一文件在别的任务里的副本、"
-          "镜像自带的种子语料）找到内容完全一致的文件，还原了 %d 个对象（%d 个文件），还原的副本放在仓库外、只供转换使用；"
-          "仍缺 %d 个对象（%d 个文件，分布在 %d 个任务里），其中 9 个任务的崩溃种子就在缺的里面，没有生成 bundle，其余缺的是不进入 bundle 的语料。"
+md.append("- **原始数据的来源**：提供数据的团队基于上游 [Cyb3rForge/CyberForge-projects](https://github.com/Cyb3rForge/CyberForge-projects) "
+          "的 `main`（`9e09f49`）：80 个有任务的项目、1034 个任务与上游一一对应，36621 个文件与上游完全相同；他们新增了 3687 个文件"
+          "（主要是给缺元数据的任务补的 bug_report.txt、hints.json、题面描述变体、task_contract.json，以及 60 个空的 sanitizer 报告和 manifest.csv），"
+          "修改了 3366 个（554 个元数据；2812 个种子文件，把 LFS 指针换成别的任务里的同一个种子，其中 16 个换成了内容不同的同名文件），"
+          "没有删除文件。注入的 diff、exploit 文件和上游已有的报告都没有改。详见 `newplatform_bundles/conversion/upstream_comparison.md`。")
+md.append("- **缺 Git LFS 内容（上游就缺）**：%d 个文件（%d 个不同对象）只是 Git LFS 指针（一百多字节的三行文本，记录真实内容的 SHA-256 和大小）。"
+          "这些指针来自上游：上游从未启用 LFS，FZ 任务是带着 6749 个指针文件当作普通文件提交的（`af0e78d`），提供数据的团队补了其中 2812 个，"
+          "剩下的就是这些。转换时按 SHA-256 从数据集其他任务里同一文件的副本、上游发布前的分支里找到内容完全一致的文件，又还原了 %d 个对象"
+          "（%d 个文件），还原的副本放在仓库外、只供转换使用；仍缺 %d 个对象（%d 个文件，分布在 %d 个任务里），在上游任何分支和提交里都没有，"
+          "其中 9 个任务的崩溃种子就在缺的里面，没有生成 bundle，其余缺的是不进入 bundle 的语料。"
           "缺失清单：`newplatform_bundles/conversion/lfs_objects/missing.json`。用到了还原文件的 bundle 在下表里标为第二类。\n"
           % (LFS["pointers"], lfs_have + LFS["missing_objects"], lfs_have, LFS["restored"], LFS["missing_objects"],
              sum(len(v) for v in LFS["tasks"].values()), len(LFS["tasks"])))
@@ -112,7 +118,7 @@ md.append(table(["分类", "目录", "标准"], [
      "数据集里与这个任务相关的证据彼此一致；无需修改任何原始数据，可直接用于 PoC 迭代和轨迹生成。"),
     ("第二类：原始数据有轻微问题", "`newplatform_bundles2/`",
      "本机三项自检全部通过，但原始数据有问题：要么做了少量修改才能用（数据集指定的 PoV 文件不触发、换成数据集里另一个能触发的输入；"
-     "触发文件没随任务附带、从同项目其他任务找回；上传的副本缺 LFS 内容、按 SHA-256 还原；exploit 的输入格式不对、按它的意图做最小修正），"
+     "触发文件没随任务附带、从同项目其他任务找回；标准答案只是 LFS 指针（上游就缺）、按 SHA-256 还原；exploit 的输入格式不对、按它的意图做最小修正），"
      "要么不修改也不影响轨迹质量（数据集缺少触发证据或报告是别的任务的，但实测有效；题面描述的漏洞类型不准，但函数和文件仍指向注入位置）。"
      "修改只涉及标准答案（只用于自检、不给 agent 看），或把指错了位置的题面描述改为数据集报告里的实际崩溃位置（%d 个），"
      "都不改变判定方式。" % N_DESC_FIX),

@@ -3,12 +3,16 @@
 
     python3 -I lfs_restore.py <inner_root> lfs_objects/ <resolved_root> [snapshot_scan/]
 
-The dataset was committed (8ab575c) from a checkout whose Git LFS files had not been
-fetched: 3937 of its files are LFS pointers ("version https://git-lfs.github.com/spec/v1",
-"oid sha256:<hex>", "size <n>"), not the files themselves, and this repository's LFS
-store does not hold them. A pointer names its content by SHA-256, so a file found
-elsewhere is the original only when its SHA-256 is the pointer's oid. Sources, in order:
-- lfs_objects/<oid> (objects found before, or supplied from the dataset's origin);
+3937 files of the dataset copy are Git LFS pointers ("version https://git-lfs.github.com/spec/v1",
+"oid sha256:<hex>", "size <n>"), not the files themselves. They come from the dataset's
+origin, github.com/Cyb3rForge/CyberForge-projects, whose FZ tasks were committed (af0e78d)
+with 6749 such pointers as plain files (it never tracked anything with LFS); the team that
+prepared this copy replaced 2812 of them with same-named files of other tasks (16 of those
+do not have the pointer's SHA-256: serenity's gsub_tail_*.bin), see upstream_comparison.md.
+A pointer names its content by SHA-256, so a file found elsewhere is the original only
+when its SHA-256 is the pointer's oid. Sources, in order:
+- lfs_objects/<oid> (objects found before, or supplied from the dataset's origin: two came
+  from files the origin's pre-release branch cyberforge_full_data still has);
 - another file of the dataset with that SHA-256 (the same seed shipped in another task);
 - with snapshot_scan/: a member of a harness's built-in seed corpus that the dataset's
   records name for the pointer's file (crash_report.json seed_provenance, or the

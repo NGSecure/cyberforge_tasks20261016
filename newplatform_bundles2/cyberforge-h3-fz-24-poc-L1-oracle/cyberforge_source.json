@@ -33,7 +33,7 @@
   "pov_kind": "harness",
   "quality": {
     "category": "\u7b2c\u4e8c\u7c7b",
-    "basis": "\u4e0a\u4f20\u7684\u526f\u672c\u7f3a Git LFS \u5185\u5bb9\uff0c\u5df2\u6309 SHA-256 \u8fd8\u539f",
+    "basis": "\u6807\u51c6\u7b54\u6848\u53ea\u662f Git LFS \u6307\u9488\uff08\u4e0a\u6e38\u5c31\u7f3a\u5185\u5bb9\uff09\uff0c\u5df2\u6309 SHA-256 \u8fd8\u539f",
     "verification": "pass"
   },
   "ground_truth_evidence": "crash evidence in the dataset",

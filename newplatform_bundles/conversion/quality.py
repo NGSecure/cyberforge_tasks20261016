@@ -46,7 +46,7 @@ BASIS = {"description-wrong": "题面描述指错了位置，已按数据集自�
          "artifact-not-reproduce": "fuzz 崩溃样本单独不复现，已换成重跑 exploit 得到的输入",
          "constructed": "exploit 的输入到不了注入的代码，已按其意图做最小修正",
          "file-missing": "触发文件没有随任务附带，已从同项目其他任务找回",
-         "lfs": "上传的副本缺 Git LFS 内容，已按 SHA-256 还原",
+         "lfs": "标准答案只是 Git LFS 指针（上游就缺内容），已按 SHA-256 还原",
          "report-not-own": "数据集的报告是别的任务的",
          "description": "题面描述的漏洞类型与实际崩溃不符"}
 SAME_VIEW = "标准答案只用于自检、不给 agent 看，换用不影响 agent 看到的内容和判定。"
@@ -233,7 +233,7 @@ def rule_entry(rec, src, status, alts, ch, cons, report_groups, raw_root, res_ro
         ("report_inputs/", "exploit_live/", "constructed/", "replay")) else ""
     if raw and os.path.isfile(raw) and open(raw, "rb").read(len(LFS)) == LFS:
         issues.append(("lfs",
-                       "本仓库里的数据集副本中，标准答案文件只是 Git LFS 指针（上传时没有带上 LFS 内容）",
+                       "标准答案文件只是 Git LFS 指针，没有真实内容（上游 CyberForge-projects 里就是这样，见 conversion/upstream_comparison.md）",
                        "按指针记录的 SHA-256，从数据集其他位置找到内容完全一致的文件还原（conversion/lfs_restore.py）"))
     rep = report_groups.get(rec["path"])
     if rep and rep["shared"] > 1 and not rep["touches"] and rec["tier"] != "C":

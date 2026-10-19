@@ -2249,8 +2249,8 @@
    "codes": [
     "lfs"
    ],
-   "basis": "上传的副本缺 Git LFS 内容，已按 SHA-256 还原",
-   "problem": "本仓库里的数据集副本中，标准答案文件只是 Git LFS 指针（上传时没有带上 LFS 内容）。",
+   "basis": "标准答案只是 Git LFS 指针（上游就缺内容），已按 SHA-256 还原",
+   "problem": "标准答案文件只是 Git LFS 指针，没有真实内容（上游 CyberForge-projects 里就是这样，见 conversion/upstream_comparison.md）。",
    "impact": "标准答案只用于自检、不给 agent 看，换用不影响 agent 看到的内容和判定。对轨迹质量没有明显影响。",
    "fix": "按指针记录的 SHA-256，从数据集其他位置找到内容完全一致的文件还原（conversion/lfs_restore.py）。",
    "suggest": "",
@@ -2327,8 +2327,8 @@
    "codes": [
     "lfs"
    ],
-   "basis": "上传的副本缺 Git LFS 内容，已按 SHA-256 还原",
-   "problem": "本仓库里的数据集副本中，标准答案文件只是 Git LFS 指针（上传时没有带上 LFS 内容）。",
+   "basis": "标准答案只是 Git LFS 指针（上游就缺内容），已按 SHA-256 还原",
+   "problem": "标准答案文件只是 Git LFS 指针，没有真实内容（上游 CyberForge-projects 里就是这样，见 conversion/upstream_comparison.md）。",
    "impact": "标准答案只用于自检、不给 agent 看，换用不影响 agent 看到的内容和判定。对轨迹质量没有明显影响。",
    "fix": "按指针记录的 SHA-256，从数据集其他位置找到内容完全一致的文件还原（conversion/lfs_restore.py）。",
    "suggest": "",
@@ -2345,8 +2345,8 @@
    "codes": [
     "lfs"
    ],
-   "basis": "上传的副本缺 Git LFS 内容，已按 SHA-256 还原",
-   "problem": "本仓库里的数据集副本中，标准答案文件只是 Git LFS 指针（上传时没有带上 LFS 内容）。",
+   "basis": "标准答案只是 Git LFS 指针（上游就缺内容），已按 SHA-256 还原",
+   "problem": "标准答案文件只是 Git LFS 指针，没有真实内容（上游 CyberForge-projects 里就是这样，见 conversion/upstream_comparison.md）。",
    "impact": "标准答案只用于自检、不给 agent 看，换用不影响 agent 看到的内容和判定。对轨迹质量没有明显影响。",
    "fix": "按指针记录的 SHA-256，从数据集其他位置找到内容完全一致的文件还原（conversion/lfs_restore.py）。",
    "suggest": "",
@@ -2363,8 +2363,8 @@
    "codes": [
     "lfs"
    ],
-   "basis": "上传的副本缺 Git LFS 内容，已按 SHA-256 还原",
-   "problem": "本仓库里的数据集副本中，标准答案文件只是 Git LFS 指针（上传时没有带上 LFS 内容）。",
+   "basis": "标准答案只是 Git LFS 指针（上游就缺内容），已按 SHA-256 还原",
+   "problem": "标准答案文件只是 Git LFS 指针，没有真实内容（上游 CyberForge-projects 里就是这样，见 conversion/upstream_comparison.md）。",
    "impact": "标准答案只用于自检、不给 agent 看，换用不影响 agent 看到的内容和判定。对轨迹质量没有明显影响。",
    "fix": "按指针记录的 SHA-256，从数据集其他位置找到内容完全一致的文件还原（conversion/lfs_restore.py）。",
    "suggest": "",
@@ -2381,8 +2381,8 @@
    "codes": [
     "lfs"
    ],
-   "basis": "上传的副本缺 Git LFS 内容，已按 SHA-256 还原",
-   "problem": "本仓库里的数据集副本中，标准答案文件只是 Git LFS 指针（上传时没有带上 LFS 内容）。",
+   "basis": "标准答案只是 Git LFS 指针（上游就缺内容），已按 SHA-256 还原",
+   "problem": "标准答案文件只是 Git LFS 指针，没有真实内容（上游 CyberForge-projects 里就是这样，见 conversion/upstream_comparison.md）。",
    "impact": "标准答案只用于自检、不给 agent 看，换用不影响 agent 看到的内容和判定。对轨迹质量没有明显影响。",
    "fix": "按指针记录的 SHA-256，从数据集其他位置找到内容完全一致的文件还原（conversion/lfs_restore.py）。",
    "suggest": "",
@@ -3297,8 +3297,8 @@
    "codes": [
     "lfs"
    ],
-   "basis": "上传的副本缺 Git LFS 内容，已按 SHA-256 还原",
-   "problem": "本仓库里的数据集副本中，标准答案文件只是 Git LFS 指针（上传时没有带上 LFS 内容）。",
+   "basis": "标准答案只是 Git LFS 指针（上游就缺内容），已按 SHA-256 还原",
+   "problem": "标准答案文件只是 Git LFS 指针，没有真实内容（上游 CyberForge-projects 里就是这样，见 conversion/upstream_comparison.md）。",
    "impact": "标准答案只用于自检、不给 agent 看，换用不影响 agent 看到的内容和判定。对轨迹质量没有明显影响。",
    "fix": "按指针记录的 SHA-256，从数据集其他位置找到内容完全一致的文件还原（conversion/lfs_restore.py）。",
    "suggest": "",
@@ -4797,8 +4797,8 @@
    "codes": [
     "lfs"
    ],
-   "basis": "上传的副本缺 Git LFS 内容，已按 SHA-256 还原",
-   "problem": "本仓库里的数据集副本中，标准答案文件只是 Git LFS 指针（上传时没有带上 LFS 内容）。",
+   "basis": "标准答案只是 Git LFS 指针（上游就缺内容），已按 SHA-256 还原",
+   "problem": "标准答案文件只是 Git LFS 指针，没有真实内容（上游 CyberForge-projects 里就是这样，见 conversion/upstream_comparison.md）。",
    "impact": "标准答案只用于自检、不给 agent 看，换用不影响 agent 看到的内容和判定。对轨迹质量没有明显影响。",
    "fix": "按指针记录的 SHA-256，从数据集其他位置找到内容完全一致的文件还原（conversion/lfs_restore.py）。",
    "suggest": "",
@@ -4846,8 +4846,8 @@
     "lfs",
     "harness-injection"
    ],
-   "basis": "上传的副本缺 Git LFS 内容，已按 SHA-256 还原；注入在 fuzz harness 的代码里，不在项目库代码里",
-   "problem": "本仓库里的数据集副本中，标准答案文件只是 Git LFS 指针（上传时没有带上 LFS 内容）；注入的改动在 OSS-Fuzz harness 自己的源码里（src/apps/fuzzers/fuzzerIndexIO.c），不在项目的库代码里。",
+   "basis": "标准答案只是 Git LFS 指针（上游就缺内容），已按 SHA-256 还原；注入在 fuzz harness 的代码里，不在项目库代码里",
+   "problem": "标准答案文件只是 Git LFS 指针，没有真实内容（上游 CyberForge-projects 里就是这样，见 conversion/upstream_comparison.md）；注入的改动在 OSS-Fuzz harness 自己的源码里（src/apps/fuzzers/fuzzerIndexIO.c），不在项目的库代码里。",
    "impact": "标准答案只用于自检、不给 agent 看，换用不影响 agent 看到的内容和判定。漏洞真实、只有利用它的输入才能触发，PoC 迭代本身有效；但它是测试代码里的漏洞，作为项目真实漏洞的样本代表性差。",
    "fix": "按指针记录的 SHA-256，从数据集其他位置找到内容完全一致的文件还原（conversion/lfs_restore.py）；注入保持原样。",
    "suggest": "如果要求漏洞在项目的产品代码里，可剔除或单独标注。",
@@ -5002,8 +5002,8 @@
    "codes": [
     "lfs"
    ],
-   "basis": "上传的副本缺 Git LFS 内容，已按 SHA-256 还原",
-   "problem": "本仓库里的数据集副本中，标准答案文件只是 Git LFS 指针（上传时没有带上 LFS 内容）。",
+   "basis": "标准答案只是 Git LFS 指针（上游就缺内容），已按 SHA-256 还原",
+   "problem": "标准答案文件只是 Git LFS 指针，没有真实内容（上游 CyberForge-projects 里就是这样，见 conversion/upstream_comparison.md）。",
    "impact": "标准答案只用于自检、不给 agent 看，换用不影响 agent 看到的内容和判定。对轨迹质量没有明显影响。",
    "fix": "按指针记录的 SHA-256，从数据集其他位置找到内容完全一致的文件还原（conversion/lfs_restore.py）。",
    "suggest": "",
@@ -5050,8 +5050,8 @@
    "codes": [
     "lfs"
    ],
-   "basis": "上传的副本缺 Git LFS 内容，已按 SHA-256 还原",
-   "problem": "本仓库里的数据集副本中，标准答案文件只是 Git LFS 指针（上传时没有带上 LFS 内容）。",
+   "basis": "标准答案只是 Git LFS 指针（上游就缺内容），已按 SHA-256 还原",
+   "problem": "标准答案文件只是 Git LFS 指针，没有真实内容（上游 CyberForge-projects 里就是这样，见 conversion/upstream_comparison.md）。",
    "impact": "标准答案只用于自检、不给 agent 看，换用不影响 agent 看到的内容和判定。对轨迹质量没有明显影响。",
    "fix": "按指针记录的 SHA-256，从数据集其他位置找到内容完全一致的文件还原（conversion/lfs_restore.py）。",
    "suggest": "",
@@ -5083,8 +5083,8 @@
    "codes": [
     "lfs"
    ],
-   "basis": "上传的副本缺 Git LFS 内容，已按 SHA-256 还原",
-   "problem": "本仓库里的数据集副本中，标准答案文件只是 Git LFS 指针（上传时没有带上 LFS 内容）。",
+   "basis": "标准答案只是 Git LFS 指针（上游就缺内容），已按 SHA-256 还原",
+   "problem": "标准答案文件只是 Git LFS 指针，没有真实内容（上游 CyberForge-projects 里就是这样，见 conversion/upstream_comparison.md）。",
    "impact": "标准答案只用于自检、不给 agent 看，换用不影响 agent 看到的内容和判定。对轨迹质量没有明显影响。",
    "fix": "按指针记录的 SHA-256，从数据集其他位置找到内容完全一致的文件还原（conversion/lfs_restore.py）。",
    "suggest": "",
@@ -5162,8 +5162,8 @@
     "lfs",
     "harness-injection"
    ],
-   "basis": "上传的副本缺 Git LFS 内容，已按 SHA-256 还原；注入在 fuzz harness 的代码里，不在项目库代码里",
-   "problem": "本仓库里的数据集副本中，标准答案文件只是 Git LFS 指针（上传时没有带上 LFS 内容）；注入的改动在 OSS-Fuzz harness 自己的源码里（src/apps/fuzzers/fuzzerCellArea.c），不在项目的库代码里。",
+   "basis": "标准答案只是 Git LFS 指针（上游就缺内容），已按 SHA-256 还原；注入在 fuzz harness 的代码里，不在项目库代码里",
+   "problem": "标准答案文件只是 Git LFS 指针，没有真实内容（上游 CyberForge-projects 里就是这样，见 conversion/upstream_comparison.md）；注入的改动在 OSS-Fuzz harness 自己的源码里（src/apps/fuzzers/fuzzerCellArea.c），不在项目的库代码里。",
    "impact": "标准答案只用于自检、不给 agent 看，换用不影响 agent 看到的内容和判定。漏洞真实、只有利用它的输入才能触发，PoC 迭代本身有效；但它是测试代码里的漏洞，作为项目真实漏洞的样本代表性差。",
    "fix": "按指针记录的 SHA-256，从数据集其他位置找到内容完全一致的文件还原（conversion/lfs_restore.py）；注入保持原样。",
    "suggest": "如果要求漏洞在项目的产品代码里，可剔除或单独标注。",
@@ -5349,8 +5349,8 @@
     "lfs",
     "harness-injection"
    ],
-   "basis": "上传的副本缺 Git LFS 内容，已按 SHA-256 还原；注入在 fuzz harness 的代码里，不在项目库代码里",
-   "problem": "本仓库里的数据集副本中，标准答案文件只是 Git LFS 指针（上传时没有带上 LFS 内容）；注入的改动在 OSS-Fuzz harness 自己的源码里（src/apps/fuzzers/fuzzerEdgeLength.c），不在项目的库代码里。",
+   "basis": "标准答案只是 Git LFS 指针（上游就缺内容），已按 SHA-256 还原；注入在 fuzz harness 的代码里，不在项目库代码里",
+   "problem": "标准答案文件只是 Git LFS 指针，没有真实内容（上游 CyberForge-projects 里就是这样，见 conversion/upstream_comparison.md）；注入的改动在 OSS-Fuzz harness 自己的源码里（src/apps/fuzzers/fuzzerEdgeLength.c），不在项目的库代码里。",
    "impact": "标准答案只用于自检、不给 agent 看，换用不影响 agent 看到的内容和判定。漏洞真实、只有利用它的输入才能触发，PoC 迭代本身有效；但它是测试代码里的漏洞，作为项目真实漏洞的样本代表性差。",
    "fix": "按指针记录的 SHA-256，从数据集其他位置找到内容完全一致的文件还原（conversion/lfs_restore.py）；注入保持原样。",
    "suggest": "如果要求漏洞在项目的产品代码里，可剔除或单独标注。",
@@ -6860,8 +6860,8 @@
    "codes": [
     "lfs"
    ],
-   "basis": "上传的副本缺 Git LFS 内容，已按 SHA-256 还原",
-   "problem": "本仓库里的数据集副本中，标准答案文件只是 Git LFS 指针（上传时没有带上 LFS 内容）。",
+   "basis": "标准答案只是 Git LFS 指针（上游就缺内容），已按 SHA-256 还原",
+   "problem": "标准答案文件只是 Git LFS 指针，没有真实内容（上游 CyberForge-projects 里就是这样，见 conversion/upstream_comparison.md）。",
    "impact": "标准答案只用于自检、不给 agent 看，换用不影响 agent 看到的内容和判定。对轨迹质量没有明显影响。",
    "fix": "按指针记录的 SHA-256，从数据集其他位置找到内容完全一致的文件还原（conversion/lfs_restore.py）。",
    "suggest": "",
@@ -8676,8 +8676,8 @@
    "codes": [
     "lfs"
    ],
-   "basis": "上传的副本缺 Git LFS 内容，已按 SHA-256 还原",
-   "problem": "本仓库里的数据集副本中，标准答案文件只是 Git LFS 指针（上传时没有带上 LFS 内容）。",
+   "basis": "标准答案只是 Git LFS 指针（上游就缺内容），已按 SHA-256 还原",
+   "problem": "标准答案文件只是 Git LFS 指针，没有真实内容（上游 CyberForge-projects 里就是这样，见 conversion/upstream_comparison.md）。",
    "impact": "标准答案只用于自检、不给 agent 看，换用不影响 agent 看到的内容和判定。对轨迹质量没有明显影响。",
    "fix": "按指针记录的 SHA-256，从数据集其他位置找到内容完全一致的文件还原（conversion/lfs_restore.py）。",
    "suggest": "",
@@ -10486,8 +10486,8 @@
    "codes": [
     "lfs"
    ],
-   "basis": "上传的副本缺 Git LFS 内容，已按 SHA-256 还原",
-   "problem": "本仓库里的数据集副本中，标准答案文件只是 Git LFS 指针（上传时没有带上 LFS 内容）。",
+   "basis": "标准答案只是 Git LFS 指针（上游就缺内容），已按 SHA-256 还原",
+   "problem": "标准答案文件只是 Git LFS 指针，没有真实内容（上游 CyberForge-projects 里就是这样，见 conversion/upstream_comparison.md）。",
    "impact": "标准答案只用于自检、不给 agent 看，换用不影响 agent 看到的内容和判定。对轨迹质量没有明显影响。",
    "fix": "按指针记录的 SHA-256，从数据集其他位置找到内容完全一致的文件还原（conversion/lfs_restore.py）。",
    "suggest": "",

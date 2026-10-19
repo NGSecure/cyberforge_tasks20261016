@@ -372,7 +372,7 @@ not change what an agent sees or how it is judged; the bundle passed here) in `n
 3 (a serious problem) and pending (not built here, or not surely the dataset's fault) in
 `newplatform_bundles3/`. Passing bundles are classified by rule (`quality.py`: the dataset's PoV file
 did not trigger and another dataset input is used; the seed is only in a sibling task; the file was
-an LFS pointer in this copy; no crash evidence or another task's report; the description names
+an LFS pointer (as upstream has it); no crash evidence or another task's report; the description names
 another crash class or, corrected from `description_fixes.json`, another place); every other
 bundle has a manual entry in `quality_review.json`. What the
 conversion got wrong is fixed in the conversion, never counted as a dataset problem.

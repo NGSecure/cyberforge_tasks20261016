@@ -1,8 +1,8 @@
 {
  "_about": "Git LFS pointers of the dataset copy whose content was not found (lfs_restore.py)",
  "pointers": 3937,
- "restored": 862,
- "missing_objects": 1483,
+ "restored": 864,
+ "missing_objects": 1481,
  "tasks": {
   "assimp/vulnerabilities/vulnerability_FZ_1": [
    {
@@ -1898,11 +1898,6 @@
     "file": "exploit_files/generated_inputs/curated_seed_cdf5fb8caf0398234ebbe9c802873e60cded6eae441b0cfc695052d263c7811d.bin",
     "oid": "cdf5fb8caf0398234ebbe9c802873e60cded6eae441b0cfc695052d263c7811d",
     "size": 9
-   },
-   {
-    "file": "exploit_files/generated_inputs/curated_seed_4e91589b2c0b0e2384118e068fa6e190eedb38121c17d88f3c5ff06d6e5f8c71.bin",
-    "oid": "4e91589b2c0b0e2384118e068fa6e190eedb38121c17d88f3c5ff06d6e5f8c71",
-    "size": 19824
    },
    {
     "file": "exploit_files/generated_inputs/curated_seed_87792bb3b3b100073b6106b9bed801df8a1c6f878f5bf8f96f144bc40be8994b.bin",
@@ -4762,11 +4757,6 @@
     "file": "exploit_files/generated_inputs/poc_5_nul_dc23df5aff.bin",
     "oid": "dc23df5affbc52522609211ab750035c5bee08f58c3065cdae8012ab37423e4f",
     "size": 6
-   },
-   {
-    "file": "exploit_files/generated_inputs/curated_seed_e5a00aa9991ac8a5ee3109844d84a55583bd20572ad3ffcd42792f3c36b183ad.bin",
-    "oid": "e5a00aa9991ac8a5ee3109844d84a55583bd20572ad3ffcd42792f3c36b183ad",
-    "size": 2048
    },
    {
     "file": "exploit_files/generated_inputs/poc_4_nul_c3cdc52c10.bin",
