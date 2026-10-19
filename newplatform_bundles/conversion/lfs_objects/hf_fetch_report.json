@@ -1,0 +1,39 @@
+{
+  "repo_id": "datasets/AmL-hug/cyberforge-projects",
+  "checked_at": "2026-10-19T04:30:48Z",
+  "access": "blocked",
+  "access_detail": "The session's egress proxy refused CONNECT to huggingface.co:443 with HTTP 403 (environment network policy), so the Hub API was never reached; this is not a Hugging Face gated/private response.",
+  "commit_sha": null,
+  "refs_checked": [],
+  "listing_files": null,
+  "listing_lfs_files": null,
+  "missing_oids_total": 1481,
+  "missing_pointer_files_total": 3073,
+  "missing_oids_matched": 0,
+  "objects_saved": 0,
+  "saved_oids": [],
+  "mismatches": [],
+  "blocked_hosts": [
+    "huggingface.co:443",
+    "hf.co:443",
+    "cdn-lfs.huggingface.co:443",
+    "xethub.hf.co:443",
+    "cas-bridge.xethub.hf.co:443"
+  ],
+  "http_errors": [
+    {
+      "url": "https://huggingface.co/api/datasets/AmL-hug/cyberforge-projects",
+      "error": "curl: (56) CONNECT tunnel failed, response 403 (from egress proxy)"
+    }
+  ],
+  "example_matching_paths": [],
+  "example_missing_pointer_paths_in_this_repo": [
+    "assimp/vulnerabilities/vulnerability_FZ_1/exploit_files/generated_inputs/curated_seed_1a685d6d3cdd743d873fac5441c51b52ca61fd908e1e9eda7243871b86e524b3.fbx",
+    "assimp/vulnerabilities/vulnerability_FZ_5/exploit_files/generated_inputs/curated_seed_1a685d6d3cdd743d873fac5441c51b52ca61fd908e1e9eda7243871b86e524b3.fbx",
+    "bluez/vulnerabilities/vulnerability_FZ_2/exploit_files/generated_inputs/curated_seed_e04bd43696c381bccc18265ab6bee658b96e447688dd819f501429f6ae515346.bin",
+    "bluez/vulnerabilities/vulnerability_FZ_3/exploit_files/generated_inputs/curated_seed_e04bd43696c381bccc18265ab6bee658b96e447688dd819f501429f6ae515346.bin",
+    "brotli/vulnerabilities/vulnerability_FZ_1/exploit_files/generated_inputs/curated_seed_1ccf5e99b77c0d4997868f09aa1f102edba5b729d6a8c4e22151565b57cca3d9.bin"
+  ],
+  "example_hf_paths_at_missing_pointer_locations": null,
+  "next_step": "Allow huggingface.co plus hf.co / *.hf.co (xethub.hf.co, cas-bridge.xethub.hf.co) and cdn-lfs.huggingface.co in the environment's network access settings, then re-run this check."
+}
