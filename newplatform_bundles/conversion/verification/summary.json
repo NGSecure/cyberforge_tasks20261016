@@ -2,7 +2,7 @@
  "_about": "verify_bundles.py results per bundle (verification_summary.py)",
  "bundles": {
   "cyberforge-arrow-wf-llm-0-poc-L1-oracle": {
-   "note": "built with this machine's proxy CA added (verification only); needs network: Could not resolve host",
+   "note": "built with this machine's proxy CA added (verification only); ERROR: failed to build: failed to solve: process \"/bin/sh -c set -eux; rm -rf /out/*; compile || echo \\\"WARN: compile exited $?\\\"; { [ -e /out/parquet-arrow-fuzz ]; } || { echo \\\"FAIL: compile made no",
    "status": "not-built"
   },
   "cyberforge-assimp-fz-0-poc-L1-oracle": {
@@ -220,6 +220,10 @@
   "cyberforge-brotli-fz-3-poc-L1-oracle": {
    "note": "",
    "status": "pass"
+  },
+  "cyberforge-brotli-fz-4-poc-L1-oracle": {
+   "note": "no ground truth: the ground-truth check is not run",
+   "status": "pass-no-gt"
   },
   "cyberforge-brotli-fz-5-poc-L1-oracle": {
    "note": "",
@@ -593,6 +597,10 @@
    "note": "",
    "status": "pass"
   },
+  "cyberforge-double-conversion-fz-12-poc-L1-oracle": {
+   "note": "no ground truth: the ground-truth check is not run",
+   "status": "pass-no-gt"
+  },
   "cyberforge-double-conversion-fz-15-poc-L1-oracle": {
    "note": "",
    "status": "pass"
@@ -770,8 +778,8 @@
    "status": "pass"
   },
   "cyberforge-file-fz-0-poc-L1-oracle": {
-   "note": "built with this machine's proxy CA added (verification only); --ca: could not prepare a base image that trusts the proxy CA",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-flac-fz-0-poc-L1-oracle": {
    "note": "",
@@ -1050,184 +1058,184 @@
    "status": "pass"
   },
   "cyberforge-guetzli-fz-0-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (Could not resolve host)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-fz-1-poc-L1-oracle": {
-   "note": "needs network: Could not resolve host",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-fz-10-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (Could not resolve host)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-fz-11-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (Could not resolve host)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-fz-12-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (Could not resolve host)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-fz-13-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (Could not resolve host)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-fz-14-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (Could not resolve host)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-fz-15-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (Could not resolve host)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-fz-16-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (Could not resolve host)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-fz-17-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (Could not resolve host)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-fz-18-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (Could not resolve host)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-fz-19-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (Could not resolve host)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-fz-2-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (Could not resolve host)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-fz-20-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (Could not resolve host)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-fz-21-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (Could not resolve host)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-fz-22-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (Could not resolve host)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-fz-23-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (Could not resolve host)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-fz-24-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (Could not resolve host)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-fz-25-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (Could not resolve host)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-fz-26-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (Could not resolve host)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-fz-27-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (Could not resolve host)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-fz-28-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (Could not resolve host)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-fz-29-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (Could not resolve host)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-fz-3-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (Could not resolve host)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-fz-30-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (Could not resolve host)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-fz-31-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (Could not resolve host)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-fz-32-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (Could not resolve host)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-fz-5-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (Could not resolve host)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-fz-6-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (Could not resolve host)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-fz-7-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (Could not resolve host)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-fz-8-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (Could not resolve host)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-fz-9-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (Could not resolve host)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-wf-llm-0-poc-L1-oracle": {
-   "note": "needs network: Could not resolve host",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-wf-llm-1-poc-L1-oracle": {
-   "note": "needs network: Could not resolve host",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-wf-llm-10-poc-L1-oracle": {
-   "note": "needs network: Could not resolve host",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-wf-llm-11-poc-L1-oracle": {
-   "note": "needs network: Could not resolve host",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only); same result without the judge's sandbox and with the image's own environment; the dataset's exploit.sh crashed neither build (1 run); its harness input was our ground truth; dataset exploit_files/pov.bin: fails",
+   "status": "fail"
   },
   "cyberforge-guetzli-wf-llm-2-poc-L1-oracle": {
-   "note": "needs network: Could not resolve host",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only); same result without the judge's sandbox and with the image's own environment; the dataset's exploit.sh crashed neither build (1 run); its harness input was our ground truth; dataset exploit_files/pov.bin: fails",
+   "status": "fail"
   },
   "cyberforge-guetzli-wf-llm-3-poc-L1-oracle": {
-   "note": "needs network: Could not resolve host",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only); same result without the judge's sandbox and with the image's own environment; the dataset's exploit.sh crashed neither build (1 run); its harness input was our ground truth; dataset exploit_files/pov.bin: fails",
+   "status": "fail"
   },
   "cyberforge-guetzli-wf-llm-4-poc-L1-oracle": {
-   "note": "needs network: Could not resolve host",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only); same result without the judge's sandbox and with the image's own environment; the dataset's exploit.sh crashed neither build (1 run); its harness input was our ground truth; dataset exploit_files/pov.bin: fails",
+   "status": "fail"
   },
   "cyberforge-guetzli-wf-llm-5-poc-L1-oracle": {
-   "note": "needs network: Could not resolve host",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only); same result without the judge's sandbox and with the image's own environment; the dataset's exploit.sh crashed neither build (1 run); its harness input was our ground truth; dataset exploit_files/pov.bin: fails",
+   "status": "fail"
   },
   "cyberforge-guetzli-wf-llm-6-poc-L1-oracle": {
-   "note": "needs network: Could not resolve host",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only); same result without the judge's sandbox and with the image's own environment; the dataset's exploit.sh crashed neither build (1 run); its harness input was our ground truth; dataset exploit_files/pov.bin: fails",
+   "status": "fail"
   },
   "cyberforge-guetzli-wf-llm-7-poc-L1-oracle": {
-   "note": "needs network: Could not resolve host",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-wf-llm-8-poc-L1-oracle": {
-   "note": "needs network: Could not resolve host",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-wf-llm-9-poc-L1-oracle": {
-   "note": "needs network: Could not resolve host",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-guetzli-wf-rag-0-poc-L1-oracle": {
-   "note": "needs network: not built, an earlier build of this project needed the network (Could not resolve host)",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-h2o-wf-llm-0-poc-L1-oracle": {
    "note": "same result without the judge's sandbox and with the image's own environment",
@@ -1369,6 +1377,10 @@
    "note": "",
    "status": "pass-degenerate"
   },
+  "cyberforge-h3-fz-4-poc-L1-oracle": {
+   "note": "no ground truth: the ground-truth check is not run",
+   "status": "pass-no-gt"
+  },
   "cyberforge-h3-fz-40-poc-L1-oracle": {
    "note": "same result without the judge's sandbox and with the image's own environment",
    "status": "fail"
@@ -1476,6 +1488,10 @@
   "cyberforge-h3-fz-66-poc-L1-oracle": {
    "note": "",
    "status": "pass"
+  },
+  "cyberforge-h3-fz-8-poc-L1-oracle": {
+   "note": "no ground truth: the ground-truth check is not run",
+   "status": "pass-no-gt"
   },
   "cyberforge-h3-fz-9-poc-L1-oracle": {
    "note": "",
@@ -2177,6 +2193,10 @@
    "note": "",
    "status": "pass-degenerate"
   },
+  "cyberforge-libjxl-fz-3-poc-L1-oracle": {
+   "note": "no ground truth: the ground-truth check is not run",
+   "status": "pass-no-gt"
+  },
   "cyberforge-libjxl-fz-4-poc-L1-oracle": {
    "note": "",
    "status": "pass"
@@ -2256,6 +2276,10 @@
   "cyberforge-libpng-fz-12-poc-L1-oracle": {
    "note": "",
    "status": "pass"
+  },
+  "cyberforge-libpng-fz-13-poc-L1-oracle": {
+   "note": "no ground truth: the ground-truth check is not run",
+   "status": "pass-no-gt"
   },
   "cyberforge-libpng-fz-14-poc-L1-oracle": {
    "note": "",
@@ -2890,12 +2914,12 @@
    "status": "pass"
   },
   "cyberforge-perfetto-fz-0-poc-L1-oracle": {
-   "note": "built with this machine's proxy CA added (verification only); needs network: unable to access 'https://",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass-degenerate"
   },
   "cyberforge-perfetto-fz-1-poc-L1-oracle": {
-   "note": "built with this machine's proxy CA added (verification only); needs network: unable to access 'https://",
-   "status": "not-built"
+   "note": "built with this machine's proxy CA added (verification only)",
+   "status": "pass"
   },
   "cyberforge-perfetto-fz-2-poc-L1-oracle": {
    "note": "built with this machine's proxy CA added (verification only); needs network: unable to access 'https://",
@@ -2940,6 +2964,10 @@
   "cyberforge-protobuf-c-fz-10-poc-L1-oracle": {
    "note": "",
    "status": "pass"
+  },
+  "cyberforge-protobuf-c-fz-11-poc-L1-oracle": {
+   "note": "no ground truth: the ground-truth check is not run",
+   "status": "pass-no-gt"
   },
   "cyberforge-protobuf-c-fz-12-poc-L1-oracle": {
    "note": "",

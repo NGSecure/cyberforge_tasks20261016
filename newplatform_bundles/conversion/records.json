@@ -5279,8 +5279,8 @@
   "path": "brotli/vulnerabilities/vulnerability_FZ_4",
   "tier": "C",
   "reason": "the dataset's crashing seed curated_seed_060ecfec95844561e55d79d9fe4ca996b849c9d1045738713b8d445f2bfd93f4.bin is only a Git LFS pointer, as upstream has it: its content (sha256 060ecfec95844561) is missing",
-  "converted": false,
-  "bundle_type": "",
+  "converted": true,
+  "bundle_type": "harness",
   "degenerate_empty_input": false,
   "deep_replay": "not replayed in the project image",
   "signal": "asan",
@@ -5289,7 +5289,7 @@
   "report_matches_exploit_check": null,
   "exploit_checks_leak_only": false,
   "poc": "",
-  "poc_src": "",
+  "poc_src": "none (the dataset's crashing seed is only a Git LFS pointer)",
   "gt_base": null,
   "fuzzer": "decode_fuzzer",
   "fuzzer_src": "metadata (fuzz_poc.py)",
@@ -5316,6 +5316,11 @@
    "unit_tests": "passed",
    "exploit_on_vulnerable": "passed",
    "exploit_on_secure": "passed"
+  },
+  "ground_truth_missing": {
+   "dataset_file": "exploit_files/generated_inputs/curated_seed_060ecfec95844561e55d79d9fe4ca996b849c9d1045738713b8d445f2bfd93f4.bin",
+   "sha256": "060ecfec95844561e55d79d9fe4ca996b849c9d1045738713b8d445f2bfd93f4",
+   "bytes": 67
   }
  },
  {
@@ -9578,8 +9583,8 @@
   "path": "double-conversion/vulnerabilities/vulnerability_FZ_12",
   "tier": "C",
   "reason": "the dataset's crashing seed curated_seed_dcd5943ced96826e5ba593d59ae3246389fdb495927b0e24fbc3c9b905c57fe8.bin is only a Git LFS pointer, as upstream has it: its content (sha256 dcd5943ced96826e) is missing",
-  "converted": false,
-  "bundle_type": "",
+  "converted": true,
+  "bundle_type": "harness",
   "degenerate_empty_input": false,
   "deep_replay": "not replayed in the project image",
   "signal": "signal",
@@ -9588,7 +9593,7 @@
   "report_matches_exploit_check": null,
   "exploit_checks_leak_only": false,
   "poc": "",
-  "poc_src": "",
+  "poc_src": "none (the dataset's crashing seed is only a Git LFS pointer)",
   "gt_base": null,
   "fuzzer": "string_to_double_fuzzer",
   "fuzzer_src": "metadata (fuzz_poc.py)",
@@ -9615,6 +9620,11 @@
    "unit_tests": "passed",
    "exploit_on_vulnerable": "passed",
    "exploit_on_secure": "passed"
+  },
+  "ground_truth_missing": {
+   "dataset_file": "exploit_files/generated_inputs/curated_seed_dcd5943ced96826e5ba593d59ae3246389fdb495927b0e24fbc3c9b905c57fe8.bin",
+   "sha256": "dcd5943ced96826e5ba593d59ae3246389fdb495927b0e24fbc3c9b905c57fe8",
+   "bytes": 4
   }
  },
  {
@@ -25721,8 +25731,8 @@
   "path": "h3/vulnerabilities/vulnerability_FZ_4",
   "tier": "C",
   "reason": "the dataset's crashing seed curated_seed_0bff19072fa99dad78bf998531108a726d446ccdb6a1152683f2872877254fd8.bin is only a Git LFS pointer, as upstream has it: its content (sha256 0bff19072fa99dad) is missing",
-  "converted": false,
-  "bundle_type": "",
+  "converted": true,
+  "bundle_type": "harness",
   "degenerate_empty_input": false,
   "deep_replay": "not replayed in the project image",
   "signal": "asan",
@@ -25731,7 +25741,7 @@
   "report_matches_exploit_check": null,
   "exploit_checks_leak_only": false,
   "poc": "",
-  "poc_src": "",
+  "poc_src": "none (the dataset's crashing seed is only a Git LFS pointer)",
   "gt_base": null,
   "fuzzer": "fuzzerCompact",
   "fuzzer_src": "metadata (fuzz_poc.py)",
@@ -25758,6 +25768,11 @@
    "unit_tests": "passed",
    "exploit_on_vulnerable": "passed",
    "exploit_on_secure": "passed"
+  },
+  "ground_truth_missing": {
+   "dataset_file": "exploit_files/generated_inputs/curated_seed_0bff19072fa99dad78bf998531108a726d446ccdb6a1152683f2872877254fd8.bin",
+   "sha256": "0bff19072fa99dad78bf998531108a726d446ccdb6a1152683f2872877254fd8",
+   "bytes": 2048
   }
  },
  {
@@ -27119,8 +27134,8 @@
   "path": "h3/vulnerabilities/vulnerability_FZ_8",
   "tier": "C",
   "reason": "the dataset's crashing seed curated_seed_4ceec3009d51e60bcbd77bf5c11ce695781f5846d19d8d29054e0b275ac31dd2.bin is only a Git LFS pointer, as upstream has it: its content (sha256 4ceec3009d51e60b) is missing",
-  "converted": false,
-  "bundle_type": "",
+  "converted": true,
+  "bundle_type": "harness",
   "degenerate_empty_input": false,
   "deep_replay": "not replayed in the project image",
   "signal": "asan",
@@ -27129,7 +27144,7 @@
   "report_matches_exploit_check": null,
   "exploit_checks_leak_only": false,
   "poc": "",
-  "poc_src": "",
+  "poc_src": "none (the dataset's crashing seed is only a Git LFS pointer)",
   "gt_base": null,
   "fuzzer": "fuzzerCompact",
   "fuzzer_src": "metadata (fuzz_poc.py)",
@@ -27156,6 +27171,11 @@
    "unit_tests": "passed",
    "exploit_on_vulnerable": "passed",
    "exploit_on_secure": "passed"
+  },
+  "ground_truth_missing": {
+   "dataset_file": "exploit_files/generated_inputs/curated_seed_4ceec3009d51e60bcbd77bf5c11ce695781f5846d19d8d29054e0b275ac31dd2.bin",
+   "sha256": "4ceec3009d51e60bcbd77bf5c11ce695781f5846d19d8d29054e0b275ac31dd2",
+   "bytes": 1027
   }
  },
  {
@@ -32439,8 +32459,8 @@
   "path": "libjxl/vulnerabilities/vulnerability_FZ_3",
   "tier": "C",
   "reason": "the dataset's crashing seed poc_trim_1de39256c7.png is only a Git LFS pointer, as upstream has it: its content (sha256 1de39256c7f2497f) is missing",
-  "converted": false,
-  "bundle_type": "",
+  "converted": true,
+  "bundle_type": "harness",
   "degenerate_empty_input": false,
   "deep_replay": "not replayed in the project image",
   "signal": "asan",
@@ -32449,7 +32469,7 @@
   "report_matches_exploit_check": null,
   "exploit_checks_leak_only": false,
   "poc": "",
-  "poc_src": "",
+  "poc_src": "none (the dataset's crashing seed is only a Git LFS pointer)",
   "gt_base": null,
   "fuzzer": "set_from_bytes_fuzzer",
   "fuzzer_src": "metadata (fuzz_poc.py)",
@@ -32476,6 +32496,11 @@
    "unit_tests": "passed",
    "exploit_on_vulnerable": "passed",
    "exploit_on_secure": "passed"
+  },
+  "ground_truth_missing": {
+   "dataset_file": "exploit_files/generated_inputs/poc_trim_1de39256c7.png",
+   "sha256": "1de39256c7f2497f6f84afbcdb68fc0a4152fb258e91173c1c658d52c5c8195b",
+   "bytes": 10
   }
  },
  {
@@ -32979,8 +33004,8 @@
   "path": "libpng/vulnerabilities/vulnerability_FZ_13",
   "tier": "C",
   "reason": "the dataset's crashing seed curated_seed_1010a3053d41019b510058479b8a0e76d4b296f81d39419c7638cf01b99c3142.png is only a Git LFS pointer, as upstream has it: its content (sha256 1010a3053d41019b) is missing",
-  "converted": false,
-  "bundle_type": "",
+  "converted": true,
+  "bundle_type": "harness",
   "degenerate_empty_input": false,
   "deep_replay": "not replayed in the project image",
   "signal": "asan",
@@ -32989,7 +33014,7 @@
   "report_matches_exploit_check": null,
   "exploit_checks_leak_only": false,
   "poc": "",
-  "poc_src": "",
+  "poc_src": "none (the dataset's crashing seed is only a Git LFS pointer)",
   "gt_base": null,
   "fuzzer": "libpng_readapi_fuzzer",
   "fuzzer_src": "metadata (fuzz_poc.py)",
@@ -33016,6 +33041,11 @@
    "unit_tests": "passed",
    "exploit_on_vulnerable": "passed",
    "exploit_on_secure": "passed"
+  },
+  "ground_truth_missing": {
+   "dataset_file": "exploit_files/generated_inputs/curated_seed_1010a3053d41019b510058479b8a0e76d4b296f81d39419c7638cf01b99c3142.png",
+   "sha256": "1010a3053d41019b510058479b8a0e76d4b296f81d39419c7638cf01b99c3142",
+   "bytes": 2073
   }
  },
  {
@@ -38432,8 +38462,8 @@
   "path": "protobuf-c/vulnerabilities/vulnerability_FZ_11",
   "tier": "C",
   "reason": "the dataset's crashing seed curated_seed_4b0ba71ad53bd38f1fd05ac92859ecc0df91b4561c36d27c8fb667196cdbb955.bin is only a Git LFS pointer, as upstream has it: its content (sha256 4b0ba71ad53bd38f) is missing",
-  "converted": false,
-  "bundle_type": "",
+  "converted": true,
+  "bundle_type": "harness",
   "degenerate_empty_input": false,
   "deep_replay": "not replayed in the project image",
   "signal": "asan",
@@ -38442,7 +38472,7 @@
   "report_matches_exploit_check": null,
   "exploit_checks_leak_only": false,
   "poc": "",
-  "poc_src": "",
+  "poc_src": "none (the dataset's crashing seed is only a Git LFS pointer)",
   "gt_base": null,
   "fuzzer": "unpack_fuzzer",
   "fuzzer_src": "metadata (fuzz_poc.py)",
@@ -38469,6 +38499,11 @@
    "unit_tests": "passed",
    "exploit_on_vulnerable": "passed",
    "exploit_on_secure": "passed"
+  },
+  "ground_truth_missing": {
+   "dataset_file": "exploit_files/generated_inputs/curated_seed_4b0ba71ad53bd38f1fd05ac92859ecc0df91b4561c36d27c8fb667196cdbb955.bin",
+   "sha256": "4b0ba71ad53bd38f1fd05ac92859ecc0df91b4561c36d27c8fb667196cdbb955",
+   "bytes": 102
   }
  },
  {
@@ -41724,8 +41759,8 @@
   "path": "serenity/vulnerabilities/vulnerability_FZ_16",
   "tier": "C",
   "reason": "the dataset's crashing seed poc_orig_291fd302e9.bin is only a Git LFS pointer, as upstream has it: its content (sha256 291fd302e9f934a2) is missing",
-  "converted": false,
-  "bundle_type": "",
+  "converted": true,
+  "bundle_type": "harness",
   "degenerate_empty_input": false,
   "deep_replay": "not replayed in the project image",
   "signal": "signal",
@@ -41734,7 +41769,7 @@
   "report_matches_exploit_check": null,
   "exploit_checks_leak_only": false,
   "poc": "",
-  "poc_src": "",
+  "poc_src": "none (the dataset's crashing seed is only a Git LFS pointer)",
   "gt_base": null,
   "fuzzer": "FuzzVP9Decoder",
   "fuzzer_src": "metadata (fuzz_poc.py)",
@@ -41763,6 +41798,11 @@
    "unit_tests": "passed",
    "exploit_on_vulnerable": "passed",
    "exploit_on_secure": "passed"
+  },
+  "ground_truth_missing": {
+   "dataset_file": "exploit_files/generated_inputs/poc_orig_291fd302e9.bin",
+   "sha256": "291fd302e9f934a2600e313eff93e17d3e052e11fb2b96bb909aca9758eac2a7",
+   "bytes": 8
   }
  },
  {
@@ -41773,8 +41813,8 @@
   "path": "serenity/vulnerabilities/vulnerability_FZ_17",
   "tier": "C",
   "reason": "the dataset's crashing seed poc_orig_81c2a21c99.bin is only a Git LFS pointer, as upstream has it: its content (sha256 81c2a21c99c2e261) is missing",
-  "converted": false,
-  "bundle_type": "",
+  "converted": true,
+  "bundle_type": "harness",
   "degenerate_empty_input": false,
   "deep_replay": "not replayed in the project image",
   "signal": "asan",
@@ -41783,7 +41823,7 @@
   "report_matches_exploit_check": null,
   "exploit_checks_leak_only": false,
   "poc": "",
-  "poc_src": "",
+  "poc_src": "none (the dataset's crashing seed is only a Git LFS pointer)",
   "gt_base": null,
   "fuzzer": "FuzzVP9Decoder",
   "fuzzer_src": "metadata (fuzz_poc.py)",
@@ -41810,6 +41850,11 @@
    "unit_tests": "passed",
    "exploit_on_vulnerable": "passed",
    "exploit_on_secure": "passed"
+  },
+  "ground_truth_missing": {
+   "dataset_file": "exploit_files/generated_inputs/poc_orig_81c2a21c99.bin",
+   "sha256": "81c2a21c99c2e261ad6d91443ffb383b57c321d7e33f09cb64c8b946bb14939b",
+   "bytes": 2
   }
  },
  {

@@ -27,7 +27,7 @@
 对转换的影响：
 
 - agent 看到的题面取自 bug_description_variants.json，其中 868 个任务（725 + 143）的描述是这个团队生成的。转换中改正过的 8 个“指错了位置”的题面，有 7 个出自这些生成的描述（quickjs FZ_3/12/15/21/25、grok WF_RAG_1、h3 WF_LLM_2）；其中 grok WF_RAG_1、h3 WF_LLM_2 上游自己的 vuln_description.md 写的位置是对的。另一个（bluez FZ_1）是上游原有的描述，但上游的 vuln_description.md 同样写对了。
-- 726 个任务的 hints.json（“成功的种子”等）是这个团队生成的；转换不直接相信它，标准答案都经过实测。第二类里“数据集指定的 PoV 不触发”的 43 个 bundle，指定 PoV 的 hints.json 全部是这个团队生成的（它把 exploit_files/pov.bin 记成成功的种子，而 exploit 实际喂的是另一个输入）。
+- 726 个任务的 hints.json（“成功的种子”等）是这个团队生成的；转换不直接相信它，标准答案都经过实测。第二类里“数据集指定的 PoV 不触发”的 43 个 bundle，数据集指定的 PoV 都是 exploit_files/pov.bin：这个文件是上游原有的，但不是 exploit 在项目镜像里实际喂给 harness 的输入；这个团队生成的 hints.json 也把它记成了“成功的种子”。
 
 ## 3. Git LFS 是怎么回事
 
@@ -40,4 +40,5 @@
 - **能找回的都找回了**：同一个种子常常在一个任务里是真实文件、在另一个任务里是指针。上游 `main` 内部能这样找到真实内容的有 3659 个指针文件（672 个内容）：提供数据的团队补对了 2796 个，转换时按 SHA-256 又补了 862 个，剩下 1 个是补错的那 16 个之一（serenity FZ_5 的 `gsub_tail_ff.bin`，正确内容其实就在同一任务的 `reproducer.bin` 里）；上游发布前的分支 `cyberforge_full_data` 里还有 2 个内容（在发布前的清理中被删掉的文件里），也已补上。
 - **剩下的上游里没有**：把上游全部历史（66 个提交、15 个分支，共 28482 个不同的文件内容）逐个比对（大小一致的再算 SHA-256），剩下的 1481 个内容（3073 个文件）一个都没有；补错的 16 个 serenity 文件里，也只有上面那 1 个的正确内容在上游。有 9 个任务的崩溃种子就在缺的里面；用指针文本本身当输入在这些任务里实测（能构建的 7 个），都不触发，所以它们需要的是原始内容。
 - **数目对得上**：上游的 2164 个指针内容 = 上游 `main` 里有真实副本的 672 个 + 发布前分支里的 2 个 + 仍缺的 1481 个 + 只出现在补错的 serenity 文件里、同样找不到的 9 个。
-- **还可能有原始内容的地方**：上游 README 链接的 Hugging Face 数据集 `AmL-hug/cyberforge-projects`，或上游作者本地的运行目录（CyberForge 框架 <https://github.com/vuljector/CyberForge> 的 `runs/fuzz_poc/_curated/`，那里的种子按 SHA-256 命名，正好能和指针对上）。
+- **Hugging Face 上的副本也只有指针**：上游 README 链接的 Hugging Face 数据集 `AmL-hug/cyberforge-projects`（2026-08-04 发布，提交 `02d0191c`）是 100 个项目各一个 tar.gz，解开就是 GitHub `main` 上同一棵目录树（40178 个文件），6749 个指针文件原样在里面，缺的 1481 个内容一个都没有。同一作者的两个教师轨迹数据集（agent 修补漏洞、构造 PoC 的对话记录）里，agent 打印或写出的字节只对上了 11 个很小的内容（1–71 字节），都不是崩溃种子。还可能有原始内容的只剩上游作者本地的运行目录（CyberForge 框架 <https://github.com/vuljector/CyberForge> 的 `runs/fuzz_poc/_curated/`，那里的种子按 SHA-256 命名，正好能和指针对上）。
+- **处理决定（2026-10-19）**：缺的内容几乎都是不进 bundle 的语料，agent 看不到、判定也不用，不影响 PoC 轨迹，所以不再找回（轨迹里出现过的、或只有 1–3 字节可以穷举出来的少数小文件也没有补进来）。崩溃种子缺内容的 9 个任务照常转成 bundle，但没有标准答案、不做“标准答案只让漏洞版崩溃”的自检，归第三类（见 repo 根目录 `README.md`）。

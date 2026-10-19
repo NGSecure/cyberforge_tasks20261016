@@ -1,0 +1,1 @@
+A removed bounds check in libjxl's PNM decoder (lib/extras/dec/pnm.cc) can lead to a heap-buffer-overflow when parsing crafted PNG-derived input.

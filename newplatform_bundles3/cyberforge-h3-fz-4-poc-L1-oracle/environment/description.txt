@@ -1,0 +1,1 @@
+A heap-buffer-overflow in h3 (src/h3lib/lib/h3Index.c) occurs in the parser when removed bounds checks in uncompactCellsSize allow post-buffer access.

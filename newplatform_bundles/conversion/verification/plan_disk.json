@@ -1,0 +1,247 @@
+[
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-unicorn-fz-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "unicorn"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-unicorn-fz-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "unicorn"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-unicorn-fz-2-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "unicorn"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-unicorn-fz-3-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "unicorn"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-icu-wf-llm-0-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/icu/vulnerabilities/vulnerability_WF_LLM_0/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "icu"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-icu-wf-llm-1-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/icu/vulnerabilities/vulnerability_WF_LLM_1/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "icu"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-radare2-wf-rag-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "radare2"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-radare2-wf-rag-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "radare2"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-fluent-bit-fz-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "fluent-bit"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-fluent-bit-fz-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "fluent-bit"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-fluent-bit-fz-2-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "fluent-bit"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-fluent-bit-fz-3-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "fluent-bit"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-fluent-bit-fz-4-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "fluent-bit"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-fluent-bit-fz-5-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "fluent-bit"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-fluent-bit-wf-rag-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "fluent-bit"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-wireshark-wf-rag-0-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/wireshark/vulnerabilities/vulnerability_WF_RAG_0/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "wireshark"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-wireshark-wf-rag-1-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/wireshark/vulnerabilities/vulnerability_WF_RAG_1/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "wireshark"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-wireshark-wf-rag-11-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "wireshark"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-wireshark-wf-rag-2-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/wireshark/vulnerabilities/vulnerability_WF_RAG_2/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "wireshark"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-wireshark-wf-rag-3-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/wireshark/vulnerabilities/vulnerability_WF_RAG_3/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "wireshark"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-wireshark-wf-rag-4-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/wireshark/vulnerabilities/vulnerability_WF_RAG_4/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "wireshark"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-openssl-fz-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "openssl"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-openssl-fz-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "openssl"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-openssl-fz-2-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "openssl"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-openssl-fz-3-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "openssl"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-openssl-fz-4-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "openssl"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-openssl-fz-5-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "openssl"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-openssl-fz-6-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "openssl"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-openssl-fz-7-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "openssl"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-openssl-fz-8-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "openssl"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-openssl-wf-rag-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "openssl"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-openssl-wf-rag-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "openssl"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-openssl-wf-rag-2-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "openssl"
+ }
+]

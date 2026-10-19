@@ -1,0 +1,51 @@
+[
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles3/cyberforge-brotli-fz-4-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "brotli"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles3/cyberforge-double-conversion-fz-12-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "double-conversion"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles3/cyberforge-h3-fz-4-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles3/cyberforge-h3-fz-8-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles3/cyberforge-libjxl-fz-3-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "libjxl"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles3/cyberforge-libpng-fz-13-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "libpng"
+ },
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles3/cyberforge-protobuf-c-fz-11-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "protobuf-c"
+ }
+]

@@ -4,12 +4,13 @@
     python3 -I classify.py       <inner_root> records.json
     python3 -I scan_snapshots.py records.json snapshot_scan/
     python3 -I convert.py        <inner_root> records.json <out_dir> [--scan snapshot_scan/]
-                                 [--out-b DIR] [--out-c DIR] [--ver v0.0.2] [--only NAME ...]
+                                 [--out-b DIR] [--out-c DIR] [--out-d DIR] [--ver v0.0.2] [--only NAME ...]
 
 <inner_root> holds manifest.csv + projects/. One bundle is written per converted
 record (see classify.py for the tiers), placed by the quality of its dataset task
 (quality.py, quality.json): category 1 into <out_dir>, 2 into --out-b (default
-<out_dir>2), 3 and pending into --out-c (default <out_dir>3); without a quality.json
+<out_dir>2), 3 into --out-c (default <out_dir>3), pending (the fourth) into --out-d (default
+<out_dir>4); without a quality.json
 entry by tier (A, B, C), as before the classification; conversion_manifest.csv
 (all tasks; for the ones without a bundle also the category and note of
 unconverted_review.json, a manual review) goes to <out_dir>. Harness bundles use the tier-A templates (judge: the fuzz
@@ -303,6 +304,52 @@ def b_text(kind, recipe, steps, judge_opts, plumbing=None):
 
 
 
+NOGT_WHY = ("the dataset's verified crashing seed is only a Git LFS pointer, in the dataset and in its origin "
+            "github.com/Cyb3rForge/CyberForge-projects (conversion/upstream_comparison.md): the bundle has no ground truth")
+# A bundle without a ground truth (the user's decision of 2026-10-19): no build/ground_truth_poc,
+# solve.sh says so, and self-check 3 checks the judge without one (task_server.py's selfcheck()
+# from templates/selfcheck_nogt.py). Every other bundle is rendered exactly as before.
+NOGT_EDITS = {
+    "build.sh": [
+        ('echo "==> self-check 3/3: differential oracle (ground truth crashes vul, not fix)"',
+         'echo "==> self-check 3/3: the judge without a ground truth (the dataset\'s crashing input is only a Git LFS pointer):"\n'
+         'echo "    both builds have the harness, a binary differs between them, an empty input crashes neither"'),
+        ('echo "==> PASS: built $MAIN_TAG and $TS_TAG"\n',
+         'echo "==> PASS: built $MAIN_TAG and $TS_TAG"\n'
+         'echo "    note: no ground truth; nothing here shows that an input can trigger the injected bug"\n')],
+    "environment/task-server/Dockerfile": [
+        ("COPY build/ground_truth_poc /tests/ground_truth_poc\n", ""),
+        ("RUN chmod 700 /tests && chmod 600 /tests/ground_truth_poc /judge.json /task_server.py",
+         "RUN mkdir -p /tests && chmod 700 /tests && chmod 600 /judge.json /task_server.py")],
+    "environment/task-server/task_server.py": [
+        ("inject_vulnerability.diff), plus the ground-truth PoV at /tests/ground_truth_poc. The\n",
+         "inject_vulnerability.diff), and no ground-truth PoV: the dataset's crashing input is only a\n"
+         "Git LFS pointer (judge.json no_ground_truth; GET /solve answers 404). The\n"),
+        ("`python3 task_server.py --selfcheck` runs the ground truth and an empty input on\n"
+         "both builds and exits non-zero unless the ground truth is differential\n"
+         "(crashes the vulnerable build, not the secure one); it flags tasks an empty file\n"
+         "would already solve.\n",
+         "`python3 task_server.py --selfcheck` (no ground truth) checks that both builds have the\n"
+         "harness, that an executable or library differs between them (the injected change is\n"
+         "compiled in) and that an empty input crashes neither; it exits non-zero otherwise.\n"
+         "Nothing here shows that an input can trigger the injected bug.\n")],
+}
+
+
+def no_ground_truth(bd):
+    for rel, edits in NOGT_EDITS.items():
+        p = os.path.join(bd, rel)
+        text = open(p, encoding="utf-8").read()
+        for old, new in edits:
+            if text.count(old) != 1:
+                raise SystemExit("%s: %s: no single %r" % (os.path.basename(bd), rel, old[:60]))
+            text = text.replace(old, new)
+        if rel.endswith("task_server.py"):
+            a, b = text.index("def selfcheck():\n"), text.index('\n\nif __name__ == "__main__":')
+            text = text[:a] + open(os.path.join(TPL, "selfcheck_nogt.py"), encoding="utf-8").read().rstrip("\n") + "\n" + text[b:]
+        write(p, text, os.stat(p).st_mode & 0o777)
+
+
 def build_bundle(root, rec, out_dir, ver, scan_dir, quality=None):
     proj = rec["project"]
     n = rec["vuln"].rsplit("_", 1)[-1]
@@ -331,8 +378,12 @@ def build_bundle(root, rec, out_dir, ver, scan_dir, quality=None):
     new_names = [m.decode("utf-8", "replace") for m in re.findall(rb"(?m)^\+\+\+ (\S+)", diff)]
     new_names = [x for x in new_names if x != "/dev/null"]
     elsewhere = bool(new_names) and all(x.startswith(("/", "b/%s/" % rec["target_dir"])) for x in new_names)
+    # the dataset's crashing seed is only a Git LFS pointer (as upstream has it): no ground truth
+    nogt = rec.get("ground_truth_missing")
     if recipe:
         gt = recipe["gt"]
+    elif nogt:
+        gt = None
     else:
         gt_path = (os.path.join(HERE, rec["poc"]) if rec["poc_src"].startswith(("exploit_replay", "project_file"))
                    or rec["poc"].startswith(("report_inputs/", "exploit_live/", "constructed/")) else os.path.join(vd, rec["poc"]))
@@ -392,7 +443,8 @@ def build_bundle(root, rec, out_dir, ver, scan_dir, quality=None):
         "COMMIT": rec["secure_base_commit"], "COMMIT_SHORT": rec["secure_base_commit"][:12],
         "BASE_IMAGE": base_image, "BASE_IMAGE_NAME": base_name, "HAS_HUB_IMAGE": has_hub, "VER": ver,
         "TAG_PREFIX": tag_prefix, "AUTH_TOKEN": token,
-        "POC_SRC_PATH": (("%s/replay_deep/%s/%s (%s)" % (CONV, proj, rec["vuln"], kind)) if recipe else
+        "POC_SRC_PATH": ("%s/%s" % (rec["path"], nogt["dataset_file"])) if nogt else
+                        (("%s/replay_deep/%s/%s (%s)" % (CONV, proj, rec["vuln"], kind)) if recipe else
                          ("%s/%s (replayed %s/exploit_files/exploit.sh)" % (CONV, rec["poc"], rec["path"]))
                          if rec["poc_src"].startswith("exploit_replay") else
                          ("%s/%s (copied from the project image's /opt/src_snapshot.tar by report_inputs.py)"
@@ -403,7 +455,7 @@ def build_bundle(root, rec, out_dir, ver, scan_dir, quality=None):
                           "verify_exploit.py, choose_gt.py)" % (CONV, rec["poc"], rec["path"]))
                          if rec["poc"].startswith("exploit_live/") else
                          "%s/%s" % (rec["path"], rec["poc"])),
-        "POC_SIZE": len(gt), "POV_KIND": kind,
+        "POC_SIZE": nogt["bytes"] if nogt else len(gt), "POV_KIND": kind,
         # the executables the judge runs stay readable (symbolized reports); the rest are 0711
         "READABLE_EXES": " ".join("/out/" + c for c in cands) if not recipe else "",
         "HARNESS_CWD": '"/out"' if from_out else "workdir",
@@ -446,6 +498,8 @@ def build_bundle(root, rec, out_dir, ver, scan_dir, quality=None):
         judge = {"fuzzer_candidates": cands, "asan_options": judge_opts,
                  "asan_options_from_exploit": rec.get("asan_options") or "",
                  "leak_detection": leak_note, "timeout_sec": 60, "cyberforge": cf}
+        if nogt:
+            judge["no_ground_truth"] = dict(nogt, why=NOGT_WHY)
     else:
         steps, notes = normalize_compile(recipe["steps"]) if kind == "program" else (recipe["steps"], [])
         # The recording keeps only sanitizer variables. A variable exploit.sh exports that just names
@@ -506,20 +560,25 @@ def build_bundle(root, rec, out_dir, ver, scan_dir, quality=None):
     write(os.path.join(bd, "environment", "task-server", "cf_delta.py"), render("cf_delta.py", v), 0o755)
     write(os.path.join(bd, "tests", "test.sh"), render(os.path.join("tests", "test.sh"), v), 0o755)
     write(os.path.join(bd, "tests", "verify.py"), render(os.path.join("tests", "verify.py"), v), 0o755)
-    if len(gt) <= INLINE_MAX:
+    if nogt:
+        write(os.path.join(bd, "solution", "solve.sh"), render("solve_none.sh", dict(v, GT_SHA256=nogt["sha256"])), 0o755)
+    elif len(gt) <= INLINE_MAX:
         b64 = base64.encodebytes(gt).decode("ascii").rstrip("\n")
         write(os.path.join(bd, "solution", "solve.sh"), render("solve_inline.sh", dict(v, POC_B64=b64)), 0o755)
     else:
         write(os.path.join(bd, "solution", "solve.sh"), render("solve_fetch.sh", v), 0o755)
     write(os.path.join(bd, "build.sh"), render("build.sh", v), 0o755)
     write(os.path.join(bd, "push.sh"), render("push.sh", v), 0o755)
+    if nogt:
+        no_ground_truth(bd)
 
     # build inputs (never copied into environment/)
     os.makedirs(os.path.join(bd, "build"), exist_ok=True)
     with open(os.path.join(bd, "build", "inject_vulnerability.diff"), "wb") as f:
         f.write(diff)
-    with open(os.path.join(bd, "build", "ground_truth_poc"), "wb") as f:
-        f.write(gt)
+    if not nogt:
+        with open(os.path.join(bd, "build", "ground_truth_poc"), "wb") as f:
+            f.write(gt)
     write(os.path.join(bd, "build", "snapshot_residue.txt"), "".join(p + "\n" for p in residue))
     sec = secure_lines(diff)
     write(os.path.join(bd, "build", "secure_lines.txt"), "".join(s + "\n" for s in sec))
@@ -552,9 +611,13 @@ def build_bundle(root, rec, out_dir, ver, scan_dir, quality=None):
         "tier": rec["tier"], "pov_kind": kind,
         # quality.py: the category of the dataset task (1 fine / 2 minor / 3 serious / pending) and why
         "quality": ({k: quality[k] for k in ("category", "basis", "verification")} if quality else None),
-        "ground_truth_evidence": ("crash evidence in the dataset" if rec["tier"] in ("A", "B") else
+        "ground_truth_evidence": ("crash evidence in the dataset (fuzz_results/vulnerable/crash_report.json), but its "
+                                  "crashing seed is only a Git LFS pointer: no ground truth, and build.sh's self-check 3 "
+                                  "checks the judge without one" if nogt else
+                                  "crash evidence in the dataset" if rec["tier"] in ("A", "B") else
                                   "none: " + rec["reason"] + " (build.sh self-check 3 decides)"),
-        "ground_truth": {"dataset_file": None if recipe else rec["poc"],
+        **({"ground_truth_missing": dict(nogt, why=NOGT_WHY)} if nogt else {}),
+        "ground_truth": None if nogt else {"dataset_file": None if recipe else rec["poc"],
                          "how_found": ("exploit_replay_deep (%s)" % kind) if recipe else rec["poc_src"],
                          "bytes": len(gt),
                          "exploit_replay_inputs": rec.get("replay_distinct_inputs", 0),
@@ -592,6 +655,7 @@ def main():
     ap.add_argument("out_dir", help="tier-A bundles and conversion_manifest.csv")
     ap.add_argument("--out-b", default=None, help="tier-B bundles (default: <out_dir>2)")
     ap.add_argument("--out-c", default=None, help="tier-C bundles (default: <out_dir>3)")
+    ap.add_argument("--out-d", default=None, help="category-pending bundles (default: <out_dir>4)")
     ap.add_argument("--scan", default=os.path.join(HERE, "snapshot_scan"),
                     help="scan_snapshots.py output (default: snapshot_scan/ next to this script)")
     ap.add_argument("--ver", default="v0.0.2")  # v0.0.2: isolated judges (see SKILL.md)
@@ -600,12 +664,13 @@ def main():
     recs = json.load(open(a.records, encoding="utf-8"))
     out = os.path.abspath(a.out_dir)  # "." must still give <name>2 / <name>3 next to it
     tier_dirs = {"A": out, "B": os.path.abspath(a.out_b or out + "2"), "C": os.path.abspath(a.out_c or out + "3")}
-    for d in tier_dirs.values():
+    pending_dir = os.path.abspath(a.out_d or out + "4")
+    for d in list(tier_dirs.values()) + [pending_dir]:
         os.makedirs(d, exist_ok=True)
-    # quality.py's classification places the bundles: 1 -> <out_dir>, 2 -> <out_dir>2, 3 / pending -> <out_dir>3
+    # quality.py's classification places the bundles: 1 -> <out_dir>, 2 -> <out_dir>2, 3 -> <out_dir>3, pending -> <out_dir>4
     qf = os.path.join(HERE, "quality.json")
     quality = json.load(open(qf, encoding="utf-8"))["bundles"] if os.path.isfile(qf) else {}
-    cat_dirs = {"1": tier_dirs["A"], "2": tier_dirs["B"], "3": tier_dirs["C"], "pending": tier_dirs["C"]}
+    cat_dirs = {"1": tier_dirs["A"], "2": tier_dirs["B"], "3": tier_dirs["C"], "pending": pending_dir}
     unplaced = []
 
     # the manual review of the tasks no bundle is made for (why, by category)

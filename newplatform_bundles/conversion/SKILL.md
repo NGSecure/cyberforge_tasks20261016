@@ -26,9 +26,10 @@ python3 -I select_candidates.py <inner_root> snapshot_scan/ replay_deep/ candida
 python3 -I classify.py        <inner_root> records.json              # (again if either of the two above found something)
 python3 -I prune_replay_deep.py <inner_root> records.json replay_deep/  # optional: stub captures no result needs
 python3 -I convert.py         <inner_root> records.json <out_dir>    # one bundle per converted task, placed by quality.json:
-                                                                     #   category 1 in <out_dir>, 2 in <out_dir>2, 3 / pending
-                                                                     #   in <out_dir>3 (--out-b/--out-c); by tier without it
-python3 -I validate.py        <out_dir>                              # static checks of all three, no Docker
+                                                                     #   category 1 in <out_dir>, 2 in <out_dir>2, 3 in
+                                                                     #   <out_dir>3, pending in <out_dir>4 (--out-b/-c/-d);
+                                                                     #   by tier without it
+python3 -I validate.py        <out_dir>                              # static checks of all four, no Docker
 python3 -I verify_bundles.py  verification/plan.json verification/results.jsonl   # build.sh for many bundles,
                                                                      #   plus alternative ground truths / judge settings,
                                                                      #   verify_diag.py / verify_exploit.py on failures
@@ -369,13 +370,23 @@ The folders sort the bundles by the quality of the dataset task (the repo README
 criteria and lists every bundle with a problem): category 1 (the task is fine, the bundle passed
 here) in `newplatform_bundles/`, 2 (a minor problem: fixed with a small change, or one that does
 not change what an agent sees or how it is judged; the bundle passed here) in `newplatform_bundles2/`,
-3 (a serious problem) and pending (not built here, or not surely the dataset's fault) in
-`newplatform_bundles3/`. Passing bundles are classified by rule (`quality.py`: the dataset's PoV file
+3 (a serious problem) in `newplatform_bundles3/`, and pending, the fourth category (not built
+here, or not surely the dataset's fault), in `newplatform_bundles4/`. Passing bundles are classified by rule (`quality.py`: the dataset's PoV file
 did not trigger and another dataset input is used; the seed is only in a sibling task; the file was
 an LFS pointer (as upstream has it); no crash evidence or another task's report; the description names
 another crash class or, corrected from `description_fixes.json`, another place); every other
 bundle has a manual entry in `quality_review.json`. What the
 conversion got wrong is fixed in the conversion, never counted as a dataset problem.
+
+**Bundles without a ground truth** (the user's decision of 2026-10-19): a task whose verified
+crashing seed (fuzz_results/vulnerable/crash_report.json) is only a Git LFS pointer, as upstream
+has it, and that nothing else stands in for, is converted anyway (classify.py records
+`ground_truth_missing`). convert.py writes no `build/ground_truth_poc`, a `solution/solve.sh` that
+says so and fails, `judge.json` `no_ground_truth`, and task_server.py's selfcheck from
+`templates/selfcheck_nogt.py`: both builds have the harness, an executable or library differs
+between them, an empty input crashes neither (`PASS-NO-GROUND-TRUTH`; verification_summary.py's
+`pass-no-gt`). quality.py puts them in category 3: whether an input can trigger the bug is not
+verified. Every other bundle is rendered exactly as before.
 
 ## Gotchas
 

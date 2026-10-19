@@ -16,8 +16,9 @@ on the conversion: what the conversion got wrong was fixed, see SKILL.md):
            missing, but the bundle passed here); the bundle passed here;
   3        a serious dataset problem: no input of the dataset triggers the injected bug alone, the
            injected change breaks the build, any input (the empty one) triggers it, ...;
-  pending  not decided: not built here (network, disk), or the cause is not the dataset's for
-           sure (e.g. the dataset crashed a build its own recipe does not make).
+  pending  not decided (the fourth category, in its own directory): not built here (network,
+           disk), or the cause is not the dataset's for sure (e.g. the dataset crashed a build its
+           own recipe does not make).
 
 Passing bundles are classified by rule from what the dataset ships and what verification found;
 every other bundle needs an entry in quality_review.json (the manual review, with the texts).
@@ -31,11 +32,14 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 V = os.path.join(HERE, "verification")
 DESCRIPTION_FIXES = json.load(open(os.path.join(HERE, "description_fixes.json")))
+# the files of each task that the team which prepared the dataset copy added or changed (upstream_comparison.md)
+UPDIFF = json.load(open(os.path.join(HERE, "upstream_diff.json")))["tasks"]
 ORDER = ("results", "results_rerun", "results_retry", "results_changed", "results_exploit", "results_round2",
-         "results_ca", "results_round3", "results_quality", "results_quality_ca")
-FOLDERS = ("newplatform_bundles", "newplatform_bundles2", "newplatform_bundles3")
+         "results_ca", "results_round3", "results_quality", "results_quality_ca", "results_nogt", "results_net",
+         "results_disk")
+FOLDERS = ("newplatform_bundles", "newplatform_bundles2", "newplatform_bundles3", "newplatform_bundles4")
 CAT_DIR = {"1": "newplatform_bundles", "2": "newplatform_bundles2", "3": "newplatform_bundles3",
-           "pending": "newplatform_bundles3"}
+           "pending": "newplatform_bundles4"}
 CAT_NAME = {"1": "第一类", "2": "第二类", "3": "第三类", "pending": "待确认"}
 LFS = b"version https://git-lfs.github.com/spec/v1"
 OK_STATUS = "可用：三项自检通过。"
@@ -60,6 +64,60 @@ IMPACT = {"no-evidence": "缺的只是数据集里的记录，不影响 agent �
 GT_CODES = ("pov-not-trigger", "file-missing", "lfs", "artifact-not-reproduce", "constructed")
 LIMIT = {"description": "限制：题面写的漏洞类型与实际崩溃不符。", "harness-injection": "限制：漏洞在 fuzz harness 的测试代码里。"}
 SAME_TASK = "未修改，与原始任务一致。"
+
+
+def by_team(rec, rel):
+    """True when the task's file rel (relative to the task) was added or changed by the team that prepared
+    the dataset copy; every other file of the task is the same as upstream CyberForge-projects."""
+    t = UPDIFF.get(rec["path"], {})
+    return rel in t.get("added", []) or rel in t.get("modified", [])
+
+
+SRC_UP, SRC_TEAM, SRC_ENV, SRC_CONV = "上游数据", "提供数据的团队", "本机环境", "转换侧（判定规则）"
+
+
+def problem_source(rec, e, src, ch):
+    """Who the dataset problem of entry e comes from: (source, note). Upstream CyberForge-projects
+    (github.com/Cyb3rForge/CyberForge-projects) ships the injected diff, the exploit files, the reports
+    and the seeds (the copy has them unchanged, LFS pointers included); the team that prepared the copy
+    added or regenerated the task metadata (bug_description_variants.json, hints.json, bug_report.txt,
+    task_contract.json) and 60 empty sanitizer reports (upstream_diff.json)."""
+    if e["cat"] == "1":
+        return "", "", {}
+    if e["basis"].startswith(("本机未能完成构建", "本机还没有验证")):
+        return SRC_ENV, "本机没能构建或还没有验证，不是数据的问题", {}
+    if "转换侧限制" in e["basis"]:
+        return SRC_CONV, "判定规则本身的限制，不是数据的问题", {}
+    team, up, notes, per = [], [], [], {}
+    for c in e.get("codes") or []:
+        if c in ("description-wrong", "description"):
+            rel = "bug_report.txt" if (src.get("description") or {}).get("from", "").startswith("bug_report.txt") \
+                else "bug_description_variants.json"
+            (team if by_team(rec, rel) else up).append("题面描述取自 %s，%s" % (rel, "是这个团队生成的" if by_team(rec, rel) else "上游原有"))
+            per[c] = SRC_TEAM if by_team(rec, rel) else SRC_UP
+        elif c == "pov-not-trigger":
+            # the PoV file the dataset names (exploit_files/pov.bin, upstream's) is not what exploit.sh feeds
+            # the harness in the project's image; the hints.json the team generated names it as the seed too
+            up.append("数据集的 PoV 文件 exploit_files/pov.bin 是上游原有的，但不是 exploit 实际喂给 harness 的输入")
+            if by_team(rec, "hints.json"):
+                team.append("这个团队生成的 hints.json 也把它记成了“成功的种子”")
+                per[c] = SRC_UP + "；" + SRC_TEAM
+            else:
+                per[c] = SRC_UP
+        elif c == "lfs":
+            up.append("标准答案文件在上游就只是 LFS 指针")
+            per[c] = SRC_UP
+        else:
+            up.append(BASIS.get(c, c))
+            per[c] = SRC_UP
+    if not e.get("codes"):
+        up.append("")  # the problem text says which of the task's (upstream) files it is
+        if "hints.json" in e.get("problem", "") and by_team(rec, "hints.json"):
+            notes.append("另外，这个团队生成的 hints.json 记的“成功种子”也不触发")
+    if by_team(rec, "sanitizer_report.txt"):
+        notes.append("上游这个任务没有 sanitizer 报告，这个团队补的是一个空文件")
+    who = "；".join(x for x in (SRC_UP if up else "", SRC_TEAM if team else "") if x)
+    return who, "；".join(x for x in up + team + notes if x), per
 
 
 def deviation(codes):
@@ -329,19 +387,42 @@ def main():
                          suggest=("把描述改成实际崩溃类型。" if "description" in codes else "") +
                                  ("如果要求漏洞在项目的产品代码里，可剔除或单独标注。" if "harness-injection" in codes else ""),
                          status=OK_STATUS + "".join(LIMIT[c] for c in codes if c in LIMIT) + deviation(codes))
+        elif status == "pass-no-gt":
+            # the user's decision of 2026-10-19: a task whose crashing seed is only a Git LFS pointer is
+            # converted without a ground truth (build.sh's self-check 3 checks the judge only)
+            gm = src["ground_truth_missing"]
+            e.update(cat="3", how="rule", basis=NOGT_BASIS,
+                     problem="数据集的 fuzz 重放记录（fuzz_results/vulnerable/crash_report.json）显示种子 %s（%d 字节）让注入版崩溃，"
+                             "但这个文件只是 Git LFS 指针：上游 CyberForge-projects 的全部提交和它在 Hugging Face 上的副本里都没有它的内容，"
+                             "数据集里也没有别的输入能代替它。" % (os.path.basename(gm["dataset_file"]), gm["bytes"]),
+                     impact="bundle 没有标准答案，本机没有验证注入的漏洞能被输入触发（只验证了两个版本都能构建、判定能运行、空输入不触发）。"
+                            "数据集记录过它触发，大概率可解；但如果实际触发不了，这个任务上的轨迹只能是失败的探索，"
+                            "而且分不清是模型没解出还是任务本身解不了。",
+                     fix="按 2026-10-19 的决定照常转成 bundle，不做“标准答案只让漏洞版崩溃”的自检：自检 1、2 照做，"
+                         "自检 3 只检查两个版本都有 harness、两版的二进制不同、空输入两版都不崩溃；solution/solve.sh 只说明没有参考 PoV（运行即失败）。",
+                     suggest="拿到原始种子（上游作者本地的 runs/fuzz_poc/_curated/，按 SHA-256 命名）后放进 "
+                             "newplatform_bundles/conversion/lfs_objects/、重新转换，就能补上标准答案和自检；在那之前，统计成功率时把这几个任务单独看待。",
+                     status="能构建、能判定；没有参考 PoV，能否触发未在本机验证（自检输出 PASS-NO-GROUND-TRUTH）。")
         elif status == "pass-degenerate":
-            empty_gt = bool(src["ground_truth"].get("degenerate_empty_input"))
+            empty_gt = bool((src["ground_truth"] or {}).get("degenerate_empty_input"))
             e.update(cat="3", how="rule", basis="空输入就能触发：任何提交都能通过",
-                     problem=("数据集记录的触发输入就是空文件，" if empty_gt else "标准答案能触发，但空输入同样") +
+                     problem=("没有标准答案（崩溃种子只有 Git LFS 指针），而空输入" if src["ground_truth"] is None else
+                              "数据集记录的触发输入就是空文件，" if empty_gt else "标准答案能触发，但空输入同样") +
                              "只让注入版崩溃：漏洞不依赖 PoV 的内容（多在任何输入都会走到的路径上）。",
                      impact="提交任意文件（包括空文件）都判为成功，判定区分不了有效 PoV；轨迹不能反映 PoC 迭代。",
                      fix=NOFIX_TXT, suggest="重新设计注入，使漏洞依赖输入内容；否则剔除（或只用于不看判定结果的用途）。",
                      status="不可用于 PoC 迭代：自检输出 PASS-DEGENERATE（空输入也触发）。" + SAME_TASK)
+        elif status == "unverified":
+            # not built here yet (e.g. queued in a verification run): pending until it is
+            print("  not verified yet:", name)
+            e.update(cat="pending", how="rule", basis="本机还没有验证（排队构建中）", problem="还没有在本机构建、运行自检。",
+                     impact="未验证，不知道能否触发。", fix=NOFIX_TXT, suggest="运行 build.sh，按自检结果和数据集证据归类。", status="待验证。")
         else:
             missing.append("%s (%s, no review entry)" % (name, status))
             e.update(cat="pending", how="none", basis="未复核", problem="", impact="", fix="", suggest="", status=status)
         e["category"] = CAT_NAME[e["cat"]]
         e["folder"] = CAT_DIR[e["cat"]]
+        e["source_of_problem"], e["source_note"], e["code_sources"] = problem_source(rec, e, src, gtc.get(rec["path"]))
         out[name] = e
     json.dump({"_about": __doc__.split("\n\n")[0] + " (quality.py)", "bundles": dict(sorted(out.items()))},
               open(os.path.join(HERE, "quality.json"), "w"), indent=1, ensure_ascii=False)
@@ -354,6 +435,7 @@ def main():
 
 
 NOFIX_TXT = "未修改。"
+NOGT_BASIS = "崩溃种子只有 Git LFS 指针（上游就缺），没有标准答案"
 
 if __name__ == "__main__":
     sys.exit(main())

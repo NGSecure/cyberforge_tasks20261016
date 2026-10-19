@@ -5,6 +5,8 @@
 
 Later files override earlier ones for the same bundle. Status:
   pass / pass-degenerate   build.sh passed here (an empty input also passes: degenerate);
+  pass-no-gt               a bundle made without a ground truth (the dataset's crashing input is only
+                           a Git LFS pointer): build.sh and the checks that need none passed here;
   fail                     the ground truth is not differential in the rebuilt images; the
                            note says what the judge-free runs and the dataset's own exploit did;
   not-built                the build did not finish here: needs network, out of disk, or the
@@ -24,11 +26,13 @@ REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 
 
 def current_gt(name):
-    """SHA-256 of the bundle's ground truth as it is now, or None."""
-    for d in ("newplatform_bundles", "newplatform_bundles2", "newplatform_bundles3"):
+    """SHA-256 of the bundle's ground truth as it is now, "" for a bundle made without one, or None."""
+    for d in ("newplatform_bundles", "newplatform_bundles2", "newplatform_bundles3", "newplatform_bundles4"):
         f = os.path.join(REPO, d, name, "build", "ground_truth_poc")
         if os.path.isfile(f):
             return hashlib.sha256(open(f, "rb").read()).hexdigest()
+        if os.path.isfile(os.path.join(REPO, d, name, "cyberforge_source.json")):
+            return ""
     return None
 
 
@@ -37,7 +41,7 @@ def alt_verdict(name, r, cur):
     Labels name the file: "dataset <path in the task>", "report_inputs <path>" / "constructed <path>"
     (next to this script)."""
     src = None
-    for d in ("newplatform_bundles", "newplatform_bundles2", "newplatform_bundles3"):
+    for d in ("newplatform_bundles", "newplatform_bundles2", "newplatform_bundles3", "newplatform_bundles4"):
         f = os.path.join(REPO, d, name, "cyberforge_source.json")
         if os.path.isfile(f):
             src = json.load(open(f))
@@ -102,6 +106,8 @@ def main():
             alt_note = "the ground truth was verified as an alternative of the first one, in the same build"
         if v.startswith("PASS-DEGENERATE"):
             out[name] = {"status": "pass-degenerate", "note": ""}
+        elif v.startswith("PASS-NO-GROUND-TRUTH"):
+            out[name] = {"status": "pass-no-gt", "note": "no ground truth: the ground-truth check is not run"}
         elif v.startswith("PASS"):
             out[name] = {"status": "pass", "note": ""}
         elif v:

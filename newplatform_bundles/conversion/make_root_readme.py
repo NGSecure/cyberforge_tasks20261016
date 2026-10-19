@@ -14,7 +14,9 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(sys.argv[1])
 CATS = ("第一类", "第二类", "第三类", "待确认")
-STATUS_ZH = {"pass": "通过", "pass-degenerate": "通过但空输入也触发", "fail": "不通过", "not-built": "本机未建成",
+SHOW = {"待确认": "第四类：待确认"}  # quality.json keeps the name 待确认
+STATUS_ZH = {"pass": "通过", "pass-degenerate": "通过但空输入也触发", "pass-no-gt": "通过（无标准答案）",
+             "fail": "不通过", "not-built": "本机未建成",
              "stale": "待重验", "unverified": "未验证"}
 
 
@@ -38,13 +40,14 @@ LFS = json.load(open(os.path.join(HERE, "lfs_objects", "missing.json"), encoding
 lfs_have = sum(1 for f in os.listdir(os.path.join(HERE, "lfs_objects")) if len(f) == 64)
 tier = {"cyberforge_tasks20261016/projects/" + r["path"]: r["tier"] for r in R}
 n_conv = sum(1 for r in R if r["converted"])
+N_NOGT = sum(1 for r in R if r["converted"] and r.get("ground_truth_missing"))  # no ground truth (crashing seed: an LFS pointer)
 by_cat = collections.Counter(e["category"] for e in Q.values())
 by_cat_status = collections.Counter((e["category"], e["verification"]) for e in Q.values())
 by_cat_tier = collections.Counter((e["category"], tier[e["source"]]) for e in Q.values())
 # bundles whose description was corrected (conversion/description_fixes.json)
 N_DESC_FIX = sum(1 for e in Q.values() if "题面描述指错了位置" in e.get("basis", ""))
 folder_of = {"第一类": "newplatform_bundles/", "第二类": "newplatform_bundles2/", "第三类": "newplatform_bundles3/",
-             "待确认": "newplatform_bundles3/"}
+             "待确认": "newplatform_bundles4/"}
 
 # ---- the raw data: where it is, and whether it changed since it was uploaded ----------------------
 DATA = "cyberforge_tasks20261016"
@@ -66,7 +69,8 @@ md.append(table(["路径", "内容"], [
     ("`newplatform_bundles/`", "第一类 bundle（%d 个），以及三类共用的转换工具 `conversion/`、任务去向清单 `conversion_manifest.csv`、"
                                "转换报告 `CONVERSION_REPORT.md`" % by_cat["第一类"]),
     ("`newplatform_bundles2/`", "第二类 bundle（%d 个）" % by_cat["第二类"]),
-    ("`newplatform_bundles3/`", "第三类（%d 个）和待确认（%d 个）bundle" % (by_cat["第三类"], by_cat["待确认"])),
+    ("`newplatform_bundles3/`", "第三类 bundle（%d 个）" % by_cat["第三类"]),
+    ("`newplatform_bundles4/`", "第四类：待确认的 bundle（%d 个）" % by_cat["待确认"]),
 ]) + "\n")
 
 md.append("## 1. 原始数据核对\n")
@@ -86,10 +90,12 @@ md.append("- **缺 Git LFS 内容（上游就缺）**：%d 个文件（%d 个不
           "这些指针来自上游：上游从未启用 LFS，FZ 任务是带着 6749 个指针文件当作普通文件提交的（`af0e78d`），提供数据的团队补了其中 2812 个，"
           "剩下的就是这些。转换时按 SHA-256 从数据集其他任务里同一文件的副本、上游发布前的分支里找到内容完全一致的文件，又还原了 %d 个对象"
           "（%d 个文件），还原的副本放在仓库外、只供转换使用；仍缺 %d 个对象（%d 个文件，分布在 %d 个任务里），在上游任何分支和提交里都没有，"
-          "其中 9 个任务的崩溃种子就在缺的里面，没有生成 bundle，其余缺的是不进入 bundle 的语料。"
-          "缺失清单：`newplatform_bundles/conversion/lfs_objects/missing.json`。用到了还原文件的 bundle 在下表里标为第二类。\n"
+          "上游 README 链接的 Hugging Face 数据集（同一棵目录树的压缩包）里也只有同样的指针。其中 %d 个任务的崩溃种子就在缺的里面："
+          "按 2026-10-19 的决定照常转成 bundle，但没有标准答案、不做标准答案自检（第三类）；其余缺的是不进入 bundle 的语料，不影响任何 bundle"
+          "（agent 看不到它们，判定也不用），所以不再找回。缺失清单：`newplatform_bundles/conversion/lfs_objects/missing.json`。"
+          "用到了还原文件的 bundle 在下表里标为第二类。\n"
           % (LFS["pointers"], lfs_have + LFS["missing_objects"], lfs_have, LFS["restored"], LFS["missing_objects"],
-             sum(len(v) for v in LFS["tasks"].values()), len(LFS["tasks"])))
+             sum(len(v) for v in LFS["tasks"].values()), len(LFS["tasks"]), N_NOGT))
 
 md.append("## 2. 背景：bundle、PoC 迭代与判定\n")
 md.append("- **数据集的一个任务**：在开源项目的一个安全版本（`secure_base_commit`）上，由 LLM 注入一个内存安全漏洞"
@@ -97,10 +103,12 @@ md.append("- **数据集的一个任务**：在开源项目的一个安全版本
 md.append("- **一个 bundle**：新平台上的一个 PoV 任务。agent 拿到注入后的源码和一句漏洞描述，提交一个 PoV（喂给 fuzz harness 的输入文件、"
           "命令行参数，或链接项目代码的 C/C++ 程序）；判定服务（task-server）把同一个 PoV 在**注入版**和**安全版**上各运行一次，"
           "注入版崩溃（sanitizer 报错或致命信号）而安全版不崩溃，才算成功。agent 可以反复提交、根据反馈修改，平台记录整个过程（轨迹）。")
-md.append("- **标准答案**（`build/ground_truth_poc`）：一个已知能成功的 PoV，只用于自检，不给 agent 看。")
+md.append("- **标准答案**（`build/ground_truth_poc`）：一个已知能成功的 PoV，只用于自检，不给 agent 看。"
+          "%d 个 bundle 没有标准答案（数据集的崩溃种子只是 Git LFS 指针，见第 1 节）。" % N_NOGT)
 md.append("- **`build.sh` 的三项自检**：构建 agent 镜像和 task-server 镜像（安全版、注入版各编一次）后检查：① agent 镜像里没有安全版源码等残留；"
           "② agent 镜像里找不到注入改动的安全版代码行；③ 标准答案让注入版崩溃、安全版不崩溃，并且空输入两个版本都不崩溃"
-          "（否则输出 PASS-DEGENERATE）。")
+          "（否则输出 PASS-DEGENERATE）。没有标准答案的 bundle，③ 只检查两个版本都有 harness、两版的二进制不同、空输入两版都不崩溃"
+          "（输出 PASS-NO-GROUND-TRUTH）。")
 md.append("- **本机验证**：在本机对每个 bundle 实际运行了 `build.sh`；没通过的再排查判定隔离、sanitizer 选项，并直接运行数据集自己的 exploit.sh "
           "（`newplatform_bundles/conversion/verification/`）。\n")
 
@@ -123,10 +131,10 @@ md.append(table(["分类", "目录", "标准"], [
      "修改只涉及标准答案（只用于自检、不给 agent 看），或把指错了位置的题面描述改为数据集报告里的实际崩溃位置（%d 个），"
      "都不改变判定方式。" % N_DESC_FIX),
     ("第三类：原始数据有严重问题", "`newplatform_bundles3/`",
-     "数据集里没有只让注入版崩溃的输入（exploit 的输入不触发、报告用的输入没保存、报告是别的程序或别的任务的、安全版也崩溃），"
+     "数据集里没有只让注入版崩溃的输入（exploit 的输入不触发、报告用的输入没保存或只剩 Git LFS 指针、报告是别的程序或别的任务的、安全版也崩溃），"
      "注入的代码不在被测程序里或让构建失败，注入的漏洞不依赖输入（空输入就触发，PASS-DEGENERATE）或实际走不到（只在内存分配失败时），"
      "漏洞版只表现为超时；修复需要重新构造 PoV 或重新设计注入，或者修复后仍会明显影响轨迹质量。"),
-    ("待确认", "`newplatform_bundles3/`",
+    ("第四类：待确认", "`newplatform_bundles4/`",
      "无法确定：本机没能构建（需要公网、磁盘不够），或者原因不能确定在原始数据（例如数据集有注入版的崩溃记录、但按它给的构建流程编不出注入版；"
      "判定规则本身的限制）。"),
 ]) + "\n")
@@ -134,23 +142,71 @@ md.append(table(["分类", "目录", "标准"], [
 md.append("## 4. 各类数量\n")
 md.append("%d 个 bundle（1034 个任务中另有 %d 个没有生成 bundle，原因见 `newplatform_bundles/conversion_manifest.csv` 的 `review` 列）：\n"
           % (len(Q), len(R) - n_conv))
-statuses = ("pass", "pass-degenerate", "fail", "not-built")
+statuses = ("pass", "pass-degenerate", "pass-no-gt", "fail", "not-built")
 md.append(table(["分类", "目录", "数量"] + ["本机验证：" + STATUS_ZH[s] for s in statuses], [
-    [c, "`%s`" % folder_of[c], by_cat[c]] + [by_cat_status[(c, s)] for s in statuses] for c in CATS] +
+    [SHOW.get(c, c), "`%s`" % folder_of[c], by_cat[c]] + [by_cat_status[(c, s)] for s in statuses] for c in CATS] +
     [["合计", "", len(Q)] + [sum(by_cat_status[(c, s)] for c in CATS) for s in statuses]]) + "\n")
 md.append("按转换时的证据分级（tier：A = 有崩溃证据、harness 型；B = 有崩溃证据、命令行 / 程序型；C = 数据集里没有触发证据）：\n")
-md.append(table(["分类", "A", "B", "C"], [[c] + [by_cat_tier[(c, t)] for t in "ABC"] for c in CATS]) + "\n")
+md.append(table(["分类", "A", "B", "C"], [[SHOW.get(c, c)] + [by_cat_tier[(c, t)] for t in "ABC"] for c in CATS]) + "\n")
+
+# ---- the summary: what converted well, what still has a problem, who it comes from, what to do -------------
+sys.path.insert(0, HERE)
+import summary_groups as SG  # noqa: E402
+UNC = json.load(open(os.path.join(HERE, "unconverted_review.json"), encoding="utf-8"))["tasks"]
+
+
+def who(counter):
+    return "、".join("%s %d" % (k, v) for k, v in counter.most_common()) if len(counter) > 1 else \
+        (next(iter(counter)) if counter else "—")
+
+
+md.append("### 汇总：哪些转好了、哪些还有问题，问题出在哪里，怎么解决\n")
+md.append("“问题出在”指原始数据里出问题的文件是谁提供的：**上游数据**是 [Cyb3rForge/CyberForge-projects]"
+          "(https://github.com/Cyb3rForge/CyberForge-projects) 原有的文件（注入的 diff、exploit、sanitizer 报告、种子，本仓库的副本与上游完全相同）；"
+          "**提供数据的团队**是他们新增或重新生成的文件（题面描述变体、hints.json、bug_report.txt、task_contract.json、60 个空的报告，见 "
+          "`newplatform_bundles/conversion/upstream_comparison.md`、`upstream_diff.json`）；**本机环境**、**转换侧**不是原始数据的问题。"
+          "第二类的一个 bundle 可能有几个问题，按问题分别计数；每个 bundle 的明细见第 6 节（“问题及影响”一栏的“来源”）。\n")
+rows = [("第一类", "原始数据正常", by_cat["第一类"], "—", "无需处理", "可直接用于 PoC 迭代和轨迹生成")]
+code_src = collections.defaultdict(collections.Counter)
+groups = collections.OrderedDict()
+for name, e in sorted(Q.items()):
+    c = e["category"]
+    if c == "第一类":
+        continue
+    if c == "第二类" and e.get("codes"):
+        for code in e["codes"]:
+            code_src[code][(e.get("code_sources") or {}).get(code) or SG.UP] += 1
+        continue
+    g = SG.basis_row(c, e["basis"]) or (e["basis"], e.get("suggest") or e.get("fix") or "", e.get("status") or "")
+    k = (c,) + g
+    groups.setdefault(k, collections.Counter())[e.get("source_of_problem") or SG.UP] += 1
+for code, cnt in sorted(code_src.items(), key=lambda kv: -sum(kv[1].values())):
+    problem, fix, state = SG.CODE_ROWS[code]
+    rows.append(("第二类", problem, sum(cnt.values()), who(cnt), fix, state))
+for c in ("第二类", "第三类", "待确认"):
+    for k, cnt in sorted(((k, v) for k, v in groups.items() if k[0] == c), key=lambda kv: -sum(kv[1].values())):
+        rows.append((SHOW.get(c, c), k[1], sum(cnt.values()), who(cnt), k[2], k[3]))
+unc = collections.Counter(v["category"] for v in UNC.values())
+for cat, n in unc.most_common():
+    problem, fix = SG.REVIEW_ROWS.get(cat, (cat, ""))
+    rows.append(("未转换", problem, n, SG.UP, fix, "没有生成 bundle"))
+md.append(table(["分类", "问题", "数量", "问题出在", "解决办法（已做 / 建议）", "现状"], rows) + "\n")
+usable = by_cat["第一类"] + by_cat["第二类"]
+md.append("合计：1034 个任务里，**%d 个 bundle 可用于 PoC 迭代和轨迹生成**（第一类 %d、第二类 %d）；第三类 %d 个原始数据有严重问题"
+          "（其中 %d 个没有标准答案）；第四类（待确认）%d 个；另有 %d 个任务没有生成 bundle。\n"
+          % (usable, by_cat["第一类"], by_cat["第二类"], by_cat["第三类"], N_NOGT, by_cat["待确认"], len(R) - n_conv))
 
 md.append("## 5. 转换侧的问题（已改正，不计入原始数据问题）\n")
 md.append(open(os.path.join(HERE, "conversion_fixes.md"), encoding="utf-8").read().strip() + "\n")
 
 md.append("## 6. 原始数据有问题的 bundle\n")
-md.append("第二类、第三类和待确认的 bundle 逐个列在下面（第一类不列）。列的含义：**转换后路径**相对 repo 根目录；**原始数据路径**是转换前的任务目录；"
-          "**分类**后是简短依据；**问题及影响**说明问题的前因后果、为什么归到原始数据，以及对 PoC 迭代和轨迹质量的影响；**必要修改**分“已做”和"
+md.append("第二类、第三类和第四类（待确认）的 bundle 逐个列在下面（第一类不列）。列的含义：**转换后路径**相对 repo 根目录；**原始数据路径**是转换前的任务目录；"
+          "**分类**后是简短依据；**问题及影响**说明问题的前因后果、为什么归到原始数据，以及对 PoC 迭代和轨迹质量的影响，"
+          "最后的“来源”说明问题出在上游数据（Cyb3rForge/CyberForge-projects 原有的文件）还是提供数据的团队（他们新增或重新生成的文件）；**必要修改**分“已做”和"
           "“建议（未实施）”；**修改后状态**说明现在能否使用、还有哪些限制。每个 bundle 的机器可读版本在 "
           "`newplatform_bundles/conversion/quality.json`。\n")
 HEAD = ["Bundle 名称", "转换后路径", "原始数据路径", "分类", "问题及影响", "必要修改", "修改后状态"]
-for c, title in (("第二类", "6.1 第二类：原始数据轻微问题"), ("第三类", "6.2 第三类：原始数据严重问题"), ("待确认", "6.3 待确认")):
+for c, title in (("第二类", "6.1 第二类：原始数据轻微问题"), ("第三类", "6.2 第三类：原始数据严重问题"), ("待确认", "6.3 第四类：待确认")):
     rows = []
     for name, e in sorted(Q.items()):
         if e["category"] != c:
@@ -163,8 +219,10 @@ for c, title in (("第二类", "6.1 第二类：原始数据轻微问题"), ("�
             fix = "已做：" + e["fix"]
         if e.get("suggest"):
             fix += "\n建议（未实施）：" + e["suggest"]
-        rows.append((name, "%s%s" % (folder_of[c], name), e["source"], "%s：%s" % (c, e["basis"]),
-                     "问题：%s\n影响：%s" % (e["problem"], e["impact"]), fix, e["status"]))
+        rows.append((name, "%s%s" % (folder_of[c], name), e["source"], "%s：%s" % (SHOW.get(c, c), e["basis"]),
+                     "问题：%s\n影响：%s\n来源：%s%s" % (e["problem"], e["impact"], e.get("source_of_problem") or "—",
+                                                       "（%s）" % e["source_note"] if e.get("source_note") else ""),
+                     fix, e["status"]))
     md.append("### %s（%d 个）\n" % (title, len(rows)))
     md.append(table(HEAD, rows) + "\n")
 
@@ -175,7 +233,7 @@ sugg = open(os.path.join(HERE, "suggestions.md"), encoding="utf-8").read().strip
 for k, v in {"N_ENV": len(env), "N_NET": sum(1 for e in env if "磁盘" not in e["problem"]),
              "N_DISK": sum(1 for e in env if "磁盘" in e["problem"]),
              "N_DEGEN": sum(1 for e in Q.values() if e["verification"] == "pass-degenerate"),
-             "N_LFS": LFS["missing_objects"]}.items():
+             "N_LFS": LFS["missing_objects"], "N_NOGT": N_NOGT}.items():
     sugg = sugg.replace("@@%s@@" % k, str(v))
 md.append(sugg + "\n")
 open(os.path.join(REPO, "README.md"), "w", encoding="utf-8").write("\n".join(md) + "\n")

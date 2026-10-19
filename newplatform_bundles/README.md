@@ -1,20 +1,21 @@
 # CyberForge → 新平台 bundles（第一类）
 
-`../cyberforge_tasks20261016/`（CyberForge 数据集）转换出的新平台 bundle，与原数据集分开存放，原数据未做任何修改。bundle 按**原始数据（数据集任务本身）的质量**分在 repo 根目录下三个平级的目录里；本目录放**第一类**，以及三类共用的转换工具、清单和报告。分类标准、各类数量和每个原始数据有问题的 bundle 的说明见 repo 根目录的 `README.md`。
+`../cyberforge_tasks20261016/`（CyberForge 数据集）转换出的新平台 bundle，与原数据集分开存放，原数据未做任何修改。bundle 按**原始数据（数据集任务本身）的质量**分在 repo 根目录下四个平级的目录里；本目录放**第一类**，以及各类共用的转换工具、清单和报告。分类标准、各类数量和每个原始数据有问题的 bundle 的说明见 repo 根目录的 `README.md`。
 
 ## 目录
 
 | 目录 | bundle 数 | 内容 |
 |---|---|---|
-| `newplatform_bundles/`（本目录） | 489 | 第一类：原始数据正常，本机三项自检全部通过，可直接用于 PoC 迭代和轨迹生成 |
-| `newplatform_bundles2/` | 117 | 第二类：原始数据有轻微问题（已做少量修改，或不修改也不影响轨迹质量），本机三项自检全部通过 |
-| `newplatform_bundles3/` | 288 | 第三类（169 个）：原始数据有严重问题，不应用于 PoC 迭代；待确认（119 个）：本机没能构建，或不能断定是原始数据的问题 |
+| `newplatform_bundles/`（本目录） | 522 | 第一类：原始数据正常，本机三项自检全部通过，可直接用于 PoC 迭代和轨迹生成 |
+| `newplatform_bundles2/` | 125 | 第二类：原始数据有轻微问题（已做少量修改，或不修改也不影响轨迹质量），本机三项自检全部通过 |
+| `newplatform_bundles3/` | 183 | 第三类：原始数据有严重问题，不应用于 PoC 迭代 |
+| `newplatform_bundles4/` | 73 | 第四类（待确认）：本机没能构建，或不能断定是原始数据的问题 |
 
-三个目录的 bundle 结构和用法完全相同；PoV 有两种形态：harness 型（喂给 OSS-Fuzz harness 的一个输入文件，801 个）和 CLI / 程序型（交给项目自己的程序：CLI 的输入文件、标准输入或命令行参数，或者是一个链接项目代码的 C/C++ 程序，93 个）。所有 bundle 都按当前模板生成（镜像标签 `v0.0.2`，判定服务做了隔离，原因见 `CONVERSION_REPORT.md` 4.7），已推送过旧版本的请用新版本替换。
+四个目录的 bundle 结构和用法完全相同；PoV 有两种形态：harness 型（喂给 OSS-Fuzz harness 的一个输入文件，810 个）和 CLI / 程序型（交给项目自己的程序：CLI 的输入文件、标准输入或命令行参数，或者是一个链接项目代码的 C/C++ 程序，93 个）。所有 bundle 都按当前模板生成（镜像标签 `v0.0.2`，判定服务做了隔离，原因见 `CONVERSION_REPORT.md` 4.7），已推送过旧版本的请用新版本替换。
 
-本目录还有（三个目录共用）：
+本目录还有（四个目录共用）：
 
-- `conversion_manifest.csv`：全部 1034 个任务的去向（tier、是否转换、所在目录、分类 `quality` / `quality_basis`、bundle、PoV 类型、原因、标准答案来源、验证结果等）。另有 140 个任务没有生成 bundle，逐个人工复核过，原因记录在这里的 `review`、`review_note` 列（exploit 根本没有执行注入的代码、行为差异型 oracle、只跑单元测试、触发输入没有保存或是空文件等，见 `CONVERSION_REPORT.md` 第 5 节）
+- `conversion_manifest.csv`：全部 1034 个任务的去向（tier、是否转换、所在目录、分类 `quality` / `quality_basis`、bundle、PoV 类型、原因、标准答案来源、验证结果等）。另有 131 个任务没有生成 bundle，逐个人工复核过，原因记录在这里的 `review`、`review_note` 列（exploit 根本没有执行注入的代码、行为差异型 oracle、只跑单元测试、触发输入没有保存或是空文件等，见 `CONVERSION_REPORT.md` 第 5 节）
 - `CONVERSION_REPORT.md`：转换方法、统计、验证情况、发现的问题
 - `conversion/`：转换工具（`SKILL.md` 说明原理与流程）。`replay_exploits.py`、`replay_deep.py` 负责重放 exploit 并记录它实际运行的命令和输入，`report_inputs.py` 从镜像里取出报告指明崩溃的项目文件，`select_candidates.py` 在重建的漏洞版上实际运行 exploit 的候选输入、找出触发的那一个，`classify.py`、`deep_recipe.py`、`convert.py`、`validate.py`、`scan_snapshots.py` 和 `templates/` 负责分级与生成，`verify_bundles.py`（及 `verify_diag.py`、`verify_exploit.py`）在本机实际构建和验证，`choose_gt.py` 按验证结果选标准答案，`quality.py` 按原始数据质量分类（`quality.json`，人工复核在 `quality_review.json`），`make_root_readme.py` 写 repo 根目录的 `README.md`。`replay/`、`replay_deep/` 是两种重放的记录，`report_inputs/` 是从镜像源码快照里取出的、报告指明崩溃的项目文件，`constructed/` 是按 exploit 意图修正过的输入（附说明），`candidates/` 是候选输入的实测结果，`snapshot_scan/` 是基础镜像快照层的扫描结果，`verification/` 是本机验证的记录，`records.json` 是分级结果，`unconverted_review.json` 是未转换任务的人工复核
 
@@ -25,7 +26,7 @@ bash newplatform_bundles/<bundle>/build.sh      # 公网：构建 main + task-se
 bash newplatform_bundles/<bundle>/push.sh       # 上传网络：推送镜像并回填 task.toml [environment]
 ```
 
-另外两个目录同样用法（`newplatform_bundles2/<bundle>/`、`newplatform_bundles3/<bundle>/`）。
+另外三个目录同样用法（`newplatform_bundles2/<bundle>/`、`newplatform_bundles3/<bundle>/`、`newplatform_bundles4/<bundle>/`）。
 
 Docker Hub 匿名拉取每小时约 100 次。`build.sh` 拉不到基础镜像时，会改从 `mirror.gcr.io` 拉同一个 digest，内容完全相同；也可以先 `docker login`。
 

@@ -33,9 +33,9 @@
   "tier": "A",
   "pov_kind": "harness",
   "quality": {
-    "category": "\u5f85\u786e\u8ba4",
-    "basis": "\u672c\u673a\u672a\u80fd\u5b8c\u6210\u6784\u5efa\uff0c\u65e0\u6cd5\u9a8c\u8bc1\uff08\u4e0d\u662f\u6570\u636e\u95ee\u9898\uff09",
-    "verification": "not-built"
+    "category": "\u7b2c\u4e09\u7c7b",
+    "basis": "\u7a7a\u8f93\u5165\u5c31\u80fd\u89e6\u53d1\uff1a\u4efb\u4f55\u63d0\u4ea4\u90fd\u80fd\u901a\u8fc7",
+    "verification": "pass-degenerate"
   },
   "ground_truth_evidence": "crash evidence in the dataset",
   "ground_truth": {

@@ -76,7 +76,7 @@ def main():
     for name, rs in sorted(hist.items()):
         r = rs[-1]
         bd = next((os.path.join(REPO, d, name) for d in ("newplatform_bundles", "newplatform_bundles2",
-                                                         "newplatform_bundles3")
+                                                         "newplatform_bundles3", "newplatform_bundles4")
                    if os.path.isdir(os.path.join(REPO, d, name))), None)
         if not bd:
             continue

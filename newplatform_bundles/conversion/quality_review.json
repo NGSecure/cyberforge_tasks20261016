@@ -4,7 +4,7 @@
   "arrow-wf-llm-0": {
    "cat": "pending",
    "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。",
+   "problem": "本机没能构建：构建时 CMake 配置失败（安全版构建，与注入无关；CMake 在下载第三方依赖时出错）。属本机环境限制，与数据集无关。",
    "impact": "未验证，不知道能否触发。",
    "fix": "未修改。",
    "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
@@ -235,15 +235,6 @@
    "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
    "status": null
   },
-  "file-fz-0": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：file 没有发布的基础镜像，build.sh 要联网构建。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
   "flex-wf-rag-0": {
    "cat": "3",
    "basis": "注入的代码让构建本身崩溃，注入版建不出来",
@@ -361,410 +352,59 @@
    "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
    "status": null
   },
-  "guetzli-fz-0": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-fz-1": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-fz-10": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-fz-11": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-fz-12": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-fz-13": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-fz-14": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-fz-15": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-fz-16": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-fz-17": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-fz-18": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-fz-19": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-fz-2": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-fz-20": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-fz-21": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-fz-22": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-fz-23": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-fz-24": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。注意：标准答案是 fuzz 崩溃样本，报告里崩溃的是 generated_inputs 里另一个文件（crash-055868f4…），构建后两个都要试。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-fz-25": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-fz-26": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-fz-27": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-fz-28": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-fz-29": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-fz-3": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-fz-30": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-fz-31": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-fz-32": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-fz-5": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-fz-6": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-fz-7": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-fz-8": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-fz-9": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-wf-llm-0": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-wf-llm-1": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-wf-llm-10": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
   "guetzli-wf-llm-11": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
+   "cat": "3",
+   "basis": "报告是别的任务的；exploit 的输入不触发",
+   "problem": "报告与另外 11 个 guetzli WF_LLM 任务的逐字节相同（12 个任务共用一份，崩溃在 ProcessAPP，jpeg_data_reader.cc:403），不是本任务的：本任务的注入在 ProcessSOF。exploit 把 14 字节的 JPEG 片段喂给 guetzli_fuzzer，两个版本都只报解析错误、不崩溃（本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃）；数据集的 pov.bin 也不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
    "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
   },
   "guetzli-wf-llm-2": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
+   "cat": "3",
+   "basis": "报告是别的任务的；exploit 的输入不触发",
+   "problem": "报告与另外 11 个 guetzli WF_LLM 任务的逐字节相同（12 个任务共用一份，崩溃在 ProcessAPP，jpeg_data_reader.cc:403），不是本任务的：本任务的注入在 ProcessSOF。exploit 把 17 字节的 JPEG 片段喂给 guetzli_fuzzer，两个版本都只报解析错误、不崩溃（本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃）；数据集的 pov.bin 也不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
    "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
   },
   "guetzli-wf-llm-3": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
+   "cat": "3",
+   "basis": "报告是别的任务的；exploit 的输入不触发",
+   "problem": "报告与另外 11 个 guetzli WF_LLM 任务的逐字节相同（12 个任务共用一份，崩溃在 ProcessAPP，jpeg_data_reader.cc:403），不是本任务的：本任务的注入在 ProcessSOF。exploit 把 15 字节的 JPEG 片段喂给 guetzli_fuzzer，两个版本都只报解析错误、不崩溃（本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃）；数据集的 pov.bin 也不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
    "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
   },
   "guetzli-wf-llm-4": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
+   "cat": "3",
+   "basis": "报告是别的任务的；exploit 的输入不触发",
+   "problem": "报告与另外 11 个 guetzli WF_LLM 任务的逐字节相同（12 个任务共用一份，崩溃在 ProcessAPP，jpeg_data_reader.cc:403），不是本任务的：本任务的注入在 ProcessSOF。exploit 把 396 字节的 JPEG 片段喂给 guetzli_fuzzer，两个版本都只报解析错误、不崩溃（本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃）；数据集的 pov.bin 也不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
    "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
   },
   "guetzli-wf-llm-5": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
+   "cat": "3",
+   "basis": "数据集给的种子和 exploit 的输入都不触发，报告用的输入没有保存",
+   "problem": "报告与另外 11 个 guetzli WF_LLM 任务的逐字节相同（12 个任务共用一份，崩溃在 ProcessAPP，jpeg_data_reader.cc:403），与本任务注入的函数相同，但这份报告 12 个任务共用，崩溃的输入没有保存。exploit 把 28 字节的 JPEG 片段喂给 guetzli_fuzzer，两个版本都不崩溃（本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃）；数据集的 pov.bin 也不触发。题面描述说的是 ProcessCOM，注入实际在 ProcessAPP。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
    "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
   },
   "guetzli-wf-llm-6": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
+   "cat": "3",
+   "basis": "报告是别的任务的；exploit 的输入不触发",
+   "problem": "报告与另外 11 个 guetzli WF_LLM 任务的逐字节相同（12 个任务共用一份，崩溃在 ProcessAPP，jpeg_data_reader.cc:403），不是本任务的：本任务的注入在 ProcessDQT。exploit 把 77 字节的 JPEG 片段喂给 guetzli_fuzzer，两个版本都只报解析错误、不崩溃（本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃）；数据集的 pov.bin 也不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
    "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-wf-llm-7": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-wf-llm-8": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-wf-llm-9": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "guetzli-wf-rag-0": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
   },
   "h2o-wf-llm-0": {
    "cat": "3",
@@ -1350,24 +990,6 @@
    "fix": "未修改。",
    "suggest": "针对注入点构造不依赖之前输入的 PoV（或对注入版做定向 fuzz、逐个单独回放），找到能单独复现的输入后可升为第二类。",
    "status": null
-  },
-  "perfetto-fz-0": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
-  },
-  "perfetto-fz-1": {
-   "cat": "pending",
-   "basis": "本机未能完成构建，无法验证（不是数据问题）",
-   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。",
-   "impact": "未验证，不知道能否触发。",
-   "fix": "未修改。",
-   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
-   "status": "待验证。未修改，与原始任务一致。"
   },
   "perfetto-fz-2": {
    "cat": "pending",

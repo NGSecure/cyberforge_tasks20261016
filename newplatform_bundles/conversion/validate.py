@@ -1,17 +1,19 @@
 #!/usr/bin/env python3
 """Static checks over generated CyberForge bundles (no Docker needed).
 
-    python3 -I validate.py <out_dir> [--out-b DIR] [--out-c DIR] [bundle ...]
+    python3 -I validate.py <out_dir> [--out-b DIR] [--out-c DIR] [--out-d DIR] [bundle ...]
 
 Checks per bundle: required files, no unfilled @@placeholders@@, task.toml /
 judge.json / cyberforge_source.json parse, `bash -n` on every script, in-memory
 compile of the Python files (no .pyc written), one auth token used consistently,
-the ground truth matches its recorded sha256 (and solve.sh decodes to it), the
+the ground truth matches its recorded sha256 (and solve.sh decodes to it; a bundle made without
+one, cyberforge_source.json ground_truth_missing, has none anywhere and the selfcheck that does
+not need one), the
 build inputs referenced by the Dockerfiles exist, every FROM is the recorded
 (digest-pinned) base image, the snapshot residue list is consistent and covers
 /opt/src_snapshot.tar, and environment/ holds only the expected non-secret files.
 Bundles of category 1 (quality.py: the dataset task is fine) live in <out_dir>, category 2
-in <out_dir>2, category 3 and pending in <out_dir>3 (as convert.py writes them); a bundle's
+in <out_dir>2, category 3 in <out_dir>3 and pending in <out_dir>4 (as convert.py writes them); a bundle's
 directory must match the category its cyberforge_source.json records (or, for a bundle made
 without one, its tier: A, B, C).
 CLI/program bundles (tier-B templates) also need a recorded recipe whose placeholders
@@ -68,7 +70,7 @@ def check_recipe(bd, judge):
     return errs
 
 
-FOLDER_CATS = {"A": ("第一类",), "B": ("第二类",), "C": ("第三类", "待确认")}  # <out_dir>, <out_dir>2, <out_dir>3
+FOLDER_CATS = {"A": ("第一类",), "B": ("第二类",), "C": ("第三类",), "D": ("待确认",)}  # <out_dir>, <out_dir>2..4
 
 
 def check(bd, tier):
@@ -79,8 +81,9 @@ def check(bd, tier):
     except Exception as e:
         return ["cyberforge_source.json: %s" % e]
     b = src.get("pov_kind") in B_KINDS
+    nogt = src.get("ground_truth") is None and bool(src.get("ground_truth_missing"))
     env_allowed = ENV_ALLOWED
-    for f in REQUIRED + ["environment/" + f for f in sorted(env_allowed)] + (["build/aux/README.txt"] if b else []):
+    for f in [x for x in REQUIRED if not (nogt and x == "build/ground_truth_poc")] + ["environment/" + f for f in sorted(env_allowed)] + (["build/aux/README.txt"] if b else []):
         if not os.path.isfile(os.path.join(bd, f)):
             errs.append("missing " + f)
     if errs:
@@ -144,15 +147,27 @@ def check(bd, tier):
         set(re.findall(r"X-Submission-Token: ([0-9a-f]{32})", solve))
     if len(toks) != 1:
         errs.append("auth token inconsistent: %s" % sorted(toks))
-    gt = open(os.path.join(bd, "build/ground_truth_poc"), "rb").read()
-    if hashlib.sha256(gt).hexdigest() != src["ground_truth"]["sha256"] \
-            or not (gt or src["ground_truth"].get("degenerate_empty_input")):
-        errs.append("ground truth sha256 mismatch, or empty without degenerate_empty_input")
-    m = re.search(r"<<'B64'\n(.*?)\nB64\n", solve, re.S)  # the terminator is a line of its own
-    if m and base64.b64decode(m.group(1)) != gt:
-        errs.append("solve.sh payload != ground truth")
-    if not m and "/solve" not in solve:
-        errs.append("solve.sh neither inlines nor fetches the ground truth")
+    if nogt:
+        ts = open(os.path.join(bd, "environment/task-server/task_server.py")).read()
+        if os.path.exists(os.path.join(bd, "build/ground_truth_poc")) or "ground_truth_poc" in \
+                open(os.path.join(bd, "environment/task-server/Dockerfile")).read():
+            errs.append("a bundle without a ground truth has or copies build/ground_truth_poc")
+        if "B64" in solve or "/solve" in solve or not re.search(r"(?m)^exit 1$", solve):
+            errs.append("solve.sh of a bundle without a ground truth must write nothing and fail")
+        if "PASS-NO-GROUND-TRUTH" not in ts or "open(GROUND_TRUTH_POC" in ts.split("def selfcheck():")[1]:
+            errs.append("task_server.py's selfcheck is not the one without a ground truth")
+        if not judge.get("no_ground_truth"):
+            errs.append("judge.json lacks no_ground_truth")
+    else:
+        gt = open(os.path.join(bd, "build/ground_truth_poc"), "rb").read()
+        if hashlib.sha256(gt).hexdigest() != src["ground_truth"]["sha256"] \
+                or not (gt or src["ground_truth"].get("degenerate_empty_input")):
+            errs.append("ground truth sha256 mismatch, or empty without degenerate_empty_input")
+        m = re.search(r"<<'B64'\n(.*?)\nB64\n", solve, re.S)  # the terminator is a line of its own
+        if m and base64.b64decode(m.group(1)) != gt:
+            errs.append("solve.sh payload != ground truth")
+        if not m and "/solve" not in solve:
+            errs.append("solve.sh neither inlines nor fetches the ground truth")
     for df in ("environment/Dockerfile", "environment/task-server/Dockerfile"):
         t = open(os.path.join(bd, df)).read()
         for ref in re.findall(r"^COPY\s+(?!--from)(\S+)\s", t, re.M):
@@ -192,14 +207,15 @@ def check(bd, tier):
 def main():
     args = sys.argv[1:]
     opts = {}
-    for flag in ("--out-b", "--out-c"):
+    for flag in ("--out-b", "--out-c", "--out-d"):
         if flag in args:
             i = args.index(flag)
             opts[flag] = args[i + 1]
             del args[i:i + 2]
     out = os.path.abspath(args[0])
     dirs = {"A": out, "B": os.path.abspath(opts.get("--out-b", out + "2")),
-            "C": os.path.abspath(opts.get("--out-c", out + "3"))}
+            "C": os.path.abspath(opts.get("--out-c", out + "3")),
+            "D": os.path.abspath(opts.get("--out-d", out + "4"))}
     todo = []
     for tier, d in dirs.items():
         if not os.path.isdir(d):

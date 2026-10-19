@@ -23,8 +23,9 @@ of disk or needs the network (without --ca), the project's remaining bundles are
 as not built; --max-seconds stops
 after the bundle that crosses the limit. --ca builds each bundle from a copy of its base
 image that also trusts the given CA, for machines whose outbound TLS goes through an
-intercepting proxy (a build step that clones or downloads otherwise fails); the bundles
-themselves are not changed (results carry "built_with_proxy_ca"). A bundle's images are removed after it, and the
+intercepting proxy (a build step that clones or downloads otherwise fails), and runs the
+builds on the host's network with $HTTPS_PROXY passed in, so they reach the network through
+this machine's proxy; the bundles themselves are not changed (results carry "built_with_proxy_ca"). A bundle's images are removed after it, and the
 build cache whenever the next bundle is of another project, so the run fits a fixed disk.
 """
 import hashlib
@@ -43,6 +44,12 @@ NETWORK_RE = re.compile(r"Could not resolve host|unable to access 'https?://|ser
 DISK_RE = re.compile(r"no space left on device", re.I)  # BuildKit says it in lower case
 PROXY_DOWN_RE = re.compile(r"proxyconnect tcp: dial tcp [0-9.]+:\d+: connect: connection refused")
 LOW_DISK = 8 << 30  # bytes free below which the build cache is cleared between two bundles of a project
+
+
+def gt_sha256(bd):
+    """SHA-256 of the bundle's ground truth, or None for a bundle made without one."""
+    f = os.path.join(bd, "build", "ground_truth_poc")
+    return hashlib.sha256(open(f, "rb").read()).hexdigest() if os.path.isfile(f) else None
 
 
 def verdict_of(text):
@@ -145,14 +152,13 @@ ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt GIT_SSL_CAINFO=/etc/ssl/cer
 """
 
 
-def ca_build_script(bd, ca):
-    """--ca: a copy of build.sh whose base image also trusts this machine's TLS-intercepting
-    proxy (only for verifying here: some builds clone or download from the network). The
-    bundle itself is unchanged; the copy is written next to build.sh and removed after."""
-    text = open(os.path.join(bd, "build.sh")).read()
-    base = re.search(r"^BASE=(\S+)", text, re.M).group(1)
-    if re.search(r"^HAS_HUB_IMAGE=0", text, re.M):
-        return None  # the base is built from build/setup, which downloads without the CA
+# HTTPS only: this machine's proxy tunnels (CONNECT) and answers 405 to plain-HTTP requests, which reach
+# the network directly (e.g. apt's http://archive.ubuntu.com)
+PROXY_VARS = ("HTTPS_PROXY", "https_proxy")
+
+
+def ca_image(base, ca):
+    """A copy of image base that also trusts the CA (built once per base), or None."""
     tag = "cf_verify_ca:" + hashlib.sha1(base.encode()).hexdigest()[:12]
     if subprocess.run(["docker", "image", "inspect", tag], capture_output=True).returncode != 0:
         if subprocess.run(["docker", "image", "inspect", base], capture_output=True).returncode != 0 and \
@@ -166,11 +172,47 @@ def ca_build_script(bd, ca):
             open(os.path.join(ctx, "Dockerfile"), "w").write(CA_DOCKERFILE % base)
             if subprocess.run(["docker", "build", "-q", "-t", tag, ctx], capture_output=True).returncode != 0:
                 return None
-    text = re.sub(r"^BASE=\S+", "BASE=" + tag, text, count=1, flags=re.M)
+    return tag
+
+
+def ca_build_script(bd, ca):
+    """--ca: a copy of build.sh whose base image also trusts this machine's TLS-intercepting
+    proxy, and whose `docker build`s reach the network through this machine's proxy
+    ($HTTPS_PROXY, with the host's network): only for verifying here, since some builds clone
+    or download. A base built from build/setup (no published image) is built from a copy of
+    build/setup whose FROM image trusts the CA. The bundle itself is unchanged; the copies are
+    written next to build.sh and removed after."""
+    text = open(os.path.join(bd, "build.sh")).read()
+    proxy = os.environ.get("HTTPS_PROXY") or os.environ.get("https_proxy") or ""
+    net = ("--network host " + "".join("--build-arg %s=%s " % (k, proxy) for k in PROXY_VARS) +
+           "--build-arg NO_PROXY=localhost,127.0.0.1 --build-arg no_proxy=localhost,127.0.0.1 ") if proxy else ""
+    if re.search(r"^HAS_HUB_IMAGE=0", text, re.M):
+        setup = os.path.join(bd, "build", "setup")
+        df = open(os.path.join(setup, "Dockerfile")).read()
+        m = re.search(r"(?m)^FROM\s+(\S+)", df)
+        tag = ca_image(m.group(1), ca) if m else None
+        old = 'docker build -t "$BASE" build/setup'
+        if not tag or old not in text:
+            return None
+        tmp = os.path.join(bd, SETUP_COPY)
+        shutil.rmtree(tmp, ignore_errors=True)
+        shutil.copytree(setup, tmp)
+        open(os.path.join(tmp, "Dockerfile"), "w").write(df[:m.start()] + "FROM " + tag + df[m.end():])
+        text = text.replace(old, 'docker build %s-t "$BASE" "%s"' % (net, tmp))
+    else:
+        tag = ca_image(re.search(r"^BASE=(\S+)", text, re.M).group(1), ca)
+        if not tag:
+            return None
+        text = re.sub(r"^BASE=\S+", "BASE=" + tag, text, count=1, flags=re.M)
+    for t in ('"$MAIN_TAG"', '"$TS_TAG"'):
+        text = text.replace("docker build -t %s" % t, "docker build %s-t %s" % (net, t))
     text = re.sub(r'^HERE=.*$', 'HERE="%s"' % bd, text, count=1, flags=re.M)
     path = os.path.join(bd, ".build.verify-ca.sh")
     open(path, "w").write(text)
     return path
+
+
+SETUP_COPY = ".setup.verify-ca"
 
 
 def project_of(bundle):
@@ -223,6 +265,7 @@ def main():
         finally:
             if ca and script and os.path.isfile(script):
                 os.remove(script)
+            shutil.rmtree(os.path.join(bd, SETUP_COPY), ignore_errors=True)
         if PROXY_DOWN_RE.search(log):
             # dockerd cannot reach its HTTP(S) proxy (e.g. the proxy moved): nothing can be pulled
             # or built until it is restarted; stop rather than record a failure for every bundle
@@ -230,8 +273,8 @@ def main():
             sys.exit(3)
         rec = {"bundle": name, "project": project, "exit": rc, "verdict": verdict_of(log),
                "seconds": int(time.monotonic() - t0),
-               # the ground truth this result is evidence for (choose_gt.py)
-               "gt_sha256": hashlib.sha256(open(os.path.join(bd, "build", "ground_truth_poc"), "rb").read()).hexdigest()}
+               # the ground truth this result is evidence for (choose_gt.py); None: a bundle without one
+               "gt_sha256": gt_sha256(bd)}
         if ca:
             rec["built_with_proxy_ca"] = True
         if report_of(log):
@@ -281,15 +324,16 @@ def main():
         # A self-check that failed: run the same inputs without the judge's sandbox too.
         failed = not rec["verdict"].startswith("PASS") or \
             any(not a["verdict"].startswith("PASS") for a in (rec.get("alts") or {}).values())
-        if have_ts and failed:
+        if have_ts and failed and gt_sha256(bd):
             rec["diag"] = diag(ts_tag, ["/tests/ground_truth_poc"] + list((item.get("alts") or {}).values()))
         # The dataset's exploit.sh against the two builds, in the project's own image: for a
         # ground truth taken from an exploit run (or a file the exploit names), and for any
         # one-harness bundle whose ground truth failed.
         src = json.load(open(os.path.join(bd, "cyberforge_source.json")))
         harness = "fuzzer_candidates" in json.load(open(os.path.join(bd, "environment", "task-server", "judge.json")))
-        how = src["ground_truth"].get("how_found", "")
-        if have_ts and harness and (how.split(" (")[0] in EXPLOIT_SOURCED or not rec["verdict"].startswith("PASS")):
+        how = (src["ground_truth"] or {}).get("how_found", "")
+        if have_ts and harness and src["ground_truth"] and \
+                (how.split(" (")[0] in EXPLOIT_SOURCED or not rec["verdict"].startswith("PASS")):
             ef = os.path.join(task_dir(src["source_task"]), "exploit_files")
             text = "".join(open(os.path.join(ef, f), errors="replace").read() for f in os.listdir(ef)
                            if f.endswith((".sh", ".py", ".c", ".cc")))

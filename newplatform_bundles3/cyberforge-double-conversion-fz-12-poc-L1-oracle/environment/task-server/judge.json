@@ -1,0 +1,20 @@
+{
+  "fuzzer_candidates": [
+    "string_to_double_fuzzer"
+  ],
+  "asan_options": "detect_leaks=0",
+  "asan_options_from_exploit": "",
+  "leak_detection": "off: the injected bug is not a leak",
+  "timeout_sec": 60,
+  "cyberforge": {
+    "project": "double-conversion",
+    "vulnerability_id": "vulnerability_FZ_12",
+    "pipeline": "FZ"
+  },
+  "no_ground_truth": {
+    "dataset_file": "exploit_files/generated_inputs/curated_seed_dcd5943ced96826e5ba593d59ae3246389fdb495927b0e24fbc3c9b905c57fe8.bin",
+    "sha256": "dcd5943ced96826e5ba593d59ae3246389fdb495927b0e24fbc3c9b905c57fe8",
+    "bytes": 4,
+    "why": "the dataset's verified crashing seed is only a Git LFS pointer, in the dataset and in its origin github.com/Cyb3rForge/CyberForge-projects (conversion/upstream_comparison.md): the bundle has no ground truth"
+  }
+}

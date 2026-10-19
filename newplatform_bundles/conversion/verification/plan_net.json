@@ -1,0 +1,633 @@
+[
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-file-fz-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "file"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-arrow-wf-llm-0-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/arrow/vulnerabilities/vulnerability_WF_LLM_0/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "arrow"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-fz-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-fz-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-fz-10-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-fz-11-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-fz-12-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-fz-13-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-fz-14-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-fz-15-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-fz-16-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-fz-17-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-fz-18-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-fz-19-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-fz-2-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-fz-20-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-fz-21-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-fz-22-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-fz-23-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-fz-24-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-fz-25-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-fz-26-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-fz-27-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-fz-28-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-fz-29-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-fz-3-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-fz-30-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-fz-31-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-fz-32-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-fz-5-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-fz-6-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-fz-7-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-fz-8-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-fz-9-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-wf-llm-0-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/guetzli/vulnerabilities/vulnerability_WF_LLM_0/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-wf-llm-1-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/guetzli/vulnerabilities/vulnerability_WF_LLM_1/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-wf-llm-10-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/guetzli/vulnerabilities/vulnerability_WF_LLM_10/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-wf-llm-11-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/guetzli/vulnerabilities/vulnerability_WF_LLM_11/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-wf-llm-2-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/guetzli/vulnerabilities/vulnerability_WF_LLM_2/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-wf-llm-3-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/guetzli/vulnerabilities/vulnerability_WF_LLM_3/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-wf-llm-4-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/guetzli/vulnerabilities/vulnerability_WF_LLM_4/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-wf-llm-5-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/guetzli/vulnerabilities/vulnerability_WF_LLM_5/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-wf-llm-6-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/guetzli/vulnerabilities/vulnerability_WF_LLM_6/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-wf-llm-7-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/guetzli/vulnerabilities/vulnerability_WF_LLM_7/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-wf-llm-8-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/guetzli/vulnerabilities/vulnerability_WF_LLM_8/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-wf-llm-9-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/guetzli/vulnerabilities/vulnerability_WF_LLM_9/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-wf-rag-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-perfetto-fz-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "perfetto"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-perfetto-fz-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "perfetto"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-perfetto-fz-2-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "perfetto"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-perfetto-fz-3-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "perfetto"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-perfetto-fz-4-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "perfetto"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-perfetto-fz-5-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "perfetto"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-perfetto-fz-6-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/poc.bin": "/home/user/cf_resolved/cyberforge_tasks20261016/projects/perfetto/vulnerabilities/vulnerability_FZ_6/exploit_files/poc.bin"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "perfetto"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-perfetto-fz-7-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "perfetto"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-perfetto-fz-8-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "perfetto"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-perfetto-wf-llm-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "perfetto"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-serenity-fz-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "serenity"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-serenity-fz-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "serenity"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-serenity-fz-10-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "serenity"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-serenity-fz-11-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/generated_inputs/poc_append_face_81ae84c9ff.txt": "/home/user/cf_resolved/cyberforge_tasks20261016/projects/serenity/vulnerabilities/vulnerability_FZ_11/exploit_files/generated_inputs/poc_append_face_81ae84c9ff.txt"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "serenity"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-serenity-fz-12-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "serenity"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-serenity-fz-13-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "serenity"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-serenity-fz-14-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "serenity"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-serenity-fz-15-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "serenity"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-serenity-fz-16-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "serenity"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-serenity-fz-17-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "serenity"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-serenity-fz-18-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/generated_inputs/curated_seed_de5174c45453e525d93fe02f334f4e2950a7f200c8cd3ede9e715c9e5bee7a2e.js": "/home/user/cf_resolved/cyberforge_tasks20261016/projects/serenity/vulnerabilities/vulnerability_FZ_18/exploit_files/generated_inputs/curated_seed_de5174c45453e525d93fe02f334f4e2950a7f200c8cd3ede9e715c9e5bee7a2e.js"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "serenity"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-serenity-fz-19-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "serenity"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-serenity-fz-2-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "serenity"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-serenity-fz-20-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/generated_inputs/poc_append_block_636be5b0ff.txt": "/home/user/cf_resolved/cyberforge_tasks20261016/projects/serenity/vulnerabilities/vulnerability_FZ_20/exploit_files/generated_inputs/poc_append_block_636be5b0ff.txt"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "serenity"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-serenity-fz-21-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "serenity"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-serenity-fz-22-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "serenity"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-serenity-fz-23-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "serenity"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-serenity-fz-24-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "serenity"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-serenity-fz-25-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "serenity"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-serenity-fz-3-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "serenity"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-serenity-fz-4-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "serenity"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-serenity-fz-5-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/generated_inputs/poc_ff_c80bd7dd8c.ttf": "/home/user/cf_resolved/cyberforge_tasks20261016/projects/serenity/vulnerabilities/vulnerability_FZ_5/exploit_files/generated_inputs/poc_ff_c80bd7dd8c.ttf"
+  },
+  "judge_alts": {},
+  "priority": 1,
+  "project": "serenity"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-serenity-fz-6-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "serenity"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-serenity-fz-7-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "serenity"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-serenity-fz-8-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "serenity"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-serenity-fz-9-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "serenity"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-serenity-wf-rag-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "serenity"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-serenity-wf-rag-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "serenity"
+ }
+]

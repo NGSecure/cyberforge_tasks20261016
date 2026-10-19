@@ -252,7 +252,7 @@ def guarded_program(es, harnesses, project):
     return ""
 
 
-LFS_PTR_RE = re.compile(rb"^version https://git-lfs\.github\.com/spec/v1\noid sha256:([0-9a-f]{64})\nsize \d+\n$")
+LFS_PTR_RE = re.compile(rb"^version https://git-lfs\.github\.com/spec/v1\noid sha256:([0-9a-f]{64})\nsize (\d+)\n$")
 
 
 # environment the shell or the sanitizers use, not what the program under test reads
@@ -286,6 +286,12 @@ def lfs_pointer(path):
     except OSError:
         return ""
     return m.group(1).decode() if m else ""
+
+
+def lfs_size(path):
+    """The content size a Git LFS pointer file records."""
+    m = LFS_PTR_RE.match(open(path, "rb").read())
+    return int(m.group(2)) if m else 0
 
 
 def exact_seed(vd, project, crep):
@@ -493,12 +499,13 @@ for r in rows:
     # the seed crash_report.json names is shipped as a Git LFS pointer whose content was not
     # found: the dataset's verified crashing input exists but is not in this copy; nothing
     # else stands in for it
-    lfs_seed = ""
+    lfs_seed, lfs_file = "", ""
     if not poc and crep.get("mode") == "replay" and crep.get("attribution_kind") == "exact_seed" \
             and crep.get("returncode") not in (0, None):
         rel_s = (crep.get("seed_provenance") or {}).get("relative_path") or ""
         if "exploit_files/" in rel_s:
-            lfs_seed = lfs_pointer(os.path.join(ef, rel_s.split("exploit_files/", 1)[1]))
+            lfs_file = "exploit_files/" + rel_s.split("exploit_files/", 1)[1]
+            lfs_seed = lfs_pointer(os.path.join(vd, lfs_file))
     rp, rinfo = replayed(r["path"], [os.path.join(vd, f) for f in ef_files])
     if lfs_seed:
         rp = None
@@ -639,8 +646,12 @@ for r in rows:
             # what crashed depended on a process running beside the recorded call (a server, a
             # file being truncated meanwhile): no single recorded input reproduces it
             tier, reason = "B", RACE
-        elif lfs_seed:
-            pass  # the verified crashing seed is known, only missing from this copy: no stand-in
+        elif lfs_seed and fuzzer:
+            # the verified crashing seed is only a Git LFS pointer (so upstream) and nothing stands in
+            # for it: the bundle ships without a ground truth, and build.sh's self-check 3 checks the
+            # judge without one (both builds have the harness and differ, an empty input crashes
+            # neither); the user's decision of 2026-10-19
+            bundle, converted, poc_src = "harness", True, "none (the dataset's crashing seed is only a Git LFS pointer)"
         elif deep and deep_kind == "harness":
             poc = os.path.relpath(os.path.join(DEEP_DIR, p, r["vuln"], deep["gt_file"]),
                                   os.path.dirname(DEEP_DIR))
@@ -737,6 +748,10 @@ for r in rows:
         "dockerhub_image": pj.get("dockerhub_image", ""),
         "target_dir": pj.get("target_dir", ""), "language": pj.get("language", ""),
         "verified": jl(os.path.join(vd, "verification_result.json")).get("checks") or None,
+        # no ground truth: the dataset's crashing seed, which only a Git LFS pointer records
+        **({"ground_truth_missing": {"dataset_file": lfs_file, "sha256": lfs_seed,
+                                     "bytes": lfs_size(os.path.join(vd, lfs_file))}}
+           if converted and not poc and lfs_seed else {}),
     })
 
 json.dump(records, open(OUT, "w"), indent=1)

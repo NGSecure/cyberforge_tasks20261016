@@ -1,0 +1,1 @@
+An out-of-bounds heap buffer overflow in serenity's LibMedia VP9 parser (Userland/Libraries/LibMedia/Video/VP9/Parser.cpp) lets malformed font-binary inputs overwrite heap memory due to a removed length restriction.

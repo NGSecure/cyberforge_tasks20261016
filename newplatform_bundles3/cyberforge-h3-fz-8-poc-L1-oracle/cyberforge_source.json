@@ -1,0 +1,81 @@
+{
+  "bundle": "cyberforge-h3-fz-8-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/h3/vulnerabilities/vulnerability_FZ_8",
+  "base_image": "vuljector/h3:setup@sha256:0e00ee6039a428a03437f90a40e3a6ae448c02a4214cd911cb6592bbfff022de",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-04-18T17:25:34.177619309Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T15:43:26.585517974Z",
+        "created_by": "sleep infinity",
+        "bytes": 300081134
+      }
+    ],
+    "post_setup_files": 2782,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 2752,
+    "scrubbed_from_agent_image": 28,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out": 25,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 1,
+  "image_tags": {
+    "docker_image": "cyberforge_h3_fz_8_main:v0.0.2",
+    "task_server_image": "cyberforge_h3_fz_8_task_server:v0.0.2"
+  },
+  "tier": "C",
+  "pov_kind": "harness",
+  "quality": {
+    "category": "\u7b2c\u4e09\u7c7b",
+    "basis": "\u5d29\u6e83\u79cd\u5b50\u53ea\u6709 Git LFS \u6307\u9488\uff08\u4e0a\u6e38\u5c31\u7f3a\uff09\uff0c\u6ca1\u6709\u6807\u51c6\u7b54\u6848",
+    "verification": "pass-no-gt"
+  },
+  "ground_truth_evidence": "crash evidence in the dataset (fuzz_results/vulnerable/crash_report.json), but its crashing seed is only a Git LFS pointer: no ground truth, and build.sh's self-check 3 checks the judge without one",
+  "ground_truth_missing": {
+    "dataset_file": "exploit_files/generated_inputs/curated_seed_4ceec3009d51e60bcbd77bf5c11ce695781f5846d19d8d29054e0b275ac31dd2.bin",
+    "sha256": "4ceec3009d51e60bcbd77bf5c11ce695781f5846d19d8d29054e0b275ac31dd2",
+    "bytes": 1027,
+    "why": "the dataset's verified crashing seed is only a Git LFS pointer, in the dataset and in its origin github.com/Cyb3rForge/CyberForge-projects (conversion/upstream_comparison.md): the bundle has no ground truth"
+  },
+  "ground_truth": null,
+  "harness": {
+    "candidates": [
+      "fuzzerCompact"
+    ],
+    "how_found": "metadata (fuzz_poc.py)",
+    "built_by_dataset_snapshot_compile": [
+      "fuzzerCompact"
+    ],
+    "dataset_metadata_said": [
+      "fuzzerCompact",
+      "fuzzerCompact",
+      "fuzzerCompact"
+    ],
+    "metadata_disagrees": false
+  },
+  "recipe": null,
+  "trigger_evidence": {
+    "signal": "asan",
+    "detail": "calloc",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": {
+      "unit_tests": "passed",
+      "exploit_on_vulnerable": "passed",
+      "exploit_on_secure": "passed"
+    }
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": null
+  },
+  "asan_options_from_exploit": null,
+  "cwe_id": "CWE-190",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "006ba2c73a944691777e6bbf08e3754bf5cc9212"
+}
