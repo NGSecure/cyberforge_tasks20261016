@@ -1,0 +1,82 @@
+{
+  "bundle": "cyberforge-perfetto-fz-8-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/perfetto/vulnerabilities/vulnerability_FZ_8",
+  "base_image": "vuljector/perfetto:setup@sha256:70f3df926f5ee4a395c199ee380beb17480936fa9e025108e3ffe76136b8bce5",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-04-18T17:59:23.932941612Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T16:57:46.016595467Z",
+        "created_by": "sleep infinity",
+        "bytes": 1099878844
+      }
+    ],
+    "post_setup_files": 30224,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 26395,
+    "scrubbed_from_agent_image": 3827,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out": 209,
+      "/work/build": 3615,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 1,
+  "image_tags": {
+    "docker_image": "cyberforge_perfetto_fz_8_main:v0.0.2",
+    "task_server_image": "cyberforge_perfetto_fz_8_task_server:v0.0.2"
+  },
+  "tier": "A",
+  "pov_kind": "harness",
+  "quality": {
+    "category": "\u7b2c\u4e09\u7c7b",
+    "basis": "\u5b89\u5168\u7248\u4e5f\u5d29\u6e83\uff1a\u5d29\u6e83\u4e0d\u662f\u6ce8\u5165\u7684\u6f0f\u6d1e\u9020\u6210\u7684",
+    "verification": "fail"
+  },
+  "ground_truth_evidence": "crash evidence in the dataset",
+  "ground_truth": {
+    "dataset_file": "exploit_files/fuzz_results/vulnerable/crash-ba823d07d87c5c71ad127568396b38690712416d",
+    "how_found": "fuzz_crash_artifact",
+    "bytes": 12,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": null,
+    "sha256": "1bf696b2c09561e3c3a67a2ee54ea860c0ef9be41258d635640dda7508466c2c",
+    "solve_sh": "inline"
+  },
+  "harness": {
+    "candidates": [
+      "trace_processor_fuzzer"
+    ],
+    "how_found": "crash_report.json",
+    "built_by_dataset_snapshot_compile": [
+      "trace_processor_fuzzer"
+    ],
+    "dataset_metadata_said": [
+      "trace_processor_fuzzer"
+    ],
+    "metadata_disagrees": false
+  },
+  "recipe": null,
+  "trigger_evidence": {
+    "signal": "asan",
+    "detail": "heap-buffer-overflow",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": {
+      "unit_tests": "passed",
+      "exploit_on_vulnerable": "passed",
+      "exploit_on_secure": "passed"
+    }
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": true
+  },
+  "asan_options_from_exploit": null,
+  "cwe_id": "CWE-130",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "40b529923598b739b2892a536a7692eedbed5685"
+}

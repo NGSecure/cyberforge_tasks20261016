@@ -8,10 +8,10 @@
 
 | 目录 | 内容 | bundle 数 |
 |---|---|---|
-| `newplatform_bundles/` | 第一类：原始数据正常，无需修复，可直接用于 PoC 迭代和轨迹生成 | 522 |
-| `newplatform_bundles2/` | 第二类：原始数据有轻微问题，已做少量修改，或不修改也不影响轨迹质量 | 125 |
-| `newplatform_bundles3/` | 第三类：原始数据有严重问题 | 183 |
-| `newplatform_bundles4/` | 第四类（待确认）：本机没能构建，或不能断定是数据的问题 | 73 |
+| `newplatform_bundles/` | 第一类：原始数据正常，无需修复，可直接用于 PoC 迭代和轨迹生成 | 524 |
+| `newplatform_bundles2/` | 第二类：原始数据有轻微问题，已做少量修改，或不修改也不影响轨迹质量 | 127 |
+| `newplatform_bundles3/` | 第三类：原始数据有严重问题 | 187 |
+| `newplatform_bundles4/` | 第四类（待确认）：本机没能构建，或不能断定是数据的问题 | 65 |
 
 下文的 A / B / C 是转换时按数据集证据定的分级（tier，`conversion_manifest.csv` 的 `tier` 列），与目录无关：A = 有崩溃证据、PoV 是喂给 OSS-Fuzz harness 的一个输入文件；B = 有崩溃证据、PoV 交给项目自己的程序（CLI 的输入 / 命令行参数，或一个链接项目代码的 C/C++ 程序）；C = 数据集里没有触发证据。
 
@@ -88,19 +88,18 @@ task-server 镜像构建两份项目后，记录每次 `compile` 新建、修改
 
 | 状态 | 第一类 | 第二类 | 第三类 | 待确认 | 合计 |
 |---|---|---|---|---|---|
-| 通过：标准答案让注入版崩溃、安全版不崩溃，空输入两边都不崩溃 | 522 | 125 | 0 | 0 | 647 |
-| 通过，但空输入也能让注入版崩溃、安全版不崩溃（空输入就能触发注入的漏洞） | 0 | 0 | 79 | 0 | 79 |
+| 通过：标准答案让注入版崩溃、安全版不崩溃，空输入两边都不崩溃 | 524 | 127 | 0 | 0 | 651 |
+| 通过，但空输入也能让注入版崩溃、安全版不崩溃（空输入就能触发注入的漏洞） | 0 | 0 | 80 | 0 | 80 |
 | 通过（无标准答案）：两个版本都有 harness、两版的二进制不同、空输入两版都不崩溃；标准答案自检没做 | 0 | 0 | 7 | 0 | 7 |
-| 不通过：标准答案在重建的两个版本上不是差分的 | 0 | 0 | 94 | 1 | 95 |
-| 未完成构建 | 0 | 0 | 3 | 70 | 73 |
-| 未验证 | 0 | 0 | 0 | 2 | 2 |
+| 不通过：标准答案在重建的两个版本上不是差分的 | 0 | 0 | 97 | 1 | 98 |
+| 未完成构建 | 0 | 0 | 3 | 64 | 67 |
 
 未完成构建的原因：
 
 | 原因 | bundle 数 |
 |---|---|
-| 需要联网（加了本机代理的 CA 证书后仍然下载失败） | 35 |
 | 本机磁盘不够 | 33 |
+| 需要联网（加了本机代理的 CA 证书后仍然下载失败） | 27 |
 | 注入的改动让构建失败，没有产出 harness | 3 |
 | 注入 diff 打不上 | 1 |
 | 注入版与安全版构建结果完全相同 | 1 |
@@ -113,7 +112,7 @@ task-server 镜像构建两份项目后，记录每次 `compile` 新建、修改
 | exploit.sh 在重建镜像里的表现 | 不通过的 bundle 数 |
 |---|---|
 | 数据集的 exploit.sh 在重建的镜像里两个版本都不崩溃 | 59 |
-| 没有在项目镜像里重跑 exploit（CLI / 程序型，或标准答案不是来自 exploit） | 30 |
+| 没有在项目镜像里重跑 exploit（CLI / 程序型，或标准答案不是来自 exploit） | 33 |
 | 数据集的 exploit.sh 只让注入版崩溃，但崩溃发生在 fuzz 过程中，没有单个输入文件可作标准答案 | 4 |
 | 数据集的 exploit.sh 两个版本都崩溃（assimp-wf-llm-4） | 1 |
 | 数据集的 exploit.sh 在重建的镜像里两个版本都不崩溃（记录里唯一的“崩溃”是 ASan 启动时影子内存分配失败，属于环境问题）（pupnp-wf-llm-0） | 1 |
@@ -132,7 +131,7 @@ exploit.sh 让注入版崩溃、安全版不崩溃、且喂的是单个输入文
 - **harness 的工作目录**：判定服务在每次运行的私有目录里运行 harness。hunspell 的 `fuzzer` 列出 /out 里的 `*.aff` 文件名、再按文件名（相对工作目录）打开词典，OSS-Fuzz 是在 /out 下运行 fuzzer 的，数据集的 exploit 也是这样做的（`cd /out`，或先 `cp /out/*.aff /out/*.dic .`）；否则词典一个都加载不上，同样的输入不会崩溃。现在对 exploit 这样运行 harness 的 2 个 bundle（hunspell-wf-rag-0、hunspell-wf-rag-1），判定服务从 /out 运行它，instruction 里也写明了 `cd /out && ...`；其余 bundle 不变。
 - **触发条件在环境变量里的任务移出**：10 个任务的 exploit 在运行 harness 前设置了程序会读取的环境变量（espeak-ng FZ_4、espeak-ng WF_LLM_1、espeak-ng WF_LLM_2、harfbuzz FZ_5、jq WF_LLM_1、jq WF_LLM_10、jq WF_LLM_5、jq WF_RAG_0、libdwarf WF_LLM_0、xz WF_RAG_1）：harfbuzz FZ_5 设置 `HB_SHAPER_LIST=harfbuzz`，注入的代码正是解析它的地方，设置后任何输入都崩溃、不设置则都不崩溃；espeak-ng 的几个任务把超长路径或植入了恶意 voice 文件的数据目录交给 `ESPEAK_DATA_PATH`，输入文件只是普通文本；jq 的几个任务的注入漏洞在 `jq_set_colors` 里，靠 `JQ_COLORS` 触发；xz WF_RAG_1 用 `LD_PRELOAD` 注入自己的库。PoV 只是一个输入，判定服务不会替它设置环境，这些任务改为不转换（`technical`，见第 5 节）。
 - **标准答案以重建镜像里的实际运行为准**：30 个 bundle 的标准答案按验证结果改了（`conversion/gt_choice.json`，`choose_gt.py`）。9 个改用数据集自己的 `pov.bin`：它在这些 bundle 的构建上能差分，而原来的标准答案只是重放时捕获的输入（assimp WF_RAG_3、c-blosc WF_LLM_0、c-blosc2 WF_RAG_0、espeak-ng WF_LLM_0、flac WF_LLM_0、icu WF_LLM_1、libjxl WF_LLM_1、libjxl WF_LLM_2、libjxl WF_LLM_3）；14 个改用数据集的 exploit.sh 在项目镜像里实际喂给 harness 的输入（`conversion/exploit_live/`）：原来的标准答案不差分，而 exploit.sh 在重建的两个版本上让注入版崩溃、安全版不崩溃（brotli WF_LLM_2、c-blosc WF_LLM_2、cjson WF_LLM_12、double-conversion WF_LLM_1、double-conversion WF_LLM_2、h3 WF_LLM_4、h3 WF_LLM_7、harfbuzz FZ_10、hunspell WF_LLM_1、hunspell WF_LLM_3、hunspell WF_LLM_6、hunspell WF_RAG_2、libzip WF_RAG_0、quickjs FZ_22）。原因主要有两个：之前重放 exploit 用的是通用镜像（没有 /src，/out 里没有种子语料），exploit 走了另一条分支；以及数据集有 102 个任务、分 31 组的 `sanitizer_report.txt` 逐字节相同（例如 guetzli 12 个 WF_LLM 任务共用一份，hunspell 8 个共用一份），按报告找到的崩溃文件只可能属于其中一个任务。
-- **Git LFS 指针**：3937 个文件（1759 个不同对象）只是指针。它们来自上游 Cyb3rForge/CyberForge-projects：上游从未启用 LFS，FZ 任务是带着 6749 个指针文件当作普通文件提交的，提供数据的团队补了其中 2812 个（见 `conversion/upstream_comparison.md`），本仓库和上游都没有存这些 LFS 对象。指针记录了内容的 SHA-256，`conversion/lfs_restore.py` 只用 SHA-256 完全一致的内容还原（同一文件在数据集其他任务里的副本、上游发布前的分支里的文件；镜像自带种子语料里数据集记录过的成员也查了，没有多找到），还原了 278 个对象（864 个文件）；还原后的副本只用于转换，数据集目录本身不变。仍缺 1481 个对象（3073 个文件，分布在 176 个任务里）；上游 README 链接的 Hugging Face 数据集 `AmL-hug/cyberforge-projects`（每个项目一个压缩包，就是同一棵目录树）里也只有同样的指针。其中 9 个任务的崩溃种子就在缺的里面：按 2026-10-19 的决定照常转成 bundle，但没有标准答案（`build/ground_truth_poc` 不存在，`solution/solve.sh` 只说明没有参考 PoV），build.sh 的自检 3 只检查两个版本都有 harness、两版的二进制不同、空输入两版都不崩溃（PASS-NO-GROUND-TRUTH），归第三类；其余任务缺的是语料等不进入 bundle 的文件，不影响任何 bundle，所以不再找回。清单在 `conversion/lfs_objects/missing.json`；拿到原始 LFS 对象放进 `conversion/lfs_objects/` 后重新运行，那几个 bundle 就会带上标准答案。
+- **Git LFS 指针**：3937 个文件（1759 个不同对象）只是指针。它们来自上游 Cyb3rForge/CyberForge-projects：上游从未启用 LFS，FZ 任务是带着 6749 个指针文件当作普通文件提交的，提供数据的团队补了其中 2812 个（见 `conversion/upstream_comparison.md`），本仓库和上游都没有存这些 LFS 对象。指针记录了内容的 SHA-256，`conversion/lfs_restore.py` 只用 SHA-256 完全一致的内容还原（同一文件在数据集其他任务里的副本、上游发布前的分支里的文件；镜像自带种子语料里数据集记录过的成员也查了，没有多找到），还原了 278 个对象（864 个文件）；还原后的副本只用于转换，数据集目录本身不变。仍缺 1481 个对象（3073 个文件，分布在 176 个任务里）；上游 README 链接的 Hugging Face 数据集 `AmL-hug/cyberforge-projects`（每个项目一个压缩包，就是同一棵目录树）里也只有同样的指针。其中 9 个任务的崩溃种子就在缺的里面：按 2026-10-19 的决定照常转成 bundle，但没有标准答案（`build/ground_truth_poc` 不存在，`solution/solve.sh` 只说明没有参考 PoV），build.sh 的自检 3 只检查两个版本都有 harness、两版的二进制不同、空输入两版都不崩溃（PASS-NO-GROUND-TRUTH），本机验证过的 7 个归第三类，2 个本机没能构建、暂在第四类（待确认）；其余任务缺的是语料等不进入 bundle 的文件，不影响任何 bundle，所以不再找回。清单在 `conversion/lfs_objects/missing.json`；拿到原始 LFS 对象放进 `conversion/lfs_objects/` 后重新运行，那几个 bundle 就会带上标准答案。
 
 - **本轮复核发现的转换问题**（逐个复核没有通过的 bundle 时找到，详见 repo 根目录 `README.md` 第 5 节）：程序型判定对 gcc 编译的 PoV 看不到崩溃位置（现在用 llvm-symbolizer 离线解析）、程序 abort 时没有栈（现在加 `handle_abort=1`）、深度重放录不到 exploit 的备用编译命令（`recipe_overrides.json`）、exploit 设置的数据目录变量没有带上、用 `$CC` 编译程序的 exploit 被当成 harness 型、HOME 被当作普通 shell 变量、重放的 16 MB 文件大小上限让 exploit 造不出 GB 级输入却没有识别出来（这 3 个任务现在按已有规则不转换）、按文件名找触发种子时没有先看任务自己的目录、也没有按数据集的做法从镜像的内置语料里取（标准答案内容不变，但之前把这些任务记成了“触发文件没有随任务附带”）、exploit 先运行镜像里的项目程序、harness 只是备用分支时，转换走了镜像外重放看到的备用分支（htslib WF_LLM_0，现在按命令行参数型转换并通过）、以及几个标准答案取错（数据集里其实有能触发的输入，`choose_gt.py` 现在也采用验证通过的数据集文件、报告指明的源码树文件，以及 `constructed/constructed.json` 里按 exploit 意图修正过的输入）。全部程序型 bundle 和改了标准答案的 bundle 都重新构建验证了（`verification/results_quality*.jsonl`）。另有 8 个 bundle 的题面描述指错了位置，按数据集自己的报告改正（`description_fixes.json`，原文保存在 `cyberforge_source.json` 的 `description.original`）。
 
@@ -268,8 +267,8 @@ PoV 本身是代码的情况比想象中多：B 类的程序型 PoV 就是一个
 | cjson-wf-rag-6 | fail | 注入的 diff 让 `cJSON_Utils.c` 编不过（OSS-Fuzz 的构建不编这个文件，exploit 的程序要编） |
 | cjson-wf-rag-2 | fail | exploit 把 `decode_pointer_inplace` 的源码抠出来编进自己的程序，崩溃发生在这份拷贝里（报告的栈在 `test_prog.c`），不经过项目的构建 |
 
-- fuzz 过程中写下的崩溃样本单独运行不复现（5 个：double-conversion-fz-9、h3-fz-26、h3-fz-30、leptonica-fz-1、pcre2-fz-10）：这些 FZ 任务的 `crash_report.json` 记录的是一次 fuzz 运行（`attribution_kind: seeded_fuzz_run`），数据集只验证了“fuzz 过程会让注入版崩溃”，没有单独重放过这个样本（记录里的重放都没有崩溃）。在重建的注入版上单独运行它不崩溃；其中 4 个在本机重跑数据集的 fuzz 过程（exploit.sh）确实让注入版崩溃、安全版不崩溃（double-conversion-fz-9、h3-fz-26、h3-fz-30、pcre2-fz-10），说明构建本身没问题，崩溃依赖 fuzz 过程中积累的状态；其余的在 90 秒的 fuzz 里没有复现。
-- 空输入也能让注入版崩溃、安全版不崩溃（79 个，`PASS-DEGENERATE`，任何空提交都能通过）：注入的漏洞在空输入上就会触发，例如 libyang 6 个任务中的 5 个，数据集自己的报告显示崩溃发生在 `ly_ctx_new` 里（harness 第 19 行，还没读输入）。这些 bundle 归入第三类（`newplatform_bundles3/`），不适合用于 PoC 迭代。
+- fuzz 过程中写下的崩溃样本单独运行不复现（7 个：double-conversion-fz-9、h3-fz-26、h3-fz-30、leptonica-fz-1、pcre2-fz-10、perfetto-fz-7、perfetto-fz-8）：这些 FZ 任务的 `crash_report.json` 记录的是一次 fuzz 运行（`attribution_kind: seeded_fuzz_run`），数据集只验证了“fuzz 过程会让注入版崩溃”，没有单独重放过这个样本（记录里的重放都没有崩溃）。在重建的注入版上单独运行它不崩溃；其中 4 个在本机重跑数据集的 fuzz 过程（exploit.sh）确实让注入版崩溃、安全版不崩溃（double-conversion-fz-9、h3-fz-26、h3-fz-30、pcre2-fz-10），说明构建本身没问题，崩溃依赖 fuzz 过程中积累的状态；其余的在 90 秒的 fuzz 里没有复现。
+- 空输入也能让注入版崩溃、安全版不崩溃（80 个，`PASS-DEGENERATE`，任何空提交都能通过）：注入的漏洞在空输入上就会触发，例如 libyang 6 个任务中的 5 个，数据集自己的报告显示崩溃发生在 `ly_ctx_new` 里（harness 第 19 行，还没读输入）。这些 bundle 归入第三类（`newplatform_bundles3/`），不适合用于 PoC 迭代。
 - 共用的报告：102 个任务（31 组）的 `sanitizer_report.txt` 逐字节相同，最多 12 个任务共用一份（guetzli WF_LLM）。每个任务注入的改动不同，一份报告最多对得上其中一个任务；转换不依赖这些报告指明的输入时，以实际验证为准（3.3）。
 
 ## 5. tier B、C 与未转换的任务

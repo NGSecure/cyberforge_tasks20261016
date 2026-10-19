@@ -41,6 +41,12 @@ lfs_have = sum(1 for f in os.listdir(os.path.join(HERE, "lfs_objects")) if len(f
 tier = {"cyberforge_tasks20261016/projects/" + r["path"]: r["tier"] for r in R}
 n_conv = sum(1 for r in R if r["converted"])
 N_NOGT = sum(1 for r in R if r["converted"] and r.get("ground_truth_missing"))  # no ground truth (crashing seed: an LFS pointer)
+NOGT_SRC = {"cyberforge_tasks20261016/projects/" + r["path"] for r in R if r["converted"] and r.get("ground_truth_missing")}
+nogt_cat = collections.Counter(e["category"] for e in Q.values() if e["source"] in NOGT_SRC)
+nogt_pending = sorted(e["source"].split("/projects/")[1].replace("/vulnerabilities/vulnerability_", " ")
+                      for e in Q.values() if e["source"] in NOGT_SRC and e["category"] == "待确认")
+NOGT_WHERE = "本机验证过的 %d 个归第三类" % nogt_cat["第三类"] + (
+    "，%s 本机没能构建、没有验证，暂在第四类" % "、".join(nogt_pending) if nogt_pending else "")
 by_cat = collections.Counter(e["category"] for e in Q.values())
 by_cat_status = collections.Counter((e["category"], e["verification"]) for e in Q.values())
 by_cat_tier = collections.Counter((e["category"], tier[e["source"]]) for e in Q.values())
@@ -91,11 +97,11 @@ md.append("- **缺 Git LFS 内容（上游就缺）**：%d 个文件（%d 个不
           "剩下的就是这些。转换时按 SHA-256 从数据集其他任务里同一文件的副本、上游发布前的分支里找到内容完全一致的文件，又还原了 %d 个对象"
           "（%d 个文件），还原的副本放在仓库外、只供转换使用；仍缺 %d 个对象（%d 个文件，分布在 %d 个任务里），在上游任何分支和提交里都没有，"
           "上游 README 链接的 Hugging Face 数据集（同一棵目录树的压缩包）里也只有同样的指针。其中 %d 个任务的崩溃种子就在缺的里面："
-          "按 2026-10-19 的决定照常转成 bundle，但没有标准答案、不做标准答案自检（第三类）；其余缺的是不进入 bundle 的语料，不影响任何 bundle"
+          "按 2026-10-19 的决定照常转成 bundle，但没有标准答案、不做标准答案自检（%s）；其余缺的是不进入 bundle 的语料，不影响任何 bundle"
           "（agent 看不到它们，判定也不用），所以不再找回。缺失清单：`newplatform_bundles/conversion/lfs_objects/missing.json`。"
           "用到了还原文件的 bundle 在下表里标为第二类。\n"
           % (LFS["pointers"], lfs_have + LFS["missing_objects"], lfs_have, LFS["restored"], LFS["missing_objects"],
-             sum(len(v) for v in LFS["tasks"].values()), len(LFS["tasks"]), N_NOGT))
+             sum(len(v) for v in LFS["tasks"].values()), len(LFS["tasks"]), N_NOGT, NOGT_WHERE))
 
 md.append("## 2. 背景：bundle、PoC 迭代与判定\n")
 md.append("- **数据集的一个任务**：在开源项目的一个安全版本（`secure_base_commit`）上，由 LLM 注入一个内存安全漏洞"
@@ -193,8 +199,9 @@ for cat, n in unc.most_common():
 md.append(table(["分类", "问题", "数量", "问题出在", "解决办法（已做 / 建议）", "现状"], rows) + "\n")
 usable = by_cat["第一类"] + by_cat["第二类"]
 md.append("合计：1034 个任务里，**%d 个 bundle 可用于 PoC 迭代和轨迹生成**（第一类 %d、第二类 %d）；第三类 %d 个原始数据有严重问题"
-          "（其中 %d 个没有标准答案）；第四类（待确认）%d 个；另有 %d 个任务没有生成 bundle。\n"
-          % (usable, by_cat["第一类"], by_cat["第二类"], by_cat["第三类"], N_NOGT, by_cat["待确认"], len(R) - n_conv))
+          "（其中 %d 个没有标准答案）；第四类（待确认）%d 个%s；另有 %d 个任务没有生成 bundle。\n"
+          % (usable, by_cat["第一类"], by_cat["第二类"], by_cat["第三类"], nogt_cat["第三类"], by_cat["待确认"],
+             "（其中 %d 个也没有标准答案）" % nogt_cat["待确认"] if nogt_cat["待确认"] else "", len(R) - n_conv))
 
 md.append("## 5. 转换侧的问题（已改正，不计入原始数据问题）\n")
 md.append(open(os.path.join(HERE, "conversion_fixes.md"), encoding="utf-8").read().strip() + "\n")
@@ -233,7 +240,9 @@ sugg = open(os.path.join(HERE, "suggestions.md"), encoding="utf-8").read().strip
 for k, v in {"N_ENV": len(env), "N_NET": sum(1 for e in env if "磁盘" not in e["problem"]),
              "N_DISK": sum(1 for e in env if "磁盘" in e["problem"]),
              "N_DEGEN": sum(1 for e in Q.values() if e["verification"] == "pass-degenerate"),
-             "N_LFS": LFS["missing_objects"], "N_NOGT": N_NOGT}.items():
+             "N_LFS": LFS["missing_objects"], "N_NOGT": N_NOGT, "NOGT_WHERE": NOGT_WHERE,
+             "ENV_PROJECTS": "、".join("%s %d 个" % kv for kv in collections.Counter(
+                 e["source"].split("/projects/")[1].split("/")[0] for e in env).most_common())}.items():
     sugg = sugg.replace("@@%s@@" % k, str(v))
 md.append(sugg + "\n")
 open(os.path.join(REPO, "README.md"), "w", encoding="utf-8").write("\n".join(md) + "\n")
