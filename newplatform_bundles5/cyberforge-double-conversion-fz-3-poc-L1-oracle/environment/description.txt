@@ -1,0 +1,1 @@
+Out-of-bounds access in double-conversion's bignum.cc during buffer handling.

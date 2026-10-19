@@ -1,0 +1,100 @@
+{
+  "bundle": "cyberforge-coturn-wf-rag-6-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/coturn/vulnerabilities/vulnerability_WF_RAG_6",
+  "base_image": "vuljector/coturn:setup@sha256:1d9e1d69fb9ae09e1444e074c0e816148a43a17dcd5278b76ad0aa9511dcc0cf",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-05-10T15:57:52.302908107Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T16:04:58.077632832Z",
+        "created_by": "sleep infinity",
+        "bytes": 48010046
+      }
+    ],
+    "post_setup_files": 397,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 367,
+    "scrubbed_from_agent_image": 28,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out": 25,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 2,
+  "image_tags": {
+    "docker_image": "cyberforge_coturn_wf_rag_6_main:v0.0.2",
+    "task_server_image": "cyberforge_coturn_wf_rag_6_task_server:v0.0.2"
+  },
+  "tier": "B",
+  "pov_kind": "driver",
+  "quality": {
+    "category": "\u7b2c\u4e94\u7c7b",
+    "basis": "\u5185\u5b58\u6cc4\u6f0f\uff1a\u65b0\u5199 driver \u8c03 HTTP \u89e3\u6790/\u91ca\u653e\u51fd\u6570\uff0cLeakSanitizer \u5224\u5b9a\uff0c\u65e0\u6807\u51c6\u7b54\u6848",
+    "verification": "pass-no-gt"
+  },
+  "ground_truth_evidence": "category 5: none: the dataset exploit calls a copy of free_http_request cut out of http_server.c on a hand-built struct and has no HTTP input.",
+  "ground_truth": null,
+  "category5": {
+    "review": {
+      "category": "behavioral",
+      "note": "output differs (EXPLOIT_TRIGGERED vs NO_TRIGGER), no crash"
+    },
+    "design": "free_http_request is reached only from the HTTPS admin interface of a running server (a TCP connection), so a new driver compiled with the build's own http_server.c calls parse_http_request on the PoV text and free_http_request on the result, with LeakSanitizer on; the vulnerable build leaks the request struct. The driver frees everything it allocates itself; no ground truth.",
+    "pov_kind": "driver",
+    "oracle": {
+      "type": "crash"
+    }
+  },
+  "harness": null,
+  "recipe": {
+    "kind": "driver",
+    "judge": "task_server_e.py (category 5)",
+    "steps": [
+      {
+        "role": "run",
+        "cwd": "/tmp/cf_poc",
+        "argv": [
+          "/cf_driver/driver",
+          "{poc}"
+        ]
+      }
+    ],
+    "poc_path": "/tmp/cf_poc/request.txt",
+    "aux_files": [],
+    "oracle": {
+      "type": "crash"
+    },
+    "touched_files": [
+      "src/apps/relay/http_server.c"
+    ],
+    "uses_out": false,
+    "design": "free_http_request is reached only from the HTTPS admin interface of a running server (a TCP connection), so a new driver compiled with the build's own http_server.c calls parse_http_request on the PoV text and free_http_request on the result, with LeakSanitizer on; the vulnerable build leaks the request struct. The driver frees everything it allocates itself; no ground truth.",
+    "driver": {
+      "files": [
+        "driver.c",
+        "http_stubs.c"
+      ],
+      "build": "$CC $CFLAGS -fsanitize=address -I/src/coturn/src -I/src/coturn/src/apps/relay -I/src/coturn/src/apps/common -I/src/coturn/src/server -I/src/coturn/src/client /src/coturn/src/apps/relay/http_server.c http_stubs.c driver.c -levent -o /cf_driver/driver",
+      "binary": "/cf_driver/driver",
+      "project_build": true
+    }
+  },
+  "trigger_evidence": {
+    "signal": "behavioral",
+    "detail": "",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": null
+  },
+  "asan_options_from_exploit": null,
+  "cwe_id": "CWE-416",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "ba571ad79547460db7868542ef9532f07661d1c7"
+}

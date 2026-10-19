@@ -1,0 +1,1 @@
+BehaviorTree.CPP contains a post-buffer operation vulnerability in bt_file_logger_v2.cpp, potentially allowing memory corruption via crafted log data.

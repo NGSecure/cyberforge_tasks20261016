@@ -1,0 +1,1 @@
+In Apache Arrow, FieldFromFlatbuffer in builder_nested.cc mishandles a CWE-369 calculation, causing behavioral divergence between vulnerable and secure builds.

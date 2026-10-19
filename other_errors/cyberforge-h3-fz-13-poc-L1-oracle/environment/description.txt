@@ -1,0 +1,1 @@
+An invalid pointer in H3 iterators.c may cause undefined behavior.

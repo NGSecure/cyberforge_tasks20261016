@@ -1,0 +1,1 @@
+A post-buffer operation in h3Index.c (CWE-125) can allow out-of-bounds access when processing H3 indexes, potentially causing memory corruption or crashes.

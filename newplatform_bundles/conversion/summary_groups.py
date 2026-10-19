@@ -56,6 +56,12 @@ BASIS_ROWS = [
      "或注入的代码不在被构建的程序里（两个版本的产物完全相同，task-server 镜像无法建立）", "数据侧（上游）：重新做注入", "构建会失败，不要构建上传"),
     ("第六类", r"编不出注入版", "数据集有注入版的崩溃记录，但按它的构建流程编不出注入版",
      "数据侧（上游）：修正注入或构建流程；第 6 节的表里给出了预计能解决的最小改动，接受后可重新转换、验证", "构建会失败，暂不构建上传"),
+    ("第六类", r"^第五类构建失败", "原来没有生成 bundle、按第五类的方案也构建不了：注入的代码不在被构建的程序里（两个版本的产物完全相同）、"
+     "diff 让漏洞版编译不过，或项目本身在数据集的镜像里就构建不了（open62541）",
+     "数据侧（上游）：重新做注入；open62541 还要修好项目在镜像里的构建", "构建会失败，不要构建上传"),
+    ("第六类", r"^第五类无法转化", "原来没有生成 bundle、按第五类的方案也转化不成有效任务：能构建，但没有 PoV 能通过判定"
+     "（注入只是注释或死代码、改动走不到或没有可观察的效果、注入是加固而非漏洞、需要判定环境给不了的权限或资源）",
+     "数据侧（上游）：重新设计注入；否则剔除", "不要上传"),
 ]
 
 # unconverted tasks, by review category: (problem, what to do)
@@ -87,8 +93,18 @@ C5_STATE = {"pass": "可用（本机验证：标准答案按本任务的规则�
             "unverified": "待验证", "stale": "待重验"}
 
 
-def c5_state(status, unusable=""):
-    return "不可用（原因见第 6.4 节）" if unusable else C5_STATE.get(status, status)
+C5_HARDWARE = "已转化；本机条件不够（磁盘、内存或网络），未实测"
+
+
+def c5_state(status, unusable="", hardware=""):
+    if unusable:
+        return "不可用（原因见第 6.4 节）"
+    return C5_HARDWARE if hardware else C5_STATE.get(status, status)
+
+
+# the same, short, for the totals sentence
+C5_SHORT = {"pass": "可用", "pass-no-gt": "没有标准答案、能否触发未验证", "pass-degenerate": "空 PoV 也通过",
+            "hardware": "已转化但本机条件不够、没能实测"}
 
 
 # category 5, by the reason the task had no bundle before (unconverted_review.json): what its bundle does now

@@ -1,0 +1,4 @@
+{
+  "pattern": "^DIFF$",
+  "type": "match"
+}

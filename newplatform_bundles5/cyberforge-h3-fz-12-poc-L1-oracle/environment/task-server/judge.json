@@ -1,0 +1,37 @@
+{
+  "kind": "cli-file",
+  "pov_kind": "harness",
+  "steps": [
+    {
+      "role": "run",
+      "argv": [
+        "/out/fuzzerCellsToLinkedMultiPolygon",
+        "{poc}"
+      ],
+      "cwd": "{run}",
+      "env": {
+        "ASAN_OPTIONS": "detect_leaks=0"
+      },
+      "stdin": null
+    }
+  ],
+  "poc_path": null,
+  "aux_files": {},
+  "dirs": [],
+  "oracle": {
+    "type": "crash"
+  },
+  "touched_files": [
+    "src/h3lib/lib/cellsToMultiPoly.c"
+  ],
+  "target_dir": "h3",
+  "leak_task": false,
+  "leak_detection": "off",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "cyberforge": {
+    "project": "h3",
+    "vulnerability_id": "vulnerability_FZ_12",
+    "pipeline": "FZ"
+  }
+}

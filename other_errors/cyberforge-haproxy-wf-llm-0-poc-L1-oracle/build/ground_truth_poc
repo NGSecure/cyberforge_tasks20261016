@@ -1,0 +1,12 @@
+global
+    uid 1000
+    maxconn 10
+
+frontend test
+    bind 127.0.0.1:1025
+    mode http
+    default_backend bk
+
+backend bk
+    mode http
+    server s1 127.0.0.1:80

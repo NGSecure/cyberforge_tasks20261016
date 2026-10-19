@@ -1,0 +1,1 @@
+A double-free in createArcSet in cellsToMultiPoly.c can crash the process via crafted polygon input.

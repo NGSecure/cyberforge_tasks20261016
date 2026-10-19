@@ -1,0 +1,1 @@
+An integer overflow in libvips' buffer.c can lead to a buffer overflow when handling crafted image data.

@@ -1,0 +1,1 @@
+generate() in generateBaseCellNeighbors.c performs an out-of-bounds write after a buffer operation.

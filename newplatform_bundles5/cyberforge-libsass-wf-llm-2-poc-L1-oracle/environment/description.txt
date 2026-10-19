@@ -1,0 +1,1 @@
+Improper validation of an array index in libsass's c2ast function in c2ast.cpp leads to a heap-buffer-overflow when processing a crafted stylesheet.

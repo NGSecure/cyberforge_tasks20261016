@@ -1,0 +1,40 @@
+{
+  "kind": "cli-file",
+  "pov_kind": "harness",
+  "steps": [
+    {
+      "role": "run",
+      "argv": [
+        "/out/barcode_fuzzer",
+        "{poc}"
+      ],
+      "cwd": "{run}",
+      "env": {
+        "ASAN_OPTIONS": "detect_leaks=0"
+      },
+      "stdin": null
+    }
+  ],
+  "poc_path": null,
+  "aux_files": {},
+  "dirs": [],
+  "oracle": {
+    "type": "crash"
+  },
+  "touched_files": [
+    "src/readbarcode.c"
+  ],
+  "target_dir": "leptonica",
+  "leak_task": false,
+  "leak_detection": "off",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "no_ground_truth": {
+    "why": "The dataset's only run (prog/barcodetest on prog/barcode-upc-300.png, a gcc build without sanitizers) shows no fault at all, and what the uninitialised NUMA pointer does depends on stack contents."
+  },
+  "cyberforge": {
+    "project": "leptonica",
+    "vulnerability_id": "vulnerability_FZ_0",
+    "pipeline": "FZ"
+  }
+}

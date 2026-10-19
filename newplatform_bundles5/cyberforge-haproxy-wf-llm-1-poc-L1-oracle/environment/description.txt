@@ -1,0 +1,1 @@
+In HAProxy's src/haproxy.c, main() uses chdir instead of chroot for the global.chroot path, breaking access-control confinement.

@@ -1,0 +1,1 @@
+PyArrow's numpy_convert.cc mishandles invalid pointers during NumPy array conversion, leading to differential behavior between secure and vulnerable builds.

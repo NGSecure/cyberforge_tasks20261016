@@ -1,0 +1,1 @@
+An out-of-bounds read after a buffer operation in time.cc leads to incorrect behavior in Apache Arrow's Gandiva engine.

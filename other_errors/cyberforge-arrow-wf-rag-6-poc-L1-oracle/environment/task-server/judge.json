@@ -1,0 +1,40 @@
+{
+  "kind": "cli-file",
+  "pov_kind": "harness",
+  "steps": [
+    {
+      "role": "run",
+      "argv": [
+        "/out/parquet-arrow-fuzz",
+        "{poc}"
+      ],
+      "cwd": "{run}",
+      "env": {
+        "ASAN_OPTIONS": "detect_leaks=0"
+      },
+      "stdin": null
+    }
+  ],
+  "poc_path": null,
+  "aux_files": {},
+  "dirs": [],
+  "oracle": {
+    "type": "crash"
+  },
+  "touched_files": [
+    "cpp/src/parquet/encryption/encryption_internal.cc"
+  ],
+  "target_dir": "arrow",
+  "leak_task": false,
+  "leak_detection": "off",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "no_ground_truth": {
+    "why": "The exploit only greps encryption_internal.cc for the removed check, and the injected diff does not compile, so there is no vulnerable build to trigger."
+  },
+  "cyberforge": {
+    "project": "arrow",
+    "vulnerability_id": "vulnerability_WF_RAG_6",
+    "pipeline": "WF_RAG"
+  }
+}

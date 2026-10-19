@@ -1,0 +1,1 @@
+htslib's CRAM codec code in cram/cram_codecs.c may read past the end of a buffer while processing crafted input.

@@ -1,0 +1,1 @@
+Insufficient input validation in mruby io.c may allow command injection, causing behavioral divergence.

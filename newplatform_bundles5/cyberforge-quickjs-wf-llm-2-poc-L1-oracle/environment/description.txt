@@ -1,0 +1,1 @@
+A numeric error in js_loadScript in cutils.c results in behavioral divergence between vulnerable and secure builds.

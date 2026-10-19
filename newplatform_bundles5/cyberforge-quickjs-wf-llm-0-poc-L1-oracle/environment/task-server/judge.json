@@ -1,0 +1,41 @@
+{
+  "kind": "cli-file",
+  "pov_kind": "harness",
+  "steps": [
+    {
+      "role": "run",
+      "argv": [
+        "/out/fuzz_eval",
+        "{poc}"
+      ],
+      "cwd": "{run}",
+      "env": {
+        "ASAN_OPTIONS": "detect_leaks=0"
+      },
+      "stdin": null
+    }
+  ],
+  "poc_path": null,
+  "aux_files": {},
+  "dirs": [],
+  "oracle": {
+    "type": "crash",
+    "frame_pattern": "js_os_exec"
+  },
+  "touched_files": [
+    "quickjs-libc.c"
+  ],
+  "target_dir": "quickjs",
+  "leak_task": false,
+  "leak_detection": "off",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "no_ground_truth": {
+    "why": "The exploit (attack.py) only checks quickjs-libc.c for the removed bound and never runs JavaScript."
+  },
+  "cyberforge": {
+    "project": "quickjs",
+    "vulnerability_id": "vulnerability_WF_LLM_0",
+    "pipeline": "WF_LLM"
+  }
+}

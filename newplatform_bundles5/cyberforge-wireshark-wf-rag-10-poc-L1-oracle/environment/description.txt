@@ -1,0 +1,1 @@
+A post-buffer write in Wireshark's parse_cosine_packet function can cause memory corruption when processing specially crafted packets.

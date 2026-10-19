@@ -1,0 +1,1 @@
+libsrtp's SHA-1 hash code in crypto/hash/sha1.c contains an integer calculation error that can produce incorrect hash results.

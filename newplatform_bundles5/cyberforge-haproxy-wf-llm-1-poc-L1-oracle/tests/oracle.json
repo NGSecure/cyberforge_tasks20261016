@@ -1,0 +1,15 @@
+{
+  "type": "output-diff",
+  "observe": [
+    "status",
+    "output"
+  ],
+  "timeout_is_observation": true,
+  "limit_sec": 5,
+  "normalize": [
+    [
+      "\\(\\d+\\)",
+      "(PID)"
+    ]
+  ]
+}

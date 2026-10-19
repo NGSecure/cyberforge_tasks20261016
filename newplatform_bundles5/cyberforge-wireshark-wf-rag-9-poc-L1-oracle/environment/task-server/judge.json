@@ -1,0 +1,40 @@
+{
+  "kind": "cli-file",
+  "pov_kind": "cli-file",
+  "steps": [
+    {
+      "role": "run",
+      "argv": [
+        "/work/build/run/fuzzshark",
+        "{poc}"
+      ],
+      "cwd": "/tmp/cf_poc",
+      "env": {
+        "ASAN_OPTIONS": "abort_on_error=1:halt_on_error=1:detect_leaks=0",
+        "FUZZSHARK_TARGET": "radiotap"
+      },
+      "stdin": null
+    }
+  ],
+  "poc_path": "/tmp/cf_poc/frame.bin",
+  "aux_files": {},
+  "dirs": [
+    "/tmp/cf_poc"
+  ],
+  "oracle": {
+    "type": "crash"
+  },
+  "touched_files": [
+    "epan/dissectors/packet-ieee80211-radiotap-iter.c"
+  ],
+  "target_dir": "wireshark",
+  "leak_task": false,
+  "leak_detection": "off",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "cyberforge": {
+    "project": "wireshark",
+    "vulnerability_id": "vulnerability_WF_RAG_9",
+    "pipeline": "WF_RAG"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "kind": "cli-file",
+  "pov_kind": "driver",
+  "steps": [
+    {
+      "role": "run",
+      "argv": [
+        "/cf_driver/driver",
+        "{poc}"
+      ],
+      "cwd": "/tmp/cf_poc",
+      "stdin": null,
+      "env": {
+        "ASAN_OPTIONS": "detect_leaks=1"
+      }
+    }
+  ],
+  "poc_path": "/tmp/cf_poc/request.txt",
+  "aux_files": {},
+  "dirs": [
+    "/tmp/cf_poc"
+  ],
+  "oracle": {
+    "type": "crash"
+  },
+  "touched_files": [
+    "src/apps/relay/http_server.c"
+  ],
+  "target_dir": "coturn",
+  "leak_task": true,
+  "leak_detection": "on",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "no_ground_truth": {
+    "why": "the dataset exploit calls a copy of free_http_request cut out of http_server.c on a hand-built struct and has no HTTP input."
+  },
+  "cyberforge": {
+    "project": "coturn",
+    "vulnerability_id": "vulnerability_WF_RAG_6",
+    "pipeline": "WF_RAG"
+  }
+}

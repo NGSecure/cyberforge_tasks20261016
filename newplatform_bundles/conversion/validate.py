@@ -140,11 +140,11 @@ def check(bd, tier):
     if errs:
         return errs
     q = (src.get("quality") or {}).get("category")
-    if e and tier != "E":
-        errs.append("a category-5 bundle outside the fifth directory")
+    if e and tier not in ("E", "F"):
+        errs.append("a category-5 bundle outside the fifth directory (or other_errors)")
     if q and q not in FOLDER_CATS[tier]:
         errs.append("bundle is in the %s directory but its category is %s" % ("/".join(FOLDER_CATS[tier]), q))
-    elif not q and src.get("tier") != tier and not (e and tier == "E"):
+    elif not q and src.get("tier") != tier and not (e and tier in ("E", "F")):
         errs.append("bundle is in the tier-%s directory but its tier is %s" % (tier, src.get("tier")))
     env_files = set()
     for dp, _, fn in os.walk(os.path.join(bd, "environment")):

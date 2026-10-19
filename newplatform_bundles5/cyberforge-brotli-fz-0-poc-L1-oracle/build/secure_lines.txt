@@ -1,0 +1,1 @@
+const size_t max_table_size = alphabet_size_limit + 376;

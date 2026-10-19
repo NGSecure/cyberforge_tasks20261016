@@ -1,0 +1,91 @@
+{
+  "bundle": "cyberforge-quickjs-wf-llm-4-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/quickjs/vulnerabilities/vulnerability_WF_LLM_4",
+  "base_image": "vuljector/quickjs:setup@sha256:50716922f4e19865a3e6a87415d6f5e9a70d7c2d5b5de6b4ed025a4ed490522a",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-04-15T18:31:43.316664812Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T17:02:55.42411512Z",
+        "created_by": "sleep infinity",
+        "bytes": 62747317
+      }
+    ],
+    "post_setup_files": 46,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 33,
+    "scrubbed_from_agent_image": 11,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out": 8,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 0,
+  "image_tags": {
+    "docker_image": "cyberforge_quickjs_wf_llm_4_main:v0.0.2",
+    "task_server_image": "cyberforge_quickjs_wf_llm_4_task_server:v0.0.2"
+  },
+  "tier": "B",
+  "pov_kind": "harness",
+  "quality": {
+    "category": "\u7b2c\u516d\u7c7b",
+    "basis": "\u7b2c\u4e94\u7c7b\u65e0\u6cd5\u8f6c\u5316\u6210\u6709\u6548\u4efb\u52a1\uff1a\u6ce8\u5165\u53ea\u52a0\u4e86\u4e00\u884c\u6ce8\u91ca",
+    "verification": "pass-no-gt"
+  },
+  "ground_truth_evidence": "category 5: none: The injection only adds a comment, so no input behaves differently on the two builds.",
+  "ground_truth": null,
+  "category5": {
+    "review": {
+      "category": "fake-exploit",
+      "note": "only checks the source for a comment the injection adds"
+    },
+    "design": "Unusable: the diff adds a comment to js_std_getenv and changes no code, so the builds differ only in the line numbers after it; the spec keeps the closest harness so the bundle exists and says why.",
+    "pov_kind": "harness",
+    "oracle": {
+      "type": "crash"
+    }
+  },
+  "harness": null,
+  "recipe": {
+    "kind": "harness",
+    "judge": "task_server_e.py (category 5)",
+    "steps": [
+      {
+        "role": "run",
+        "cwd": "{run}",
+        "argv": [
+          "/out/fuzz_eval",
+          "{poc}"
+        ]
+      }
+    ],
+    "poc_path": null,
+    "aux_files": [],
+    "oracle": {
+      "type": "crash"
+    },
+    "touched_files": [
+      "quickjs-libc.c"
+    ],
+    "uses_out": true,
+    "design": "Unusable: the diff adds a comment to js_std_getenv and changes no code, so the builds differ only in the line numbers after it; the spec keeps the closest harness so the bundle exists and says why."
+  },
+  "trigger_evidence": {
+    "signal": "behavioral",
+    "detail": "",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": null
+  },
+  "asan_options_from_exploit": null,
+  "cwe_id": "CWE-200",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "f1139494d18a2053630c5ed3384a42bb70db3c53"
+}

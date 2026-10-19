@@ -1,0 +1,1 @@
+An integer overflow in Wireshark's Lua struct handling (wslua_struct.c) causes behavioral divergence, allowing crafted inputs to trigger unintended outcomes.

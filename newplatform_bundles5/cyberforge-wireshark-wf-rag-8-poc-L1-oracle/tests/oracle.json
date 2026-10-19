@@ -1,0 +1,4 @@
+{
+  "type": "timeout",
+  "limit_sec": 10
+}

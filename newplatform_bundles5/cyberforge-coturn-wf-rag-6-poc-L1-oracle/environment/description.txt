@@ -1,0 +1,1 @@
+A use-after-free in coturn's HTTP server can lead to behavioral divergence between vulnerable and secure builds.

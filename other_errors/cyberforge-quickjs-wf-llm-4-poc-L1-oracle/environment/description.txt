@@ -1,0 +1,1 @@
+An information exposure vulnerability in QuickJS's pstrcat function in quickjs-libc.c causes observable behavioral divergence between vulnerable and secure builds.

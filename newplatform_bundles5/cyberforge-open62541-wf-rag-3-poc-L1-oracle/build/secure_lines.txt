@@ -1,0 +1,1 @@
+default:  buf[outpos++] = (char)c; break;

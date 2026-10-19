@@ -1,0 +1,62 @@
+{
+  "kind": "program",
+  "pov_kind": "program",
+  "steps": [
+    {
+      "argv": [
+        "/usr/local/bin/clang",
+        "-O1",
+        "-fno-omit-frame-pointer",
+        "-gline-tables-only",
+        "-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION",
+        "-fsanitize=address",
+        "-fsanitize-address-use-after-scope",
+        "-I/src/relic/build/include",
+        "-I/src/relic/include",
+        "-I/src/relic/include/low",
+        "{poc}",
+        "/src/relic/build/lib/librelic_s.a",
+        "-o",
+        "/tmp/cf_prog/prog"
+      ],
+      "cwd": "/tmp/cf_prog",
+      "role": "compile",
+      "stdin": null,
+      "env": {
+        "ASAN_OPTIONS": "halt_on_error=1:abort_on_error=1:detect_leaks=0"
+      }
+    },
+    {
+      "argv": [
+        "/tmp/cf_prog/prog"
+      ],
+      "cwd": "/tmp/cf_prog",
+      "role": "run",
+      "stdin": null,
+      "env": {
+        "ASAN_OPTIONS": "halt_on_error=1:abort_on_error=1:detect_leaks=0"
+      }
+    }
+  ],
+  "poc_path": "/tmp/cf_prog/poc.c",
+  "aux_files": {},
+  "dirs": [
+    "/tmp/cf_prog"
+  ],
+  "oracle": {
+    "type": "crash"
+  },
+  "touched_files": [
+    "src/cp/relic_cp_ecdsa.c"
+  ],
+  "target_dir": "relic",
+  "leak_task": false,
+  "leak_detection": "off",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "cyberforge": {
+    "project": "relic",
+    "vulnerability_id": "vulnerability_WF_RAG_0",
+    "pipeline": "WF_RAG"
+  }
+}

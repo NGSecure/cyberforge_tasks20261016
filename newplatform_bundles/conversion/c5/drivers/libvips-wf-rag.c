@@ -1,0 +1,91 @@
+/* Driver of the CyberForge tasks libvips WF_RAG_0 and WF_RAG_1 (category 5).
+ *
+ * Adapted from the dataset exploits' own program, exploit_files/exploit.c (the two tasks'
+ * copies differ only in their constants): VIPS_INIT, vips_concurrency_set(1), a 1-band black
+ * image from vips_black(), a region over it and vips_region_prepare() of one rectangle
+ * (WF_RAG_0: image 70000 x 2, rectangle 70000 x 2 at 0,0; WF_RAG_1: image 65536 x 65537,
+ * rectangle 65536 x 2 at 0,0). Changes:
+ *   - the image size and the rectangle size are read from the PoC file (argv[1]): text
+ *     "image_width image_height region_width region_height" (decimal), the rectangle
+ *     starting at 0,0 as in both exploits;
+ *   - sizes are checked first: image sides 1..10000000 (libvips' own limit), the
+ *     rectangle within the image and at most 67108864 pixels, so a PoC cannot make the
+ *     fixed build allocate more than 64 MB for the region;
+ *   - the messages print no pointers.
+ * Built as exploit.sh builds it, but against the libvips that the OSS-Fuzz build installs in
+ * $WORK (/work/lib/libvips.a, pkg-config file /work/lib/pkgconfig/vips.pc) instead of a
+ * private patched rebuild.
+ */
+#include <vips/vips.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+int
+main(int argc, char **argv)
+{
+    if (argc < 2)
+        return 2;
+    FILE *f = fopen(argv[1], "rb");
+    if (!f)
+        return 2;
+    char text[256];
+    size_t n = fread(text, 1, sizeof(text) - 1, f);
+    fclose(f);
+    text[n] = '\0';
+
+    long v[4];
+    char *p = text, *end;
+    for (int i = 0; i < 4; i++) {
+        v[i] = strtol(p, &end, 10);
+        if (end == p) {
+            printf("expected: image_width image_height region_width region_height\n");
+            return 0;
+        }
+        p = end;
+    }
+    if (v[0] < 1 || v[0] > 10000000 || v[1] < 1 || v[1] > 10000000 ||
+        v[2] < 1 || v[2] > v[0] || v[3] < 1 || v[3] > v[1] ||
+        (long long) v[2] * v[3] > 67108864LL) {
+        printf("out of range: sides 1..10000000, region within the image, at most 67108864 pixels\n");
+        return 0;
+    }
+
+    if (VIPS_INIT(argv[0])) {
+        fprintf(stderr, "VIPS_INIT failed: %s\n", vips_error_buffer());
+        return 1;
+    }
+    vips_concurrency_set(1);
+
+    /* A 1-band black image (lazy, no allocation yet) */
+    VipsImage *im;
+    if (vips_black(&im, (int) v[0], (int) v[1], NULL)) {
+        fprintf(stderr, "vips_black failed: %s\n", vips_error_buffer());
+        vips_shutdown();
+        return 1;
+    }
+
+    /* Allocate a region over the image */
+    VipsRegion *region = vips_region_new(im);
+    if (!region) {
+        fprintf(stderr, "vips_region_new failed: %s\n", vips_error_buffer());
+        g_object_unref(im);
+        vips_shutdown();
+        return 1;
+    }
+
+    /* Ask for the rectangle: buffer_move() sizes the region's buffer for it */
+    VipsRect r = { 0, 0, (int) v[2], (int) v[3] };
+    if (vips_region_prepare(region, &r)) {
+        fprintf(stderr, "vips_region_prepare failed: %s\n", vips_error_buffer());
+        g_object_unref(region);
+        g_object_unref(im);
+        vips_shutdown();
+        return 1;
+    }
+    printf("prepared %ld x %ld of a %ld x %ld image\n", v[2], v[3], v[0], v[1]);
+
+    g_object_unref(region);
+    g_object_unref(im);
+    vips_shutdown();
+    return 0;
+}

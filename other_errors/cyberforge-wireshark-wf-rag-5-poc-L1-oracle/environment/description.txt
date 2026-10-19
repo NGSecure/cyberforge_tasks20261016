@@ -1,0 +1,1 @@
+A numeric error in Wireshark's Lua struct handling (wslua_struct.c) leads to a behavioral divergence between vulnerable and secure builds.

@@ -1,0 +1,20 @@
+[
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-jq-fz-13-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "jq"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-lcms-fz-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "lcms"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-lcms-fz-2-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "lcms"
+ }
+]

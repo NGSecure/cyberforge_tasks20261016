@@ -1,0 +1,1 @@
+json-c may dereference an invalid pointer in json_object.c.

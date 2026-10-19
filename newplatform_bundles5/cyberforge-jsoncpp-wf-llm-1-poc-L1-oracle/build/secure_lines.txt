@@ -1,0 +1,3 @@
+Value const* found = find(key.data(), key.data() + key.length());
+const Value& Value::operator[](std::string_view key) const {
+const Value& operator[](std::string_view key) const;

@@ -1,0 +1,2 @@
+!read_write(fd, (unsigned char *)&seed, sizeof(seed), RW_READ) ||
+!read_write(fd, (unsigned char *)&in, sizeof(in), RW_READ))

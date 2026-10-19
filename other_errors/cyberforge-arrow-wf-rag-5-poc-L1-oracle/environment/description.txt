@@ -1,0 +1,1 @@
+A null pointer dereference in FileReadAt in numpy_convert.cc causes a segmentation fault, leading to denial of service.

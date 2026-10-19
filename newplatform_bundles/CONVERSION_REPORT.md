@@ -4,7 +4,7 @@
 
 ## 1. 结论
 
-1034 个任务生成了 903 个 bundle，另有 131 个任务无法生成 bundle（原因记录在 `conversion_manifest.csv`，见第 5 节）。bundle 按**原始数据（数据集任务本身）的质量**分在 repo 根目录下几个平级的目录里；分类标准、各类数量和每个有问题的 bundle 的说明见 repo 根目录的 `README.md`（由 `conversion/quality.py` 写出的 `conversion/quality.json` 生成）：
+1034 个任务都生成了 bundle：903 个按原来的判定（注入版崩溃、安全版不崩溃）转换；其余 131 个不能这样转换（原因记录在 `conversion_manifest.csv`，见第 5 节），改为在各自的 `tests/` 里实现判定逻辑（平台完全按 bundle 自己的 `tests/test.sh` 判定），作为第五类，其中 23 个构建不了或转化不成有效任务，放在第六类。bundle 按**原始数据（数据集任务本身）的质量**分在 repo 根目录下几个平级的目录里；分类标准、各类数量和每个有问题的 bundle 的说明见 repo 根目录的 `README.md`（由 `conversion/quality.py` 写出的 `conversion/quality.json` 生成）：
 
 | 目录 | 内容 | bundle 数 |
 |---|---|---|
@@ -12,7 +12,8 @@
 | `newplatform_bundles2/` | 第二类：原始数据有轻微问题，已做少量修改，或不修改也不影响轨迹质量 | 127 |
 | `newplatform_bundles3/` | 第三类：原始数据有严重问题 | 184 |
 | `newplatform_bundles4/` | 第四类（待确认）：本机没能构建，或不能断定是数据的问题 | 63 |
-| `other_errors/` | 第六类：因原始数据的问题确定构建失败、暂时无法修复 | 5 |
+| `newplatform_bundles5/` | 第五类：原来的判定转换不了、改为按任务实现判定（`tests/oracle.json`）的任务 | 108 |
+| `other_errors/` | 第六类：因原始数据的问题构建失败，或转化不成有效任务（没有 PoV 能通过判定），暂时无法修复，不要构建上传 | 28 |
 
 下文的 A / B / C 是转换时按数据集证据定的分级（tier，`conversion_manifest.csv` 的 `tier` 列），与目录无关：A = 有崩溃证据、PoV 是喂给 OSS-Fuzz harness 的一个输入文件；B = 有崩溃证据、PoV 交给项目自己的程序（CLI 的输入 / 命令行参数，或一个链接项目代码的 C/C++ 程序）；C = 数据集里没有触发证据。
 
@@ -21,18 +22,18 @@
 | A | 745 | 喂给 OSS-Fuzz harness 的一个输入文件（`/out/<harness> <poc>`），与 ARVO bundle 同一范式 | 数据集有崩溃证据 |
 | B | 62 | 交给项目自己的程序：CLI 的输入文件 / 标准输入 / 命令行参数，或一个链接项目代码的 C/C++ 程序；按数据集 exploit 实际运行的命令重放 | 数据集有崩溃证据 |
 | C | 96 | harness 型 65 个，CLI / 程序型 31 个 | **数据集里没有触发证据**，以 build.sh 自检 3 为准 |
-| 未转换 | 131 | 见第 5 节 | — |
+| 原判定未转换 | 131 | 改为第五类：按各自的判定逻辑转换，见第 5 节 | 见第 5 节 |
 
 |  | FZ | WF_RAG | WF_LLM |
 |---|---|---|---|
 | A | 549 | 112 | 84 |
 | B | 21 | 21 | 20 |
 | C | 30 | 41 | 25 |
-| 未转换 | 43 | 46 | 42 |
+| 原判定未转换 | 43 | 46 | 42 |
 
-历次版本：第一版只有 A 级 705 个 bundle；第二版（880 个）加入了 B、C 两级，并给判定服务做了隔离；第三版（920 个）从数据集自身的证据里找回了 40 个原先未转换的任务（见 4.4、第 5 节）；第四版（900 个）在本机把每个 bundle 实际构建并跑完三项自检（第 3 节），按结果改正了转换中与数据集做法不一致的地方（3.3），并移出了核实后无法可靠转换的 20 个任务；本版（903 个）逐个复核了没有通过的 bundle，区分原始数据的问题和转换的问题，又找出并改正了几处转换问题（3.3 末尾），重新验证了受影响的 bundle，并移出 -3 个（触发条件在 exploit 设置的环境变量里、exploit 的程序要读它自己生成的文件，或 exploit 真正的输入是 GB 级文件），最后按原始数据的质量重新分了目录（不再按 tier 分）。与第一版相比：
+历次版本：第一版只有 A 级 705 个 bundle；第二版（880 个）加入了 B、C 两级，并给判定服务做了隔离；第三版（920 个）从数据集自身的证据里找回了 40 个原先未转换的任务（见 4.4、第 5 节）；第四版（900 个）在本机把每个 bundle 实际构建并跑完三项自检（第 3 节），按结果改正了转换中与数据集做法不一致的地方（3.3），并移出了核实后无法可靠转换的 20 个任务；本版（903 个）逐个复核了没有通过的 bundle，区分原始数据的问题和转换的问题，又找出并改正了几处转换问题（3.3 末尾），重新验证了受影响的 bundle，并移出 6 个（触发条件在 exploit 设置的环境变量里、exploit 的程序要读它自己生成的文件，或 exploit 真正的输入是 GB 级文件），加入 9 个崩溃种子只是 Git LFS 指针的任务（没有标准答案自检），最后按原始数据的质量重新分了目录（不再按 tier 分）；之后把原判定转换不了的 131 个任务按各自的判定逻辑做成了第五类（5.1）。与第一版相比：
 
-- 目录按原始数据质量分：第一类在 `newplatform_bundles/`，第二类在 `newplatform_bundles2/`，第三类在 `newplatform_bundles3/`，第四类（待确认）在 `newplatform_bundles4/`，确定构建失败的（第六类）在 `other_errors/`；
+- 目录按原始数据质量分：第一类在 `newplatform_bundles/`，第二类在 `newplatform_bundles2/`，第三类在 `newplatform_bundles3/`，第四类（待确认）在 `newplatform_bundles4/`，按任务实现判定的（第五类）在 `newplatform_bundles5/`，构建失败或转化不成有效任务的（第六类）在 `other_errors/`；
 - 23 个原先在 B / C 的任务（exploit.sh 写法看起来像别的形态，或 payload 只在脚本里生成），在真实镜像里重放后确认 exploit 实际只是给 harness 喂一个输入，并且有崩溃证据，归入 A；
 - **判定服务做了隔离（见 4.7）**：第一版的 task-server 以 root 身份运行 harness，脚本引擎类 harness（如 quickjs `fuzz_eval`）的 PoV 可以在判定容器里执行任意命令、读到标准答案，或分辨当前跑的是哪个版本后伪造崩溃。所有 bundle 都已按新模板重新生成；之后又改动过 task-server 的构建步骤和程序型判定（3.3），建议用本版整体替换之前推送的版本。
 
@@ -80,7 +81,7 @@ task-server 镜像构建两份项目后，记录每次 `compile` 新建、修改
 
 ### 3.1 静态校验
 
-- `conversion/validate.py`，903 个 bundle 全部通过：文件齐全、无未填占位符、脚本语法、token 一致、标准答案哈希、FROM 固定到已扫描的 digest、残留清单一致、environment/ 只含可上传文件、bundle 所在目录与分类一致；CLI / 程序型另外检查记录的命令与 PoV 类型相符、需要的附加文件都在 `build/aux/`。
+- `conversion/validate.py`，1034 个 bundle 全部通过：文件齐全、无未填占位符、脚本语法、token 一致、标准答案哈希、FROM 固定到已扫描的 digest、残留清单一致、environment/ 只含可上传文件、bundle 所在目录与分类一致；CLI / 程序型另外检查记录的命令与 PoV 类型相符、需要的附加文件都在 `build/aux/`；第五类另外检查判定规则和 PoV 形式的配置。
 - harness 名核对：harness 型中有已发布镜像的 764 个 bundle，764 个的首选 harness 确实出现在数据集当时编译出的 `/out` 里。
 
 ### 3.2 本机批量构建验证
@@ -243,11 +244,11 @@ PoV 本身是代码的情况比想象中多：B 类的程序型 PoV 就是一个
 
 仍然存在的风险（无法从机制上消除，已记录）：PoV 可以通过实际执行项目代码观察行为差异来分辨版本（这与真正理解漏洞已相差不远），或对自己链接进来的项目代码做哈希、与预先在本地编译好的漏洞版比对；注入改动涉及头文件的程序型任务（13 个，`cyberforge_source.json` 中 `recipe.diff_touches_headers=true`），PoV 编译时读得到被改动的头文件。
 
-### 4.8 有的 exploit 根本没有执行注入的代码（数据集问题，未转换）
+### 4.8 有的 exploit 根本没有执行注入的代码（数据集问题，原判定未转换）
 
-数据集的验证记录（`verification_result.json`，1034 个任务中 421 个有）检查的是 `exploit_on_vulnerable`、`exploit_on_secure` 和单元测试，也就是 exploit.sh 在两个版本上给出的判定是否不同；WF 任务的 "DIFFERENTIAL" 报告记录的也是 exploit.sh 在两个版本上的退出码。这种验证不检查是否真的发生了崩溃，也不检查 exploit 有没有执行注入的代码，只 grep 源码的 exploit 同样能通过（被 grep 的正是注入时加上或删掉的那一行）。未转换的 131 个任务里只有 1 个有这份记录。
+数据集的验证记录（`verification_result.json`，1034 个任务中 421 个有）检查的是 `exploit_on_vulnerable`、`exploit_on_secure` 和单元测试，也就是 exploit.sh 在两个版本上给出的判定是否不同；WF 任务的 "DIFFERENTIAL" 报告记录的也是 exploit.sh 在两个版本上的退出码。这种验证不检查是否真的发生了崩溃，也不检查 exploit 有没有执行注入的代码，只 grep 源码的 exploit 同样能通过（被 grep 的正是注入时加上或删掉的那一行）。原判定未转换的 131 个任务里只有 1 个有这份记录。
 
-逐个看了所有未转换任务的 exploit 和报告（`conversion/unconverted_review.json`，manifest 的 `review`、`review_note` 列）。其中 19 个 exploit 没有运行项目里被注入的代码，判定只取决于源码文本：只 grep 源码里有没有注入的改动（如 hdf5 FZ_2、kamailio FZ_12；quickjs WF_LLM_4 检查的是注入时加上的一行注释）；grep 之后 `echo` 一段伪造的 AddressSanitizer / UBSan 报告（kamailio FZ_4、coturn WF_RAG_5，数据集的 `sanitizer_report.txt` 记录的就是这段 echo）；grep 之后让一个与项目无关的空指针程序崩溃（arrow WF_RAG_5）；PoC 编译失败也算触发（arrow WF_RAG_2、open62541 WF_RAG_2）。lcms FZ_2 grep 的字符串根本不在注入的 diff 里，两个版本结果相同。这 19 个任务都没有 `verification_result.json`。另有 mruby WF_LLM_2、WF_LLM_3 在真实的行为检查之后 echo 了一段伪造的 LeakSanitizer 报告（归入 `behavioral`）。完整列表：arrow WF_RAG_2、arrow WF_RAG_3、arrow WF_RAG_5、arrow WF_RAG_6、coturn WF_RAG_5、hdf5 FZ_2、kamailio FZ_12、kamailio FZ_14、kamailio FZ_4、lcms FZ_1、lcms FZ_2、open62541 WF_RAG_2、pcre2 FZ_4、quickjs WF_LLM_0、quickjs WF_LLM_1、quickjs WF_LLM_4、wireshark WF_RAG_10、wireshark WF_RAG_12、wireshark WF_RAG_8
+逐个看了所有原判定未转换任务的 exploit 和报告（`conversion/unconverted_review.json`，manifest 的 `review`、`review_note` 列）。其中 19 个 exploit 没有运行项目里被注入的代码，判定只取决于源码文本：只 grep 源码里有没有注入的改动（如 hdf5 FZ_2、kamailio FZ_12；quickjs WF_LLM_4 检查的是注入时加上的一行注释）；grep 之后 `echo` 一段伪造的 AddressSanitizer / UBSan 报告（kamailio FZ_4、coturn WF_RAG_5，数据集的 `sanitizer_report.txt` 记录的就是这段 echo）；grep 之后让一个与项目无关的空指针程序崩溃（arrow WF_RAG_5）；PoC 编译失败也算触发（arrow WF_RAG_2、open62541 WF_RAG_2）。lcms FZ_2 grep 的字符串根本不在注入的 diff 里，两个版本结果相同。这 19 个任务都没有 `verification_result.json`。另有 mruby WF_LLM_2、WF_LLM_3 在真实的行为检查之后 echo 了一段伪造的 LeakSanitizer 报告（归入 `behavioral`）。完整列表：arrow WF_RAG_2、arrow WF_RAG_3、arrow WF_RAG_5、arrow WF_RAG_6、coturn WF_RAG_5、hdf5 FZ_2、kamailio FZ_12、kamailio FZ_14、kamailio FZ_4、lcms FZ_1、lcms FZ_2、open62541 WF_RAG_2、pcre2 FZ_4、quickjs WF_LLM_0、quickjs WF_LLM_1、quickjs WF_LLM_4、wireshark WF_RAG_10、wireshark WF_RAG_12、wireshark WF_RAG_8
 
 另外，有 29 个任务（FZ 22 个、WF 7 个）的 exploit.sh 只是运行项目自己的单元测试或测试程序（例如 `/workspace/run/unit_tests/test.sh`、h3 的 `testCellsToMultiPoly`），没有任何攻击者提供的输入。有的 FZ 任务报告里的崩溃其实来自另一次 fuzz 运行（如 double-conversion FZ_0、FZ_19：`string_to_double_fuzzer` 在 `crash-<sha1>` 上崩溃，但这个文件没有保存，归入 `lost-input`）。
 
@@ -272,15 +273,16 @@ PoV 本身是代码的情况比想象中多：B 类的程序型 PoV 就是一个
 - 空输入也能让注入版崩溃、安全版不崩溃（80 个，`PASS-DEGENERATE`，任何空提交都能通过）：注入的漏洞在空输入上就会触发，例如 libyang 6 个任务中的 5 个，数据集自己的报告显示崩溃发生在 `ly_ctx_new` 里（harness 第 19 行，还没读输入）。这些 bundle 归入第三类（`newplatform_bundles3/`），不适合用于 PoC 迭代。
 - 共用的报告：102 个任务（31 组）的 `sanitizer_report.txt` 逐字节相同，最多 12 个任务共用一份（guetzli WF_LLM）。每个任务注入的改动不同，一份报告最多对得上其中一个任务；转换不依赖这些报告指明的输入时，以实际验证为准（3.3）。
 
-## 5. tier B、C 与未转换的任务
+## 5. tier B、C 与第五类（原判定未转换的任务）
 
 |  | 数量 |
 |---|---|
 | B：转换（CLI / 程序型） | 62 |
 | C：转换（harness 型） | 65 |
 | C：转换（CLI / 程序型） | 31 |
-| 未转换（原先归 B 的） | 108 |
-| 未转换（原先归 C 的） | 18 |
+| 原判定未转换（原先归 B 的） | 108 |
+| 原判定未转换（原先归 C 的） | 18 |
+| 原判定未转换（原先归 A 的） | 5 |
 
 C 类转换了，但数据集没有证明标准答案能触发漏洞，原因分布：
 
@@ -311,7 +313,7 @@ C 类转换了，但数据集没有证明标准答案能触发漏洞，原因分
 
 另有 16 个任务从 C 移到 A（brotli FZ_4、cgif FZ_6、double-conversion FZ_12、json-c WF_RAG_1、htslib WF_LLM_0、guetzli FZ_10、h3 FZ_4、h3 FZ_8、libjxl FZ_3、libpng FZ_13、libsrtp FZ_11、libsrtp FZ_8、libyang FZ_3、protobuf-c FZ_11、serenity FZ_16、serenity FZ_17）：数据集的验证记录（`verification_result.json`）显示 exploit_on_vulnerable 通过、crash_report.json 里那个种子的重放退出码非 0，第二版只看了 `sanitizer_report.txt`（为空或没有崩溃）。这些 bundle 的内容不变，只是换了目录。
 
-未转换的 131 个任务逐个人工复核过（`conversion/unconverted_review.json`，manifest 的 `review`、`review_note` 列），分类如下：
+原判定未转换的 131 个任务逐个人工复核过（`conversion/unconverted_review.json`，manifest 的 `review`、`review_note` 列），分类如下：
 
 | 类别（review） | 数量 | 说明 |
 |---|---|---|
@@ -331,7 +333,28 @@ C 类转换了，但数据集没有证明标准答案能触发漏洞，原因分
 - `lost-input`：harness 和崩溃位置已知，可以对漏洞版做定向 fuzz 找回一个崩溃位置相同、安全版不崩溃的输入；
 - `empty-input`：空文件确实触发（例如 json-c WF_RAG_3 的崩溃样本就是 `crash-da39a3ee…`），但任何空提交都能通过；
 - `technical`：需要扩展判定方式（例如把 exploit 自己的驱动程序当作 harness、允许 PoV 读取被 `#include` 的源文件）；
-- 逐条明细见 `conversion_manifest.csv`（`converted=False` 的行，`review`、`review_note`、`reason`、`deep_replay` 列）。
+- 逐条明细见 `conversion_manifest.csv`（`review` 列非空的行，即第五类和从第五类移到第六类的 bundle：`review`、`review_note`、`reason`、`deep_replay` 列）。
+
+### 5.1 第五类：按任务实现判定
+
+平台最终运行 bundle 自己的 `tests/test.sh` 检查 agent 迭代出的 PoV，完全按它的结果判定（2026-10-19 的说明），所以这 131 个任务改为在各自的 `tests/` 里实现判定逻辑（`tests/oracle.json` 的规则：崩溃差分、输出差分、输出匹配、超时；PoV 可以是 harness / 项目程序的输入文件、标准输入、命令行参数、链接项目代码的程序、带环境变量和附加文件的 tar 包，或数据集 exploit 自己的测试程序（driver）的输入，PoV 形式的数量：harness 46、driver 41、cli-file 19、cli-argv 12、archive 10、program 3）。规格在 `conversion/c5_specs.json`（driver、标准答案等在 `conversion/c5/`），每个 bundle 都在本机按 `build.sh` 构建并跑了三项自检（结果在 `conversion/verification/results_c5*.jsonl`），判定方式和每个 bundle 的结果见 repo 根目录 `README.md` 第 6 节。按复核类别：
+
+| 类别（review） | 数量 | 第五类：可用 | 第五类：无参考 PoV | 第五类：空 PoV 也通过 | 第五类：未实测 | 第六类：构建失败 | 第六类：无法转化 |
+|---|---|---|---|---|---|---|---|
+| `behavioral` | 30 | 20 | 1 | 1 | 2 | 4 | 2 |
+| `technical` | 30 | 25 | 0 | 1 | 4 | 0 | 0 |
+| `unit-test` | 29 | 23 | 1 | 3 | 0 | 0 | 2 |
+| `fake-exploit` | 19 | 1 | 6 | 0 | 2 | 4 | 6 |
+| `weak-oracle` | 8 | 4 | 2 | 0 | 0 | 1 | 1 |
+| `lost-input` | 5 | 5 | 0 | 0 | 0 | 0 | 0 |
+| `candidates` | 3 | 2 | 0 | 0 | 0 | 0 | 1 |
+| `race` | 3 | 2 | 0 | 0 | 0 | 0 | 1 |
+| `no-evidence` | 3 | 1 | 0 | 1 | 0 | 0 | 1 |
+| `empty-input` | 1 | 0 | 0 | 1 | 0 | 0 | 0 |
+| 合计 | 131 | 83 | 10 | 7 | 8 | 9 | 14 |
+
+- 可用：按本任务的规则，标准答案通过、空 PoV 不通过；无参考 PoV：数据集没有能用的触发输入，自检只检查判定本身（`PASS-NO-GROUND-TRUTH`）；空 PoV 也通过：注入的效果与输入无关（`PASS-DEGENERATE`），只能当退化任务看待；未实测：已经转化，本机的磁盘、内存或网络不够，没能构建或运行，需要在条件足够的机器上运行 `build.sh` 验证；
+- 第六类（`other_errors/`）：注入的代码不在被构建的程序里、diff 让漏洞版编译不过、项目本身构建不了（构建失败），或能构建但注入只是注释或死代码、改动没有可观察的效果、需要判定环境给不了的权限或资源（无法转化）。
 
 ## 附：tier A 涉及的项目（73 个）
 

@@ -1,0 +1,42 @@
+{
+  "kind": "cli-file",
+  "pov_kind": "driver",
+  "steps": [
+    {
+      "role": "run",
+      "argv": [
+        "/cf_driver/pcre2_diff_fuzzer",
+        "{poc}"
+      ],
+      "cwd": "/tmp/cf_poc",
+      "stdin": null,
+      "env": {
+        "ASAN_OPTIONS": "detect_leaks=0"
+      }
+    }
+  ],
+  "poc_path": "/tmp/cf_poc/poc.bin",
+  "aux_files": {},
+  "dirs": [
+    "/tmp/cf_poc"
+  ],
+  "oracle": {
+    "type": "crash"
+  },
+  "touched_files": [
+    "src/pcre2_jit_compile.c"
+  ],
+  "target_dir": "pcre2",
+  "leak_task": false,
+  "leak_detection": "off",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "no_ground_truth": {
+    "why": "The exploit only greps pcre2_jit_compile.c for the removed check (its exploit.c is never compiled), so the dataset has no input."
+  },
+  "cyberforge": {
+    "project": "pcre2",
+    "vulnerability_id": "vulnerability_FZ_4",
+    "pipeline": "FZ"
+  }
+}

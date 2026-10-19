@@ -1,0 +1,1 @@
+A use-after-free in Wireshark's window_geom_recent_write_all function in ui/recent.c leads to behavioral divergence when writing recent window geometries.

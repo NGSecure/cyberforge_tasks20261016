@@ -1,0 +1,40 @@
+{
+  "kind": "cli-file",
+  "pov_kind": "harness",
+  "steps": [
+    {
+      "role": "run",
+      "argv": [
+        "/out/fuzz_binary_message",
+        "{poc}"
+      ],
+      "cwd": "{run}",
+      "env": {
+        "ASAN_OPTIONS": "detect_leaks=0"
+      },
+      "stdin": null
+    }
+  ],
+  "poc_path": null,
+  "aux_files": {},
+  "dirs": [],
+  "oracle": {
+    "type": "crash"
+  },
+  "touched_files": [
+    "src/client/ua_client.c"
+  ],
+  "target_dir": "open62541",
+  "leak_task": false,
+  "leak_detection": "off",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "no_ground_truth": {
+    "why": "the exploit calls a copy of UA_Client_getState with a stub client and a counting UA_malloc; there is no input for any built program, and the project build does not complete in its image."
+  },
+  "cyberforge": {
+    "project": "open62541",
+    "vulnerability_id": "vulnerability_WF_RAG_1",
+    "pipeline": "WF_RAG"
+  }
+}

@@ -1,0 +1,2 @@
+else return &slot->value;
+if (slot == 0) return 0;

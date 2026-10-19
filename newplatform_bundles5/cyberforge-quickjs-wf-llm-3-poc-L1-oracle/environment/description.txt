@@ -1,0 +1,1 @@
+A buffer overflow in js_std_loadFile in cutils.c may allow memory corruption when loading files.

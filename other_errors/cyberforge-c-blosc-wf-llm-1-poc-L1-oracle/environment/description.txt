@@ -1,0 +1,1 @@
+A heap-buffer-overflow in c-blosc's filegen.c main function allows a write of 10238 bytes past the end of a heap buffer.

@@ -1,0 +1,1 @@
+A path-related vulnerability in cJSON.c causes a behavioral divergence in file handling, allowing an exploit to trigger different results in vulnerable and secure builds.

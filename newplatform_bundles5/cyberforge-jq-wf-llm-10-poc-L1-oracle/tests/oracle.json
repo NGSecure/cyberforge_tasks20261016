@@ -1,0 +1,29 @@
+{
+  "type": "output-diff",
+  "normalize": [
+    [
+      "(?m)^INFO: .*$",
+      "<libFuzzer INFO>"
+    ],
+    [
+      "(?m)^Executed .* in \\d+ ms$",
+      "<libFuzzer executed>"
+    ],
+    [
+      "(?m)^\\*\\*\\*.*$",
+      "<libFuzzer note>"
+    ],
+    [
+      "(?m)^Running: .*$",
+      "<libFuzzer running>"
+    ],
+    [
+      "(?m)^MERGE.*$",
+      ""
+    ],
+    [
+      "(?m)^#\\d+\\s+(INITED|DONE|RELOAD|pulse|NEW|REDUCE).*$",
+      "<libFuzzer status>"
+    ]
+  ]
+}

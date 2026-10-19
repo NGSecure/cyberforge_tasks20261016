@@ -1,0 +1,1 @@
+In cJSON.c, the parse_string function can dereference a null pointer when a memory allocation routine's return value is not checked.

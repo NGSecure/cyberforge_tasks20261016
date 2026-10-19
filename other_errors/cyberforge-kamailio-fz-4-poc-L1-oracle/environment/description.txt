@@ -1,0 +1,1 @@
+Kamailio dns_cache.c contains a calculation error that can cause incorrect DNS cache handling.

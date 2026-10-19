@@ -1,0 +1,2 @@
+request->headers->uri_headers = NULL;
+request->headers = NULL;

@@ -1,0 +1,5 @@
+BLOSC_TRACE_ERROR("Could not access %s", urlpath);
+if ((statbuf.st_mode & S_IFDIR) != 0) {
+if (stat(urlpath, &statbuf) != 0){
+return blosc2_remove_dir(urlpath);
+return BLOSC2_ERROR_FAILURE;

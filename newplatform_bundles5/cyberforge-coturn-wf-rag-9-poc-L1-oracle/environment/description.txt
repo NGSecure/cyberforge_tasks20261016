@@ -1,0 +1,1 @@
+A post-buffer operation in coturn's ns_ioalib_engine_impl.c introduces a behavioral divergence between patched and vulnerable builds, potentially leading to inconsistent relay engine behavior.

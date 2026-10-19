@@ -1,0 +1,1 @@
+A memory release issue in DnsLayer.cpp of pcapplusplus may allow a crafted DNS packet to cause a memory release error.

@@ -1,0 +1,1 @@
+A calculation error in guetzli's processor.cc can cause a segmentation violation.

@@ -1,0 +1,3 @@
+if(msg->from == NULL || get_from(msg) == NULL)
+LM_ERR("cannot parse FROM header\n");
+if(parse_from_header(msg) < 0) {

@@ -1,0 +1,1 @@
+In HAProxy, set_identity() in src/haproxy.c replaced setuid() with seteuid(), preventing effective privilege drop and allowing retained root privileges.

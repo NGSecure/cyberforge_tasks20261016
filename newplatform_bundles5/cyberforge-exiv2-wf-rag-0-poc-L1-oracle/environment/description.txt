@@ -1,0 +1,1 @@
+In Exiv2::http in src/http.cpp, a failed file open leads to a null pointer dereference and segmentation violation.

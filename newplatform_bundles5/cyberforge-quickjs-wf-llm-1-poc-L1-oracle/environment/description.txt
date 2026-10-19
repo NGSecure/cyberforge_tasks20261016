@@ -1,0 +1,1 @@
+In quickjs-libc.c, pstrcpy fails to validate input, allowing shell command injection through crafted path strings, resulting in differential behavior between vulnerable and patched builds.

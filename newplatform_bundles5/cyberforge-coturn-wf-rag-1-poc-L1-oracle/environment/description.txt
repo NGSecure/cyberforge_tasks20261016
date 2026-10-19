@@ -1,0 +1,1 @@
+In coturn, the adminmain function in mainrelay.c logs sensitive information, potentially exposing credentials to local users.

@@ -1,0 +1,4 @@
+{
+  "type": "crash",
+  "frame_pattern": "printbuf_memappend"
+}

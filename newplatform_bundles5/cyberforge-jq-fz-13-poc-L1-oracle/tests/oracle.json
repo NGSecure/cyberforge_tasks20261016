@@ -1,0 +1,4 @@
+{
+  "type": "crash",
+  "frame_pattern": "jv_object_get|jvp_object_read"
+}

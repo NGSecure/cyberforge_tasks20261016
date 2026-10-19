@@ -1,0 +1,3 @@
+if (ret == Z_DATA_ERROR) {              /* deflate stream invalid */
+state->err = WTAP_ERR_DECOMPRESS;
+state->err_info = strm->msg;

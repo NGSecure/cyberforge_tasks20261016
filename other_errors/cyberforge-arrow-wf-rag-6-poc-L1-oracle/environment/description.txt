@@ -1,0 +1,1 @@
+An out-of-bounds write in AesDecryptor::AesDecryptorImpl::GcmDecrypt in parquet encryption leads to behavioral divergence in decryption output.

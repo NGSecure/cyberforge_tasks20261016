@@ -1,0 +1,1 @@
+zlib-ng's crc32_p.h contains a calculation error (CWE-193) that can cause incorrect CRC32 size/index computation and potentially lead to out-of-bounds memory access.

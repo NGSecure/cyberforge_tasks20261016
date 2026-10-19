@@ -1,0 +1,1 @@
+A post-buffer operation in pcre2_jit_compile.c may access memory outside an allocated buffer.

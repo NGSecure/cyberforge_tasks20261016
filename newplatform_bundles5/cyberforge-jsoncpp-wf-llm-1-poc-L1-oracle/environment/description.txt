@@ -1,0 +1,1 @@
+jsoncpp value.h allows improper encapsulation, leading to behavioral divergence between vulnerable and secure builds.

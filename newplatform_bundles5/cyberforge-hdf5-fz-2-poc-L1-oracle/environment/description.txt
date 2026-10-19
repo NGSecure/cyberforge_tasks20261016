@@ -1,0 +1,1 @@
+An integer overflow in HDF5's file system cache handling in src/H5FScache.c can lead to incorrect size calculations.

@@ -89,8 +89,12 @@ def note(r):
 def main():
     # a category-5 bundle (newplatform_bundles5) counts only the results of its own judge (results_c5*.jsonl):
     # results of an earlier bundle of the same name tested another judge
-    d5 = os.path.join(REPO, "newplatform_bundles5")
+    d5, d6 = os.path.join(REPO, "newplatform_bundles5"), os.path.join(REPO, "other_errors")
     fifth = set(os.listdir(d5)) if os.path.isdir(d5) else set()
+    for n in (os.listdir(d6) if os.path.isdir(d6) else []):
+        f = os.path.join(d6, n, "cyberforge_source.json")
+        if os.path.isfile(f) and "category5" in json.load(open(f)):
+            fifth.add(n)
     res = {}
     for f in sys.argv[1:]:
         c5_file = os.path.basename(f).startswith("results_c5")
@@ -106,7 +110,16 @@ def main():
         if cur is None:
             continue  # the bundle is no longer made (e.g. a task found unconvertible)
         alt_note = ""
-        if v and r.get("gt_sha256") and r["gt_sha256"] != cur:
+        if v and name in fifth and not r.get("gt_sha256") and cur:
+            # a category-5 bundle verified before its ground truth existed (generated in the built image,
+            # c5_specs.json ground_truth.generate): the self-check of that file, as an alternative, counts
+            v2 = alt_verdict(name, r, cur)
+            if v2:
+                v, alt_note = v2, "the ground truth was generated in the built image and self-checked there"
+            else:
+                out[name] = {"status": "stale", "note": "verified without the ground truth it has now"}
+                continue
+        elif v and r.get("gt_sha256") and r["gt_sha256"] != cur:
             v = alt_verdict(name, r, cur)
             if not v:
                 out[name] = {"status": "stale", "note": "verified with another ground truth (%s...)" % r["gt_sha256"][:12]}

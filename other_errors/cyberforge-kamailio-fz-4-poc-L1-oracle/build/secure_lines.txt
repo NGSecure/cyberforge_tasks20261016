@@ -1,0 +1,1 @@
+for(l = naptr_head; l && (i < MAX_NAPTR_RRS); l = l->next) {

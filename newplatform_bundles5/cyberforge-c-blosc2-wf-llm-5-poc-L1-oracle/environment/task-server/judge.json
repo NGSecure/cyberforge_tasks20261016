@@ -1,0 +1,38 @@
+{
+  "kind": "archive",
+  "pov_kind": "archive",
+  "steps": [
+    {
+      "argv": [
+        "/cf_driver/blosc2_rm",
+        "{input}"
+      ],
+      "cwd": "{dir}",
+      "role": "run",
+      "stdin": null,
+      "env": {
+        "ASAN_OPTIONS": "detect_leaks=0"
+      }
+    }
+  ],
+  "poc_path": null,
+  "aux_files": {},
+  "dirs": [],
+  "oracle": {
+    "pattern": "^rc=-?[0-9]+ exists=1$",
+    "type": "match"
+  },
+  "touched_files": [
+    "blosc/directories.c"
+  ],
+  "target_dir": "c-blosc2",
+  "leak_task": false,
+  "leak_detection": "off",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "cyberforge": {
+    "project": "c-blosc2",
+    "vulnerability_id": "vulnerability_WF_LLM_5",
+    "pipeline": "WF_LLM"
+  }
+}

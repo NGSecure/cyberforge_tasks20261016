@@ -1,0 +1,42 @@
+{
+  "kind": "cli-argv",
+  "pov_kind": "cli-argv",
+  "steps": [
+    {
+      "role": "run",
+      "argv": [
+        "/src/c-blosc/compat/filegen",
+        "{args}"
+      ],
+      "cwd": "/tmp/cf_poc",
+      "stdin": null,
+      "env": {
+        "ASAN_OPTIONS": "detect_leaks=0"
+      }
+    }
+  ],
+  "poc_path": null,
+  "aux_files": {},
+  "dirs": [
+    "/tmp/cf_poc"
+  ],
+  "oracle": {
+    "type": "crash"
+  },
+  "touched_files": [
+    "compat/filegen.c"
+  ],
+  "target_dir": "c-blosc",
+  "leak_task": false,
+  "leak_detection": "off",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "no_ground_truth": {
+    "why": "the injected change only adds NULL-pointer checks after fopen() (and a harmless MinGW typo), so the secure build is the one that crashes on a missing file while the vulnerable build handles it; the usual rule (vulnerable crashes, fixed does not) can never pass."
+  },
+  "cyberforge": {
+    "project": "c-blosc",
+    "vulnerability_id": "vulnerability_WF_LLM_1",
+    "pipeline": "WF_LLM"
+  }
+}

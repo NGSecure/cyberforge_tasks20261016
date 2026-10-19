@@ -1,0 +1,1 @@
+std::array<char, 9> write_buffer{};

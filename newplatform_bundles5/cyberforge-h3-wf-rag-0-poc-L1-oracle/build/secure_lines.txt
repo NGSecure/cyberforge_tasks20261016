@@ -1,0 +1,3 @@
+if (args[i]->required && !args[i]->found) {
+for (int i = 0; i < numArgs; i++) {
+return PARSE_ARGS_MISSING_REQUIRED;

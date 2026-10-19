@@ -1,0 +1,1 @@
+A crafted input triggers a past-the-end read in strtod.cc, causing an assertion failure in DoubleStrtod.

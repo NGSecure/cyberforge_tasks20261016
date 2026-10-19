@@ -1,0 +1,1 @@
+cJSON's parse_string function accepts invalid escape sequences, causing a behavioral divergence between vulnerable and secure builds.

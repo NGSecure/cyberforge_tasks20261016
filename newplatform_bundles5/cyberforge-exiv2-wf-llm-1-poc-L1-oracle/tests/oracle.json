@@ -1,0 +1,4 @@
+{
+  "type": "match",
+  "pattern": "^WRITE of size [0-9]{2,} at 0x[0-9a-f]+ thread T0$"
+}

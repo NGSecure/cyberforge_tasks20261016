@@ -1,0 +1,1 @@
+A post-buffer out-of-bounds read in pcre2's src/pcre2_jit_compile.c may allow an attacker to read memory beyond a compiled JIT buffer.

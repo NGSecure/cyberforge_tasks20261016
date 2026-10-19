@@ -1,0 +1,1 @@
+In dnsmasq, src/util.c's rand_init function does not check the return value of a random number generation call, causing behavioral divergence between secure and vulnerable builds.

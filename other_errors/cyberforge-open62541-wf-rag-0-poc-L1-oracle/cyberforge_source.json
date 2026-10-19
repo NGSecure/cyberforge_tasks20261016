@@ -1,0 +1,92 @@
+{
+  "bundle": "cyberforge-open62541-wf-rag-0-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/open62541/vulnerabilities/vulnerability_WF_RAG_0",
+  "base_image": "vuljector/open62541:setup@sha256:7d330c729380e9bd84794db6c6cd6d6420110b1561c155d0d4e973e882feb3bc",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-05-10T16:55:42.211676432Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T17:04:25.205279713Z",
+        "created_by": "sleep infinity",
+        "bytes": 251554837
+      }
+    ],
+    "post_setup_files": 305,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 180,
+    "scrubbed_from_agent_image": 123,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out": 1,
+      "/work/open62541": 119,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 1,
+  "image_tags": {
+    "docker_image": "cyberforge_open62541_wf_rag_0_main:v0.0.2",
+    "task_server_image": "cyberforge_open62541_wf_rag_0_task_server:v0.0.2"
+  },
+  "tier": "B",
+  "pov_kind": "harness",
+  "quality": {
+    "category": "\u7b2c\u516d\u7c7b",
+    "basis": "\u7b2c\u4e94\u7c7b\u6784\u5efa\u5931\u8d25\uff1a\u6ce8\u5165\u7684\u4ee3\u7801\u4e0d\u5728\u4efb\u4f55\u88ab\u6784\u5efa\u7684\u7a0b\u5e8f\u91cc\uff0c\u4e14\u9879\u76ee\u6784\u5efa\u5728\u955c\u50cf\u4e2d\u6ca1\u6709\u5b8c\u6210",
+    "verification": "not-built"
+  },
+  "ground_truth_evidence": "category 5: none: the exploit calls a copy of clear_pubsub_aes256ctr_tpm on a stub struct and checks a pointer, it has no input for any program, and no built program contains the function.",
+  "ground_truth": null,
+  "category5": {
+    "review": {
+      "category": "behavioral",
+      "note": "cuts the function out of the source into its own program, which prints its own verdict"
+    },
+    "design": "Unusable here: the changed file is the TPM/PKCS#11 PubSub security policy, which the OSS-Fuzz build does not compile, and the open62541 project build does not complete in its image (no library, no fuzzers). The spec keeps the project's fuzz_binary_message harness and the crash rule so the bundle exists and says why it is unusable.",
+    "pov_kind": "harness",
+    "oracle": {
+      "type": "crash"
+    }
+  },
+  "harness": null,
+  "recipe": {
+    "kind": "harness",
+    "judge": "task_server_e.py (category 5)",
+    "steps": [
+      {
+        "role": "run",
+        "cwd": "{run}",
+        "argv": [
+          "/out/fuzz_binary_message",
+          "{poc}"
+        ]
+      }
+    ],
+    "poc_path": null,
+    "aux_files": [],
+    "oracle": {
+      "type": "crash"
+    },
+    "touched_files": [
+      "plugins/crypto/pkcs11/securitypolicy_pubsub_aes256ctr_tpm.c"
+    ],
+    "uses_out": true,
+    "design": "Unusable here: the changed file is the TPM/PKCS#11 PubSub security policy, which the OSS-Fuzz build does not compile, and the open62541 project build does not complete in its image (no library, no fuzzers). The spec keeps the project's fuzz_binary_message harness and the crash rule so the bundle exists and says why it is unusable."
+  },
+  "trigger_evidence": {
+    "signal": "behavioral",
+    "detail": "",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": null
+  },
+  "asan_options_from_exploit": null,
+  "cwe_id": "CWE-416",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "8d060e94c11ba5025438bc92bd3ae2df4ba87ed0"
+}

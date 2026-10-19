@@ -1,0 +1,1 @@
+A resource management vulnerability in behaviortreecpp's tokenize function in script_tokenizer.cpp could cause excessive resource consumption.

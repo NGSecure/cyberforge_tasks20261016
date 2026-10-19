@@ -1,0 +1,5 @@
+opensslRet = EVP_DigestSignFinal(mdctx, signatureEnc.data, &signatureEnc.length);
+opensslRet = EVP_DigestSignInit(mdctx, &evpKeyCtx, evpMd, NULL, privateKey);
+opensslRet = EVP_DigestSignUpdate(mdctx, message->data, message->length);
+ret = UA_ByteString_allocBuffer(&signatureEnc, signatureEnc.length);
+signatureEnc.length = ECDSA_size(EVP_PKEY_get0_EC_KEY(privateKey));

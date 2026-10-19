@@ -1,0 +1,1 @@
+A heap-use-after-free in libsrtp's srtp_aes_icm_dealloc (crypto/cipher/aes_icm.c) causes a crash when freeing an AES-ICM cipher.

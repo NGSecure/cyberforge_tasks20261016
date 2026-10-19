@@ -1,0 +1,1 @@
+mruby's IO gem may allow command injection due to insufficient input validation in mrbgems/mruby-io/src/io.c.

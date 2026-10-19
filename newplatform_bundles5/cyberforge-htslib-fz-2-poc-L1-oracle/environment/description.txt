@@ -1,0 +1,1 @@
+Out-of-bounds read in htslib bgzf.c when processing BGZF data.

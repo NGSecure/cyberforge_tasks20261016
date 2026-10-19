@@ -1,0 +1,1 @@
+Kamailio's msg_parser.c post-buffer operation may access memory outside the intended buffer.

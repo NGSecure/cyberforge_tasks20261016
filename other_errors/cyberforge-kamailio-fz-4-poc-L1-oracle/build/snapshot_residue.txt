@@ -1,0 +1,6 @@
+/opt/src_snapshot.tar
+/out/fuzz_parse_msg
+/out/fuzz_uri
+/out/llvm-symbolizer
+/workspace/run/unit_tests/parse_results.py
+/workspace/run/unit_tests/test.sh

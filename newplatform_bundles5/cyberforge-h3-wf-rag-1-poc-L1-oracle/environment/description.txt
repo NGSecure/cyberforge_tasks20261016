@@ -1,0 +1,1 @@
+A stack-buffer-overflow in h3's generatePentagonDirectionFaces.c function generate allows an out-of-bounds read.

@@ -1,0 +1,4 @@
+{
+  "type": "match",
+  "pattern": "ERROR: libFuzzer: out-of-memory"
+}

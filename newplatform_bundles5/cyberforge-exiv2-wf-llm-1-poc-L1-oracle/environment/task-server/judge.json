@@ -1,0 +1,47 @@
+{
+  "kind": "cli-argv",
+  "pov_kind": "cli-argv",
+  "steps": [
+    {
+      "role": "run",
+      "argv": [
+        "/src/exiv2/build/bin/exiv2",
+        "{args}"
+      ],
+      "cwd": "/tmp",
+      "unset_env": [
+        "http_proxy",
+        "HTTP_PROXY",
+        "https_proxy",
+        "HTTPS_PROXY",
+        "no_proxy",
+        "NO_PROXY"
+      ],
+      "stdin": null,
+      "env": {
+        "ASAN_OPTIONS": "detect_leaks=0"
+      }
+    }
+  ],
+  "poc_path": null,
+  "aux_files": {},
+  "dirs": [],
+  "oracle": {
+    "type": "match",
+    "pattern": "^WRITE of size [0-9]{2,} at 0x[0-9a-f]+ thread T0$"
+  },
+  "touched_files": [
+    "src/http.cpp"
+  ],
+  "target_dir": "exiv2",
+  "leak_task": false,
+  "leak_detection": "off",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "network": "inet",
+  "cyberforge": {
+    "project": "exiv2",
+    "vulnerability_id": "vulnerability_WF_LLM_1",
+    "pipeline": "WF_LLM"
+  }
+}

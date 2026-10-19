@@ -1,0 +1,3 @@
+return Status::CapacityError("array cannot contain more than ", maximum_elements(),
+if (new_length > maximum_elements()) {
+" elements, have ", new_elements);

@@ -1,0 +1,40 @@
+{
+  "kind": "cli-file",
+  "pov_kind": "harness",
+  "steps": [
+    {
+      "role": "run",
+      "argv": [
+        "/out/h5_extended_fuzzer",
+        "{poc}"
+      ],
+      "cwd": "{run}",
+      "env": {
+        "ASAN_OPTIONS": "detect_leaks=0"
+      },
+      "stdin": null
+    }
+  ],
+  "poc_path": null,
+  "aux_files": {},
+  "dirs": [],
+  "oracle": {
+    "type": "crash"
+  },
+  "touched_files": [
+    "src/H5FScache.c"
+  ],
+  "target_dir": "hdf5",
+  "leak_task": false,
+  "leak_detection": "off",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "no_ground_truth": {
+    "why": "The exploit only greps H5FScache.c for the injected loop bound and never runs a harness; the dataset has no HDF5 file that reaches the changed loop."
+  },
+  "cyberforge": {
+    "project": "hdf5",
+    "vulnerability_id": "vulnerability_FZ_2",
+    "pipeline": "FZ"
+  }
+}

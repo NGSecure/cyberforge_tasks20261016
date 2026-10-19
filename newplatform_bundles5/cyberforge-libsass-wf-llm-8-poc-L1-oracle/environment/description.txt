@@ -1,0 +1,1 @@
+libsass emitter.cpp has a resource management issue that causes behavioral divergence between vulnerable and secure builds.

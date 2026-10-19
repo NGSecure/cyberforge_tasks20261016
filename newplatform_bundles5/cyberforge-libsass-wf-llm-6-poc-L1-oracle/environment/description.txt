@@ -1,0 +1,1 @@
+Unhandled error condition in libsass file.cpp may cause unexpected program failure.

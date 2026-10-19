@@ -1,0 +1,1 @@
+.h = H3_NULL, ._parentRes = -1, ._skipDigit = -1};

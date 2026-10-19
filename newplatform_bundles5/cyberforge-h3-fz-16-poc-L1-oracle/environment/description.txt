@@ -1,0 +1,1 @@
+In h3, a calculation flaw in cellsToMultiPoly.c causes createSortableLoop to generate loops with fewer than 3 vertices, triggering an assertion failure and memory leak.

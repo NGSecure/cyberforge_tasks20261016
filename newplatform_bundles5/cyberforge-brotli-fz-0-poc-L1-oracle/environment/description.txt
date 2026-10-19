@@ -1,0 +1,1 @@
+Brotli's c/dec/state.c may read out of bounds during decoding.

@@ -1,0 +1,1 @@
+In RELIC, an out-of-bounds read in cp_ecdsa_sig triggers a stack-buffer-overflow during ECDSA verification.

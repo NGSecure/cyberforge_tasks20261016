@@ -1,0 +1,96 @@
+{
+  "bundle": "cyberforge-htslib-fz-7-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/htslib/vulnerabilities/vulnerability_FZ_7",
+  "base_image": "vuljector/htslib:setup@sha256:d9e7b576144521b2f13eccf6396c4893bb5525f18e4ea5d0b1e5ef226bb48dd3",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-04-17T13:44:20.573852801Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T15:48:41.869823217Z",
+        "created_by": "sleep infinity",
+        "bytes": 129614068
+      }
+    ],
+    "post_setup_files": 152,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 145,
+    "scrubbed_from_agent_image": 5,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out": 2,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 1,
+  "image_tags": {
+    "docker_image": "cyberforge_htslib_fz_7_main:v0.0.2",
+    "task_server_image": "cyberforge_htslib_fz_7_task_server:v0.0.2"
+  },
+  "tier": "C",
+  "pov_kind": "harness",
+  "quality": {
+    "category": "\u7b2c\u516d\u7c7b",
+    "basis": "\u7b2c\u4e94\u7c7b\u65e0\u6cd5\u8f6c\u5316\u6210\u6709\u6548\u4efb\u52a1\uff1a\u6ce8\u5165\u7684\u6539\u52a8\u662f\u6b7b\u4ee3\u7801\uff08E_INT \u5df2\u88ab\u4e0a\u4e00\u5206\u652f\u5904\u7406\uff09\uff0c\u4e24\u4e2a\u7248\u672c\u884c\u4e3a\u5b8c\u5168\u4e00\u81f4",
+    "verification": "pass-no-gt"
+  },
+  "ground_truth_evidence": "category 5: none: the injected `|| option == E_INT` is dead code (the branch just above already handles E_INT), so it changes nothing observable and the two builds behave identically.",
+  "ground_truth": null,
+  "category5": {
+    "review": {
+      "category": "no-evidence",
+      "note": "fuzz_poc.py over 41 inputs; sanitizer_report.txt is empty"
+    },
+    "design": "The injected code adds `|| option == E_INT` to the E_LONG/E_SLONG branch of cram_varint_decode_init, but the preceding branch already handles E_INT, so the added condition is never reached. No input can separate the builds; the spec keeps hts_open_fuzzer and marks the task unusable.",
+    "pov_kind": "harness",
+    "oracle": {
+      "type": "crash"
+    }
+  },
+  "harness": null,
+  "recipe": {
+    "kind": "harness",
+    "judge": "task_server_e.py (category 5)",
+    "steps": [
+      {
+        "role": "run",
+        "cwd": "{run}",
+        "argv": [
+          "/out/hts_open_fuzzer",
+          "{poc}"
+        ]
+      }
+    ],
+    "poc_path": null,
+    "aux_files": [],
+    "oracle": {
+      "type": "crash"
+    },
+    "touched_files": [
+      "cram/cram_codecs.c",
+      "test/test.pl"
+    ],
+    "uses_out": true,
+    "design": "The injected code adds `|| option == E_INT` to the E_LONG/E_SLONG branch of cram_varint_decode_init, but the preceding branch already handles E_INT, so the added condition is never reached. No input can separate the builds; the spec keeps hts_open_fuzzer and marks the task unusable."
+  },
+  "trigger_evidence": {
+    "signal": "empty",
+    "detail": "",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": {
+      "unit_tests": "passed",
+      "exploit_on_vulnerable": "passed",
+      "exploit_on_secure": "passed"
+    }
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": null
+  },
+  "asan_options_from_exploit": null,
+  "cwe_id": "CWE-125",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "bf93316d3575eb623a72d84ec67cc5b8ce2d1448"
+}

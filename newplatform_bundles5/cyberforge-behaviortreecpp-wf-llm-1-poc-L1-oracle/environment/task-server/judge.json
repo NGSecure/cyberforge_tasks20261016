@@ -1,0 +1,70 @@
+{
+  "kind": "program",
+  "pov_kind": "program",
+  "steps": [
+    {
+      "argv": [
+        "/usr/local/bin/clang++",
+        "-O1",
+        "-fno-omit-frame-pointer",
+        "-gline-tables-only",
+        "-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION",
+        "-fsanitize=address",
+        "-fsanitize-address-use-after-scope",
+        "-std=c++17",
+        "-stdlib=libstdc++",
+        "-I/src/behaviortreecpp/include",
+        "{poc}",
+        "/src/behaviortreecpp/build/libbehaviortree_cpp.a",
+        "-ldl",
+        "/src/behaviortreecpp/build/3rdparty/minitrace/libminitrace.a",
+        "/src/behaviortreecpp/build/3rdparty/tinyxml2/libtinyxml2.a",
+        "/usr/local/lib/libzmq.a",
+        "/usr/local/lib/libsqlite3.a",
+        "-lpthread",
+        "-lrt",
+        "-lm",
+        "-o",
+        "/tmp/cf_prog/prog"
+      ],
+      "cwd": "/tmp/cf_prog",
+      "role": "compile",
+      "stdin": null,
+      "env": {
+        "ASAN_OPTIONS": "detect_leaks=0"
+      }
+    },
+    {
+      "argv": [
+        "/tmp/cf_prog/prog"
+      ],
+      "cwd": "/tmp/cf_prog",
+      "role": "run",
+      "stdin": null,
+      "env": {
+        "ASAN_OPTIONS": "detect_leaks=0"
+      }
+    }
+  ],
+  "poc_path": "/tmp/cf_prog/poc.cpp",
+  "aux_files": {},
+  "dirs": [
+    "/tmp/cf_prog"
+  ],
+  "oracle": {
+    "type": "crash"
+  },
+  "touched_files": [
+    "src/loggers/bt_file_logger_v2.cpp"
+  ],
+  "target_dir": "behaviortreecpp",
+  "leak_task": false,
+  "leak_detection": "off",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "cyberforge": {
+    "project": "behaviortreecpp",
+    "vulnerability_id": "vulnerability_WF_LLM_1",
+    "pipeline": "WF_LLM"
+  }
+}

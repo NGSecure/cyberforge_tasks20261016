@@ -1,0 +1,4 @@
+{
+  "type": "match",
+  "pattern": "INFO: Admin operation for user \\S* with password \\S*"
+}

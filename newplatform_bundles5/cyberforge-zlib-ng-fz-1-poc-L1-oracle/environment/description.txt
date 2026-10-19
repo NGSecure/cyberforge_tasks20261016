@@ -1,0 +1,1 @@
+An invalid pointer dereference in zlib-ng's arch/x86/crc32_pclmulqdq_tpl.h can lead to application crash or memory corruption when processing CRC32 data.

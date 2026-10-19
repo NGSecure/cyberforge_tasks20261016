@@ -402,7 +402,18 @@ deterministically from dataset files by `c5.ground_truth`); none where the datas
 trigger (`no_ground_truth_why`; the self-check then needs the program the PoC runs to differ
 between the builds and an empty PoC not to pass). A program PoC is never judged by
 `output-diff`/`match`: a program can tell the builds apart by itself (validate.py refuses it).
-quality.py gives every one category 5 with the texts of its spec's `zh`.
+quality.py gives every one category 5 with the texts of its spec's `zh`, except (the user's rule of
+2026-10-19) a spec with `zh.build_fails` (it will not build: the injected code is in no program the
+build makes, the diff breaks the vulnerable build, the project does not build in its image) or
+`zh.unusable` (it builds, but no PoC can pass): category 6, in `other_errors/`. A spec with
+`zh.hardware` (converted, but this machine could not test it: disk, memory, the GitHub proxy) stays
+in category 5, its state naming what is missing. The judge keeps the programs a step runs readable
+(`c5_readable`, including the ELF behind a libtool wrapper): an unreadable executable makes the
+process non-dumpable, and the sanitizer then cannot read its own environment (no ASAN_OPTIONS, no
+symbolizer). Verification: `plan_c5*.json`, `results_c5*.jsonl` (verification_summary.py counts only
+these for category-5 bundles). A ground truth made in the built image (`ground_truth.generate`,
+e.g. brotli FZ_11, libsndfile FZ_0) is self-checked there as an alternative and credited when the
+bundle carries the same file.
 
 **Bundles without a ground truth** (the user's decision of 2026-10-19): a task whose verified
 crashing seed (fuzz_results/vulnerable/crash_report.json) is only a Git LFS pointer, as upstream

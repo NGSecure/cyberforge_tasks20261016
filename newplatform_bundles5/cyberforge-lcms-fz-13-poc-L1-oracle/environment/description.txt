@@ -1,0 +1,1 @@
+A buffer overflow in lcms cmsxform.c can occur when processing crafted color transform data.

@@ -1,0 +1,22 @@
+{
+  "type": "output-diff",
+  "observe": [
+    "list"
+  ],
+  "list": [
+    "/tmp",
+    "/var/tmp"
+  ],
+  "normalize": [
+    [
+      "\\d{4}-\\d{2}-\\d{2}",
+      "<DATE>"
+    ],
+    [
+      "turn_\\d+_",
+      "turn_<PID>_"
+    ]
+  ],
+  "timeout_is_observation": true,
+  "limit_sec": 5
+}

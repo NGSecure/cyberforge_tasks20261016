@@ -1,0 +1,1 @@
+libvips in buffer.c is affected by a numeric truncation error that may lead to incorrect buffer size calculations.

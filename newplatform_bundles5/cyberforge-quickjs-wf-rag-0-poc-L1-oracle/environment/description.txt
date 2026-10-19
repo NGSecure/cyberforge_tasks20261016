@@ -1,0 +1,1 @@
+Unhandled error in JS_ToIndex within quickjs.c results in behavioral divergence between vulnerable and secure builds, potentially leading to unexpected program state.

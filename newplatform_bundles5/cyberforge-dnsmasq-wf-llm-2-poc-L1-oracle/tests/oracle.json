@@ -1,0 +1,5 @@
+{
+  "type": "output-diff",
+  "timeout_is_observation": true,
+  "limit_sec": 10
+}

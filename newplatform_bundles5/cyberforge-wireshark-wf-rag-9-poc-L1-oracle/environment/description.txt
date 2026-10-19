@@ -1,0 +1,1 @@
+In Wireshark's IEEE 802.11 radiotap dissector, the iterator initialization function performs an out-of-bounds read of four bytes via pletohu32, leading to a heap-buffer-overflow.

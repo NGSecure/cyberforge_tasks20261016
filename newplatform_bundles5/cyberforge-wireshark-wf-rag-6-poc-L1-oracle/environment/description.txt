@@ -1,0 +1,1 @@
+A post-buffer operation in wiretap/cosine.c can be triggered by crafted input, causing divergent behavior between patched and secure Wireshark builds.

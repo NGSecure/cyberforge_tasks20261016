@@ -1,0 +1,9 @@
+{
+  "type": "output-diff",
+  "normalize": [
+    [
+      "\\(PID:\\d+\\)",
+      "(PID)"
+    ]
+  ]
+}

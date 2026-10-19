@@ -1,0 +1,1 @@
+In Apache Arrow, the vendored xxhash.h hash implementation has an access control flaw that produces divergent behavior between patched and vulnerable builds.

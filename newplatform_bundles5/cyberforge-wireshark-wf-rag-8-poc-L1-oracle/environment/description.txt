@@ -1,0 +1,1 @@
+In Wireshark's wiretap/file_wrappers.c, a resource management flaw can cause excessive resource consumption when processing crafted capture files.

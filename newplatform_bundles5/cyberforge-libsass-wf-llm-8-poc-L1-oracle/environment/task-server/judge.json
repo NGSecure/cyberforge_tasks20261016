@@ -1,0 +1,41 @@
+{
+  "kind": "cli-file",
+  "pov_kind": "cli-file",
+  "steps": [
+    {
+      "role": "run",
+      "argv": [
+        "/out/data_context_fuzzer",
+        "-rss_limit_mb=1024",
+        "{poc}"
+      ],
+      "cwd": "{run}",
+      "stdin": null,
+      "env": {
+        "ASAN_OPTIONS": "detect_leaks=0"
+      }
+    }
+  ],
+  "poc_path": "/tmp/cf_poc/payload.scss",
+  "aux_files": {},
+  "dirs": [
+    "/tmp/cf_poc"
+  ],
+  "oracle": {
+    "type": "match",
+    "pattern": "ERROR: libFuzzer: out-of-memory"
+  },
+  "touched_files": [
+    "src/emitter.cpp"
+  ],
+  "target_dir": "libsass",
+  "leak_task": false,
+  "leak_detection": "off",
+  "timeout_sec": 120,
+  "compile_timeout_sec": 600,
+  "cyberforge": {
+    "project": "libsass",
+    "vulnerability_id": "vulnerability_WF_LLM_8",
+    "pipeline": "WF_LLM"
+  }
+}

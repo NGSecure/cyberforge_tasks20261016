@@ -1,0 +1,1 @@
+In open62541, deps/cj5.c contains a format string vulnerability (CWE-134) where externally controlled format specifiers cause behavioral divergence between vulnerable and patched builds.

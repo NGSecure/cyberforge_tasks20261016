@@ -1,0 +1,1 @@
+Undefined behavior due to unsigned integer overflow in buffer_skip_whitespace in cJSON.c leads to invalid size_t calculation.

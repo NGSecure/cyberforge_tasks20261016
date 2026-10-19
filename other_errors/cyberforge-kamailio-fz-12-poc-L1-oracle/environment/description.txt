@@ -1,0 +1,1 @@
+Kamailio's fmsg.c can perform an out-of-bounds access after a buffer operation.

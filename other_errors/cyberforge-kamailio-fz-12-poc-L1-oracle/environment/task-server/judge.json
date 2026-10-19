@@ -1,0 +1,40 @@
+{
+  "kind": "cli-file",
+  "pov_kind": "harness",
+  "steps": [
+    {
+      "role": "run",
+      "argv": [
+        "/out/fuzz_parse_msg",
+        "{poc}"
+      ],
+      "cwd": "{run}",
+      "env": {
+        "ASAN_OPTIONS": "detect_leaks=0"
+      },
+      "stdin": null
+    }
+  ],
+  "poc_path": null,
+  "aux_files": {},
+  "dirs": [],
+  "oracle": {
+    "type": "crash"
+  },
+  "touched_files": [
+    "src/core/fmsg.c"
+  ],
+  "target_dir": "kamailio",
+  "leak_task": false,
+  "leak_detection": "off",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "no_ground_truth": {
+    "why": "The exploit only greps fmsg.c for the new condition; the changed function runs only for faked messages of a running server, which no built program creates."
+  },
+  "cyberforge": {
+    "project": "kamailio",
+    "vulnerability_id": "vulnerability_FZ_12",
+    "pipeline": "FZ"
+  }
+}

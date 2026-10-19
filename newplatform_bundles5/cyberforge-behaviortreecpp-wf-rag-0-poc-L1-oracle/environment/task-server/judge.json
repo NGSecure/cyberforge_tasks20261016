@@ -1,0 +1,40 @@
+{
+  "kind": "cli-file",
+  "pov_kind": "driver",
+  "steps": [
+    {
+      "argv": [
+        "/cf_driver/bt_load_file",
+        "{poc}"
+      ],
+      "cwd": "/tmp/cf_poc",
+      "role": "run",
+      "stdin": null,
+      "env": {
+        "ASAN_OPTIONS": "detect_leaks=0"
+      }
+    }
+  ],
+  "poc_path": "/tmp/cf_poc/tree.xml",
+  "aux_files": {},
+  "dirs": [
+    "/tmp/cf_poc"
+  ],
+  "oracle": {
+    "pattern": "^load-error: Error parsing the XML: Error=XML_ERROR_FILE_NOT_FOUND",
+    "type": "match"
+  },
+  "touched_files": [
+    "src/bt_factory.cpp"
+  ],
+  "target_dir": "behaviortreecpp",
+  "leak_task": false,
+  "leak_detection": "off",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "cyberforge": {
+    "project": "behaviortreecpp",
+    "vulnerability_id": "vulnerability_WF_RAG_0",
+    "pipeline": "WF_RAG"
+  }
+}

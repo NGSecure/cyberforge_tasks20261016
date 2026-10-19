@@ -1,0 +1,93 @@
+{
+  "bundle": "cyberforge-json-c-wf-rag-0-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/json-c/vulnerabilities/vulnerability_WF_RAG_0",
+  "base_image": "vuljector/json-c:setup@sha256:684c6d1567e91fbc5bb489fd5d27d50cbabcc564af4495725679f1eb6cac55db",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-04-18T18:56:59.90802755Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T16:00:18.869271473Z",
+        "created_by": "sleep infinity",
+        "bytes": 68486641
+      }
+    ],
+    "post_setup_files": 639,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 625,
+    "scrubbed_from_agent_image": 12,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out": 9,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 1,
+  "image_tags": {
+    "docker_image": "cyberforge_json_c_wf_rag_0_main:v0.0.2",
+    "task_server_image": "cyberforge_json_c_wf_rag_0_task_server:v0.0.2"
+  },
+  "tier": "C",
+  "pov_kind": "harness",
+  "quality": {
+    "category": "\u7b2c\u516d\u7c7b",
+    "basis": "\u7b2c\u4e94\u7c7b\u65e0\u6cd5\u8f6c\u5316\u6210\u6709\u6548\u4efb\u52a1\uff1a\u89e6\u53d1\u9700\u8981\u5355\u6b21\u8ffd\u52a0\u8d85\u8fc7 2 GiB \u8f93\u51fa\uff08\u7ea6\u9700 10 GB \u5185\u5b58\u3001\u5173\u6389 libFuzzer \u9650\u989d\uff09\uff0c\u6807\u51c6\u5224\u5b9a\u670d\u52a1\u505a\u4e0d\u5230",
+    "verification": "pass-no-gt"
+  },
+  "ground_truth_evidence": "category 5: none: the overflow needs the printer to append >= 2 GiB of output in one go, which takes a ~1.25 GB input, libFuzzer limits disabled and about 10 GB of RAM per run (and json_tokener_parse_ex rejects lengths above INT32_MAX), none of which a standard task server provides; the dataset's 2.3 GB input OOMs libFuzzer on both builds.",
+  "ground_truth": null,
+  "category5": {
+    "review": {
+      "category": "weak-oracle",
+      "note": "a 2.3 GB input; libFuzzer runs out of memory reading it on both builds (the dataset's own report: 'Vulnerability not triggered')"
+    },
+    "design": "The injected code drops the `size > INT_MAX - p->bpos - 1` guard in printbuf_memappend, so a single append that makes bpos+size overflow int memcpy's past the buffer. It is reachable only with >= 2 GiB of printed output in one append, which a standard task server cannot afford, so there is no usable PoV; the spec keeps the harness and marks the task unusable.",
+    "pov_kind": "harness",
+    "oracle": {
+      "type": "crash",
+      "frame_pattern": "printbuf_memappend"
+    }
+  },
+  "harness": null,
+  "recipe": {
+    "kind": "harness",
+    "judge": "task_server_e.py (category 5)",
+    "steps": [
+      {
+        "role": "run",
+        "cwd": "{run}",
+        "argv": [
+          "/out/tokener_parse_ex_fuzzer",
+          "{poc}"
+        ]
+      }
+    ],
+    "poc_path": null,
+    "aux_files": [],
+    "oracle": {
+      "type": "crash",
+      "frame_pattern": "printbuf_memappend"
+    },
+    "touched_files": [
+      "printbuf.c"
+    ],
+    "uses_out": true,
+    "design": "The injected code drops the `size > INT_MAX - p->bpos - 1` guard in printbuf_memappend, so a single append that makes bpos+size overflow int memcpy's past the buffer. It is reachable only with >= 2 GiB of printed output in one append, which a standard task server cannot afford, so there is no usable PoV; the spec keeps the harness and marks the task unusable."
+  },
+  "trigger_evidence": {
+    "signal": "oom",
+    "detail": "",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": null
+  },
+  "asan_options_from_exploit": "halt_on_error=1:abort_on_error=1",
+  "cwe_id": "CWE-189",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "52ddfb35f1cc7e337edb6b1939a043140b42cf5a"
+}

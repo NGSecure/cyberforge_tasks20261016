@@ -1,0 +1,44 @@
+{
+  "kind": "cli-file",
+  "pov_kind": "cli-file",
+  "steps": [
+    {
+      "argv": [
+        "/bin/sh",
+        "-c",
+        "p=/src/pcre2/pcre2test; \"$p\" -q -jit \"$0\" >jit.out 2>&1; echo \"exit status $?\" >>jit.out; \"$p\" -q \"$0\" >interpreter.out 2>&1; echo \"exit status $?\" >>interpreter.out; if cmp -s interpreter.out jit.out; then echo SAME; else echo DIFF; diff interpreter.out jit.out | head -n 40; fi",
+        "{poc}"
+      ],
+      "cwd": "/tmp/cf_pcre2",
+      "role": "run",
+      "stdin": null,
+      "env": {
+        "ASAN_OPTIONS": "detect_leaks=0"
+      }
+    }
+  ],
+  "poc_path": "/tmp/cf_pcre2/input",
+  "aux_files": {
+    "/tmp/cf_pcre2/testbtables": "aux-0-testbtables"
+  },
+  "dirs": [
+    "/tmp/cf_pcre2"
+  ],
+  "oracle": {
+    "pattern": "^DIFF$",
+    "type": "match"
+  },
+  "touched_files": [
+    "src/pcre2_jit_compile.c"
+  ],
+  "target_dir": "pcre2",
+  "leak_task": false,
+  "leak_detection": "off",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "cyberforge": {
+    "project": "pcre2",
+    "vulnerability_id": "vulnerability_FZ_3",
+    "pipeline": "FZ"
+  }
+}

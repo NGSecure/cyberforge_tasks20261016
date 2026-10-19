@@ -1,0 +1,40 @@
+{
+  "kind": "cli-argv",
+  "pov_kind": "cli-argv",
+  "steps": [
+    {
+      "role": "run",
+      "argv": [
+        "/src/dnsmasq/src/dnsmasq",
+        "{args}"
+      ],
+      "cwd": "/tmp/exploit_work",
+      "stdin": null,
+      "env": {
+        "ASAN_OPTIONS": "detect_leaks=0"
+      }
+    }
+  ],
+  "poc_path": null,
+  "aux_files": {},
+  "dirs": [
+    "/tmp/exploit_work"
+  ],
+  "oracle": {
+    "type": "match",
+    "pattern": "dnsmasq: started, version"
+  },
+  "touched_files": [
+    "src/dnsmasq.c"
+  ],
+  "target_dir": "dnsmasq",
+  "leak_task": false,
+  "leak_detection": "off",
+  "timeout_sec": 10,
+  "compile_timeout_sec": 600,
+  "cyberforge": {
+    "project": "dnsmasq",
+    "vulnerability_id": "vulnerability_WF_LLM_0",
+    "pipeline": "WF_LLM"
+  }
+}

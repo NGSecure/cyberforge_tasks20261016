@@ -1,0 +1,1 @@
+A race condition in Apache Arrow Flight SQL's server session middleware leads to a use-after-free in CastOptions::is_unsafe, causing behavioral divergence between builds.

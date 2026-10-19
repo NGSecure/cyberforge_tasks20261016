@@ -1,0 +1,1 @@
+In jsoncpp's utf8ToCodepoint in json_reader.cpp, improper resource management causes a behavioral divergence between vulnerable and secure builds during JSON parsing.

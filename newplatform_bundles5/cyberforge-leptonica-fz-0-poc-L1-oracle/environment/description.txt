@@ -1,0 +1,1 @@
+Leptonica has an invalid pointer dereference in src/readbarcode.c that can cause crashes or memory corruption when reading barcodes.

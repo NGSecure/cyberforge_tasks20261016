@@ -1,0 +1,1 @@
+libyang ly_ctx_set_searchdir in context.c accepts a non-directory path and returns success, violating its contract.

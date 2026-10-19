@@ -1,0 +1,41 @@
+{
+  "kind": "cli-file",
+  "pov_kind": "harness",
+  "steps": [
+    {
+      "role": "run",
+      "argv": [
+        "/out/cjson_read_fuzzer",
+        "{poc}"
+      ],
+      "cwd": "{run}",
+      "env": {
+        "ASAN_OPTIONS": "allocator_may_return_null=1:max_allocation_size_mb=16:detect_leaks=0"
+      },
+      "stdin": null
+    }
+  ],
+  "poc_path": null,
+  "aux_files": {},
+  "dirs": [],
+  "oracle": {
+    "type": "crash",
+    "frame_pattern": "print_value|print_array|print_object|print"
+  },
+  "touched_files": [
+    "cJSON.c"
+  ],
+  "target_dir": "cjson",
+  "leak_task": false,
+  "leak_detection": "off",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "no_ground_truth": {
+    "why": "the dataset's input never reaches the changed code (it OOMs libFuzzer while printing a string, a path the diff does not touch), and we do not ship an invented PoV; the injected NULL-check removal is reachable only when a print-buffer allocation fails."
+  },
+  "cyberforge": {
+    "project": "cjson",
+    "vulnerability_id": "vulnerability_WF_LLM_6",
+    "pipeline": "WF_LLM"
+  }
+}

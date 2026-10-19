@@ -1,0 +1,1 @@
+mrb_raise(mrb, E_IO_ERROR, "closed stream");

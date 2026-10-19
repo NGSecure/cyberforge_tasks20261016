@@ -1,0 +1,4 @@
+{
+  "type": "crash",
+  "frame_pattern": "print_value|print_array|print_object|print"
+}

@@ -1,0 +1,2 @@
+if (plaintext.size() < static_cast<size_t>(ciphertext_len) - ciphertext_size_delta_) {
+throw ParquetException(ss.str());

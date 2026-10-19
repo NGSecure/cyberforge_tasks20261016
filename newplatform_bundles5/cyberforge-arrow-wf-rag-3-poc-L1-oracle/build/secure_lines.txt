@@ -1,0 +1,1 @@
+err = gdv_fn_time_with_zone(&ts_fields[0], (input + index), (length - index),

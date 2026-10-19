@@ -1,0 +1,41 @@
+{
+  "kind": "cli-file",
+  "pov_kind": "cli-file",
+  "steps": [
+    {
+      "role": "run",
+      "argv": [
+        "/src/lighttpd1.4/src/lemon",
+        "large_grammar.txt"
+      ],
+      "cwd": "/tmp/exploit_work",
+      "stdin": null,
+      "env": {
+        "ASAN_OPTIONS": "detect_leaks=0"
+      }
+    }
+  ],
+  "poc_path": "/tmp/exploit_work/large_grammar.txt",
+  "aux_files": {},
+  "dirs": [
+    "/tmp/exploit_work"
+  ],
+  "oracle": {
+    "type": "output-diff"
+  },
+  "touched_files": [
+    "src/lemon.c"
+  ],
+  "target_dir": "lighttpd1.4",
+  "leak_task": false,
+  "leak_detection": "off",
+  "timeout_sec": 120,
+  "compile_timeout_sec": 600,
+  "decompress": "auto",
+  "fsize_limit_mb": 128,
+  "cyberforge": {
+    "project": "lighttpd",
+    "vulnerability_id": "vulnerability_WF_RAG_0",
+    "pipeline": "WF_RAG"
+  }
+}

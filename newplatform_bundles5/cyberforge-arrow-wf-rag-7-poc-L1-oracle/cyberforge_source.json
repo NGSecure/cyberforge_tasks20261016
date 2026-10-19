@@ -1,0 +1,105 @@
+{
+  "bundle": "cyberforge-arrow-wf-rag-7-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/arrow/vulnerabilities/vulnerability_WF_RAG_7",
+  "base_image": "vuljector/arrow:setup@sha256:bd3d1a1e7023f8e8abcdceeb8b78ea268723b6baab4cc2e13441d11f9fce9e06",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-04-18T18:56:59.444328846Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T15:52:08.291736456Z",
+        "created_by": "sleep infinity",
+        "bytes": 4048950714
+      }
+    ],
+    "post_setup_files": 19079,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 14627,
+    "scrubbed_from_agent_image": 4450,
+    "scrubbed_by_location": {
+      "/ccache/cache": 1562,
+      "/opt/src_snapshot.tar": 1,
+      "/out": 13,
+      "/root": 3,
+      "/tmp": 2715,
+      "/usr/local": 154,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 3,
+  "image_tags": {
+    "docker_image": "cyberforge_arrow_wf_rag_7_main:v0.0.2",
+    "task_server_image": "cyberforge_arrow_wf_rag_7_task_server:v0.0.2"
+  },
+  "tier": "B",
+  "pov_kind": "driver",
+  "quality": {
+    "category": "\u7b2c\u4e94\u7c7b",
+    "basis": "\u903b\u8f91\u6f0f\u6d1e\uff1a\u65b0\u5199 driver \u76f4\u63a5\u8c03\u7528 API\uff08\u65e0\u53ef\u6539\u7f16\u7684\u7a0b\u5e8f\uff09\uff0c\u6309\u8f93\u51fa\u5dee\u5206\u5224\u5b9a\uff0c\u65e0\u6807\u51c6\u7b54\u6848",
+    "verification": "not-built"
+  },
+  "ground_truth_evidence": "category 5: none: the dataset exploit is a placeholder that only greps builder_nested.cc; nothing in the dataset ever called FixedSizeListBuilder::ValidateOverflow.",
+  "ground_truth": null,
+  "category5": {
+    "review": {
+      "category": "behavioral",
+      "note": "output differs (EXPLOIT_TRIGGERED vs NO_TRIGGER), no crash"
+    },
+    "design": "No dataset program, fuzzer or tool calls FixedSizeListBuilder::ValidateOverflow (it has no caller outside the unit tests), so a new driver linked with the build's libarrow.a calls the public method directly on numbers from the PoV and prints the Status strings Arrow returns; output-diff on exit status and output. No ground truth; the driver could not be built on the conversion machine (Arrow's full build cannot run there).",
+    "pov_kind": "driver",
+    "oracle": {
+      "type": "output-diff"
+    }
+  },
+  "harness": null,
+  "recipe": {
+    "kind": "driver",
+    "judge": "task_server_e.py (category 5)",
+    "steps": [
+      {
+        "role": "run",
+        "cwd": "/tmp/cf_poc",
+        "argv": [
+          "/cf_driver/driver",
+          "{poc}"
+        ]
+      }
+    ],
+    "poc_path": "/tmp/cf_poc/numbers.txt",
+    "aux_files": [],
+    "oracle": {
+      "type": "output-diff"
+    },
+    "touched_files": [
+      "cpp/src/arrow/array/builder_nested.cc"
+    ],
+    "uses_out": false,
+    "design": "No dataset program, fuzzer or tool calls FixedSizeListBuilder::ValidateOverflow (it has no caller outside the unit tests), so a new driver linked with the build's libarrow.a calls the public method directly on numbers from the PoV and prints the Status strings Arrow returns; output-diff on exit status and output. No ground truth; the driver could not be built on the conversion machine (Arrow's full build cannot run there).",
+    "driver": {
+      "files": [
+        "driver.cc"
+      ],
+      "build": "$CXX $CXXFLAGS -fsanitize=address -fsanitize=fuzzer-no-link -std=c++20 -I/src/arrow/cpp/src -I/src/build-dir/src driver.cc /src/build-dir/release/libarrow.a /src/build-dir/release/libarrow_bundled_dependencies.a -lpthread -ldl -lrt -o /cf_driver/driver",
+      "binary": "/cf_driver/driver",
+      "project_build": true
+    }
+  },
+  "trigger_evidence": {
+    "signal": "behavioral",
+    "detail": "",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": null
+  },
+  "asan_options_from_exploit": null,
+  "cwe_id": "CWE-369",
+  "cwe_in_description_variants": [
+    "CWE-369"
+  ],
+  "secure_base_commit": "c16a8b22d144d6685ef97c3ef676091dd9c86f1f"
+}

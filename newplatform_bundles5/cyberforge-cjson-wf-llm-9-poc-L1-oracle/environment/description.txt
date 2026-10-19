@@ -1,0 +1,1 @@
+cJSON.c's ensure function can trigger a segmentation violation due to an out-of-bounds access after a buffer operation.

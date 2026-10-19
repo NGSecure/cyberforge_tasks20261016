@@ -1,0 +1,1 @@
+An integer overflow in stun_get_size in coturn's stun_buffer.c results in undefined behavior, returning an incorrect size and potentially leading to buffer overflow.

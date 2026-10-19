@@ -1,0 +1,38 @@
+{
+  "kind": "cli-file",
+  "pov_kind": "harness",
+  "steps": [
+    {
+      "role": "run",
+      "argv": [
+        "/out/mruby_fuzzer",
+        "{poc}"
+      ],
+      "cwd": "{run}",
+      "env": {
+        "ASAN_OPTIONS": "halt_on_error=1:abort_on_error=1:detect_leaks=0"
+      },
+      "stdin": null
+    }
+  ],
+  "poc_path": null,
+  "aux_files": {},
+  "dirs": [],
+  "oracle": {
+    "type": "timeout",
+    "limit_sec": 10
+  },
+  "touched_files": [
+    "mrbgems/mruby-compiler/core/y.tab.c"
+  ],
+  "target_dir": "mruby",
+  "leak_task": false,
+  "leak_detection": "off",
+  "timeout_sec": 120,
+  "compile_timeout_sec": 600,
+  "cyberforge": {
+    "project": "mruby",
+    "vulnerability_id": "vulnerability_WF_RAG_0",
+    "pipeline": "WF_RAG"
+  }
+}

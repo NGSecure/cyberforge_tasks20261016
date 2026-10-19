@@ -1,0 +1,1 @@
+A stack-buffer-overflow in H3's faceijk.c occurs during cell boundary computation when _geoAzDistanceRads writes beyond a local buffer, causing memory corruption.

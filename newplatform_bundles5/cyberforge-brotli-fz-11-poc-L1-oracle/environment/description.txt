@@ -1,0 +1,1 @@
+brotli's transform.c has a calculation error that can cause incorrect results.

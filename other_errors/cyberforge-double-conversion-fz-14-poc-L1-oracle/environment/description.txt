@@ -1,0 +1,1 @@
+double-conversion bignum.cc has a post-buffer operation that may access memory outside a buffer.

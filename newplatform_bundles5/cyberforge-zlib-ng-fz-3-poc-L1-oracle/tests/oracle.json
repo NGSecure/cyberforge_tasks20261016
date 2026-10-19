@@ -1,0 +1,4 @@
+{
+  "type": "crash",
+  "frame_pattern": "crc32_copy_small"
+}

@@ -1,0 +1,1 @@
+if (bigit_length_a < bigit_length_b) {

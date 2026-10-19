@@ -1,0 +1,1 @@
+A heap-buffer-overflow in compactCells in h3Index.c allows out-of-bounds writes when compacting H3 cells.

@@ -1,0 +1,1 @@
+A memory leak in the read_file function in src/file.cpp in libsass allows remote attackers to cause a denial of service via a crafted input.

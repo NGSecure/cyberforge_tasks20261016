@@ -1,0 +1,2 @@
+LOGERR(ctx, LY_ESYS, "Given search directory \"%s\" is not a directory.", new_dir);
+if (!S_ISDIR(st.st_mode)) {

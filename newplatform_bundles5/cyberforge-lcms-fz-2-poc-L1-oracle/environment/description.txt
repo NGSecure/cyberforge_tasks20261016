@@ -1,0 +1,1 @@
+A NULL or invalid pointer in lcms' src/cmsps2.c can lead to a crash due to dereferencing an uninitialized pointer in color profile processing.

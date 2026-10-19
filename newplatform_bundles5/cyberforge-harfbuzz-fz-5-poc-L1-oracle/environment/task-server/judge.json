@@ -1,0 +1,37 @@
+{
+  "kind": "archive",
+  "pov_kind": "archive",
+  "steps": [
+    {
+      "role": "run",
+      "argv": [
+        "/out/hb-shape-fuzzer",
+        "{input}"
+      ],
+      "cwd": "{dir}",
+      "stdin": null,
+      "env": {
+        "ASAN_OPTIONS": "detect_leaks=0"
+      }
+    }
+  ],
+  "poc_path": null,
+  "aux_files": {},
+  "dirs": [],
+  "oracle": {
+    "type": "crash"
+  },
+  "touched_files": [
+    "src/hb-shaper.cc"
+  ],
+  "target_dir": "harfbuzz",
+  "leak_task": false,
+  "leak_detection": "off",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "cyberforge": {
+    "project": "harfbuzz",
+    "vulnerability_id": "vulnerability_FZ_5",
+    "pipeline": "FZ"
+  }
+}

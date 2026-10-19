@@ -1,0 +1,4 @@
+-n
+--simple-log
+-l
+/tmp/exploit_work/my_simple_log

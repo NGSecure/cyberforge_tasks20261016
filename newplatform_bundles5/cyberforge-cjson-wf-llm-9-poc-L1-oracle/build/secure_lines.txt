@@ -1,0 +1,1 @@
+if ((p->length > 0) && (p->offset >= p->length))

@@ -1,0 +1,1 @@
+A resource management flaw in open62541's client implementation can cause excessive resource consumption, leading to behavioral divergence between versions.

@@ -1,0 +1,4 @@
+{
+  "pattern": "^rc=-?[0-9]+ exists=1$",
+  "type": "match"
+}

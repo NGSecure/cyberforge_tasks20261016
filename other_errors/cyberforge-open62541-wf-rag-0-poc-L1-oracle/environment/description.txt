@@ -1,0 +1,1 @@
+Use-after-free in securitypolicy_pubsub_aes256ctr_tpm.c in open62541 causes behavioral divergence between vulnerable and secure builds.

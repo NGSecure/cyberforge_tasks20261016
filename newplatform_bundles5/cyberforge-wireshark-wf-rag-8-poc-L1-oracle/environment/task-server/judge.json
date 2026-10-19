@@ -1,0 +1,43 @@
+{
+  "kind": "cli-file",
+  "pov_kind": "driver",
+  "steps": [
+    {
+      "role": "run",
+      "argv": [
+        "/cf_driver/driver",
+        "{poc}"
+      ],
+      "cwd": "/tmp/cf_poc",
+      "stdin": null,
+      "env": {
+        "ASAN_OPTIONS": "detect_leaks=0"
+      }
+    }
+  ],
+  "poc_path": "/tmp/cf_poc/capture",
+  "aux_files": {},
+  "dirs": [
+    "/tmp/cf_poc"
+  ],
+  "oracle": {
+    "type": "timeout",
+    "limit_sec": 10
+  },
+  "touched_files": [
+    "wiretap/file_wrappers.c"
+  ],
+  "target_dir": "wireshark",
+  "leak_task": false,
+  "leak_detection": "off",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "no_ground_truth": {
+    "why": "the dataset exploit runs no wiretap code: it greps file_wrappers.c and runs its own copy of a zlib loop."
+  },
+  "cyberforge": {
+    "project": "wireshark",
+    "vulnerability_id": "vulnerability_WF_RAG_8",
+    "pipeline": "WF_RAG"
+  }
+}

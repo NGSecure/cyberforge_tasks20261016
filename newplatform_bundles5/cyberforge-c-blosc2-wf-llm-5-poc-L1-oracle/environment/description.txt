@@ -1,0 +1,1 @@
+A memory leak in blosc2_remove_urlpath in c-blosc2 directories.c allows an attacker to exhaust memory resources.

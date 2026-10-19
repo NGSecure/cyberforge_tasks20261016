@@ -1,0 +1,64 @@
+{
+  "kind": "cli-file",
+  "pov_kind": "cli-file",
+  "steps": [
+    {
+      "role": "background",
+      "argv": [
+        "python3",
+        "/cf_driver/responder.py",
+        "{poc}"
+      ],
+      "cwd": "/tmp/cf_poc",
+      "ready_sec": 2,
+      "stdin": null,
+      "env": {
+        "ASAN_OPTIONS": "halt_on_error=1:abort_on_error=1:detect_leaks=0"
+      }
+    },
+    {
+      "role": "run",
+      "argv": [
+        "/src/exiv2/build/bin/exiv2",
+        "read",
+        "http://127.0.0.1:8080/test.jpg"
+      ],
+      "cwd": "/tmp/exploit_work",
+      "unset_env": [
+        "http_proxy",
+        "HTTP_PROXY",
+        "https_proxy",
+        "HTTPS_PROXY",
+        "no_proxy",
+        "NO_PROXY"
+      ],
+      "stdin": null,
+      "env": {
+        "ASAN_OPTIONS": "halt_on_error=1:abort_on_error=1:detect_leaks=0"
+      }
+    }
+  ],
+  "poc_path": "/tmp/cf_poc/response.bin",
+  "aux_files": {},
+  "dirs": [
+    "/tmp/cf_poc",
+    "/tmp/exploit_work"
+  ],
+  "oracle": {
+    "type": "crash"
+  },
+  "touched_files": [
+    "src/http.cpp"
+  ],
+  "target_dir": "exiv2",
+  "leak_task": false,
+  "leak_detection": "off",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "network": "inet",
+  "cyberforge": {
+    "project": "exiv2",
+    "vulnerability_id": "vulnerability_WF_RAG_0",
+    "pipeline": "WF_RAG"
+  }
+}

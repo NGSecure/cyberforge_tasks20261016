@@ -1,0 +1,1 @@
+A heap-buffer-overflow in cancelArcPairs in cellsToMultiPoly.c can cause an out-of-bounds read during polygon conversion.

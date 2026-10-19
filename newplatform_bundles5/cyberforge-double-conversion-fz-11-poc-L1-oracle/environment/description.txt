@@ -1,0 +1,1 @@
+Out-of-bounds read in double-conversion bignum.cc can cause an abort.

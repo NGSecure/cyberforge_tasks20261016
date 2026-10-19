@@ -1,0 +1,1 @@
+A stack buffer overflow in Exiv2's http function in src/http.cpp allows out-of-bounds writes via vsprintf due to improper input validation.

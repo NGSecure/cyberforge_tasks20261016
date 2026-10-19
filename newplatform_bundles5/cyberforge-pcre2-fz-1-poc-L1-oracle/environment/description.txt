@@ -1,0 +1,1 @@
+Out-of-bounds read in pcre2's JIT SIMD code in src/pcre2_jit_simd_inc.h may access memory outside the intended buffer.

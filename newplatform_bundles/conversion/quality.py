@@ -457,9 +457,20 @@ def main():
         e = {"bundle": name, "source": "cyberforge_tasks20261016/projects/" + rec["path"], "verification": status,
              "cat": "5", "how": "c5", "basis": zh["basis"], "problem": zh["problem"], "impact": zh.get("impact", ""),
              "fix": zh["fix"], "suggest": zh.get("suggest", ""), "status": c5_status(status, zh, (summary.get(name) or {})),
-             "review": review.get(rec["path"], {}).get("category", ""), "unusable": zh.get("unusable", "")}
-        e["category"] = CAT_NAME["5"]
-        e["folder"] = CAT_DIR["5"]
+             "review": review.get(rec["path"], {}).get("category", ""), "unusable": zh.get("unusable", ""),
+             "hardware": zh.get("hardware", "") if status in ("unverified", "not-built") else ""}
+        # the user's rule of 2026-10-19: what will not build, or cannot be converted into a valid task (no PoC can
+        # pass), goes to other_errors/ (category 6); what is converted but could not be tested on this machine
+        # (disk, memory, network: zh.hardware) stays in category 5
+        basis = zh["basis"][len("不可用："):] if zh["basis"].startswith("不可用：") else zh["basis"]
+        if zh.get("build_fails"):
+            e.update(cat="6", basis="第五类构建失败：" + basis,
+                     status="构建会失败：%s。不要构建上传。" % zh["build_fails"].rstrip("。"))
+        elif zh.get("unusable"):
+            e.update(cat="6", basis="第五类无法转化成有效任务：" + basis,
+                     status="无法转化成有效任务（没有 PoV 能通过判定）：%s。不要上传。" % zh["unusable"].rstrip("。"))
+        e["category"] = CAT_NAME[e["cat"]]
+        e["folder"] = CAT_DIR[e["cat"]]
         e["source_of_problem"], e["source_note"], e["code_sources"] = zh.get("source", SRC_UP), zh.get("source_note", ""), {}
         out[name] = e
     json.dump({"_about": __doc__.split("\n\n")[0] + " (quality.py)", "bundles": dict(sorted(out.items()))},
@@ -479,6 +490,8 @@ def c5_status(status, zh, sm):
     """The state of a category-5 bundle after verification here."""
     if zh.get("unusable"):  # no PoC can pass (e.g. the injected code is not in any program the build makes)
         return "不可用：%s" % zh["unusable"]
+    if zh.get("hardware") and status in ("unverified", "not-built"):  # converted, but this machine could not test it
+        return "已转化；本机条件不够（磁盘、内存或网络），未实测：%s。" % zh["hardware"].rstrip("。")
     if status == "pass":
         return "可用：按本任务的判定规则（tests/oracle.json）标准答案通过、空 PoV 不通过。" + zh.get("status_note", "")
     if status == "pass-no-gt":

@@ -746,7 +746,7 @@ def build_bundle(root, rec, out_dir, ver, scan_dir, quality=None, c5spec=None):
     write(os.path.join(bd, "push.sh"), render("push.sh", v), 0o755)
     if nogt:
         no_ground_truth(bd)
-    if quality and quality.get("verification") == "fail" and quality.get("cat") in ("3", "pending"):
+    if quality and quality.get("verification") == "fail" and quality.get("cat") in ("3", "pending", "5"):
         known_fail_build_sh(bd, quality)
     if c5spec:
         c5_build_sh(bd, gt is None)
@@ -879,8 +879,8 @@ def main():
         if spec:  # category 5 (the tasks without a bundle before): judged by the bundle's own tests/
             n = rec["vuln"].rsplit("_", 1)[-1]
             name = "cyberforge-%s-%s-%s-poc-L1-oracle" % (rec["project"].lower(), PIPE[rec["type"]], n)
-            folder = fifth_dir
             q = quality.get(name)
+            folder = sixth_dir if q and q.get("cat") == "6" else fifth_dir  # 6: it will not build (quality.py)
             if a.only is None or name in a.only or rec["path"] in a.only:
                 bundle, desc_src, desc_mismatch = build_bundle(a.root, rec, folder, a.ver, a.scan, q, c5spec=spec)
                 built["第五类/%s" % spec["kind"]] += 1

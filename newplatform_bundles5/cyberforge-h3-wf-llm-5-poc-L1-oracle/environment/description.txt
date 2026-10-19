@@ -1,0 +1,1 @@
+A heap-buffer-overflow in h3's cellToLatLng occurs due to an out-of-bounds read in constructCell, leading to a crash.

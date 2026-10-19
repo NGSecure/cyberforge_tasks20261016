@@ -1,0 +1,40 @@
+{
+  "kind": "cli-file",
+  "pov_kind": "harness",
+  "steps": [
+    {
+      "role": "run",
+      "argv": [
+        "/out/srtp-fuzzer",
+        "{poc}"
+      ],
+      "cwd": "{run}",
+      "env": {
+        "ASAN_OPTIONS": "detect_leaks=0"
+      },
+      "stdin": null
+    }
+  ],
+  "poc_path": null,
+  "aux_files": {},
+  "dirs": [],
+  "oracle": {
+    "type": "crash"
+  },
+  "touched_files": [
+    "crypto/hash/sha1.c"
+  ],
+  "target_dir": "libsrtp",
+  "leak_task": false,
+  "leak_detection": "off",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "no_ground_truth": {
+    "why": "the off-by-one copies one extra in-struct word (ctx->M[16], inside srtp_sha1_ctx_t), so no out-of-bounds access occurs; it only makes every SHA-1/HMAC output wrong, an input-independent effect the harness never reports."
+  },
+  "cyberforge": {
+    "project": "libsrtp",
+    "vulnerability_id": "vulnerability_FZ_1",
+    "pipeline": "FZ"
+  }
+}

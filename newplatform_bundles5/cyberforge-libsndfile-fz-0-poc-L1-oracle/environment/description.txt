@@ -1,0 +1,1 @@
+libsndfile contains an off-by-one calculation error in the G72x decoder, potentially leading to an out-of-bounds read.

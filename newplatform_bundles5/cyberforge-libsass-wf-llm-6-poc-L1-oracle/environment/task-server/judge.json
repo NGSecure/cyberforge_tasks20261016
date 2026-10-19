@@ -1,0 +1,45 @@
+{
+  "kind": "cli-file",
+  "pov_kind": "harness",
+  "steps": [
+    {
+      "role": "run",
+      "argv": [
+        "/out/data_context_fuzzer",
+        "{poc}"
+      ],
+      "cwd": "{run}",
+      "env": {
+        "ASAN_OPTIONS": "detect_leaks=0"
+      },
+      "stdin": null
+    }
+  ],
+  "poc_path": null,
+  "aux_files": {
+    "/tmp/cf_ls6/trigger_file": "aux-0-trigger_file"
+  },
+  "dirs": [
+    "/tmp/cf_ls6"
+  ],
+  "oracle": {
+    "type": "crash",
+    "frame_pattern": "read_file"
+  },
+  "touched_files": [
+    "src/file.cpp"
+  ],
+  "target_dir": "libsass",
+  "leak_task": false,
+  "leak_detection": "off",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "aux_modes": {
+    "/tmp/cf_ls6/trigger_file": "0000"
+  },
+  "cyberforge": {
+    "project": "libsass",
+    "vulnerability_id": "vulnerability_WF_LLM_6",
+    "pipeline": "WF_LLM"
+  }
+}

@@ -1,0 +1,1 @@
+A null pointer dereference in parse_from.c can occur while parsing a malformed From header, causing a crash.

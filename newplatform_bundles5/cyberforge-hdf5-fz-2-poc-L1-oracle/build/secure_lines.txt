@@ -1,0 +1,1 @@
+for (bin = 0; bin < sinfo->nbins; bin++)

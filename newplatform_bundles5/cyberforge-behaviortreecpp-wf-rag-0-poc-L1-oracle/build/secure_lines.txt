@@ -1,0 +1,2 @@
+_p->parser.get(), main_tree_ID, [&] { _p->parser->loadFromFile(file_path); });
+doc.LoadFile(file_path.string().c_str());

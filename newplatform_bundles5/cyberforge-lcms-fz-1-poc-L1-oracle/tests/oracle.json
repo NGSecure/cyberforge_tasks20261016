@@ -1,0 +1,4 @@
+{
+  "type": "match",
+  "pattern": "dup 1\\.1 gt \\{ pop 1\\.0 \\} if"
+}

@@ -1,0 +1,2 @@
+new_bsize = (size_t) VIPS_IMAGE_SIZEOF_PEL(im) *
+area->width * area->height;

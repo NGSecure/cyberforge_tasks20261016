@@ -1,0 +1,37 @@
+{
+  "kind": "cli-argv",
+  "pov_kind": "cli-argv",
+  "steps": [
+    {
+      "role": "run",
+      "argv": [
+        "/src/jq/jq",
+        "{args}"
+      ],
+      "cwd": "/tmp",
+      "stdin": null,
+      "env": {
+        "ASAN_OPTIONS": "detect_leaks=0"
+      }
+    }
+  ],
+  "poc_path": null,
+  "aux_files": {},
+  "dirs": [],
+  "oracle": {
+    "type": "crash"
+  },
+  "touched_files": [
+    "src/jv.c"
+  ],
+  "target_dir": "jq",
+  "leak_task": false,
+  "leak_detection": "off",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "cyberforge": {
+    "project": "jq",
+    "vulnerability_id": "vulnerability_FZ_14",
+    "pipeline": "FZ"
+  }
+}

@@ -1,0 +1,1 @@
+jq's jvp_object_get_slot in src/jv.c triggers an assertion failure when an out-of-range object slot is computed.

@@ -1,0 +1,1 @@
+A heap use-after-free in libsass's source_map.cpp triggers an invalid read in strlen, potentially leading to a crash or memory corruption.

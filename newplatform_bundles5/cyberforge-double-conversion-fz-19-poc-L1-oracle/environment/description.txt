@@ -1,0 +1,1 @@
+An out-of-bounds read in strtod.cc of double-conversion can lead to incorrect parsing or a crash when processing crafted input.

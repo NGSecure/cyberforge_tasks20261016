@@ -1,0 +1,1 @@
+In espeak-ng, the SSML parameter stack handler in ssml.c writes past a fixed stack buffer using an unchecked sprintf, leading to a stack-buffer-overflow.

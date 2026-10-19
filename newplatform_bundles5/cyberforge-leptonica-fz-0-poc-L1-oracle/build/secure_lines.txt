@@ -1,0 +1,2 @@
+return (NUMA *)ERROR_PTR("nas not made", __func__, NULL);
+if ((nas = pixAverageRasterScans(pixs, 50)) == NULL)

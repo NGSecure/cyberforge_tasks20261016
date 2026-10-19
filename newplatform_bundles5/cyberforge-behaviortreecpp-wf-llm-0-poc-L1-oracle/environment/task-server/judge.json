@@ -1,0 +1,43 @@
+{
+  "kind": "cli-file",
+  "pov_kind": "cli-file",
+  "steps": [
+    {
+      "role": "run",
+      "argv": [
+        "/out/script_fuzzer",
+        "-rss_limit_mb=2048",
+        "{poc}"
+      ],
+      "cwd": "{run}",
+      "stdin": null,
+      "env": {
+        "ASAN_OPTIONS": "detect_leaks=0"
+      }
+    }
+  ],
+  "poc_path": "/tmp/cf_poc/payload.bin",
+  "aux_files": {},
+  "dirs": [
+    "/tmp/cf_poc"
+  ],
+  "oracle": {
+    "type": "match",
+    "pattern": "ERROR: libFuzzer: out-of-memory"
+  },
+  "touched_files": [
+    "src/script_tokenizer.cpp"
+  ],
+  "target_dir": "behaviortreecpp",
+  "leak_task": false,
+  "leak_detection": "off",
+  "timeout_sec": 120,
+  "compile_timeout_sec": 600,
+  "decompress": "auto",
+  "fsize_limit_mb": 128,
+  "cyberforge": {
+    "project": "behaviortreecpp",
+    "vulnerability_id": "vulnerability_WF_LLM_0",
+    "pipeline": "WF_LLM"
+  }
+}

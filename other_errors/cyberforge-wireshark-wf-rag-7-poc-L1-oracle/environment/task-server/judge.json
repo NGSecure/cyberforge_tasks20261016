@@ -1,0 +1,40 @@
+{
+  "kind": "cli-file",
+  "pov_kind": "harness",
+  "steps": [
+    {
+      "role": "run",
+      "argv": [
+        "/out/fuzzshark_ip",
+        "{poc}"
+      ],
+      "cwd": "{run}",
+      "env": {
+        "ASAN_OPTIONS": "detect_leaks=0"
+      },
+      "stdin": null
+    }
+  ],
+  "poc_path": null,
+  "aux_files": {},
+  "dirs": [],
+  "oracle": {
+    "type": "crash"
+  },
+  "touched_files": [
+    "epan/wslua/wslua_struct.c"
+  ],
+  "target_dir": "wireshark",
+  "leak_task": false,
+  "leak_detection": "off",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "no_ground_truth": {
+    "why": "the exploit only greps wslua_struct.c (its attack.c is never compiled), and no built program contains wslua."
+  },
+  "cyberforge": {
+    "project": "wireshark",
+    "vulnerability_id": "vulnerability_WF_RAG_7",
+    "pipeline": "WF_RAG"
+  }
+}

@@ -1,0 +1,1 @@
+double-conversion ieee.h contains a post-buffer operation that may read or write memory after a buffer boundary.

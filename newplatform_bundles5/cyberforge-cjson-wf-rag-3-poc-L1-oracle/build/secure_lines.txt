@@ -1,0 +1,1 @@
+return cJSON_ParseWithLengthOpts(value, buffer_length, 0, 0);

@@ -1,0 +1,142 @@
+{
+  "bundle": "cyberforge-haproxy-wf-llm-0-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/haproxy/vulnerabilities/vulnerability_WF_LLM_0",
+  "base_image": "vuljector/haproxy:setup@sha256:c57043d6925c4a7aba1641d7345646c3f0117ad84e88169be9189ae3da6651f8",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-05-11T01:40:31.173405592Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-11T01:45:29.256625303Z",
+        "created_by": "sleep infinity",
+        "bytes": 202384261
+      },
+      {
+        "created": "2026-05-11T01:51:20.655300483Z",
+        "created_by": "sleep infinity",
+        "bytes": 1343
+      },
+      {
+        "created": "2026-05-11T02:50:02.26665452Z",
+        "created_by": "/bin/bash",
+        "bytes": 1206
+      },
+      {
+        "created": "2026-05-11T02:53:24.396098247Z",
+        "created_by": "/bin/bash",
+        "bytes": 1215
+      }
+    ],
+    "post_setup_files": 258,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 232,
+    "scrubbed_from_agent_image": 24,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out": 6,
+      "/work/h1_seeds": 15,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 1,
+  "image_tags": {
+    "docker_image": "cyberforge_haproxy_wf_llm_0_main:v0.0.2",
+    "task_server_image": "cyberforge_haproxy_wf_llm_0_task_server:v0.0.2"
+  },
+  "tier": "B",
+  "pov_kind": "cli-file",
+  "quality": {
+    "category": "\u7b2c\u516d\u7c7b",
+    "basis": "\u7b2c\u4e94\u7c7b\u65e0\u6cd5\u8f6c\u5316\u6210\u6709\u6548\u4efb\u52a1\uff1a\u53ea\u6709\u4ee5 root \u8fd0\u884c\u624d\u80fd\u89c2\u5bdf setuid \u4e0e seteuid \u7684\u5dee\u522b",
+    "verification": "fail"
+  },
+  "ground_truth_evidence": "category 5: the dataset's own trigger (newplatform_bundles/conversion/c5/gt/haproxy/vulnerability_WF_LLM_0/haproxy_privdrop.cfg; adapted: exploit.sh's haproxy_privdrop.cfg unchanged (global uid 1000, frontend on 127.0.0.1:1025))",
+  "ground_truth": {
+    "dataset_file": null,
+    "how_found": "c5_specs.json: newplatform_bundles/conversion/c5/gt/haproxy/vulnerability_WF_LLM_0/haproxy_privdrop.cfg; adapted: exploit.sh's haproxy_privdrop.cfg unchanged (global uid 1000, frontend on 127.0.0.1:1025)",
+    "bytes": 164,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": null,
+    "sha256": "53bd7b1cebbb10766d14d3d5c357ca85bf21de88a45063c9819987476509533b",
+    "solve_sh": "inline"
+  },
+  "category5": {
+    "review": {
+      "category": "behavioral",
+      "note": "privileges are dropped with seteuid instead of setuid"
+    },
+    "design": "Unusable here: setuid() and seteuid() only differ when haproxy starts as root (real and saved uid stay 0 in the vulnerable build); as the judge's unprivileged user both calls fail with EPERM and print the same alert. The spec keeps the exploit's config and an output-diff rule so the bundle exists and says why it cannot pass.",
+    "pov_kind": "cli-file",
+    "oracle": {
+      "type": "output-diff",
+      "observe": [
+        "status",
+        "output"
+      ],
+      "timeout_is_observation": true,
+      "limit_sec": 5,
+      "normalize": [
+        [
+          "\\(\\d+\\)",
+          "(PID)"
+        ]
+      ]
+    }
+  },
+  "harness": null,
+  "recipe": {
+    "kind": "cli-file",
+    "judge": "task_server_e.py (category 5)",
+    "steps": [
+      {
+        "role": "run",
+        "cwd": "/tmp/exploit_work",
+        "argv": [
+          "/src/haproxy/haproxy",
+          "-f",
+          "{poc}",
+          "-d",
+          "-q"
+        ]
+      }
+    ],
+    "poc_path": "/tmp/exploit_work/haproxy_privdrop.cfg",
+    "aux_files": [],
+    "oracle": {
+      "type": "output-diff",
+      "observe": [
+        "status",
+        "output"
+      ],
+      "timeout_is_observation": true,
+      "limit_sec": 5,
+      "normalize": [
+        [
+          "\\(\\d+\\)",
+          "(PID)"
+        ]
+      ]
+    },
+    "touched_files": [
+      "src/haproxy.c"
+    ],
+    "uses_out": false,
+    "design": "Unusable here: setuid() and seteuid() only differ when haproxy starts as root (real and saved uid stay 0 in the vulnerable build); as the judge's unprivileged user both calls fail with EPERM and print the same alert. The spec keeps the exploit's config and an output-diff rule so the bundle exists and says why it cannot pass."
+  },
+  "trigger_evidence": {
+    "signal": "nocrash",
+    "detail": "",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": null
+  },
+  "asan_options_from_exploit": null,
+  "cwe_id": "CWE-271",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "731fc033dd56196761e42efe0d39b3d4b4ef8203"
+}

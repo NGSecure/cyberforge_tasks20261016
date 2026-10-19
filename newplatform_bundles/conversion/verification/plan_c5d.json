@@ -1,0 +1,20 @@
+[
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-h3-wf-llm-5-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-htslib-fz-2-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "htslib"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-hdf5-fz-2-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "hdf5"
+ }
+]

@@ -1,0 +1,1 @@
+numRemainingHexes / 6;  // Somehow all pentagons; conservative

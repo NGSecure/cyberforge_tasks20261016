@@ -1,0 +1,42 @@
+{
+  "kind": "cli-file",
+  "pov_kind": "driver",
+  "steps": [
+    {
+      "role": "run",
+      "argv": [
+        "/cf_driver/driver",
+        "{poc}"
+      ],
+      "cwd": "/tmp/cf_poc",
+      "stdin": null,
+      "env": {
+        "ASAN_OPTIONS": "allocator_may_return_null=1:max_allocation_size_mb=8:detect_leaks=0"
+      }
+    }
+  ],
+  "poc_path": "/tmp/cf_poc/payload.bin",
+  "aux_files": {},
+  "dirs": [
+    "/tmp/cf_poc"
+  ],
+  "oracle": {
+    "type": "crash",
+    "frame_pattern": "parse_string|parse_value|cJSON_ParseWithOpts"
+  },
+  "touched_files": [
+    "cJSON.c"
+  ],
+  "target_dir": "cjson",
+  "leak_task": false,
+  "leak_detection": "off",
+  "timeout_sec": 120,
+  "compile_timeout_sec": 600,
+  "decompress": "auto",
+  "fsize_limit_mb": 64,
+  "cyberforge": {
+    "project": "cjson",
+    "vulnerability_id": "vulnerability_WF_LLM_7",
+    "pipeline": "WF_LLM"
+  }
+}

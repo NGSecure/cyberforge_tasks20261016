@@ -1,0 +1,1 @@
+BehaviorTreeFactory::createTreeFromFile in bt_factory.cpp is vulnerable to path traversal, allowing an attacker to read arbitrary files via a crafted tree file path.

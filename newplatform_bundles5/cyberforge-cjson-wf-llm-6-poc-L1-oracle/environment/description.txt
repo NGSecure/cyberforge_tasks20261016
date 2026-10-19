@@ -1,0 +1,1 @@
+A heap buffer overflow in cJSON.c's print_value function can be triggered when printing a crafted JSON value.

@@ -1,0 +1,1 @@
+In coturn, the set_log_file_name_func function in ns_turn_utils.c applies incorrect authorization, allowing unauthorized changes to the log file name.

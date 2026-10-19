@@ -1,0 +1,51 @@
+# CyberForge task-server sidecar (CyberGym/ARVO-compatible).
+# Merged on top of Harbor's base docker-compose config. The task-server holds the
+# secure + vulnerable harness builds and the ground-truth PoV in an isolated
+# container — the agent only interacts with it via HTTP.
+# Both images build from the bundle root (secrets live in build/, not environment/);
+# on the platform the prebuilt docker_image / task_server_image are used instead.
+services:
+  main:
+    build:
+      context: ..
+      dockerfile: environment/Dockerfile
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS:-}
+      - ANTHROPIC_BASE_URL=${ANTHROPIC_BASE_URL:-}
+      - OPENAI_BASE_URL=${OPENAI_BASE_URL:-}
+      - LLM_BASE_URL=${LLM_BASE_URL:-}
+      - GOOGLE_BASE_URL=${GOOGLE_BASE_URL:-}
+      - OPENROUTER_BASE_URL=${OPENROUTER_BASE_URL:-}
+      - NVIDIA_BASE_URL=${NVIDIA_BASE_URL:-}
+      - AZURE_BASE_URL=${AZURE_BASE_URL:-}
+      - AZURE_OPENAI_ENDPOINT=${AZURE_OPENAI_ENDPOINT:-}
+      - DOUBAO_BASE_URL=${DOUBAO_BASE_URL:-}
+      - LITELLM_BASE_URL=${LITELLM_BASE_URL:-}
+      - DYNAMO_BASE_URL=${DYNAMO_BASE_URL:-}
+      - HF_ENDPOINT_URL=${HF_ENDPOINT_URL:-}
+    depends_on:
+      task-server:
+        condition: service_healthy
+
+  task-server:
+    build:
+      context: ..
+      dockerfile: environment/task-server/Dockerfile
+    platform: linux/amd64
+    environment:
+      - AUTH_TOKEN=3d51a0f4ed2ce1286eec2888247856bf
+    expose:
+      - "9111"
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 4096M
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:9111/health')"]
+      interval: 3s
+      timeout: 5s
+      retries: 20
+      start_period: 5s

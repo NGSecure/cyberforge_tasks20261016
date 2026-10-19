@@ -1,0 +1,3 @@
+if (a > (INT_MAX / 10) || a * 10 > (INT_MAX - (**fmt - '0')))
+luaL_error(L, "integral size overflow");
+a = a*10 + *((*fmt)++) - '0';

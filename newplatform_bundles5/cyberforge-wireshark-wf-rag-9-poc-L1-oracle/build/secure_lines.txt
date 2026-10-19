@@ -1,0 +1,1 @@
+if (!ITERATOR_VALID(iterator, sizeof(uint32_t)))

@@ -1,0 +1,1 @@
+A reachability-through-expression issue in Kamailio's parse_privacy.c may allow crafted input to reach unintended code paths.

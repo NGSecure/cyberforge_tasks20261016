@@ -1,0 +1,1 @@
+double-conversion bignum.cc may read out of bounds while generating counted digits, causing an assertion failure.

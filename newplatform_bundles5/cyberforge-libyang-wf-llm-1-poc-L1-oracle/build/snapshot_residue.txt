@@ -1,0 +1,7 @@
+/opt/src_snapshot.tar
+/out/llvm-symbolizer
+/out/lyd_parse_mem_json
+/out/lyd_parse_mem_xml
+/out/lys_parse_mem
+/workspace/run/unit_tests/parse_results.py
+/workspace/run/unit_tests/test.sh

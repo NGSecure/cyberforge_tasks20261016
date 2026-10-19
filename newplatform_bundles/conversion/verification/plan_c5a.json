@@ -1,0 +1,152 @@
+[
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-cjson-wf-llm-6-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "cjson"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-cjson-wf-llm-7-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "cjson"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-h3-wf-llm-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-h3-wf-llm-5-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-double-conversion-fz-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "double-conversion"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-double-conversion-fz-19-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "double-conversion"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-jq-fz-13-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "jq"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-lcms-fz-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "lcms"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-lcms-fz-2-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "lcms"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-libsrtp-wf-rag-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "libsrtp"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-zlib-ng-fz-3-poc-L1-oracle",
+  "alts": {
+   "candidate-1": "/home/user/cyberforge_tasks20261016/newplatform_bundles/conversion/c5/gt/zlib-ng/vulnerability_FZ_3/input-010"
+  },
+  "judge_alts": {},
+  "project": "zlib-ng"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-pcre2-fz-4-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "pcre2"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-quickjs-wf-llm-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "quickjs"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-quickjs-wf-llm-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "quickjs"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-libsass-wf-llm-5-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "libsass"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-libsass-wf-llm-6-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "libsass"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-libsass-wf-llm-8-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "libsass"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-htslib-fz-2-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "htslib"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-behaviortreecpp-wf-llm-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "behaviortreecpp"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-hdf5-fz-2-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "hdf5"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-espeak-ng-wf-llm-3-poc-L1-oracle",
+  "alts": {
+   "candidate-1": "/home/user/cyberforge_tasks20261016/newplatform_bundles/conversion/c5/gt/espeak-ng/vulnerability_WF_LLM_3/input-002",
+   "candidate-2": "/home/user/cyberforge_tasks20261016/newplatform_bundles/conversion/c5/gt/espeak-ng/vulnerability_WF_LLM_3/input-003",
+   "candidate-3": "/home/user/cyberforge_tasks20261016/newplatform_bundles/conversion/c5/gt/espeak-ng/vulnerability_WF_LLM_3/input-004"
+  },
+  "judge_alts": {},
+  "project": "espeak-ng"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-mruby-wf-rag-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "mruby"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-guetzli-fz-4-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "guetzli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-arrow-wf-rag-3-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "arrow"
+ }
+]

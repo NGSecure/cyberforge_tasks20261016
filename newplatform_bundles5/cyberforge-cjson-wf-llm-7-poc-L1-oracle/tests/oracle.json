@@ -1,0 +1,4 @@
+{
+  "type": "crash",
+  "frame_pattern": "parse_string|parse_value|cJSON_ParseWithOpts"
+}

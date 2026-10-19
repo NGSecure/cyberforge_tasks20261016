@@ -1,0 +1,39 @@
+{
+  "kind": "cli-file",
+  "pov_kind": "driver",
+  "steps": [
+    {
+      "role": "run",
+      "argv": [
+        "/cf_driver/driver",
+        "{poc}"
+      ],
+      "cwd": "/tmp/cf_poc",
+      "stdin": null,
+      "env": {
+        "ASAN_OPTIONS": "detect_leaks=0"
+      }
+    }
+  ],
+  "poc_path": "/tmp/cf_poc/input.scss",
+  "aux_files": {},
+  "dirs": [
+    "/tmp/cf_poc"
+  ],
+  "oracle": {
+    "type": "crash"
+  },
+  "touched_files": [
+    "src/source_map.cpp"
+  ],
+  "target_dir": "libsass",
+  "leak_task": false,
+  "leak_detection": "off",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "cyberforge": {
+    "project": "libsass",
+    "vulnerability_id": "vulnerability_WF_LLM_9",
+    "pipeline": "WF_LLM"
+  }
+}

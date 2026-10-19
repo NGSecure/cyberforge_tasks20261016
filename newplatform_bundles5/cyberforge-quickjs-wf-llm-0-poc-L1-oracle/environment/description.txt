@@ -1,0 +1,1 @@
+QuickJS's dbuf_claim in quickjs-libc.c is vulnerable to command injection due to improper validation of shell-out paths, allowing crafted input to execute unintended commands.

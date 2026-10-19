@@ -1,0 +1,1 @@
+if (need_cap_net_admin && !(data->permitted & (1 << CAP_NET_ADMIN)))

@@ -1,0 +1,1 @@
+else if (option == E_LONG || option == E_SLONG)

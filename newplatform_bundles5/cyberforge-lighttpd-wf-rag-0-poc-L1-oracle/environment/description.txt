@@ -1,0 +1,1 @@
+Improper input validation in lighttpd's lemon.c Parse function allows malformed parser input to be processed.

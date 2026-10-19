@@ -1,0 +1,1 @@
+coturn's HTTP relay server contains a concurrency race condition that causes a behavioral divergence between vulnerable and secure builds, leading to inconsistent handling of HTTP requests.

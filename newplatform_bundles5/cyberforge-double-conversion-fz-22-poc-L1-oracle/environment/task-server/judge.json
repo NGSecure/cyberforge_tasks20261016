@@ -1,0 +1,39 @@
+{
+  "kind": "cli-file",
+  "pov_kind": "driver",
+  "steps": [
+    {
+      "argv": [
+        "/cf_driver/dc_driver",
+        "{poc}"
+      ],
+      "cwd": "/tmp/cf_poc",
+      "role": "run",
+      "stdin": null,
+      "env": {
+        "ASAN_OPTIONS": "detect_leaks=0"
+      }
+    }
+  ],
+  "poc_path": "/tmp/cf_poc/input.txt",
+  "aux_files": {},
+  "dirs": [
+    "/tmp/cf_poc"
+  ],
+  "oracle": {
+    "type": "crash"
+  },
+  "touched_files": [
+    "double-conversion/bignum.cc"
+  ],
+  "target_dir": "double-conversion",
+  "leak_task": false,
+  "leak_detection": "off",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "cyberforge": {
+    "project": "double-conversion",
+    "vulnerability_id": "vulnerability_FZ_22",
+    "pipeline": "FZ"
+  }
+}

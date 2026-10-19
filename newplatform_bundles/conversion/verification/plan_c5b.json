@@ -1,0 +1,582 @@
+[
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-cjson-wf-llm-4-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "cjson"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-cjson-wf-llm-8-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "cjson"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-cjson-wf-llm-9-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "cjson"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-cjson-wf-rag-3-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "cjson"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-h3-fz-12-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-h3-fz-13-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-h3-fz-16-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-h3-fz-23-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-h3-fz-5-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-h3-fz-53-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-h3-fz-7-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-h3-wf-rag-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-h3-wf-rag-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-h3-wf-rag-6-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-double-conversion-fz-11-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "double-conversion"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-double-conversion-fz-13-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "double-conversion"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-double-conversion-fz-14-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "double-conversion"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-double-conversion-fz-22-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "double-conversion"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-double-conversion-fz-3-poc-L1-oracle",
+  "alts": {
+   "constructed c5/gt/double-conversion/vulnerability_FZ_3/test_dtoa_prefix.txt": "/home/user/cyberforge_tasks20261016/newplatform_bundles/conversion/c5/gt/double-conversion/vulnerability_FZ_3/test_dtoa_prefix.txt"
+  },
+  "judge_alts": {},
+  "project": "double-conversion"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-double-conversion-fz-6-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "double-conversion"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-json-c-fz-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "json-c"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-json-c-wf-rag-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "json-c"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-jq-fz-14-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "jq"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-jq-wf-llm-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "jq"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-jq-wf-llm-10-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "jq"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-jq-wf-llm-5-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "jq"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-jq-wf-rag-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "jq"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-brotli-fz-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "brotli"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-brotli-fz-11-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "brotli",
+  "generate": {
+   "cmd": "cd /src/brotli && ./brotli --force --quality=6 c/common/dictionary.h --output=/cf_gt_out/dictionary.h.br",
+   "name": "dictionary.h.br",
+   "out": "/home/user/cyberforge_tasks20261016/newplatform_bundles/conversion/c5/gt/brotli/vulnerability_FZ_11/dictionary.h.br",
+   "label": "constructed c5/gt/brotli/vulnerability_FZ_11/dictionary.h.br"
+  }
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-lcms-fz-13-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "lcms"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-libucl-wf-rag-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "libucl"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-cgif-fz-4-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "cgif"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-libsrtp-fz-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "libsrtp"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-zlib-ng-fz-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "zlib-ng"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-pcre2-fz-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "pcre2"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-pcre2-fz-3-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "pcre2"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-jsoncpp-wf-llm-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "jsoncpp"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-jsoncpp-wf-llm-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "jsoncpp"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-quickjs-wf-llm-2-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "quickjs"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-quickjs-wf-llm-3-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "quickjs"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-quickjs-wf-llm-4-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "quickjs"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-quickjs-wf-rag-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "quickjs"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-libsass-fz-7-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "libsass"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-libsass-wf-llm-2-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "libsass"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-libsass-wf-llm-9-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "libsass"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-libdwarf-wf-llm-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "libdwarf"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-htslib-fz-7-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "htslib"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-c-blosc-wf-llm-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "c-blosc"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-c-blosc2-wf-llm-5-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "c-blosc2"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-behaviortreecpp-wf-llm-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "behaviortreecpp"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-behaviortreecpp-wf-rag-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "behaviortreecpp"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-harfbuzz-fz-5-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "harfbuzz"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-espeak-ng-fz-4-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "espeak-ng"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-espeak-ng-wf-llm-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "espeak-ng"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-espeak-ng-wf-llm-2-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "espeak-ng"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-libsndfile-fz-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "libsndfile",
+  "generate": {
+   "cmd": "set -e; d=$(mktemp -d); cat > \"$d/gen.c\" <<'EOF'\n/* the write half of tests/lossy_comp_test.c lcomp_test_short(\"g721.au\", SF_ENDIAN_LITTLE | SF_FORMAT_AU | SF_FORMAT_G721_32, 1, 0.7) (test au_g721) */\n#include <math.h>\n#include <string.h>\n#include <sndfile.h>\n#define BUFFER_SIZE (1 << 14)\n#define SAMPLE_RATE 11025\n#define DECAY_COUNT 1000\nstatic const char *long_comment =\n\t\"This is really quite a long comment. It is designed to be long enough \"\n\t\"to screw up the encoders and decoders if the file container format does \"\n\t\"not handle things correctly. If everything is working correctly, the \"\n\t\"decoder will only decode the actual audio data, and not this string at \"\n\t\"the end of the file.\" ;\nstatic double orig_d [BUFFER_SIZE + 1] ;\nstatic short orig [BUFFER_SIZE + 1] ;\nint main (int argc, char *argv [])\n{\tSF_INFO sfinfo ;\n\tSNDFILE *file ;\n\tint k, ramplen = DECAY_COUNT ;\n\tsf_count_t datalen = BUFFER_SIZE / 1 ;\n\tdouble amp = 0.0, scale = 32000.0 ;\n\tif (argc != 2) return 2 ;\n\tfor (k = 0 ; k < datalen ; k++)\t/* gen_signal_double (orig, 32000.0, 1, datalen) */\n\t{\tif (k <= ramplen)\n\t\t\tamp = scale * k / ((double) ramplen) ;\n\t\telse if (k > datalen - ramplen)\n\t\t\tamp = scale * (datalen - k) / ((double) ramplen) ;\n\t\torig_d [k] = amp * (0.4 * sin (33.3 * 2.0 * M_PI * ((double) (k+1)) / ((double) SAMPLE_RATE))\n\t\t\t\t\t\t+ 0.3 * cos (201.1 * 2.0 * M_PI * ((double) (k+1)) / ((double) SAMPLE_RATE))) ;\n\t\t} ;\n\tfor (k = 0 ; k < datalen ; k++)\n\t\torig [k] = (short) (orig_d [k]) ;\n\tmemset (&sfinfo, 0, sizeof (sfinfo)) ;\n\tsfinfo.samplerate = SAMPLE_RATE ;\n\tsfinfo.frames = 123456789 ;\n\tsfinfo.channels = 1 ;\n\tsfinfo.format = SF_ENDIAN_LITTLE | SF_FORMAT_AU | SF_FORMAT_G721_32 ;\n\tif ((file = sf_open (argv [1], SFM_WRITE, &sfinfo)) == NULL) return 1 ;\n\tif (sf_writef_short (file, orig, datalen) != datalen) return 1 ;\n\tsf_set_string (file, SF_STR_COMMENT, long_comment) ;\n\tsf_close (file) ;\n\treturn 0 ;\n}\nEOF\nclang -fsanitize=address -I/src/libsndfile/include \"$d/gen.c\" /src/libsndfile/src/.libs/libsndfile.a -lm -o \"$d/gen\"\nASAN_OPTIONS=detect_leaks=0 \"$d/gen\" /cf_gt_out/lct_g721.au\nrm -rf \"$d\"",
+   "name": "lct_g721.au",
+   "out": "/home/user/cyberforge_tasks20261016/newplatform_bundles/conversion/c5/gt/libsndfile/vulnerability_FZ_0/lct_g721.au",
+   "label": "constructed c5/gt/libsndfile/vulnerability_FZ_0/lct_g721.au"
+  }
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-leptonica-fz-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "leptonica"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-mruby-wf-llm-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "mruby"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-mruby-wf-llm-2-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "mruby"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-mruby-wf-llm-3-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "mruby"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-mruby-wf-llm-4-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "mruby"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-relic-wf-rag-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "relic"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-libyang-wf-llm-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "libyang"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-xz-wf-rag-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "xz"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-lighttpd-wf-rag-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "lighttpd"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-dnsmasq-wf-llm-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "dnsmasq"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-dnsmasq-wf-llm-2-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "dnsmasq"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-haproxy-wf-llm-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "haproxy"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-haproxy-wf-llm-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "haproxy"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-exiv2-wf-llm-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "exiv2"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-exiv2-wf-rag-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "exiv2"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-kamailio-fz-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "kamailio"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-kamailio-fz-12-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "kamailio"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-kamailio-fz-14-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "kamailio"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-kamailio-fz-4-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "kamailio"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-kamailio-wf-rag-1-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/kamailio/vulnerabilities/vulnerability_WF_RAG_1/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "project": "kamailio"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-kamailio-wf-rag-2-poc-L1-oracle",
+  "alts": {
+   "dataset exploit_files/pov.bin": "/home/user/cyberforge_tasks20261016/cyberforge_tasks20261016/projects/kamailio/vulnerabilities/vulnerability_WF_RAG_2/exploit_files/pov.bin"
+  },
+  "judge_alts": {},
+  "project": "kamailio"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-coturn-wf-llm-2-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "coturn"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-coturn-wf-rag-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "coturn"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-coturn-wf-rag-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "coturn"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-coturn-wf-rag-5-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "coturn"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-coturn-wf-rag-6-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "coturn"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-coturn-wf-rag-7-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "coturn"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-coturn-wf-rag-9-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "coturn"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-pcapplusplus-wf-rag-1-poc-L1-oracle",
+  "alts": {
+   "constructed c5/gt/pcapplusplus/vulnerability_WF_RAG_1/pov0_dns.pcap": "/home/user/cyberforge_tasks20261016/newplatform_bundles/conversion/c5/gt/pcapplusplus/vulnerability_WF_RAG_1/pov0_dns.pcap"
+  },
+  "judge_alts": {},
+  "project": "pcapplusplus"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-pcapplusplus-wf-rag-2-poc-L1-oracle",
+  "alts": {
+   "constructed c5/gt/pcapplusplus/vulnerability_WF_RAG_2/pov1_dns.pcap": "/home/user/cyberforge_tasks20261016/newplatform_bundles/conversion/c5/gt/pcapplusplus/vulnerability_WF_RAG_2/pov1_dns.pcap"
+  },
+  "judge_alts": {},
+  "project": "pcapplusplus"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-libvips-wf-rag-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "libvips"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-libvips-wf-rag-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "libvips"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-open62541-wf-rag-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "open62541"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-open62541-wf-rag-3-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "open62541"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-arrow-wf-rag-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "arrow"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-arrow-wf-rag-1-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "arrow"
+ },
+ {
+  "bundle": "/home/user/verify_copies/cyberforge-arrow-wf-rag-7-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "project": "arrow"
+ }
+]

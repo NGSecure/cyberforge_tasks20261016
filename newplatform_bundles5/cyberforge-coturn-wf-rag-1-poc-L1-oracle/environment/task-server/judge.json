@@ -1,0 +1,38 @@
+{
+  "kind": "cli-argv",
+  "pov_kind": "cli-argv",
+  "steps": [
+    {
+      "role": "run",
+      "argv": [
+        "/src/coturn/my_build/bin/turnadmin",
+        "{args}"
+      ],
+      "cwd": "/tmp",
+      "stdin": null,
+      "env": {
+        "ASAN_OPTIONS": "detect_leaks=0"
+      }
+    }
+  ],
+  "poc_path": null,
+  "aux_files": {},
+  "dirs": [],
+  "oracle": {
+    "type": "match",
+    "pattern": "INFO: Admin operation for user \\S* with password \\S*"
+  },
+  "touched_files": [
+    "src/apps/relay/mainrelay.c"
+  ],
+  "target_dir": "coturn",
+  "leak_task": false,
+  "leak_detection": "off",
+  "timeout_sec": 60,
+  "compile_timeout_sec": 600,
+  "cyberforge": {
+    "project": "coturn",
+    "vulnerability_id": "vulnerability_WF_RAG_1",
+    "pipeline": "WF_RAG"
+  }
+}

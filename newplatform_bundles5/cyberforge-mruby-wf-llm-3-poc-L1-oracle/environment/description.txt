@@ -1,0 +1,1 @@
+mruby io.c resource management can produce behavior that differs from the secure build.

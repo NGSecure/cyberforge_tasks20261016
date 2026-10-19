@@ -1,0 +1,1 @@
+snprintf(logtail, FILE_STR_LEN, "turn.log");

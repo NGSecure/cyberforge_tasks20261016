@@ -1,0 +1,1 @@
+An out-of-bounds post-buffer operation in cgif_raw.c (CWE-125) can cause reads past allocated buffers when parsing raw CGIF data, potentially leading to crashes or data leakage.

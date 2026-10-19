@@ -1,0 +1,1 @@
+double-conversion's bignum.cc may perform an out-of-bounds read after a buffer operation, matching CWE-125.

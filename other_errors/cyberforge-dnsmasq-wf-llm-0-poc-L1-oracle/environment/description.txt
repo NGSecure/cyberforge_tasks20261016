@@ -1,0 +1,1 @@
+An access-control weakness in dnsmasq's main2 capability check allows an unprivileged attacker to reach privileged behavior.

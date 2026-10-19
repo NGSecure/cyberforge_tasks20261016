@@ -1,0 +1,1 @@
+A heap-buffer-overflow in strutils.c can occur due to an integer underflow in a length calculation.

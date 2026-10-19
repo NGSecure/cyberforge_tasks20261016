@@ -1,0 +1,1 @@
+In jq, a crafted input causes a null pointer read in jv_object_get (src/jv.c), leading to a segmentation violation.

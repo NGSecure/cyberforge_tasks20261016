@@ -1,0 +1,1 @@
+int n = snprintf(buffer, buff_l, httpTemplate, verb, page, version, servername, header);

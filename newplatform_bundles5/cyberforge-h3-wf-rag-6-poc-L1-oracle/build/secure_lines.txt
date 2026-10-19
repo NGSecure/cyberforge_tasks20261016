@@ -1,0 +1,1 @@
+baseCellNeighbors[i][dir] = neighborBc;
