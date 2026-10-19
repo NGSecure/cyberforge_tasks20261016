@@ -1,1 +1,0 @@
-In QuickJS, a crafted regular expression leads to parser-state misuse in the regexp parser, causing an invalid pointer dereference.

@@ -36,6 +36,11 @@
   },
   "tier": "C",
   "pov_kind": "cli-argv",
+  "quality": {
+    "category": "\u7b2c\u4e09\u7c7b",
+    "basis": "\u62a5\u544a\u662f\u522b\u7684\u4efb\u52a1\u7684\uff1b\u6ce8\u5165\u7684\u662f\u76ee\u5f55\u68c0\u67e5\uff0c\u53ea\u6539\u53d8\u62a5\u9519\u4fe1\u606f\uff0c\u4e0d\u5d29\u6e83",
+    "verification": "fail"
+  },
   "ground_truth_evidence": "none: sanitizer report does not show what exploit.sh checks for (recorded run did not trigger; ground truth unverified) (build.sh self-check 3 decides)",
   "ground_truth": {
     "dataset_file": null,

@@ -1,0 +1,78 @@
+{
+  "bundle": "cyberforge-bluez-wf-llm-1-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/bluez/vulnerabilities/vulnerability_WF_LLM_1",
+  "base_image": "vuljector/bluez:setup@sha256:e9edcd3afe8cce4eb4d964052ac74de880ae7838d11464771279cedfac371491",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-05-11T01:48:54.079763926Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-11T01:55:57.642783056Z",
+        "created_by": "sleep infinity",
+        "bytes": 1014127153
+      }
+    ],
+    "post_setup_files": 1205,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 1193,
+    "scrubbed_from_agent_image": 10,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out": 7,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 4,
+  "image_tags": {
+    "docker_image": "cyberforge_bluez_wf_llm_1_main:v0.0.2",
+    "task_server_image": "cyberforge_bluez_wf_llm_1_task_server:v0.0.2"
+  },
+  "tier": "A",
+  "pov_kind": "harness",
+  "quality": {
+    "category": "\u7b2c\u4e09\u7c7b",
+    "basis": "\u6570\u636e\u96c6\u7ed9\u7684\u79cd\u5b50\u548c exploit \u7684\u8f93\u5165\u90fd\u4e0d\u89e6\u53d1\uff0c\u62a5\u544a\u7528\u7684\u8f93\u5165\u6ca1\u6709\u4fdd\u5b58",
+    "verification": "fail"
+  },
+  "ground_truth_evidence": "crash evidence in the dataset",
+  "ground_truth": {
+    "dataset_file": "exploit_files/pov.bin",
+    "how_found": "hints.successful_seed",
+    "bytes": 1,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": null,
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "solve_sh": "inline"
+  },
+  "harness": {
+    "candidates": [
+      "fuzz_gobex"
+    ],
+    "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "fuzz_gobex"
+    ],
+    "dataset_metadata_said": [
+      "fuzz_gobex",
+      "fuzz_gobex"
+    ],
+    "metadata_disagrees": false
+  },
+  "recipe": null,
+  "trigger_evidence": {
+    "signal": "asan",
+    "detail": "heap-buffer-overflow",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": true
+  },
+  "asan_options_from_exploit": null,
+  "cwe_id": "CWE-20",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "7cd27f4f66aa88194fbc1565bc13f24405acacd8"
+}

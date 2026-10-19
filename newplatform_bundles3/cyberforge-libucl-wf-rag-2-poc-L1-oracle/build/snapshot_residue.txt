@@ -1,7 +1,0 @@
-/opt/src_snapshot.tar
-/out/llvm-symbolizer
-/out/ucl_add_string_fuzzer
-/out/ucl_add_string_fuzzer.o
-/out/ucl_add_string_fuzzer.options
-/workspace/run/unit_tests/parse_results.py
-/workspace/run/unit_tests/test.sh

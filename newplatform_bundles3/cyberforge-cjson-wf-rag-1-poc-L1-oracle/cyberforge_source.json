@@ -31,6 +31,11 @@
   },
   "tier": "C",
   "pov_kind": "program",
+  "quality": {
+    "category": "\u7b2c\u4e09\u7c7b",
+    "basis": "exploit \u7684\u7a0b\u5e8f\u53ea\u6253\u5370\u7ed3\u8bba\u4e0d\u5d29\u6e83\uff0c\u5d29\u6e83\u62a5\u544a\u6765\u81ea\u53e6\u4e00\u4e2a\u7a0b\u5e8f",
+    "verification": "fail"
+  },
   "ground_truth_evidence": "none: the dataset's report comes from another program (r1.c), not the exploit's trigger.c (build.sh self-check 3 decides)",
   "ground_truth": {
     "dataset_file": null,

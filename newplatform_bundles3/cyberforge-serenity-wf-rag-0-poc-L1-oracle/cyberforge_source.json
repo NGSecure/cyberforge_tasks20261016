@@ -1,0 +1,76 @@
+{
+  "bundle": "cyberforge-serenity-wf-rag-0-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/serenity/vulnerabilities/vulnerability_WF_RAG_0",
+  "base_image": "vuljector/serenity:setup@sha256:34480686e2bbb244f955333af0e782fcb543af9b9c6bcfb3c6586fd0ae723996",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-05-10T17:19:32.329832587Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T17:44:31.751084704Z",
+        "created_by": "sleep infinity",
+        "bytes": 1976300402
+      }
+    ],
+    "post_setup_files": 18958,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 13493,
+    "scrubbed_from_agent_image": 5463,
+    "scrubbed_by_location": {
+      "/ccache/cache": 5385,
+      "/opt/src_snapshot.tar": 1,
+      "/out": 75,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 2,
+  "image_tags": {
+    "docker_image": "cyberforge_serenity_wf_rag_0_main:v0.0.2",
+    "task_server_image": "cyberforge_serenity_wf_rag_0_task_server:v0.0.2"
+  },
+  "tier": "A",
+  "pov_kind": "harness",
+  "quality": {
+    "category": "\u5f85\u786e\u8ba4",
+    "basis": "\u672c\u673a\u672a\u80fd\u5b8c\u6210\u6784\u5efa\uff0c\u65e0\u6cd5\u9a8c\u8bc1\uff08\u4e0d\u662f\u6570\u636e\u95ee\u9898\uff09",
+    "verification": "not-built"
+  },
+  "ground_truth_evidence": "crash evidence in the dataset",
+  "ground_truth": {
+    "dataset_file": "replay/serenity/vulnerability_WF_RAG_0/input-000",
+    "how_found": "exploit_replay",
+    "bytes": 110,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": null,
+    "sha256": "c3fbd0824e148e45a460a2b6d41c57f7e67fdf968dd383c220f33924af9c4295",
+    "solve_sh": "inline"
+  },
+  "harness": {
+    "candidates": [
+      "FuzzILBMLoader"
+    ],
+    "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "FuzzILBMLoader"
+    ],
+    "dataset_metadata_said": [],
+    "metadata_disagrees": false
+  },
+  "recipe": null,
+  "trigger_evidence": {
+    "signal": "asan",
+    "detail": "heap-buffer-overflow",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": true
+  },
+  "asan_options_from_exploit": "detect_leaks=0:abort_on_error=1",
+  "cwe_id": "CWE-126",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "6075be9543bcdaf8a1fff80fcd27f7042c9a1251"
+}

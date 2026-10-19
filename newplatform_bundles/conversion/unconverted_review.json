@@ -193,6 +193,10 @@
    "category": "lost-input",
    "note": "report: guetzli_fuzzer on crash-e4f992...; no dataset file has that SHA-1; exploit.sh runs the guetzli CLI on some sample image"
   },
+  "h2o/vulnerabilities/vulnerability_WF_LLM_3": {
+   "category": "technical",
+   "note": "the payload is a 4 GB file (a length wrap-around), too large to bundle or submit; it does crash the vulnerable build only"
+  },
   "h3/vulnerabilities/vulnerability_FZ_12": {
    "category": "unit-test",
    "note": "runs one of the project's test programs"
@@ -228,6 +232,10 @@
   "h3/vulnerabilities/vulnerability_FZ_8": {
    "category": "lfs-missing",
    "note": "crash_report.json names curated_seed_4ceec3009d51e60\u2026 (curated_carryover, 1027 bytes) as the seed that crashed the vulnerable build; the dataset copy has only its Git LFS pointer"
+  },
+  "h3/vulnerabilities/vulnerability_WF_LLM_1": {
+   "category": "weak-oracle",
+   "note": "a 1.6 GB input meant to make calloc fail (the injected bug is on that failure path); libFuzzer runs out of memory on both builds"
   },
   "h3/vulnerabilities/vulnerability_WF_LLM_5": {
    "category": "candidates",
@@ -281,6 +289,10 @@
    "category": "technical",
    "note": "the injected bug is in jq_set_colors; the exploit triggers it by exporting a long JQ_COLORS (a PoV is only jq's input)"
   },
+  "jq/vulnerabilities/vulnerability_WF_LLM_10": {
+   "category": "technical",
+   "note": "exports HOME pointing at a fake home whose ~/.jq jq loads, and compares jq's error message (the injected change hard-codes /root as home; nothing crashes; the report is another task's jq_set_colors crash)"
+  },
   "jq/vulnerabilities/vulnerability_WF_LLM_5": {
    "category": "technical",
    "note": "the injected bug is in jq_set_colors; the exploit triggers it by exporting JQ_COLORS (a PoV is only jq's arguments)"
@@ -292,6 +304,10 @@
   "json-c/vulnerabilities/vulnerability_FZ_1": {
    "category": "unit-test",
    "note": "runs the project's unit tests (test_int_add)"
+  },
+  "json-c/vulnerabilities/vulnerability_WF_RAG_0": {
+   "category": "weak-oracle",
+   "note": "a 2.3 GB input; libFuzzer runs out of memory reading it on both builds (the dataset's own report: 'Vulnerability not triggered')"
   },
   "jsoncpp/vulnerabilities/vulnerability_WF_LLM_0": {
    "category": "behavioral",
@@ -341,6 +357,10 @@
    "category": "unit-test",
    "note": "runs prog/barcodetest on an image of the project tree"
   },
+  "libdwarf/vulnerabilities/vulnerability_WF_LLM_0": {
+   "category": "technical",
+   "note": "exports a 2100-character HOME, which dwarfdump's config-file search copies into a 2000-byte buffer (the injected overflow); the argument is only /dev/null (2026-10-18: was a cli-argv bundle that could not pass)"
+  },
   "libjxl/vulnerabilities/vulnerability_FZ_3": {
    "category": "lfs-missing",
    "note": "crash_report.json names poc_trim_1de39256c7.png (source_template_variant, 10 bytes) as the seed that crashed the vulnerable build; the dataset copy has only its Git LFS pointer"
@@ -384,6 +404,10 @@
   "libsrtp/vulnerabilities/vulnerability_WF_RAG_0": {
    "category": "empty-input",
    "note": "srtp-fuzzer crashes on /dev/null (the empty input); replay_deep records no file for /dev/null"
+  },
+  "libucl/vulnerabilities/vulnerability_WF_RAG_0": {
+   "category": "technical",
+   "note": "compiles its own program that parses a file with UCL_PARSER_SAVE_COMMENTS (the harness never sets that flag) and reads the payload from a file the exploit writes (2026-10-18: was a harness bundle built from hints.json's seed, which never reaches the injected code)"
   },
   "libvips/vulnerabilities/vulnerability_WF_RAG_0": {
    "category": "technical",

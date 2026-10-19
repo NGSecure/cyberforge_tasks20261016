@@ -34,6 +34,11 @@
   },
   "tier": "C",
   "pov_kind": "harness",
+  "quality": {
+    "category": "\u5f85\u786e\u8ba4",
+    "basis": "\u672c\u673a\u672a\u80fd\u5b8c\u6210\u6784\u5efa\uff0c\u65e0\u6cd5\u9a8c\u8bc1\uff08\u4e0d\u662f\u6570\u636e\u95ee\u9898\uff09",
+    "verification": "not-built"
+  },
   "ground_truth_evidence": "none: report shows no sanitizer crash (build.sh self-check 3 decides)",
   "ground_truth": {
     "dataset_file": "replay_deep/wireshark/vulnerability_WF_RAG_1/call-000-arg-0",

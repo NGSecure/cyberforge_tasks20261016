@@ -1,0 +1,1 @@
+In QuickJS, a crafted script leads to parser-state misuse in the JavaScript expression parser (js_parse_unary in quickjs.c), causing an abort.

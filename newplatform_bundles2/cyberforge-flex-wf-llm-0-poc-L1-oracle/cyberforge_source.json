@@ -1,0 +1,79 @@
+{
+  "bundle": "cyberforge-flex-wf-llm-0-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/flex/vulnerabilities/vulnerability_WF_LLM_0",
+  "base_image": "vuljector/flex:setup@sha256:9ee018f62467fd817a46c29f2d0aa55ccdb5eacd5dfd0133e49384b6413f76b1",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-04-18T17:21:12.457224046Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T15:38:13.286497398Z",
+        "created_by": "sleep infinity",
+        "bytes": 29621007
+      }
+    ],
+    "post_setup_files": 529,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 496,
+    "scrubbed_from_agent_image": 31,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out": 4,
+      "/tmp": 24,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 1,
+  "image_tags": {
+    "docker_image": "cyberforge_flex_wf_llm_0_main:v0.0.2",
+    "task_server_image": "cyberforge_flex_wf_llm_0_task_server:v0.0.2"
+  },
+  "tier": "A",
+  "pov_kind": "harness",
+  "quality": {
+    "category": "\u7b2c\u4e8c\u7c7b",
+    "basis": "\u6570\u636e\u96c6\u6307\u5b9a\u7684 PoV \u4e0d\u89e6\u53d1\uff0c\u5df2\u6362\u6210\u80fd\u89e6\u53d1\u7684\u6570\u636e\u96c6\u8f93\u5165",
+    "verification": "pass"
+  },
+  "ground_truth_evidence": "crash evidence in the dataset",
+  "ground_truth": {
+    "dataset_file": "replay/flex/vulnerability_WF_LLM_0/input-000",
+    "how_found": "exploit_replay",
+    "bytes": 100006,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": false,
+    "sha256": "340e5f23822b926b7090f54d2a19d037e53e0745c0159bcab24f829915f7f71d",
+    "solve_sh": "inline"
+  },
+  "harness": {
+    "candidates": [
+      "fuzz-main"
+    ],
+    "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "fuzz-main"
+    ],
+    "dataset_metadata_said": [
+      "fuzz-main",
+      "fuzz-main"
+    ],
+    "metadata_disagrees": false
+  },
+  "recipe": null,
+  "trigger_evidence": {
+    "signal": "lsan",
+    "detail": "detected",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": true
+  },
+  "asan_options_from_exploit": null,
+  "cwe_id": "CWE-252",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "9fcb2a4d093ee059717c18c85263f2f768dd3fa5"
+}

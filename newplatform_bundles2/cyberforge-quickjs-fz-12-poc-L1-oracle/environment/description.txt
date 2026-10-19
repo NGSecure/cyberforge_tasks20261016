@@ -1,0 +1,1 @@
+In QuickJS, a heap-buffer-overflow in define_var (quickjs.c) can be triggered by evaluating a crafted script, due to an unchecked index before a buffer operation.

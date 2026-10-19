@@ -31,6 +31,11 @@
   },
   "tier": "A",
   "pov_kind": "harness",
+  "quality": {
+    "category": "\u7b2c\u4e00\u7c7b",
+    "basis": "",
+    "verification": "pass"
+  },
   "ground_truth_evidence": "crash evidence in the dataset",
   "ground_truth": {
     "dataset_file": "exploit_files/generated_inputs/curated_seed_8e0b2fc638d1e93bf47e8791e96ef9b7462f782cfacab4ca0c34db10e7bbdea8.bin",

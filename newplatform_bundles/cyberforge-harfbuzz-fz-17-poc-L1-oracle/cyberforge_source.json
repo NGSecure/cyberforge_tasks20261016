@@ -32,6 +32,11 @@
   },
   "tier": "A",
   "pov_kind": "harness",
+  "quality": {
+    "category": "\u7b2c\u4e00\u7c7b",
+    "basis": "",
+    "verification": "pass"
+  },
   "ground_truth_evidence": "crash evidence in the dataset",
   "ground_truth": {
     "dataset_file": "report_inputs/harfbuzz/vulnerability_FZ_17/RobotoFlex-Variable.ABC.default.all.wght=400,wdth=100,opsz=14.ttf",

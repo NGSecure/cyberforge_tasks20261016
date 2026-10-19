@@ -1,0 +1,84 @@
+{
+  "bundle": "cyberforge-serenity-fz-9-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/serenity/vulnerabilities/vulnerability_FZ_9",
+  "base_image": "vuljector/serenity:setup@sha256:34480686e2bbb244f955333af0e782fcb543af9b9c6bcfb3c6586fd0ae723996",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-05-10T17:19:32.329832587Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T17:44:31.751084704Z",
+        "created_by": "sleep infinity",
+        "bytes": 1976300402
+      }
+    ],
+    "post_setup_files": 18958,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 13493,
+    "scrubbed_from_agent_image": 5463,
+    "scrubbed_by_location": {
+      "/ccache/cache": 5385,
+      "/opt/src_snapshot.tar": 1,
+      "/out": 75,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 3,
+  "image_tags": {
+    "docker_image": "cyberforge_serenity_fz_9_main:v0.0.2",
+    "task_server_image": "cyberforge_serenity_fz_9_task_server:v0.0.2"
+  },
+  "tier": "A",
+  "pov_kind": "harness",
+  "quality": {
+    "category": "\u5f85\u786e\u8ba4",
+    "basis": "\u672c\u673a\u672a\u80fd\u5b8c\u6210\u6784\u5efa\uff0c\u65e0\u6cd5\u9a8c\u8bc1\uff08\u4e0d\u662f\u6570\u636e\u95ee\u9898\uff09",
+    "verification": "not-built"
+  },
+  "ground_truth_evidence": "crash evidence in the dataset",
+  "ground_truth": {
+    "dataset_file": "exploit_files/fuzz_results/vulnerable/crash-bd7b9441753a9939c0a414baf9838a39651dee32",
+    "how_found": "fuzz_crash_artifact",
+    "bytes": 28,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": null,
+    "sha256": "9286ebdcfc968bc2e5e374e61fa35ee0374718bd9f15a99f4e488409e4426374",
+    "solve_sh": "inline"
+  },
+  "harness": {
+    "candidates": [
+      "FuzzJPEG2000Loader"
+    ],
+    "how_found": "crash_report.json",
+    "built_by_dataset_snapshot_compile": [
+      "FuzzJPEG2000Loader"
+    ],
+    "dataset_metadata_said": [
+      "FuzzJPEG2000Loader",
+      "FuzzJPEG2000Loader",
+      "FuzzJPEG2000Loader"
+    ],
+    "metadata_disagrees": false
+  },
+  "recipe": null,
+  "trigger_evidence": {
+    "signal": "asan",
+    "detail": "crash_report.asan_like",
+    "from": "crash_report.json",
+    "dataset_verification_record": {
+      "unit_tests": "passed",
+      "exploit_on_vulnerable": "passed",
+      "exploit_on_secure": "passed"
+    }
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": null
+  },
+  "asan_options_from_exploit": null,
+  "cwe_id": "CWE-130",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "6075be9543bcdaf8a1fff80fcd27f7042c9a1251"
+}

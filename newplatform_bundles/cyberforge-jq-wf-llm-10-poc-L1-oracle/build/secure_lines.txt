@@ -1,1 +1,0 @@
-char *home = getenv("HOME");

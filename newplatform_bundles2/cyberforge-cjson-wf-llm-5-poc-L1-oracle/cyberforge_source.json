@@ -1,0 +1,78 @@
+{
+  "bundle": "cyberforge-cjson-wf-llm-5-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/cjson/vulnerabilities/vulnerability_WF_LLM_5",
+  "base_image": "vuljector/cjson:setup@sha256:822bff875826541b24f5c6e35a43f15f8c68c17683af170d3952bc9b35fc6b93",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-04-05T20:03:34.054933504Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T15:27:07.369339457Z",
+        "created_by": "sleep infinity",
+        "bytes": 20046211
+      }
+    ],
+    "post_setup_files": 61,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 52,
+    "scrubbed_from_agent_image": 7,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out": 4,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 2,
+  "image_tags": {
+    "docker_image": "cyberforge_cjson_wf_llm_5_main:v0.0.2",
+    "task_server_image": "cyberforge_cjson_wf_llm_5_task_server:v0.0.2"
+  },
+  "tier": "A",
+  "pov_kind": "harness",
+  "quality": {
+    "category": "\u7b2c\u4e8c\u7c7b",
+    "basis": "exploit \u7684\u8f93\u5165\u5230\u4e0d\u4e86\u6ce8\u5165\u7684\u4ee3\u7801\uff0c\u5df2\u6309\u5176\u610f\u56fe\u505a\u6700\u5c0f\u4fee\u6b63",
+    "verification": "pass"
+  },
+  "ground_truth_evidence": "crash evidence in the dataset",
+  "ground_truth": {
+    "dataset_file": "constructed/cjson/vulnerability_WF_LLM_5/input",
+    "how_found": "constructed (constructed/cjson/vulnerability_WF_LLM_5/input, the exploit's own payload made to reach the harness, see constructed/constructed.json: in this bundle's builds it crashes the vulnerable build and not the secure one, where the first ground truth did not)",
+    "bytes": 200005,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": true,
+    "sha256": "2e11039ce4bd5d2003fc1e3fdc0ad6a93bc36621198135a38adea61e56555f24",
+    "solve_sh": "inline"
+  },
+  "harness": {
+    "candidates": [
+      "cjson_read_fuzzer"
+    ],
+    "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "cjson_read_fuzzer"
+    ],
+    "dataset_metadata_said": [
+      "cjson_read_fuzzer",
+      "cjson_read_fuzzer"
+    ],
+    "metadata_disagrees": false
+  },
+  "recipe": null,
+  "trigger_evidence": {
+    "signal": "asan",
+    "detail": "stack-overflow",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": false
+  },
+  "asan_options_from_exploit": null,
+  "cwe_id": "CWE-20",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "b2890c8d76bbb64e710585ebc0a917196b9c67e7"
+}

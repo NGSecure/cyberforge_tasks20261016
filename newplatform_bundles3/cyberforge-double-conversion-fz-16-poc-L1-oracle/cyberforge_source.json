@@ -32,6 +32,11 @@
   },
   "tier": "C",
   "pov_kind": "program",
+  "quality": {
+    "category": "\u7b2c\u4e09\u7c7b",
+    "basis": "\u5224\u5b9a\u65b9\u5411\u76f8\u53cd\uff1a\u5b89\u5168\u7248\u201c\u5d29\u6e83\u201d\u3001\u6f0f\u6d1e\u7248\u7684\u5d29\u6e83\u5728 PoV \u81ea\u5df1\u7684\u4ee3\u7801\u91cc",
+    "verification": "fail"
+  },
   "ground_truth_evidence": "none: sanitizer_report.txt is empty (no trigger evidence) (build.sh self-check 3 decides)",
   "ground_truth": {
     "dataset_file": null,

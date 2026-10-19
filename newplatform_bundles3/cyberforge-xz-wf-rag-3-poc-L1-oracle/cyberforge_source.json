@@ -1,0 +1,78 @@
+{
+  "bundle": "cyberforge-xz-wf-rag-3-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/xz/vulnerabilities/vulnerability_WF_RAG_3",
+  "base_image": "vuljector/xz:setup@sha256:004a088dc179f5c44c38e28fd13ec3054ffa09724738e6db5adb4cc6018682cf",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-04-18T19:03:08.956048997Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T17:33:43.500868521Z",
+        "created_by": "sleep infinity",
+        "bytes": 36634472
+      }
+    ],
+    "post_setup_files": 479,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 461,
+    "scrubbed_from_agent_image": 16,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out": 13,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 1,
+  "image_tags": {
+    "docker_image": "cyberforge_xz_wf_rag_3_main:v0.0.2",
+    "task_server_image": "cyberforge_xz_wf_rag_3_task_server:v0.0.2"
+  },
+  "tier": "A",
+  "pov_kind": "harness",
+  "quality": {
+    "category": "\u7b2c\u4e09\u7c7b",
+    "basis": "\u62a5\u544a\u662f\u522b\u7684\u4efb\u52a1\u7684\uff1bexploit \u7684\u8f93\u5165\u4e0d\u89e6\u53d1",
+    "verification": "fail"
+  },
+  "ground_truth_evidence": "crash evidence in the dataset",
+  "ground_truth": {
+    "dataset_file": "replay/xz/vulnerability_WF_RAG_3/input-000",
+    "how_found": "exploit_replay",
+    "bytes": 401,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": false,
+    "sha256": "cbb4a309706e146711630a6671ba2540b89e696332028c194f38095971576e6c",
+    "solve_sh": "inline"
+  },
+  "harness": {
+    "candidates": [
+      "fuzz_encode_stream"
+    ],
+    "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "fuzz_encode_stream"
+    ],
+    "dataset_metadata_said": [
+      "fuzz_encode_stream",
+      "fuzz_encode_stream"
+    ],
+    "metadata_disagrees": false
+  },
+  "recipe": null,
+  "trigger_evidence": {
+    "signal": "lsan",
+    "detail": "detected",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": true
+  },
+  "asan_options_from_exploit": null,
+  "cwe_id": "CWE-401",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "bfc5f12a84a2a9df774ed16cd6eb58fd5ab24646"
+}

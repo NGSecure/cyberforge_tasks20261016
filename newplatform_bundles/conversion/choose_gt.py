@@ -12,6 +12,13 @@ For a one-harness bundle whose exploit does not race a background process:
   image against the two builds (verify_exploit.py), fed the harness a single input that
   crashed the vulnerable build and not the secure one: that input ("exploit_live"; for an
   exploit that draws its input at random, the first such draw);
+- else, when our ground truth failed and an alternative verify_bundles.py tried in its place
+  passed (crashed the vulnerable build only, and the empty input does not): that file. An
+  alternative is a file the task ships ("dataset <path>": wuffs WF_RAG_1's report runs
+  crash-144384e4..., which the task ships as reauthor_poc_WF_RAG_1.bin), a project file the
+  report shows crashing ("report_inputs <path>", taken from the image's source snapshot by
+  report_inputs.py), or the exploit's own payload made to reach the harness
+  ("constructed <path>", each one explained in constructed/constructed.json); in that order;
 - else nothing changes.
 Results files are read in the order given (oldest first), so each bundle has a history.
 A result records the ground truth it tested (gt_sha256; older results do not). A choice is
@@ -37,6 +44,15 @@ RACE_RE = re.compile(r"(\)|[\w\"'])[ \t]*&[ \t]*$", re.M)  # classify.py's backg
 # no longer counts these; older records did)
 ASAN_INIT_FAIL = re.compile(r"AddressSanitizer failed to allocate 0x[0-9a-f]+ \(\d+\) bytes at address|"
                             r"ReserveShadowMemoryRange failed|Shadow memory range interleaves")
+ALT_KINDS = ("dataset", "report_inputs", "constructed")  # verify_bundles.py alternative labels, in preference order
+ALT_SRC = {"dataset": "dataset_file (%s, a file the task ships: in this bundle's builds it crashes the vulnerable "
+                      "build and not the secure one, where the first ground truth did not)",
+           "report_inputs": "report_running (%s, the project file the dataset's report shows crashing, from the "
+                            "image's source snapshot: in this bundle's builds it crashes the vulnerable build and "
+                            "not the secure one, where the first ground truth did not)",
+           "constructed": "constructed (%s, the exploit's own payload made to reach the harness, see "
+                          "constructed/constructed.json: in this bundle's builds it crashes the vulnerable build "
+                          "and not the secure one, where the first ground truth did not)"}
 CHOOSABLE = ("exploit_replay", "hints.successful_seed", "named_file", "referenced_by_exploit.sh",
              "single_input_file", "dataset_pov", "exploit_live")
 
@@ -68,7 +84,8 @@ def main():
         rel = src["source_task"].split("/projects/", 1)[1]
         rec = recs.get(rel)
         pc = prev.get(rel)  # the choice made before, if any
-        pc_file = os.path.join(HERE, pc["poc"]) if pc and pc["poc"].startswith("exploit_live/") else \
+        pc_file = os.path.join(HERE, pc["poc"]) if pc and pc["poc"].startswith(("exploit_live/", "report_inputs/",
+                                                                                  "constructed/")) else \
             os.path.join(root, "projects", rel, pc["poc"]) if pc else None
         pc_sha = sha(open(pc_file, "rb").read()) if pc_file and os.path.isfile(pc_file) else None
         if not r.get("verdict"):
@@ -86,7 +103,7 @@ def main():
         # the base ground truth (before any choice), as classify.py resolves its path
         bp = base["poc"]
         gt = open(os.path.join(HERE, bp) if base["poc_src"].startswith(("exploit_replay", "project_file"))
-                  or bp.startswith(("report_inputs/", "exploit_live/")) else os.path.join(vd, bp), "rb").read()
+                  or bp.startswith(("report_inputs/", "exploit_live/", "constructed/")) else os.path.join(vd, bp), "rb").read()
         base_sha = sha(gt)
         if pc_sha and pc_sha != base_sha:
             if ours and tested in (pc_sha, None):
@@ -111,6 +128,15 @@ def main():
             continue
         if ours:
             continue
+        alts = sorted(((label.partition(" ")[0], label.partition(" ")[2], a) for label, a in (r.get("alts") or {}).items()
+                       if label.partition(" ")[0] in ALT_KINDS), key=lambda x: ALT_KINDS.index(x[0]))
+        alt = next(((k, path) for k, path, a in alts if a["verdict"] == "PASS"), None)
+        if alt and r.get("gt_sha256") in (base_sha, None):
+            k, path = alt
+            f = os.path.join(vd, path) if k == "dataset" else os.path.join(HERE, path)
+            if os.path.isfile(f) and sha(open(f, "rb").read()) != base_sha:
+                choice[rel] = {"poc": path, "poc_src": ALT_SRC[k] % path, "was": base["poc_src"], "evidence": name}
+                continue
         # the latest run of the dataset's exploit, on the base ground truth's builds, that crashed the
         # vulnerable build and not the secure one
         def real_crash(x):
@@ -169,9 +195,11 @@ def main():
         if not os.listdir(dp):
             os.rmdir(dp)
     json.dump(choice, open(gc, "w"), indent=1, sort_keys=True)
-    print("%d ground truths chosen (%d dataset pov.bin, %d exploit_live); before: %d" % (
+    print("%d ground truths chosen (%d dataset pov.bin, %d exploit_live, %d other alternatives); before: %d" % (
         len(choice), sum(1 for c in choice.values() if c["poc"].endswith("pov.bin")),
-        sum(1 for c in choice.values() if c["poc"].startswith("exploit_live/")), len(prev)))
+        sum(1 for c in choice.values() if c["poc"].startswith("exploit_live/")),
+        sum(1 for c in choice.values() if c["poc_src"].startswith(("dataset_file", "report_running", "constructed"))),
+        len(prev)))
     for k in sorted(set(prev) - set(choice)):
         print("dropped:", k)
     for k in sorted(set(choice) - set(prev)):

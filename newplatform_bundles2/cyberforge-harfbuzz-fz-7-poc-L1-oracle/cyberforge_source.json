@@ -1,0 +1,76 @@
+{
+  "bundle": "cyberforge-harfbuzz-fz-7-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/harfbuzz/vulnerabilities/vulnerability_FZ_7",
+  "base_image": "vuljector/harfbuzz:setup@sha256:a45a9d626b9bfd08914071516935de686a0616d444974ceda1d669fe86ffed62",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-04-18T18:56:57.663238651Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T15:48:53.096340342Z",
+        "created_by": "sleep infinity",
+        "bytes": 415503467
+      }
+    ],
+    "post_setup_files": 1418,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 1212,
+    "scrubbed_from_agent_image": 204,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out": 11,
+      "/work/build": 190,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 1,
+  "image_tags": {
+    "docker_image": "cyberforge_harfbuzz_fz_7_main:v0.0.2",
+    "task_server_image": "cyberforge_harfbuzz_fz_7_task_server:v0.0.2"
+  },
+  "tier": "C",
+  "pov_kind": "harness",
+  "quality": {
+    "category": "\u7b2c\u4e8c\u7c7b",
+    "basis": "\u6570\u636e\u96c6\u7f3a\u5c11\u89e6\u53d1\u8bc1\u636e\uff0c\u5b9e\u6d4b\u6709\u6548",
+    "verification": "pass"
+  },
+  "ground_truth_evidence": "none: sanitizer report does not show what exploit.sh checks for (recorded run did not trigger; ground truth unverified) (build.sh self-check 3 decides)",
+  "ground_truth": {
+    "dataset_file": "replay_deep/harfbuzz/vulnerability_FZ_7/call-000-arg-1",
+    "how_found": "exploit_replay_deep",
+    "bytes": 4724,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": false,
+    "sha256": "6392cb555a7690d4b45a81cbc3ceca305f4984c03d6bc16a9cffaf2ab3eefa77",
+    "solve_sh": "inline"
+  },
+  "harness": {
+    "candidates": [
+      "hb-subset-fuzzer"
+    ],
+    "how_found": "replay_deep",
+    "built_by_dataset_snapshot_compile": [
+      "hb-subset-fuzzer"
+    ],
+    "dataset_metadata_said": [],
+    "metadata_disagrees": false
+  },
+  "recipe": null,
+  "trigger_evidence": {
+    "signal": "oom",
+    "detail": "",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": null
+  },
+  "asan_options_from_exploit": null,
+  "cwe_id": "CWE-125",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "2763ae13d34360d959b906a9c4bd955087d1ce60"
+}

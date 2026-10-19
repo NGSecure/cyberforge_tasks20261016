@@ -1,1 +1,0 @@
-if (size < 0 || size > INT_MAX - p->bpos - 1)

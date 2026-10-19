@@ -10,8 +10,10 @@ the ground truth matches its recorded sha256 (and solve.sh decodes to it), the
 build inputs referenced by the Dockerfiles exist, every FROM is the recorded
 (digest-pinned) base image, the snapshot residue list is consistent and covers
 /opt/src_snapshot.tar, and environment/ holds only the expected non-secret files.
-Tier-A bundles live in <out_dir>, tier B in <out_dir>2 and tier C in <out_dir>3 (as
-convert.py writes them); a bundle's directory must match its recorded tier.
+Bundles of category 1 (quality.py: the dataset task is fine) live in <out_dir>, category 2
+in <out_dir>2, category 3 and pending in <out_dir>3 (as convert.py writes them); a bundle's
+directory must match the category its cyberforge_source.json records (or, for a bundle made
+without one, its tier: A, B, C).
 CLI/program bundles (tier-B templates) also need a recorded recipe whose placeholders
 fit its kind and whose extra files exist in build/aux/.
 Exits non-zero if any bundle fails.
@@ -66,6 +68,9 @@ def check_recipe(bd, judge):
     return errs
 
 
+FOLDER_CATS = {"A": ("第一类",), "B": ("第二类",), "C": ("第三类", "待确认")}  # <out_dir>, <out_dir>2, <out_dir>3
+
+
 def check(bd, tier):
     errs = []
     name = os.path.basename(bd)
@@ -80,7 +85,10 @@ def check(bd, tier):
             errs.append("missing " + f)
     if errs:
         return errs
-    if src.get("tier") != tier:
+    q = (src.get("quality") or {}).get("category")
+    if q and q not in FOLDER_CATS[tier]:
+        errs.append("bundle is in the %s directory but its category is %s" % ("/".join(FOLDER_CATS[tier]), q))
+    elif not q and src.get("tier") != tier:
         errs.append("bundle is in the tier-%s directory but its tier is %s" % (tier, src.get("tier")))
     env_files = set()
     for dp, _, fn in os.walk(os.path.join(bd, "environment")):
@@ -213,7 +221,7 @@ def main():
                 print("    -", x)
     by = {t: sum(1 for x, _ in todo if x == t) for t in dirs}
     print("checked %d bundles (%s): %d ok, %d failed" % (len(todo), ", ".join(
-        "%s %d in %s" % (t, by[t], os.path.basename(dirs[t])) for t in dirs), len(todo) - bad, bad))
+        "%d in %s" % (by[t], os.path.basename(dirs[t])) for t in dirs), len(todo) - bad, bad))
     return 1 if bad else 0
 
 

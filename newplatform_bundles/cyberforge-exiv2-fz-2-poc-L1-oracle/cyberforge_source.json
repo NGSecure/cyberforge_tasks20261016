@@ -31,14 +31,19 @@
   },
   "tier": "A",
   "pov_kind": "harness",
+  "quality": {
+    "category": "\u7b2c\u4e00\u7c7b",
+    "basis": "",
+    "verification": "pass"
+  },
   "ground_truth_evidence": "crash evidence in the dataset",
   "ground_truth": {
-    "dataset_file": "replay/exiv2/vulnerability_FZ_2/input-000",
-    "how_found": "exploit_replay",
-    "bytes": 29,
+    "dataset_file": "exploit_files/poc.png",
+    "how_found": "dataset_file (exploit_files/poc.png, a file the task ships: in this bundle's builds it crashes the vulnerable build and not the secure one, where the first ground truth did not)",
+    "bytes": 144766,
     "exploit_replay_inputs": 1,
     "dataset_report_matches_exploit_check": true,
-    "sha256": "4d2d6e1e125088bb80b839944f31934e3a7707049a84c68fd54122bc20437c7f",
+    "sha256": "bbd52b622fe389921c3d22d21e54fbfa491f424e1b8539dae56f964ebee1e6fa",
     "solve_sh": "inline"
   },
   "harness": {

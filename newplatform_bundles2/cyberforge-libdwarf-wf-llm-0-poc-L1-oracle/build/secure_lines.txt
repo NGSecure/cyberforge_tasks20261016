@@ -1,1 +1,0 @@
-if (totallen >= target_size) {

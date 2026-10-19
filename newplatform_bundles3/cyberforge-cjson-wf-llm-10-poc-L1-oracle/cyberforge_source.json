@@ -1,0 +1,78 @@
+{
+  "bundle": "cyberforge-cjson-wf-llm-10-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/cjson/vulnerabilities/vulnerability_WF_LLM_10",
+  "base_image": "vuljector/cjson:setup@sha256:822bff875826541b24f5c6e35a43f15f8c68c17683af170d3952bc9b35fc6b93",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-04-05T20:03:34.054933504Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T15:27:07.369339457Z",
+        "created_by": "sleep infinity",
+        "bytes": 20046211
+      }
+    ],
+    "post_setup_files": 61,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 52,
+    "scrubbed_from_agent_image": 7,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out": 4,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 0,
+  "image_tags": {
+    "docker_image": "cyberforge_cjson_wf_llm_10_main:v0.0.2",
+    "task_server_image": "cyberforge_cjson_wf_llm_10_task_server:v0.0.2"
+  },
+  "tier": "A",
+  "pov_kind": "harness",
+  "quality": {
+    "category": "\u7b2c\u4e09\u7c7b",
+    "basis": "\u6ce8\u5165\u7684\u6f0f\u6d1e\u53ea\u6709\u5185\u5b58\u5206\u914d\u5931\u8d25\u624d\u4f1a\u8d70\u5230\uff0c\u6570\u636e\u96c6\u8bc1\u636e\u4e0e\u4e4b\u4e0d\u7b26",
+    "verification": "fail"
+  },
+  "ground_truth_evidence": "crash evidence in the dataset",
+  "ground_truth": {
+    "dataset_file": "exploit_files/pov.bin",
+    "how_found": "hints.successful_seed",
+    "bytes": 4,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": null,
+    "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+    "solve_sh": "inline"
+  },
+  "harness": {
+    "candidates": [
+      "cjson_read_fuzzer"
+    ],
+    "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "cjson_read_fuzzer"
+    ],
+    "dataset_metadata_said": [
+      "cjson_read_fuzzer",
+      "cjson_read_fuzzer"
+    ],
+    "metadata_disagrees": false
+  },
+  "recipe": null,
+  "trigger_evidence": {
+    "signal": "oom",
+    "detail": "",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": null
+  },
+  "asan_options_from_exploit": null,
+  "cwe_id": "CWE-476",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "b2890c8d76bbb64e710585ebc0a917196b9c67e7"
+}

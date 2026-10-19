@@ -1,0 +1,9 @@
+[
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles2/cyberforge-espeak-ng-wf-llm-5-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "espeak-ng"
+ }
+]

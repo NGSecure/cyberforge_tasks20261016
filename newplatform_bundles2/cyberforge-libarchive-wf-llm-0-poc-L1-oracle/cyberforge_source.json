@@ -1,0 +1,78 @@
+{
+  "bundle": "cyberforge-libarchive-wf-llm-0-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/libarchive/vulnerabilities/vulnerability_WF_LLM_0",
+  "base_image": "vuljector/libarchive:setup@sha256:10ab286a142f244ef35b27f91e4b479293e61836675159fa2cbc32a472ee9e47",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-05-10T20:39:04.467112175Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T20:42:29.881642773Z",
+        "created_by": "sleep infinity",
+        "bytes": 171769151
+      }
+    ],
+    "post_setup_files": 2991,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 2983,
+    "scrubbed_from_agent_image": 6,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out": 3,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 3,
+  "image_tags": {
+    "docker_image": "cyberforge_libarchive_wf_llm_0_main:v0.0.2",
+    "task_server_image": "cyberforge_libarchive_wf_llm_0_task_server:v0.0.2"
+  },
+  "tier": "A",
+  "pov_kind": "harness",
+  "quality": {
+    "category": "\u7b2c\u4e8c\u7c7b",
+    "basis": "\u6570\u636e\u96c6\u6307\u5b9a\u7684 PoV \u4e0d\u89e6\u53d1\uff0c\u5df2\u6362\u6210\u80fd\u89e6\u53d1\u7684\u6570\u636e\u96c6\u8f93\u5165\uff1b\u6570\u636e\u96c6\u7684\u62a5\u544a\u662f\u522b\u7684\u4efb\u52a1\u7684",
+    "verification": "pass"
+  },
+  "ground_truth_evidence": "crash evidence in the dataset",
+  "ground_truth": {
+    "dataset_file": "replay/libarchive/vulnerability_WF_LLM_0/input-000",
+    "how_found": "exploit_replay",
+    "bytes": 36,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": true,
+    "sha256": "66c242f7e8b67ca493507ea40a133641bb64bcb0fb6424320253151e5b6aa9f9",
+    "solve_sh": "inline"
+  },
+  "harness": {
+    "candidates": [
+      "libarchive_fuzzer"
+    ],
+    "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "libarchive_fuzzer"
+    ],
+    "dataset_metadata_said": [
+      "libarchive_fuzzer",
+      "libarchive_fuzzer"
+    ],
+    "metadata_disagrees": false
+  },
+  "recipe": null,
+  "trigger_evidence": {
+    "signal": "asan",
+    "detail": "double-free",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": true
+  },
+  "asan_options_from_exploit": null,
+  "cwe_id": "CWE-20",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "1546fbffe844287cad6959fe77233d3369f375fc"
+}

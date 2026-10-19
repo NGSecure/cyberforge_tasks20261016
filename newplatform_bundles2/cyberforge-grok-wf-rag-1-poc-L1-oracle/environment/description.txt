@@ -1,0 +1,1 @@
+A heap-buffer-overflow in grk::t1::BlockCoder::initFlags in src/lib/core/t1/part1/block_coder/BlockCoderEnc.cpp may cause memory corruption when processing a crafted image.

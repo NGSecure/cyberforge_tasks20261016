@@ -35,6 +35,8 @@ def _abs(path, cwd):
 
 LIMIT = 16 << 20  # replay_deep.py runs exploits under `ulimit -f` 16 MiB
 PRUNED = b"CF-PRUNED "  # a large capture of an unconverted task, replaced by its hash and size
+# the exploit hit that limit while it wrote its payload (bash / Python): what it fed is not what it meant to
+SIZE_LIMIT_RE = re.compile(r"File size limit exceeded|OSError: \[Errno 27\] File too large")
 
 
 class Truncated(Exception):
@@ -110,12 +112,32 @@ def recipe_or_reason(task_dir, exploit_sh="", exploit_files=()):
         return None, "the exploit's input is larger than 16 MB (the replay cut it off)"
 
 
+def fallback_compiles(task_dir):
+    """{call index: argv} from recipe_overrides.json next to replay_deep/: compile calls whose
+    recorded command fails in the real build, so that the exploit's own fallback compile is
+    what ran (the replay's compiler recorder always succeeds, so the fallback never ran there).
+    Each entry quotes the exploit's fallback line and the build error that makes it run."""
+    project, vuln = os.path.normpath(task_dir).split(os.sep)[-2:]
+    f = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(task_dir)))),
+                     "recipe_overrides.json")
+    if not os.path.isfile(f):
+        return {}
+    e = json.load(open(f)).get("%s/vulnerabilities/%s" % (project, vuln)) or {}
+    return {int(k): v["argv"] for k, v in (e.get("compile_fallback") or {}).items()}
+
+
 def _recipe(task_dir, exploit_sh, exploit_files):
     f = os.path.join(task_dir, "calls.json")
     if not os.path.isfile(f):
         return None, "not replayed in the project image"
+    log = os.path.join(task_dir, "log.txt")
+    if os.path.isfile(log) and SIZE_LIMIT_RE.search(open(log, errors="replace").read()):
+        raise Truncated(log)
     only = selected_call(task_dir)
-    calls = [c for i, c in enumerate(json.load(open(f))) if c["kind"] != "build" and only in (None, i)]
+    fallback = fallback_compiles(task_dir)
+    calls = [dict(c, argv=fallback[i]) if i in fallback and c["kind"] == "cc" else c
+             for i, c in enumerate(json.load(open(f)))]
+    calls = [c for i, c in enumerate(calls) if c["kind"] != "build" and only in (None, i)]
     if not calls:
         return None, "the exploit ran no program the replay could record"
     generated = False

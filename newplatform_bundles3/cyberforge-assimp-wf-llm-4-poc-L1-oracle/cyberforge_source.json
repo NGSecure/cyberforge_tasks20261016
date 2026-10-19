@@ -32,6 +32,11 @@
   },
   "tier": "C",
   "pov_kind": "harness",
+  "quality": {
+    "category": "\u7b2c\u4e09\u7c7b",
+    "basis": "\u5b89\u5168\u7248\u4e5f\u5d29\u6e83\uff1a\u5d29\u6e83\u4e0d\u662f\u6ce8\u5165\u7684\u6f0f\u6d1e\u9020\u6210\u7684",
+    "verification": "fail"
+  },
   "ground_truth_evidence": "none: the dataset's differential run crashed the secure build too (build.sh self-check 3 decides)",
   "ground_truth": {
     "dataset_file": "replay_deep/assimp/vulnerability_WF_LLM_4/call-000-arg-0",

@@ -1,0 +1,1922 @@
+{
+ "_about": "Manual review behind quality.py (2026-10-18), for the bundles that did not pass self-check 3 here (and passes that need a word). quality.py adds rule-based entries for the passing bundles.",
+ "bundles": {
+  "arrow-wf-llm-0": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "assimp-wf-llm-0": {
+   "cat": "pending",
+   "basis": "数据集有注入版的崩溃记录，但按它的构建流程编不出注入版",
+   "problem": "注入的 diff 删掉了一段校验循环，留下未使用的变量 end2；assimp 用 -Werror 编译，按镜像里的 build.sh（数据集声明的流程：还原干净源码 → 打 diff → compile）注入版的库编不过。可数据集确实有注入版 assimp_fuzzer 的崩溃报告（AC3D 导入时越界），说明数据集当时的构建方式与它声明的不同（例如关掉了 -Werror），具体差在哪里无法从数据集里得知，不能断定是数据问题还是转换没有复现它的构建。",
+   "impact": "注入版建不出来，目前不可用。",
+   "fix": "未修改。",
+   "suggest": "在注入版（和 agent 镜像的构建说明）里加 -Wno-error=unused-variable 后验证；通过即可用，属于少量修改。",
+   "status": "目前不可用：按数据集声明的构建流程编不出注入版。未修改，与原始任务一致；按建议改动构建参数后才可能可用（对构建流程的少量偏离）。"
+  },
+  "assimp-wf-llm-4": {
+   "cat": "3",
+   "basis": "安全版也崩溃：崩溃不是注入的漏洞造成的",
+   "problem": "数据集自己的“差分”运行里安全版也崩溃了；本机运行 exploit.sh，同一输入在两个版本上都崩溃（SIGABRT）。这个输入在注入前的代码上就会崩溃，不是注入的漏洞造成的，数据集也没有只让注入版崩溃的输入。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "bluez-wf-llm-1": {
+   "cat": "3",
+   "basis": "数据集给的种子和 exploit 的输入都不触发，报告用的输入没有保存",
+   "problem": "hints.json 声称成功的种子 pov.bin 只有 1 个字节（\\x00），exploit 实际喂给 fuzz_gobex 的是 3 个字节 01 00 04；两者在两个版本上都不崩溃（本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃）。报告里 get_bytes 的堆越界读来自另一个输入，数据集没有保存。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "brotli-wf-llm-0": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（报告里没有崩溃）；按 exploit 的命令行（`brotli --comment=<超长参数>`）运行，漏洞版没有输出、安全版打印用法说明，两者都不崩溃，差异只是行为不同。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "brotli-wf-llm-1": {
+   "cat": "3",
+   "basis": "报告里崩溃的语料文件没有保存",
+   "problem": "exploit 解压 /out/decode_fuzzer_seed_corpus.zip 后逐个喂给 decode_fuzzer；报告显示崩溃的是 payload_13.bin。这些 payload_*.bin 是数据集流水线当时放进语料包的文件，数据集没有保存；在项目镜像里用真实的语料包运行 exploit，两个版本都不崩溃。（转换时在镜像外重放，捕获到的“输入”是 unzip 的报错日志，这是转换的问题，但数据集里本来就没有可用的输入。）",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "c-blosc2-wf-llm-1": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（报告里没有崩溃）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案（exploit 喂给 harness 的输入）同样不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "c-blosc2-wf-llm-2": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（报告里没有崩溃）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案（exploit 喂给 harness 的输入）同样不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "c-blosc2-wf-llm-3": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（报告里没有崩溃）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案（exploit 喂给 harness 的输入）同样不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "c-blosc2-wf-llm-4": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（报告里没有崩溃）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案（exploit 喂给 harness 的输入）同样不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "c-blosc2-wf-rag-3": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（报告里没有崩溃）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案（exploit 喂给 harness 的输入）同样不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "c-blosc2-wf-rag-5": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（报告里没有崩溃）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案和数据集的 pov.bin（128 KB）同样不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "cgif-wf-llm-3": {
+   "cat": "3",
+   "basis": "数据集的 PoV 和 exploit 的输入都不触发，报告用的输入没有保存",
+   "problem": "exploit 实际喂给 cgif_file_fuzzer 的 1560 字节输入和数据集的 pov.bin（795 字节）在两个版本上都不崩溃（本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃）；报告里 cgif_raw.c:91 resetDict 的堆越界来自另一个输入，数据集没有保存。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "cgif-wf-rag-0": {
+   "cat": "pending",
+   "basis": "数据集有注入版的崩溃记录，但按它的构建流程编不出注入版",
+   "problem": "cgif 的 build.sh 在编 fuzzer 之前先跑 meson test；注入的越界写让单元测试逐个 abort，build.sh 就此停止，fuzzer 编不出来。可数据集确实有注入版 cgif_fuzzer 的崩溃报告，说明它当时的构建方式与声明的不同，无法从数据集得知，不能断定是数据问题还是转换没有复现它的构建。",
+   "impact": "注入版建不出来，目前不可用。",
+   "fix": "未修改。",
+   "suggest": "构建注入版时跳过 meson test（或容忍测试失败）后验证；通过即可用。",
+   "status": "目前不可用：按数据集声明的构建流程编不出注入版。未修改，与原始任务一致；按建议改动构建参数后才可能可用（对构建流程的少量偏离）。"
+  },
+  "cjson-wf-llm-10": {
+   "cat": "3",
+   "basis": "注入的漏洞只有内存分配失败才会走到，数据集证据与之不符",
+   "problem": "exploit 的输入只是 'null'，按退出码 139 判定；注入的改动删掉的是打印缓冲区分配失败时的检查，只有内存分配失败才会走到。数据集报告记录的是 libFuzzer 的 out-of-memory（RSS 超限），不是这个空指针；本机两个版本都不崩溃。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "cjson-wf-rag-0": {
+   "cat": "3",
+   "basis": "exploit 的程序只打印结论不崩溃，崩溃报告来自另一个程序",
+   "problem": "exploit 的程序只打印 EXPLOIT_TRIGGERED / NO_TRIGGER（行为差异），本身不崩溃；数据集的崩溃报告来自另一个程序（rag0a.c），不是 exploit 交付的这个。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "cjson-wf-rag-1": {
+   "cat": "3",
+   "basis": "exploit 的程序只打印结论不崩溃，崩溃报告来自另一个程序",
+   "problem": "exploit 的程序只打印 EXPLOIT_TRIGGERED / NO_TRIGGER（行为差异），本身不崩溃；数据集的崩溃报告来自另一个程序（r1.c），不是 exploit 交付的这个。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "cjson-wf-rag-2": {
+   "cat": "3",
+   "basis": "数据集的崩溃发生在 exploit 自己拷贝的代码里",
+   "problem": "exploit 把 decode_pointer_inplace 的源码抠出来编进自己的程序（报告的栈在 test_prog.c），崩溃发生在这份拷贝里，不经过项目的构建；按 exploit 的程序在两个版本上运行，都打印 NO_TRIGGER、都不崩溃。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "cjson-wf-rag-6": {
+   "cat": "3",
+   "basis": "注入的 diff 是坏的，注入版编译不过",
+   "problem": "注入的 diff 删掉了 compare_json 函数的开头、留下半截函数体，cJSON_Utils.c 无法编译（15 个错误）；exploit 的程序要编译这个文件，所以注入版根本建不出来（OSS-Fuzz 的构建不编这个文件，harness 型检查发现不了）。数据集的报告（cJSONUtils_strdup 堆溢出）与另一个任务逐字节相同，不是本任务的。",
+   "impact": "漏洞版编不出来，任务不成立。",
+   "fix": "未修改。",
+   "suggest": "需要重新设计注入（修正 diff），否则剔除。",
+   "status": null
+  },
+  "coturn-wf-llm-1": {
+   "cat": "3",
+   "basis": "报告是 libFuzzer 读输入文件时的内存超限，与项目代码无关",
+   "problem": "报告里的 out-of-memory 发生在 libFuzzer 读取输入文件的时候（FileToVector 申请 2 GB），说明当时喂进去的文件本身异常（大小不对），与项目代码无关；exploit 的 10 字节全零输入在两个版本上都不崩溃。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "coturn-wf-rag-12": {
+   "cat": "3",
+   "basis": "报告来自作者自写的程序，harness 到不了注入的函数",
+   "problem": "报告来自作者自己写的程序 /tmp/h12.c（直接调用 is_http），不是 harness；exploit 把一段 HTTP 请求喂给 FuzzStunClient，这个 harness 不经过 is_http，两个版本都不崩溃。注入的漏洞很可能任何 harness 都到不了。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "确认是否有 harness 会调用 is_http；没有则剔除。",
+   "status": null
+  },
+  "dnsmasq-wf-llm-1": {
+   "cat": "3",
+   "basis": "报告里的崩溃是安全版本身就有的上游 bug，不在注入的文件里",
+   "problem": "报告里的崩溃在 util.c:436 hostname_issubdomain，这是安全版本身就有的上游 bug（dnsmasq WF_LLM_3 的 pov.bin 在安全版上也在这里崩溃），与本任务注入的 rfc1035.c 无关；exploit 的输入在两个版本上都不崩溃。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "dnsmasq-wf-llm-3": {
+   "cat": "3",
+   "basis": "数据集的 PoV 在安全版上也崩溃（上游 bug）",
+   "problem": "数据集的 pov.bin 在漏洞版上确实在注入的 check_name 里堆越界（与报告一致），但在安全版上也会在 util.c:436 hostname_issubdomain 崩溃——这是安全版本身就有的上游 bug；exploit 自己的 1 字节输入两个版本都不崩溃。没有“只让漏洞版崩溃”的输入。",
+   "impact": "agent 很容易构造出两个版本都崩溃的输入而得到“不通过”，反馈有噪声；目前没有可用的标准答案。",
+   "fix": "未修改。",
+   "suggest": "在 pov.bin 基础上改出只走到 check_name、不经过 hostname_issubdomain 的输入（需要分析 fuzz_util 的输入格式），验证后可升为第二类。",
+   "status": null
+  },
+  "double-conversion-fz-16": {
+   "cat": "3",
+   "basis": "判定方向相反：安全版“崩溃”、漏洞版的崩溃在 PoV 自己的代码里",
+   "problem": "数据集的报告为空。exploit 的程序在安全版上触发项目自己的参数检查断言（utils.h:253，`len == 0 || (len > 0 && data != nullptr)`）而中止；在漏洞版上（注入正是去掉了这个检查）程序在它自己的代码里（driver.cc:12）空指针访问。按程序型判定，安全版算崩溃、漏洞版不算，方向相反。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "double-conversion-fz-9": {
+   "cat": "3",
+   "basis": "漏洞真实，但崩溃依赖 fuzz 过程，没有单个输入能复现",
+   "problem": "crash_report.json 记录的是一次 fuzz 运行（seeded_fuzz_run），数据集只验证了“fuzz 过程会让注入版崩溃”，记录里对崩溃样本的单独重放都没有崩溃；本机单独运行这个样本也不崩溃。本机重跑数据集的 fuzz 过程，确实让注入版崩溃、安全版不崩溃：漏洞是真实的，但触发依赖 fuzz 过程中积累的状态，没有单个输入能复现。",
+   "impact": "单个 PoV 无法稳定触发，agent 提交的输入也可能时灵时不灵，判定可信度低。",
+   "fix": "未修改。",
+   "suggest": "对注入版做定向 fuzz（例如保存 fuzz 过程中的全部输入、用 -minimize_crash），找出能单独复现的输入；找到后可升为第二类。",
+   "status": null
+  },
+  "double-conversion-wf-llm-0": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（报告里没有崩溃）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案（exploit 喂给 harness 的输入）同样不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "file-fz-0": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：file 没有发布的基础镜像，build.sh 要联网构建。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "flex-wf-rag-0": {
+   "cat": "3",
+   "basis": "注入的代码让构建本身崩溃，注入版建不出来",
+   "problem": "数据集的报告为空。注入的代码在 flex 的扫描器里，而 flex 构建时要先用自己编出的 stage1flex 生成扫描器：注入的漏洞让 stage1flex 在构建过程中崩溃，生成 stage1scan.c 失败，构建停止，注入版的 fuzzer 编不出来。",
+   "impact": "漏洞版建不出来，任务不成立。",
+   "fix": "未修改。",
+   "suggest": "剔除，或改注入位置。",
+   "status": null
+  },
+  "flex-wf-rag-1": {
+   "cat": "3",
+   "basis": "diff 改的是构建时生成的文件，干净源码里没有它",
+   "problem": "数据集的报告为空。diff 改的是构建时由 scan.l 生成的 src/scan.c，而数据集每次构建前还原的干净源码（/opt/src_snapshot.tar）里没有这个文件，diff 打不上；数据集记录的触发输入还是空文件。",
+   "impact": "漏洞版建不出来，任务不成立。",
+   "fix": "未修改。",
+   "suggest": "改为修改 scan.l，或剔除。",
+   "status": null
+  },
+  "fluent-bit-fz-0": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "fluent-bit-fz-1": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "fluent-bit-fz-2": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "fluent-bit-fz-3": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "fluent-bit-fz-4": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "fluent-bit-fz-5": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "fluent-bit-wf-rag-0": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "freerdp-wf-rag-0": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（报告里没有崩溃）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案（exploit 喂给 harness 的输入）同样不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "ghostscript-wf-rag-0": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（sanitizer_report.txt 为空）；exploit 运行的是构建辅助程序 genarch（生成 arch.h 的工具），两个版本都没有输出、都不崩溃。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "grok-wf-llm-1": {
+   "cat": "3",
+   "basis": "报告是别的任务的；按 exploit 运行只有报错信息不同，不崩溃",
+   "problem": "报告与另一个任务逐字节相同（崩溃在 grk_transcode 里，与本任务注入的 GrkDecompress.cpp 无关）。按 exploit 的命令行运行 grk_decompress，两个版本只是报错信息不同（'Could not parse precision option' / 'Invalid precision'），都不崩溃（行为差异型）。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "grok-wf-llm-2": {
+   "cat": "3",
+   "basis": "报告是别的任务的；按 exploit 运行只有报错信息不同，不崩溃",
+   "problem": "报告与另外 2 个任务逐字节相同（崩溃在 grk_decompress 里），不是本任务的。按 exploit 的命令行运行 grk_dump，两个版本只是报错不同（'Unknown codec format' / 'Path is too long'），都不崩溃（行为差异型）。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "guetzli-fz-0": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-fz-1": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-fz-10": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-fz-11": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-fz-12": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-fz-13": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-fz-14": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-fz-15": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-fz-16": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-fz-17": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-fz-18": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-fz-19": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-fz-2": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-fz-20": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-fz-21": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-fz-22": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-fz-23": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-fz-24": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。注意：标准答案是 fuzz 崩溃样本，报告里崩溃的是 generated_inputs 里另一个文件（crash-055868f4…），构建后两个都要试。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-fz-25": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-fz-26": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-fz-27": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-fz-28": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-fz-29": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-fz-3": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-fz-30": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-fz-31": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-fz-32": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-fz-5": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-fz-6": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-fz-7": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-fz-8": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-fz-9": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-wf-llm-0": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-wf-llm-1": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-wf-llm-10": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-wf-llm-11": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-wf-llm-2": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-wf-llm-3": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-wf-llm-4": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-wf-llm-5": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-wf-llm-6": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-wf-llm-7": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-wf-llm-8": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-wf-llm-9": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "guetzli-wf-rag-0": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：guetzli 没有发布的基础镜像，build.sh 要从 GitHub 克隆源码构建，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "h2o-wf-llm-0": {
+   "cat": "3",
+   "basis": "报告是别的任务的；按 exploit 运行只有配置报错不同，不崩溃",
+   "problem": "报告与另外 2 个任务逐字节相同（h2o_strdup_slashed 堆溢出），不是本任务的。按 exploit 的命令（`h2o -c <配置文件>`）运行，两个版本只是配置报错不同（缺少 hosts 指令 / 路径过长），都不崩溃（行为差异型）。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "h3-fz-26": {
+   "cat": "3",
+   "basis": "漏洞真实，但崩溃依赖 fuzz 过程，没有单个输入能复现",
+   "problem": "crash_report.json 记录的是一次 fuzz 运行（seeded_fuzz_run），数据集只验证了“fuzz 过程会让注入版崩溃”，记录里对崩溃样本的单独重放都没有崩溃；本机单独运行这个样本也不崩溃。本机重跑数据集的 fuzz 过程，确实让注入版崩溃、安全版不崩溃：漏洞是真实的，但触发依赖 fuzz 过程中积累的状态，没有单个输入能复现。",
+   "impact": "单个 PoV 无法稳定触发，agent 提交的输入也可能时灵时不灵，判定可信度低。",
+   "fix": "未修改。",
+   "suggest": "对注入版做定向 fuzz（例如保存 fuzz 过程中的全部输入、用 -minimize_crash），找出能单独复现的输入；找到后可升为第二类。",
+   "status": null
+  },
+  "h3-fz-30": {
+   "cat": "3",
+   "basis": "漏洞真实，但崩溃依赖 fuzz 过程，没有单个输入能复现",
+   "problem": "crash_report.json 记录的是一次 fuzz 运行（seeded_fuzz_run），数据集只验证了“fuzz 过程会让注入版崩溃”，记录里对崩溃样本的单独重放都没有崩溃；本机单独运行这个样本也不崩溃。本机重跑数据集的 fuzz 过程，确实让注入版崩溃、安全版不崩溃：漏洞是真实的，但触发依赖 fuzz 过程中积累的状态，没有单个输入能复现。",
+   "impact": "单个 PoV 无法稳定触发，agent 提交的输入也可能时灵时不灵，判定可信度低。",
+   "fix": "未修改。",
+   "suggest": "对注入版做定向 fuzz（例如保存 fuzz 过程中的全部输入、用 -minimize_crash），找出能单独复现的输入；找到后可升为第二类。",
+   "status": null
+  },
+  "h3-fz-40": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（sanitizer_report.txt 为空）；exploit 的程序在漏洞版上只打印 EXPLOIT_TRIGGERED，并不崩溃（行为差异型）。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "h3-wf-rag-4": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（报告里没有崩溃）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案（exploit 喂给 harness 的输入）同样不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "h3-wf-rag-5": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（报告里没有崩溃）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案（exploit 喂给 harness 的输入）同样不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "h3-wf-rag-7": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（报告里没有崩溃）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案（exploit 喂给 harness 的输入）同样不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "harfbuzz-fz-8": {
+   "cat": "3",
+   "basis": "exploit 的输入不触发，报告里崩溃的文件没有保存",
+   "problem": "exploit 取源码树里找到的第一个 .ttf 喂给 hb-shape-fuzzer（与数据集附带的 poc.ttf 相同），两个版本都不崩溃；报告里崩溃的是一次 fuzz 运行留下的 crash-f823b10b…，数据集没有保存。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "harfbuzz-wf-rag-1": {
+   "cat": "3",
+   "basis": "注入的代码不在 harness 里，任何输入都不可能触发",
+   "problem": "数据集的报告为空。注入的改动在 src/hb-ft.cc（FreeType 接口），而 exploit 用的 hb-shape-fuzzer 根本不编译这个文件：两个版本的 harness 完全一样，注入的漏洞不在被测程序里，任何 PoV 都不可能触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "改用会编译 hb-ft.cc 的 harness（如有），或剔除。",
+   "status": null
+  },
+  "htslib-fz-3": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（sanitizer_report.txt 为空）；exploit 的程序只打印 TRIGGERED / NOT_TRIGGERED，并不崩溃（行为差异型）。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "htslib-wf-llm-0": {
+   "cat": "3",
+   "basis": "数据集的崩溃来自单元测试程序，harness 到不了注入的代码",
+   "problem": "数据集的崩溃来自项目的单元测试程序 test/test_expr（参数 '1 % 0' 触发 mul_expr 的除零），OSS-Fuzz 的构建不编译它；exploit 在没有它时退回 hts_open_fuzzer 赌一个输入。hints.json 声称成功的种子 pov.bin 和 exploit 退回时的输入在两个版本上都不触发，hts_open_fuzzer 很可能根本不会求值过滤表达式。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "若平台支持命令行参数型 PoV 且构建 test_expr，可改为 cli-argv 任务；否则剔除。",
+   "status": null
+  },
+  "icu-wf-llm-0": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "icu-wf-llm-1": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "jq-wf-llm-11": {
+   "cat": "3",
+   "basis": "报告是别的任务的；注入的是目录检查，只改变报错信息，不崩溃",
+   "problem": "报告是另一个任务的：9 个 jq 任务共用一份 jq_set_colors 堆溢出报告（那是靠 JQ_COLORS 环境变量触发的任务）。本任务注入的改动在 jv_file.c（去掉对目录的检查），按 exploit 的命令行运行，两个版本只是报错信息不同（'Error reading from <目录>' / \"Could not open <目录>: It's a directory\"），都不崩溃（行为差异型）。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "jq-wf-llm-2": {
+   "cat": "3",
+   "basis": "报告是别的任务的；注入的是目录检查，只改变报错信息，不崩溃",
+   "problem": "报告是另一个任务的：9 个 jq 任务共用一份 jq_set_colors 堆溢出报告（那是靠 JQ_COLORS 环境变量触发的任务）。本任务注入的改动在 jv_file.c（去掉对目录的检查），按 exploit 的命令行运行，两个版本只是报错信息不同（'Error reading from <目录>' / \"Could not open <目录>: It's a directory\"），都不崩溃（行为差异型）。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "jq-wf-llm-4": {
+   "cat": "3",
+   "basis": "报告是别的任务的；注入的是目录检查，只改变报错信息，不崩溃",
+   "problem": "报告是另一个任务的：9 个 jq 任务共用一份 jq_set_colors 堆溢出报告（那是靠 JQ_COLORS 环境变量触发的任务）。本任务注入的改动在 jv_file.c（去掉对目录的检查），按 exploit 的命令行运行，两个版本只是报错信息不同（'Error reading from <目录>' / \"Could not open <目录>: It's a directory\"），都不崩溃（行为差异型）。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "jq-wf-llm-8": {
+   "cat": "3",
+   "basis": "报告是别的任务的；注入的是目录检查，只改变报错信息，不崩溃",
+   "problem": "报告是另一个任务的：9 个 jq 任务共用一份 jq_set_colors 堆溢出报告（那是靠 JQ_COLORS 环境变量触发的任务）。本任务注入的改动在 jv_file.c（去掉对目录的检查），按 exploit 的命令行运行，两个版本只是报错信息不同（'Error reading from <目录>' / \"Could not open <目录>: It's a directory\"），都不崩溃（行为差异型）。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "jq-wf-llm-9": {
+   "cat": "3",
+   "basis": "报告是别的任务的；注入的是目录检查，只改变报错信息，不崩溃",
+   "problem": "报告是另一个任务的：9 个 jq 任务共用一份 jq_set_colors 堆溢出报告（那是靠 JQ_COLORS 环境变量触发的任务）。本任务注入的改动在 jv_file.c（去掉对目录的检查），按 exploit 的命令行运行，两个版本只是报错信息不同（'Error reading from <目录>' / \"Could not open <目录>: It's a directory\"），都不崩溃（行为差异型）。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "json-c-fz-0": {
+   "cat": "3",
+   "basis": "判定方向相反：安全版崩溃、漏洞版只是返回值不同",
+   "problem": "数据集的报告为空。exploit 的程序在漏洞版上只是检测到返回值 0xdeadbeef 并打印 EXPLOIT_TRIGGERED（不崩溃），在安全版上反而在 linkhash.h:429 lh_entry_next 里空指针崩溃。没有“只让漏洞版崩溃”的输入。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "kamailio-fz-3": {
+   "cat": "pending",
+   "basis": "漏洞真实，但判定规则认不出宏里的注入（转换侧限制）",
+   "problem": "注入的改动在 hashes.h 的宏 hash_update_str2 里（循环边界 `end-4` 改成 `end-3`）。exploit 的程序直接展开这个宏，本机实测漏洞版堆越界读、安全版正常结束，数据集的报告也是这样，原始数据没有问题。但宏展开后的代码在调试信息里算作 PoV 程序自己的行（driver.c:22），程序型判定要求崩溃栈经过被改动的文件（为了不让 PoV 在自己代码里制造崩溃），所以判为未触发。这是判定规则的限制，不是数据问题。",
+   "impact": "目前自检 3 不通过：agent 写出正确的 PoV 也会被判为未触发。",
+   "fix": "未修改。",
+   "suggest": "对注入改动在宏里的程序型任务放宽判定（例如崩溃行展开了被改动的宏也算），或剔除。",
+   "status": "不可用：自检 3 不通过（判定没有认出注入版的崩溃）。未修改，与原始任务一致；按建议放宽判定后才可能可用。"
+  },
+  "kamailio-fz-5": {
+   "cat": "3",
+   "basis": "数据集的崩溃来自 exploit 自己拷贝的函数；exploit 的程序编不过",
+   "problem": "数据集的报告来自 exploit 自己拷贝出来的函数（/tmp/exploit/func.c 里的 escape_common），不是项目代码；exploit 的程序单独编译项目的 strutils.c 时缺少项目 Makefile 提供的锁实现宏（'no locking method selected'），编译失败。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "kamailio-wf-rag-0": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（报告里没有崩溃）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案（exploit 喂给 harness 的输入）同样不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "leptonica-fz-1": {
+   "cat": "3",
+   "basis": "崩溃依赖 fuzz 过程，本机 fuzz 也未复现",
+   "problem": "crash_report.json 记录的是一次 fuzz 运行（seeded_fuzz_run），数据集只验证了“fuzz 过程会让注入版崩溃”，记录里对崩溃样本的单独重放都没有崩溃；本机单独运行这个样本也不崩溃。本机重跑数据集的 fuzz 过程（90 秒）也没有复现；报告的崩溃在 sarray1.c，不在本任务注入的 readbarcode.c。",
+   "impact": "没有能复现的输入，判定无从核对。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "leptonica-wf-llm-0": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（sanitizer_report.txt 为空）；注入的是命令注入类问题（htmlviewer 的参数里带 `; touch …`），两个版本都只打印打开文件失败，没有内存错误；基于崩溃的判定无法评估这类漏洞。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "leptonica-wf-rag-0": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（sanitizer_report.txt 为空）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案（exploit 喂给 harness 的输入）同样不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "leptonica-wf-rag-2": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（sanitizer_report.txt 为空）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案（exploit 喂给 harness 的输入）同样不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "leptonica-wf-rag-3": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（报告里没有崩溃）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案（exploit 喂给 harness 的输入）同样不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "leptonica-wf-rag-4": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（sanitizer_report.txt 为空）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案（exploit 喂给 harness 的输入）同样不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "libdwarf-wf-rag-0": {
+   "cat": "3",
+   "basis": "报告是 libFuzzer 读输入文件时的内存超限；exploit 用随机输入、只看错误码",
+   "problem": "报告里的 out-of-memory 发生在 libFuzzer 读取输入文件的时候（FileToVector 申请 20 GB），与项目代码无关；exploit 用 /dev/urandom 生成 1 KB 随机数据，只按输出里有没有错误码 DW_DLE_FILE_WRONG_TYPE(412) 判定（行为差异），本机两个版本都不崩溃，数据集的 pov.bin 也不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "libjxl-fz-7": {
+   "cat": "3",
+   "basis": "exploit 是行为差异型，报告里崩溃的文件没有保存",
+   "problem": "exploit 只在输出里 grep 'Missing token'（行为差异），两个版本都不崩溃；报告里崩溃的是一次 fuzz 运行留下的 crash-df447551…（没有保存），而且那是 -fno-exceptions 下抛出 out_of_range 导致的中止。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "libjxl-wf-rag-1": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（报告里没有崩溃）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案（exploit 喂给 harness 的输入）同样不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "libjxl-wf-rag-2": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（报告里没有崩溃）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案（exploit 喂给 harness 的输入）同样不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "libjxl-wf-rag-3": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（sanitizer_report.txt 为空）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案（exploit 喂给 harness 的输入）同样不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "libjxl-wf-rag-4": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（报告里没有崩溃）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案（exploit 喂给 harness 的输入）同样不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "libsass-wf-llm-0": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（报告里没有崩溃）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案（exploit 喂给 harness 的输入）同样不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "libsass-wf-llm-1": {
+   "cat": "3",
+   "basis": "证据只是小泄漏，exploit 还依赖它自己写的另一个文件",
+   "problem": "exploit 的输入只有一行 `@import \"trigger.scss\";`，被导入的 trigger.scss 是 exploit 另外写的文件（PoV 只能是一个文件，判定方不会提供它）；数据集的报告只有 4 字节泄漏。按 exploit 的输入在两个版本上运行都不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "libsass-wf-llm-3": {
+   "cat": "3",
+   "basis": "证据只是一个 5 字节泄漏，报告不在注入的文件里",
+   "problem": "数据集的报告只有一个 5 字节的内存泄漏，栈不经过本任务注入的 sass_values.cpp；数据集没有其他触发证据，exploit 的输入在两个版本上都不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "libsass-wf-rag-4": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（报告里没有崩溃）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案（exploit 喂给 harness 的输入）同样不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "libsass-wf-rag-5": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（sanitizer_report.txt 为空）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案（exploit 喂给 harness 的输入）同样不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "libsass-wf-rag-6": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（报告里没有崩溃）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案（exploit 喂给 harness 的输入）同样不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "libsndfile-fz-1": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（sanitizer_report.txt 为空，数据集自己的 run.out 只有一行 'sndfile-info not found'（exploit 当时也没跑成））；exploit 的程序 `#include <sndfile.h>` 并链接系统里的 libsndfile，项目镜像里没有安装，程序编译失败。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "libucl-wf-rag-3": {
+   "cat": "3",
+   "basis": "报告是别的任务的；exploit 的程序只打印结论，不崩溃",
+   "problem": "报告与另外 3 个任务逐字节相同（ucl_set_err 堆溢出，来自 fuzz harness，不是 exploit 的程序）。exploit 的程序只打印 'SUCCESS: Accepted non-regular file' / 'FAILURE: Rejected non-regular file'，两个版本都不崩溃（行为差异型）。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "libzip-wf-rag-2": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（报告里没有崩溃）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案（exploit 喂给 harness 的输入）同样不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "mruby-fz-0": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（sanitizer_report.txt 为空）；两个版本只是抛出的 TypeError 文案不同（'nil cannot be converted to Float' / \"can't convert nil into Float\"），都不崩溃（行为差异型）。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "njs-wf-rag-1": {
+   "cat": "2",
+   "basis": "触发偶尔不稳定（多数运行能触发）",
+   "problem": "exploit 用 1000 次 async/await 循环触发 njs_flathsh_unique_find 里的空指针访问（与数据集报告一致）。同一个标准答案在本机先后运行 6 次，5 次让注入版崩溃（SIGABRT）、安全版不崩溃，有 1 次（第一轮的自检 3）注入版没有崩溃：触发依赖运行时状态，不是每次都发生。",
+   "impact": "agent 提交正确的 PoV 时，偶尔会被判为未触发，反馈有少量噪声；多数情况下判定正常。",
+   "fix": "未修改。",
+   "suggest": "平台判定时对这类 bundle 多跑几次（例如 3 次里有 1 次触发即算触发），或在轨迹里容忍偶发的误判。",
+   "status": "可用：本轮三项自检通过，另外 3 次重跑也都通过。限制：偶发不触发（见左），判定反馈有少量噪声。未修改，与原始任务一致。"
+  },
+  "opencv-wf-rag-0": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（报告里没有崩溃）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案（exploit 喂给 harness 的输入）同样不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "opencv-wf-rag-1": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（报告里没有崩溃）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案和数据集的 pov.bin 同样不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "openh264-wf-rag-0": {
+   "cat": "3",
+   "basis": "注入的代码不在 harness 里（两个版本构建完全相同）",
+   "problem": "注入的改动在编码器里，exploit 用的 decoder_fuzzer 不包含这部分代码：两个版本构建出的 harness 完全相同，任何输入都不可能触发。数据集的“报告”只是 ASan 自身的 personality CHECK 失败，并非崩溃。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "剔除。",
+   "status": null
+  },
+  "openh264-wf-rag-2": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（报告里没有崩溃）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案（exploit 喂给 harness 的输入）同样不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "openssl-fz-0": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "openssl-fz-1": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "openssl-fz-2": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "openssl-fz-3": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "openssl-fz-4": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "openssl-fz-5": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "openssl-fz-6": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "openssl-fz-7": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "openssl-fz-8": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "openssl-wf-rag-0": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "openssl-wf-rag-1": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "openssl-wf-rag-2": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "openthread-wf-rag-1": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（报告里没有崩溃）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案（exploit 喂给 harness 的输入）同样不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "openthread-wf-rag-2": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（报告里没有崩溃）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案（exploit 喂给 harness 的输入）同样不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "pcapplusplus-wf-llm-0": {
+   "cat": "2",
+   "basis": "项目自带的构建脚本在编完 fuzzer 后失败（与注入无关）",
+   "problem": "镜像里 pcapplusplus 的 build.sh 编完 fuzzer 之后，后面构建单元测试的步骤失败，`compile` 以非 0 退出；数据集自己的快照也是这样（有 fuzzer，没有 libPcap++.a）。这是镜像的构建环境问题，与注入无关，fuzzer 本身完整。",
+   "impact": "agent 在沙箱里运行 `compile` 会看到构建报错（fuzzer 其实已经编好），可能误以为构建失败、多花步骤排查；判定不受影响。",
+   "fix": "转换按数据集的做法容忍 `compile` 的非 0 退出，只要求 harness 已生成。",
+   "suggest": "在 instruction 里注明“compile 末尾的单元测试构建失败可以忽略”。",
+   "status": "可用：三项自检通过。限制：agent 运行 `compile` 会看到末尾的构建报错。与原始任务一致（注入、题面、判定方式都没有改）。"
+  },
+  "pcapplusplus-wf-rag-0": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（sanitizer_report.txt 为空）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案（exploit 喂给 harness 的输入）同样不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "pcre2-fz-10": {
+   "cat": "3",
+   "basis": "漏洞真实，但崩溃依赖 fuzz 过程，没有单个输入能复现",
+   "problem": "crash_report.json 记录的是一次 fuzz 运行（seeded_fuzz_run），数据集只验证了“fuzz 过程会让注入版崩溃”，记录里对崩溃样本的单独重放都没有崩溃；本机单独运行这个样本也不崩溃。本机重跑数据集的 fuzz 过程，确实让注入版崩溃、安全版不崩溃：漏洞是真实的，但触发依赖 fuzz 过程中积累的状态，没有单个输入能复现。",
+   "impact": "单个 PoV 无法稳定触发，agent 提交的输入也可能时灵时不灵，判定可信度低。",
+   "fix": "未修改。",
+   "suggest": "对注入版做定向 fuzz（例如保存 fuzz 过程中的全部输入、用 -minimize_crash），找出能单独复现的输入；找到后可升为第二类。",
+   "status": null
+  },
+  "perfetto-fz-0": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "perfetto-fz-1": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "perfetto-fz-2": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "perfetto-fz-3": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "perfetto-fz-4": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "perfetto-fz-5": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "perfetto-fz-6": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。注意：标准答案是重放 exploit 捕获的输入，报告里崩溃的是 exploit_files/poc.bin（两者不同），构建后两个都要试。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "perfetto-fz-7": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "perfetto-fz-8": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "perfetto-wf-llm-0": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "pupnp-fz-12": {
+   "cat": "3",
+   "basis": "漏洞版只表现为超时，崩溃判定无法评估",
+   "problem": "数据集的报告为空。标准答案让漏洞版超时（60 秒内不结束，像是死循环）、安全版正常退出；判定不把超时算作触发（与 ARVO 判定一致：超时可能只是机器慢），所以不通过。",
+   "impact": "注入的漏洞若本质是死循环 / 资源耗尽，基于崩溃的判定无法评估，agent 提交什么都得不到“触发”反馈。",
+   "fix": "未修改。",
+   "suggest": "平台若支持“超时即触发”的判定可单独处理，否则剔除。",
+   "status": null
+  },
+  "pupnp-wf-llm-0": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（报告里没有崩溃）；本机运行 exploit.sh 时唯一一次“崩溃”是 ASan 启动时影子内存分配失败（环境问题，不是漏洞），实际两个版本都不崩溃。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "quickjs-wf-rag-1": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（报告里没有崩溃）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案（exploit 喂给 harness 的输入）同样不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "quickjs-wf-rag-2": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（报告里没有崩溃）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案（exploit 喂给 harness 的输入）同样不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "quickjs-wf-rag-3": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（报告里没有崩溃）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案和 exploit 附带的 crash_input_2 同样不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "quickjs-wf-rag-4": {
+   "cat": "3",
+   "basis": "注入的漏洞只有内存分配失败才会走到，实际不可触发",
+   "problem": "注入的漏洞只在 cr_union_interval 里 realloc 失败时才会走到；数据集的证据只是一份 2 字节的 LeakSanitizer 泄漏报告（与注入无关，开启泄漏检测后两个版本表现一样），exploit 的 40 万字节正则在两个版本上都不崩溃。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "quickjs-wf-rag-6": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（报告里没有崩溃）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案（exploit 喂给 harness 的输入）同样不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "quickjs-wf-rag-7": {
+   "cat": "3",
+   "basis": "数据集没有触发证据，本机实测也不触发",
+   "problem": "数据集没有任何记录证明 exploit 触发了漏洞（报告里没有崩溃）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案（exploit 喂给 harness 的输入）同样不触发。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "radare2-wf-rag-0": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "radare2-wf-rag-1": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "selinux-wf-rag-1": {
+   "cat": "3",
+   "basis": "报告用的输入没有保存，exploit 的 payload 到不了注入的代码",
+   "problem": "报告里的 use-after-free 来自含有 classpermissionset 语句的 CIL 输入，exploit 喂的 payload 并没有这种语句，甚至不是合法的 CIL 语法（缺外层括号）；exploit 的输入和数据集的 pov.bin 在两个版本上都不崩溃，报告用的输入没有保存。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "手写一个含 classpermissionset 语句的 CIL 策略验证（预计容易），通过后可升为第二类。",
+   "status": null
+  },
+  "selinux-wf-rag-2": {
+   "cat": "3",
+   "basis": "报告用的输入没有保存，exploit 的 payload 到不了注入的代码",
+   "problem": "报告里的 use-after-free 来自含有 classpermission 语句的 CIL 输入，exploit 喂的 payload 并没有这种语句，甚至不是合法的 CIL 语法（缺外层括号）；exploit 的输入和数据集的 pov.bin 在两个版本上都不崩溃，报告用的输入没有保存。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "手写一个含 classpermission 语句的 CIL 策略验证（预计容易），通过后可升为第二类。",
+   "status": null
+  },
+  "serenity-fz-0": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "serenity-fz-1": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "serenity-fz-10": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "serenity-fz-11": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。注意：crash_report.json 记录的种子与报告里崩溃的 generated_inputs/poc_append_face_81ae84c9ff.txt 不同，构建后两个都要试。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "serenity-fz-12": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "serenity-fz-13": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "serenity-fz-14": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "serenity-fz-15": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "serenity-fz-18": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。注意：crash_report.json 记录的种子与报告里崩溃的 generated_inputs/curated_seed_de5174c4….js 不同，构建后两个都要试。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "serenity-fz-19": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "serenity-fz-2": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "serenity-fz-20": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。注意：crash_report.json 记录的种子与报告里崩溃的 generated_inputs/poc_append_block_636be5b0ff.txt 不同，构建后两个都要试。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "serenity-fz-21": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "serenity-fz-22": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "serenity-fz-23": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "serenity-fz-24": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "serenity-fz-25": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "serenity-fz-3": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "serenity-fz-4": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "serenity-fz-5": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。注意：数据集的两份证据指向不同的输入（crash_report.json 记录的种子与报告里崩溃的 generated_inputs/poc_ff_c80bd7dd8c.ttf 不同），构建后两个都要试。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "serenity-fz-6": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "serenity-fz-7": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "serenity-fz-8": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "serenity-fz-9": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "serenity-wf-rag-0": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "serenity-wf-rag-1": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：build.sh 要从 GitHub 克隆源码或下载依赖，本机无法联网。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "unicorn-fz-0": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "unicorn-fz-1": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "unicorn-fz-2": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "unicorn-fz-3": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "wireshark-wf-rag-0": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "wireshark-wf-rag-1": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "wireshark-wf-rag-11": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "wireshark-wf-rag-2": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "wireshark-wf-rag-3": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "wireshark-wf-rag-4": {
+   "cat": "pending",
+   "basis": "本机未能完成构建，无法验证（不是数据问题）",
+   "problem": "本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。",
+   "impact": "未验证，不知道能否触发。",
+   "fix": "未修改。",
+   "suggest": "在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。",
+   "status": "待验证。未修改，与原始任务一致。"
+  },
+  "wuffs-wf-rag-1": {
+   "cat": "3",
+   "basis": "exploit 的输入不触发，报告里崩溃的文件单独运行也不复现",
+   "problem": "exploit 喂给 pixel_swizzler_fuzzer 的 pov.bin 在两个版本上都不崩溃（本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃）。报告里崩溃的是一次 fuzz 运行（/tmp/camp/）留下的 crash-144384e4…，任务以 reauthor_poc_WF_RAG_1.bin 的名字附带了它（SHA-1 一致），但本机单独运行它，两个版本也都不崩溃：这个崩溃依赖当时 fuzz 过程的状态，单独运行复现不了。",
+   "impact": "没有能单独复现的输入，判定无从核对。",
+   "fix": "未修改。",
+   "suggest": "对注入版做定向 fuzz，找出能单独复现的输入；找到后可升为第二类。",
+   "status": null
+  },
+  "xz-wf-rag-3": {
+   "cat": "3",
+   "basis": "报告是别的任务的；exploit 的输入不触发",
+   "problem": "报告与 xz WF_RAG_0、WF_RAG_2 逐字节相同（那两个任务的内存泄漏），不是本任务的。exploit 把 401 字节的 'A' 喂给 fuzz_encode_stream，开启泄漏检测后两个版本都不报告泄漏，也不崩溃。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "xz-wf-rag-4": {
+   "cat": "3",
+   "basis": "报告是别的任务的；数据集的种子和 exploit 的输入都不触发",
+   "problem": "报告同 xz WF_RAG_3，不是本任务的。hints.json 声称成功的种子 pov.bin 只有 1 个字节（\\x00），exploit 实际写的是 13 字节的 LZMA 头；两者在两个版本上都不触发（本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃）。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  },
+  "zlib-ng-fz-2": {
+   "cat": "3",
+   "basis": "exploit 用随机输入，数据集自己那次也没触发，报告的输入没有保存",
+   "problem": "exploit 每次用 /dev/urandom 生成 512 字节随机数据；数据集自己的 run.out 显示那一次（poc.zip）没有崩溃；报告里崩溃的是 /workspace/run/attempt/poc_crash.bin，没有保存。本机按 exploit 随机生成 20 次，两个版本都不崩溃。",
+   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
+   "fix": "未修改。",
+   "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
+   "status": null
+  }
+ }
+}

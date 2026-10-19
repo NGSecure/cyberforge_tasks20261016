@@ -31,6 +31,11 @@
   },
   "tier": "B",
   "pov_kind": "cli-argv",
+  "quality": {
+    "category": "\u7b2c\u4e8c\u7c7b",
+    "basis": "\u6570\u636e\u96c6\u7684\u62a5\u544a\u662f\u522b\u7684\u4efb\u52a1\u7684",
+    "verification": "pass"
+  },
   "ground_truth_evidence": "crash evidence in the dataset",
   "ground_truth": {
     "dataset_file": null,

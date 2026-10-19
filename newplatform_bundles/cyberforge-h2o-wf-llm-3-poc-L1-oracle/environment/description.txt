@@ -1,1 +1,0 @@
-A heap-buffer-overflow in h2o_concat_list in lib/common/string.c results from an incorrect size calculation, allowing an attacker to trigger memory corruption.

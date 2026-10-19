@@ -218,6 +218,14 @@ def replayed(rel, dataset_files):
     return None, info
 
 
+def size_limited(rinfo):
+    """Whether the replay's 16 MB file-size limit stopped exploit.sh writing its payload (replay.json:
+    bash's "File size limit exceeded", or Python's "File too large", which the replay counted as a
+    Python error), so the exploit's real payload is larger than 16 MB."""
+    return "file size limit" in (rinfo.get("problems") or []) or \
+        bool(deep_recipe.SIZE_LIMIT_RE.search(rinfo.get("log_tail") or ""))
+
+
 def snapshot_out(project):
     """Names in /out after the dataset's own compile (from scan_snapshots.py), or None."""
     f = os.path.join(SCAN_DIR, project + ".json")
@@ -232,8 +240,10 @@ LFS_PTR_RE = re.compile(rb"^version https://git-lfs\.github\.com/spec/v1\noid sh
 
 # environment the shell or the sanitizers use, not what the program under test reads
 # environment the shell, the sanitizers or a build use, not what the program under test reads
+# HOME is not among them: an exploit that exports it sets what the program reads (libdwarf WF_LLM_0: a
+# 2100-byte HOME overflows dwarfdump's config-file path; jq WF_LLM_10: a fake home holding ~/.jq).
 SHELL_ENV = {"ASAN_OPTIONS", "UBSAN_OPTIONS", "MSAN_OPTIONS", "LSAN_OPTIONS", "HWASAN_OPTIONS", "TSAN_OPTIONS",
-             "ASAN_SYMBOLIZER_PATH", "LLVM_SYMBOLIZER_PATH", "PATH", "HOME", "LANG", "LC_ALL", "LANGUAGE", "TMPDIR",
+             "ASAN_SYMBOLIZER_PATH", "LLVM_SYMBOLIZER_PATH", "PATH", "LANG", "LC_ALL", "LANGUAGE", "TMPDIR",
              "TERM", "PYTHONPATH", "PYTHONDONTWRITEBYTECODE", "SRC", "OUT", "WORK", "EXPLOIT_DIR",
              "LD_LIBRARY_PATH", "CC", "CXX", "CFLAGS", "CXXFLAGS", "CPPFLAGS", "LDFLAGS"}
 
@@ -293,7 +303,8 @@ def poc_path(vd, poc, poc_src):
     """Ground truths of the replays, of report_inputs.py and of choose_gt.py's exploit runs
     are relative to this script's directory, the dataset's own files to the task directory."""
     return (os.path.join(os.path.dirname(REPLAY_DIR), poc)
-            if poc_src.startswith(("exploit_replay", "project_file")) or poc.startswith(("report_inputs/", "exploit_live/"))
+            if poc_src.startswith(("exploit_replay", "project_file")) or poc.startswith(("report_inputs/", "exploit_live/",
+                                                                                          "constructed/"))
             else os.path.join(vd, poc))
 
 
@@ -430,8 +441,8 @@ for r in rows:
         # the exploit ran in the dataset's image (seed corpora, /src): only the deep replay,
         # in that image too, shows what it fed the target
         custom.append("differential-run report")
-    if re.search(r"\b(gcc|g\+\+|clang\+\+|clang|cc)\b[^\n]*\s-o\s", es):
-        custom.append("exploit.sh compiles code")
+    if re.search(r"(\b(gcc|g\+\+|clang\+\+|clang|cc)\b|\$\{?(CC|CXX)\}?)[^\n]*\s-o\s", es):
+        custom.append("exploit.sh compiles code")  # also through $CC / $CXX (json-c WF_RAG_1, libucl WF_RAG_0)
     code = "\n".join(l for l in es.splitlines() if not l.strip().startswith("#"))
     RACE = "exploit races a background process (not a single-input PoV)"
     if re.search(r"(\)|[\w\"'])[ \t]*&[ \t]*$", code, re.M):
@@ -567,7 +578,7 @@ for r in rows:
         tier, reason = "C", note or "fuzz harness not identifiable"
     elif empty_gt and not degenerate:
         tier, reason = "C", "ground-truth PoC file is empty (pov.bin harvest failure or degenerate empty-input trigger)"
-    elif "file size limit" in (rinfo.get("problems") or []) and \
+    elif size_limited(rinfo) and \
             not poc_src.startswith(("fuzz_crash_artifact", "fuzz_exact_seed")):
         tier, reason = "C", "the exploit's real payload is larger than 16 MB (too large to bundle; pov.bin is not it)"
     elif sig_src == "sanitizer_report.txt" and report_ok is False and poc_src != "exploit_replay":
@@ -623,7 +634,7 @@ for r in rows:
             bundle, converted = deep_kind, True
         elif tier == "C" and reason == no_evidence and poc and fuzzer \
                 and os.path.getsize(poc_path(vd, poc, poc_src)) > 0 \
-                and "file size limit" not in (rinfo.get("problems") or []) and "larger than 16 MB" not in deep_why:
+                and not size_limited(rinfo) and "larger than 16 MB" not in deep_why:
             # the dataset's own PoC + harness, unconfirmed (not when a replay showed the
             # exploit's real payload is larger than 16 MB: then that file is not it)
             bundle, converted = "harness", True

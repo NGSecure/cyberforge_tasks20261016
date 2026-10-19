@@ -1,0 +1,31 @@
+{
+ "_about": "Ground truths made from a dataset exploit's own payload when the payload as shipped does not reach the injected code in the rebuilt builds, by a change the exploit's evident intent and the harness's documented input format determine. choose_gt.py uses one only when the bundle's dataset-derived ground truth failed and this one passed self-check 3 (verification/, alternative 'constructed <path>').",
+ "cjson/vulnerabilities/vulnerability_WF_LLM_0": {
+  "file": "constructed/cjson/vulnerability_WF_LLM_0/input",
+  "why": "The injected change removes cJSON's nesting limit (CJSON_NESTING_LIMIT) in parse_array, so deep '[' nesting recurses until the stack overflows. exploit.sh nests 20000 levels (WF_LLM_1 nests '{', which cJSON rejects at the first level since an object key must be a string); with the 8 MB stack of a standard container that does not overflow in the rebuilt builds (verification/: neither build crashes, with or without the judge's sandbox). This is the exploit's own input with the nesting raised to 100000 levels, the depth cjson WF_LLM_2's exploit uses for the same injected change (`ulimit -s 8192`), framed as cjson_read_fuzzer requires (4 option bytes '0', trailing NUL).",
+  "sha256": "2e11039ce4bd5d2003fc1e3fdc0ad6a93bc36621198135a38adea61e56555f24",
+  "why_zh": "注入的改动去掉了 parse_array 的嵌套深度限制，深层 '[' 嵌套会一直递归直到栈溢出。exploit 只嵌套 2 万层（WF_LLM_1 嵌套的是 '{'，cJSON 在第一层就会拒绝，因为对象的键必须是字符串），在标准容器的 8 MB 栈上，重建的两个版本都不会溢出（本机实测，去掉判定沙箱也一样）",
+  "change_zh": "嵌套深度提高到 10 万层（与同一注入的 cjson WF_LLM_2 的 exploit 相同），并按 cjson_read_fuzzer 的格式加上 4 个选项字节 '0' 和结尾 NUL"
+ },
+ "cjson/vulnerabilities/vulnerability_WF_LLM_1": {
+  "file": "constructed/cjson/vulnerability_WF_LLM_1/input",
+  "why": "The injected change removes cJSON's nesting limit (CJSON_NESTING_LIMIT) in parse_array, so deep '[' nesting recurses until the stack overflows. exploit.sh nests 20000 levels (WF_LLM_1 nests '{', which cJSON rejects at the first level since an object key must be a string); with the 8 MB stack of a standard container that does not overflow in the rebuilt builds (verification/: neither build crashes, with or without the judge's sandbox). This is the exploit's own input with the nesting raised to 100000 levels, the depth cjson WF_LLM_2's exploit uses for the same injected change (`ulimit -s 8192`), framed as cjson_read_fuzzer requires (4 option bytes '0', trailing NUL).",
+  "sha256": "2e11039ce4bd5d2003fc1e3fdc0ad6a93bc36621198135a38adea61e56555f24",
+  "why_zh": "注入的改动去掉了 parse_array 的嵌套深度限制，深层 '[' 嵌套会一直递归直到栈溢出。exploit 只嵌套 2 万层（WF_LLM_1 嵌套的是 '{'，cJSON 在第一层就会拒绝，因为对象的键必须是字符串），在标准容器的 8 MB 栈上，重建的两个版本都不会溢出（本机实测，去掉判定沙箱也一样）",
+  "change_zh": "嵌套深度提高到 10 万层（与同一注入的 cjson WF_LLM_2 的 exploit 相同），并按 cjson_read_fuzzer 的格式加上 4 个选项字节 '0' 和结尾 NUL"
+ },
+ "cjson/vulnerabilities/vulnerability_WF_LLM_5": {
+  "file": "constructed/cjson/vulnerability_WF_LLM_5/input",
+  "why": "The injected change removes cJSON's nesting limit (CJSON_NESTING_LIMIT) in parse_array, so deep '[' nesting recurses until the stack overflows. exploit.sh nests 20000 levels (WF_LLM_1 nests '{', which cJSON rejects at the first level since an object key must be a string); with the 8 MB stack of a standard container that does not overflow in the rebuilt builds (verification/: neither build crashes, with or without the judge's sandbox). This is the exploit's own input with the nesting raised to 100000 levels, the depth cjson WF_LLM_2's exploit uses for the same injected change (`ulimit -s 8192`), framed as cjson_read_fuzzer requires (4 option bytes '0', trailing NUL).",
+  "sha256": "2e11039ce4bd5d2003fc1e3fdc0ad6a93bc36621198135a38adea61e56555f24",
+  "why_zh": "注入的改动去掉了 parse_array 的嵌套深度限制，深层 '[' 嵌套会一直递归直到栈溢出。exploit 只嵌套 2 万层（WF_LLM_1 嵌套的是 '{'，cJSON 在第一层就会拒绝，因为对象的键必须是字符串），在标准容器的 8 MB 栈上，重建的两个版本都不会溢出（本机实测，去掉判定沙箱也一样）",
+  "change_zh": "嵌套深度提高到 10 万层（与同一注入的 cjson WF_LLM_2 的 exploit 相同），并按 cjson_read_fuzzer 的格式加上 4 个选项字节 '0' 和结尾 NUL"
+ },
+ "cjson/vulnerabilities/vulnerability_WF_RAG_8": {
+  "file": "constructed/cjson/vulnerability_WF_RAG_8/input",
+  "why": "The injected change turns parse_string's bound `<` into `<=`, so an unterminated string reads one byte past the input. exploit.sh feeds `\"A` (2 bytes) to cjson_read_fuzzer, which returns at once for inputs that do not start with 4 option bytes ('0'/'1') and end in a NUL (fuzzing/cjson_read_fuzzer.c); the dataset's report comes from the author's own program (/tmp/r8.c), not the harness. This is the exploit's `\"A` framed as the harness requires: `0000\"A\\0`.",
+  "sha256": "a4a813bcef36b00536d914c5602fa3dfe17db2fc5d3568bf36cbea45c385c600",
+  "why_zh": "注入的改动把 parse_string 的边界 `<` 改成 `<=`，未闭合的字符串会多读一个字节。exploit 把 `\"A`（2 字节）喂给 cjson_read_fuzzer，而这个 harness 要求输入以 4 个选项字节（'0'/'1'）开头、以 NUL 结尾，否则直接返回；数据集的崩溃报告来自作者自己的程序 /tmp/r8.c，不是 harness",
+  "change_zh": "给 exploit 的 `\"A` 加上 harness 要求的格式：`0000\"A\\0`"
+ }
+}

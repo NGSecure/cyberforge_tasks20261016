@@ -31,6 +31,11 @@
   },
   "tier": "A",
   "pov_kind": "harness",
+  "quality": {
+    "category": "\u7b2c\u4e00\u7c7b",
+    "basis": "",
+    "verification": "pass"
+  },
   "ground_truth_evidence": "crash evidence in the dataset",
   "ground_truth": {
     "dataset_file": "exploit_files/fuzz_results/vulnerable/crash-aa3c7b12e6dae4f9b2da4d8a27d06c14a41450eb",

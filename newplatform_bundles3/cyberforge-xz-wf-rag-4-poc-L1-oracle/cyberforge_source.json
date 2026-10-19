@@ -31,6 +31,11 @@
   },
   "tier": "C",
   "pov_kind": "harness",
+  "quality": {
+    "category": "\u7b2c\u4e09\u7c7b",
+    "basis": "\u62a5\u544a\u662f\u522b\u7684\u4efb\u52a1\u7684\uff1b\u6570\u636e\u96c6\u7684\u79cd\u5b50\u548c exploit \u7684\u8f93\u5165\u90fd\u4e0d\u89e6\u53d1",
+    "verification": "fail"
+  },
   "ground_truth_evidence": "none: sanitizer report does not show what exploit.sh checks for (recorded run did not trigger; ground truth unverified) (build.sh self-check 3 decides)",
   "ground_truth": {
     "dataset_file": "exploit_files/pov.bin",

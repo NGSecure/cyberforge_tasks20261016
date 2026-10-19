@@ -1,1 +1,1 @@
-A double-free vulnerability in H3's _parseArgsList function in args.c causes the polygon-to-cells path to free the same allocation twice, leading to memory corruption.
+A stack-buffer-overflow in the stringToInt subcommand of H3's h3 command-line tool (src/apps/filters/h3.c) can be triggered by a crafted cell argument, leading to memory corruption.

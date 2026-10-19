@@ -1,1 +1,0 @@
-A heap-buffer-overflow in jq_set_colors causes a one-byte out-of-bounds write in jv_print.c, leading to a crash.

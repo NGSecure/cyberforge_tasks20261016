@@ -10,7 +10,9 @@ Later files override earlier ones for the same bundle. Status:
   not-built                the build did not finish here: needs network, out of disk, or the
                            build itself fails (e.g. the injected diff does not compile).
   stale                    the result tested another ground truth than the bundle has now
-                           (results record it as gt_sha256): verify the bundle again.
+                           (results record it as gt_sha256): verify the bundle again. A result whose
+                           alternative ground truth (verify_bundles.py's "alts", e.g. "dataset <path>")
+                           is the bundle's ground truth now verified that one too: its verdict counts.
 Bundles without a result are absent (not verified yet).
 """
 import hashlib
@@ -28,6 +30,27 @@ def current_gt(name):
         if os.path.isfile(f):
             return hashlib.sha256(open(f, "rb").read()).hexdigest()
     return None
+
+
+def alt_verdict(name, r, cur):
+    """The verdict of the alternative of result r whose file is the bundle's ground truth now, or ''.
+    Labels name the file: "dataset <path in the task>", "report_inputs <path>" / "constructed <path>"
+    (next to this script)."""
+    src = None
+    for d in ("newplatform_bundles", "newplatform_bundles2", "newplatform_bundles3"):
+        f = os.path.join(REPO, d, name, "cyberforge_source.json")
+        if os.path.isfile(f):
+            src = json.load(open(f))
+    if not src:
+        return ""
+    task = os.path.join(REPO, src["source_task"])
+    for label, a in (r.get("alts") or {}).items():
+        kind, _, path = label.partition(" ")
+        f = os.path.join(task, path) if kind == "dataset" else \
+            os.path.join(os.path.dirname(os.path.abspath(__file__)), path) if kind in ("report_inputs", "constructed") else ""
+        if f and os.path.isfile(f) and hashlib.sha256(open(f, "rb").read()).hexdigest() == cur:
+            return a.get("verdict") or ""
+    return ""
 
 
 def note(r):
@@ -70,9 +93,13 @@ def main():
         cur = current_gt(name)
         if cur is None:
             continue  # the bundle is no longer made (e.g. a task found unconvertible)
+        alt_note = ""
         if v and r.get("gt_sha256") and r["gt_sha256"] != cur:
-            out[name] = {"status": "stale", "note": "verified with another ground truth (%s...)" % r["gt_sha256"][:12]}
-            continue
+            v = alt_verdict(name, r, cur)
+            if not v:
+                out[name] = {"status": "stale", "note": "verified with another ground truth (%s...)" % r["gt_sha256"][:12]}
+                continue
+            alt_note = "the ground truth was verified as an alternative of the first one, in the same build"
         if v.startswith("PASS-DEGENERATE"):
             out[name] = {"status": "pass-degenerate", "note": ""}
         elif v.startswith("PASS"):
@@ -81,6 +108,8 @@ def main():
             out[name] = {"status": "fail", "note": note(r)}
         else:
             out[name] = {"status": "not-built", "note": (r.get("failure") or "")[:200]}
+        if alt_note:
+            out[name]["note"] = (alt_note + "; " + out[name]["note"]).rstrip("; ") if out[name]["status"] == "fail" else alt_note
         if r.get("built_with_proxy_ca"):
             out[name]["note"] = ("built with this machine's proxy CA added (verification only); " + out[name]["note"]).rstrip("; ")
     json.dump({"_about": "verify_bundles.py results per bundle (verification_summary.py)", "bundles": out},

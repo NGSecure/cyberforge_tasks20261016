@@ -1,0 +1,16 @@
+复核没有通过的 bundle 时，先排除转换和本机环境的原因，再归因到原始数据。判定隔离（以 root、不加 seccomp / rlimit 再跑）、sanitizer 选项（换成镜像自带的环境再跑）和本机运行环境（标准的 8 MB 栈）都检查过，没有一个 bundle 是因为它们而不通过的。本轮找到并改正了下面这些转换侧的问题，改完后重新构建、验证了受影响的 bundle（全部 55 个程序型 bundle、espeak-ng-wf-llm-5，以及 14 个试了数据集里其他候选输入的 bundle，记录在 `newplatform_bundles/conversion/verification/results_quality*.jsonl`）。它们不计入原始数据问题：
+
+| 问题 | 原因 | 改正 | 涉及的 bundle | 结果 |
+|---|---|---|---|---|
+| 程序型判定看不到崩溃位置 | 程序型 PoV 只有“崩溃栈经过注入改动所在的文件”才算触发（防止 PoV 在自己的代码里制造崩溃）。用 gcc 编译的 PoV，GCC 9 的 libasan 读不了项目 clang 构建产生的 DWARF 5 调试信息，栈帧没有文件和行号（数据集自己的报告也是这样），判定一律当作没触发 | 对没有源码位置的栈帧，判定服务用 llvm-symbolizer（以运行 PoV 的无权限用户身份）离线解析 | coturn-fz-0、coturn-wf-rag-11、lcms-fz-6、lcms-fz-9、simdjson-fz-4、simdjson-fz-8 | 全部通过（之前不通过） |
+| 程序 abort 时没有栈 | fmt 自己的断言失败、未捕获的异常只打印一行就 abort，判定看不到栈，也就认不出它在项目代码里 | 程序型 PoV 运行时加 ASan 的 `handle_abort=1`，abort 也打印栈 | fmt-wf-llm-1、fmt-wf-llm-2、fmt-wf-llm-3、fmt-wf-llm-6 | 全部通过（之前不通过）；数据集的报告其实记录了这个 abort，之前误判为“报告里没有崩溃” |
+| exploit 的备用编译命令没有录到 | 深度重放时编译器换成了总是“成功”的记录器，exploit 的 `if [ $? -ne 0 ]` 备用分支没有执行；c-blosc FZ_1 的第一条编译命令少了 crc32.c，在真实构建里链接失败 | `conversion/recipe_overrides.json` 记录改用 exploit 自己的备用编译命令（编译全部 zlib 源文件），写明了原因 | c-blosc-fz-1 | 通过（之前编译失败） |
+| exploit 设置的数据目录没有带上 | 重放只记录 sanitizer 相关的环境变量；espeak-ng WF_LLM_5 的 exploit 设置 `ESPEAK_DATA_PATH=/out/espeak-ng-data` 指向构建产物里的语音数据，判定没有设置，程序找不到数据直接退出 | exploit 导出的、只指向 /out 构建产物的变量加到运行步骤里，instruction 也写明 | espeak-ng-wf-llm-5 | 通过（之前不通过） |
+| 用 `$CC` 编译程序的 exploit 被当成 harness 型 | exploit.sh 通过 `$CC` / `$CXX` 编译自己的程序时没有识别出来，按 hints.json 声称的种子转成了 harness 型（那个 harness 根本到不了注入的代码） | 识别 `$CC` / `$CXX`，在项目镜像里深度重放 exploit | json-c-wf-rag-1、libucl-wf-rag-0 | json-c-wf-rag-1 改为程序型后通过；libucl-wf-rag-0 的程序要读 exploit 自己写的文件，按已有规则不再转换 |
+| HOME 被当作普通的 shell 变量 | libdwarf WF_LLM_0 用 2100 个字符的 HOME 触发 dwarfdump 配置文件路径的溢出；jq WF_LLM_10 用假的 HOME 让 jq 读到 ~/.jq。PoV 只是一个输入，判定不会替它设置环境变量 | 与之前 8 个“触发条件在环境变量里”的任务一样，改为不转换 | libdwarf-wf-llm-0、jq-wf-llm-10 | 移出，不再生成 bundle |
+| 重放的文件大小上限截断了 GB 级 payload，没有识别出来 | 重放 exploit 时设了 16 MB 的文件大小上限；exploit 的真实输入超过上限的任务，按已有规则不转换（PoV 无法打包、提交，例如 cjson WF_LLM_6/7、lighttpd WF_RAG_0）。h2o WF_LLM_3、json-c WF_RAG_0 的 exploit 用 truncate 造 4 GB / 2.3 GB 的文件，truncate 直接失败，只留下随后写进去的几个字节，转换把这几个字节当成了标准答案；h3 WF_LLM_1 的 Python 报“File too large”，被当成普通的脚本错误，转换退回用了 exploit 并没有用的 pov.bin | 识别 bash 的“File size limit exceeded”和 Python 的“File too large”，按已有规则不转换 | h2o-wf-llm-3、json-c-wf-rag-0、h3-wf-llm-1 | 移出，不再生成 bundle（之前在第三类；原因写在 `conversion_manifest.csv`） |
+| 标准答案没有试数据集里的其他候选输入 | ①wuffs WF_RAG_1：报告里崩溃的 `crash-144384e4…` 就是任务附带的 reauthor_poc_WF_RAG_1.bin（SHA-1 一致），转换只按 exploit 用了它喂的 pov.bin；②harfbuzz FZ_16、exiv2 FZ_2：exploit 取“find 找到的第一个”文件，重放环境的目录顺序不同，取到的不是数据集当时那个；③harfbuzz FZ_14：重放时找不到字体，exploit 走了“写一个 FakeOTF”的分支 | `verify_bundles.py` 把数据集附带的文件、报告指明的源码树文件作为候选实测，`choose_gt.py` 在原标准答案不通过、候选通过时采用 | wuffs-wf-rag-1、harfbuzz-fz-16、exiv2-fz-2、harfbuzz-fz-14 | harfbuzz-fz-16、exiv2-fz-2、harfbuzz-fz-14 换成数据集里的输入后通过（之前不通过）；wuffs-wf-rag-1 报告里那个崩溃文件单独运行也不崩溃，是数据集的问题（第三类） |
+
+另外，brotli-wf-llm-1 的标准答案是转换时在镜像外重放捕获到的 unzip 报错日志（镜像外没有种子语料包），这是转换的问题；但在项目镜像里用真实语料重跑 exploit 也不崩溃，数据集也没有保存报告里崩溃的输入，所以仍归第三类。
+
+之前几轮已经改正的转换问题（详见 `newplatform_bundles/CONVERSION_REPORT.md` 3.3、4.2、4.4）：libyang 的 `clean_build_command`、相对 /src 或绝对路径的 diff、`compile` 非 0 退出、泄漏检测口径、hunspell 的工作目录、触发条件在环境变量里的 8 个任务、标准答案按重建镜像里的实际运行改选、Git LFS 指针按 SHA-256 还原。

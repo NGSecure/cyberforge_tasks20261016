@@ -35,6 +35,11 @@
   },
   "tier": "C",
   "pov_kind": "harness",
+  "quality": {
+    "category": "\u7b2c\u4e09\u7c7b",
+    "basis": "\u6570\u636e\u96c6\u6ca1\u6709\u89e6\u53d1\u8bc1\u636e\uff0c\u672c\u673a\u5b9e\u6d4b\u4e5f\u4e0d\u89e6\u53d1",
+    "verification": "fail"
+  },
   "ground_truth_evidence": "none: sanitizer_report.txt is empty (no trigger evidence) (build.sh self-check 3 decides)",
   "ground_truth": {
     "dataset_file": "replay_deep/leptonica/vulnerability_WF_RAG_4/call-000-arg-0",

@@ -7,8 +7,10 @@
                                  [--out-b DIR] [--out-c DIR] [--ver v0.0.2] [--only NAME ...]
 
 <inner_root> holds manifest.csv + projects/. One bundle is written per converted
-record (see classify.py for the tiers): tier A into <out_dir>, tier B into --out-b
-(default <out_dir>2), tier C into --out-c (default <out_dir>3); conversion_manifest.csv
+record (see classify.py for the tiers), placed by the quality of its dataset task
+(quality.py, quality.json): category 1 into <out_dir>, 2 into --out-b (default
+<out_dir>2), 3 and pending into --out-c (default <out_dir>3); without a quality.json
+entry by tier (A, B, C), as before the classification; conversion_manifest.csv
 (all tasks; for the ones without a bundle also the category and note of
 unconverted_review.json, a manual review) goes to <out_dir>. Harness bundles use the tier-A templates (judge: the fuzz
 harness), CLI/program bundles the tier-B ones (judge: the commands replay_deep.py
@@ -153,6 +155,10 @@ def jl(p):
         return {}
 
 
+# descriptions corrected where every dataset variant names a place neither the diff nor the report is in
+DESCRIPTION_FIXES = {k: v for k, v in jl(os.path.join(HERE, "description_fixes.json")).items() if k != "_about"}
+
+
 def choose_description(vd, rec):
     """Pick the dataset's own one-line description (no rewriting).
 
@@ -160,6 +166,9 @@ def choose_description(vd, rec):
     does not name the class of the actual crash but another variant does, use that
     one instead. Tasks without variants get the bug_report.txt header fields.
     """
+    fix = DESCRIPTION_FIXES.get(rec["path"])
+    if fix:  # every variant names the wrong place (description_fixes.json says why)
+        return fix["description"], "description_fixes.json (corrected)", None
     variants = jl(os.path.join(vd, "bug_description_variants.json")).get("variants") or []
     variants = [v for v in variants if isinstance(v, dict) and (v.get("description") or "").strip()]
     if not variants:
@@ -180,6 +189,14 @@ def choose_description(vd, rec):
             mismatch = True
     text = " ".join(chosen["description"].split())
     return text, "%s/%s" % (chosen.get("variant_id", "?"), chosen.get("style", "?")), mismatch
+
+
+def choose_description_original(vd):
+    """The dataset's concise-cve-style variant (what a corrected description replaced)."""
+    variants = jl(os.path.join(vd, "bug_description_variants.json")).get("variants") or []
+    variants = [v for v in variants if isinstance(v, dict) and (v.get("description") or "").strip()]
+    order = sorted(variants, key=lambda v: 0 if v.get("style") == "concise-cve-style" else 1)
+    return " ".join(order[0]["description"].split()) if order else ""
 
 
 def render(name, values):
@@ -235,12 +252,13 @@ def shown(argv, poc_path):
                     else shlex.quote(a.replace("{poc}", poc_path or "<PoC>")) for a in argv)
 
 
-def b_text(kind, recipe, steps, judge_opts):
+def b_text(kind, recipe, steps, judge_opts, plumbing=None):
     """Instruction sentences for a tier-B bundle (what the PoC is, how it is run)."""
     run = [st for st in steps if st["role"] == "run"][0]
     poc_path = recipe.get("poc_path")
     def cmd(st):
-        line = shown(st["argv"], poc_path)
+        pre = "".join("%s=%s " % (k, shlex.quote(v)) for k, v in sorted((plumbing or {}).items())) if st["role"] == "run" else ""
+        line = pre + shown(st["argv"], poc_path)
         return "cd %s && %s" % (shlex.quote(st["cwd"]), line) if st.get("cwd") else line
     env = "ASAN_OPTIONS=%s" % judge_opts
     if kind == "cli-file":
@@ -285,7 +303,7 @@ def b_text(kind, recipe, steps, judge_opts):
 
 
 
-def build_bundle(root, rec, tier_dirs, ver, scan_dir):
+def build_bundle(root, rec, out_dir, ver, scan_dir, quality=None):
     proj = rec["project"]
     n = rec["vuln"].rsplit("_", 1)[-1]
     pipe = PIPE[rec["type"]]
@@ -293,7 +311,7 @@ def build_bundle(root, rec, tier_dirs, ver, scan_dir):
     tag_prefix = "cyberforge_%s_%s_%s" % (re.sub(r"[^a-z0-9]+", "_", proj.lower()).strip("_"),
                                           pipe.replace("-", "_"), n)
     vd = os.path.join(root, "projects", rec["path"])
-    bd = os.path.join(tier_dirs[rec["tier"]], bundle)
+    bd = os.path.join(out_dir, bundle)
     if os.path.isdir(bd):
         shutil.rmtree(bd)
     kind = rec["bundle_type"]
@@ -317,7 +335,7 @@ def build_bundle(root, rec, tier_dirs, ver, scan_dir):
         gt = recipe["gt"]
     else:
         gt_path = (os.path.join(HERE, rec["poc"]) if rec["poc_src"].startswith(("exploit_replay", "project_file"))
-                   or rec["poc"].startswith(("report_inputs/", "exploit_live/")) else os.path.join(vd, rec["poc"]))
+                   or rec["poc"].startswith(("report_inputs/", "exploit_live/", "constructed/")) else os.path.join(vd, rec["poc"]))
         gt = open(gt_path, "rb").read()
     token = hashlib.sha256(b"cyberforge-auth-v1|" + bundle.encode() + b"|"
                            + hashlib.sha256(diff).hexdigest().encode()).hexdigest()[:32]
@@ -430,6 +448,14 @@ def build_bundle(root, rec, tier_dirs, ver, scan_dir):
                  "leak_detection": leak_note, "timeout_sec": 60, "cyberforge": cf}
     else:
         steps, notes = normalize_compile(recipe["steps"]) if kind == "program" else (recipe["steps"], [])
+        # The recording keeps only sanitizer variables. A variable exploit.sh exports that just names
+        # the build's own files under /out is plumbing the program needs (espeak-ng WF_LLM_5:
+        # ESPEAK_DATA_PATH=${ESPEAK_DATA_PATH:-/out/espeak-ng-data}, without it the voice data is not
+        # found); give it to the run steps as the exploit did.
+        plumbing = {k: v for k, v in re.findall(r'(?m)(?:^|[;&|]\s*)export\s+([A-Za-z_]\w*)="?(?:\$\{\w+:-)?(/out/[\w./-]*)\}?"?\s*$',
+                                                es_code)}
+        if plumbing:
+            steps = [dict(st, env=dict(st.get("env") or {}, **plumbing)) if st["role"] == "run" else st for st in steps]
         touched = touched_files(diff)
         aux_names = {}
         for i, (dst, saved) in enumerate(sorted(recipe["aux"].items())):
@@ -444,7 +470,7 @@ def build_bundle(root, rec, tier_dirs, ver, scan_dir):
         if "detect_leaks" not in run_opts:  # task_server_b.py applies the same leak policy as tier A
             run_opts = (run_opts + ":" if run_opts else "") + "detect_leaks=%d" % leak_task(rec)
         poc_s, target_s, crit_s = b_text(kind, dict(recipe, aux_sizes={d: len(aux_files[n]) for d, n in aux_names.items()}),
-                                         steps, run_opts)
+                                         steps, run_opts, plumbing)
         run_exe = os.path.normpath(os.path.join(run.get("cwd") or "/", run["argv"][0]))
         vb = dict(v, B_KIND=kind, B_WHAT=what, B_POC_SENTENCE=poc_s, B_TARGET=target_s, B_CRITERION=crit_s,
                   READABLE_EXES="" if kind == "program" else shlex.quote(run_exe),
@@ -524,6 +550,8 @@ def build_bundle(root, rec, tier_dirs, ver, scan_dir):
         "image_tags": {"docker_image": tag_prefix + "_main:" + ver,
                        "task_server_image": tag_prefix + "_task_server:" + ver},
         "tier": rec["tier"], "pov_kind": kind,
+        # quality.py: the category of the dataset task (1 fine / 2 minor / 3 serious / pending) and why
+        "quality": ({k: quality[k] for k in ("category", "basis", "verification")} if quality else None),
         "ground_truth_evidence": ("crash evidence in the dataset" if rec["tier"] in ("A", "B") else
                                   "none: " + rec["reason"] + " (build.sh self-check 3 decides)"),
         "ground_truth": {"dataset_file": None if recipe else rec["poc"],
@@ -542,8 +570,10 @@ def build_bundle(root, rec, tier_dirs, ver, scan_dir):
         "recipe": b_info,
         "trigger_evidence": {"signal": rec["signal"], "detail": rec["signal_detail"], "from": rec["signal_src"],
                              "dataset_verification_record": rec["verified"]},
-        "description": {"from": desc_src, "names_actual_crash_class": (None if desc_mismatch is None
-                                                                       else not desc_mismatch)},
+        "description": dict({"from": desc_src, "names_actual_crash_class": (None if desc_mismatch is None
+                                                                            else not desc_mismatch)},
+                            **({"original": choose_description_original(vd), "why_corrected": DESCRIPTION_FIXES[rec["path"]]["why"]}
+                               if rec["path"] in DESCRIPTION_FIXES else {})),
         "asan_options_from_exploit": rec.get("asan_options") or None,
         "cwe_id": rec["cwe_meta"], "cwe_in_description_variants": rec["cwe_variants"],
         "secure_base_commit": rec["secure_base_commit"],
@@ -572,6 +602,11 @@ def main():
     tier_dirs = {"A": out, "B": os.path.abspath(a.out_b or out + "2"), "C": os.path.abspath(a.out_c or out + "3")}
     for d in tier_dirs.values():
         os.makedirs(d, exist_ok=True)
+    # quality.py's classification places the bundles: 1 -> <out_dir>, 2 -> <out_dir>2, 3 / pending -> <out_dir>3
+    qf = os.path.join(HERE, "quality.json")
+    quality = json.load(open(qf, encoding="utf-8"))["bundles"] if os.path.isfile(qf) else {}
+    cat_dirs = {"1": tier_dirs["A"], "2": tier_dirs["B"], "3": tier_dirs["C"], "pending": tier_dirs["C"]}
+    unplaced = []
 
     # the manual review of the tasks no bundle is made for (why, by category)
     vs = os.path.join(HERE, "verification", "summary.json")
@@ -584,15 +619,21 @@ def main():
         if rec["converted"]:
             n = rec["vuln"].rsplit("_", 1)[-1]
             name = "cyberforge-%s-%s-%s-poc-L1-oracle" % (rec["project"].lower(), PIPE[rec["type"]], n)
+            q = quality.get(name)
+            if q is None:
+                unplaced.append(name)
+            folder = cat_dirs[q["cat"]] if q else tier_dirs[rec["tier"]]
             if a.only is None or name in a.only or rec["path"] in a.only:
-                bundle, desc_src, desc_mismatch = build_bundle(a.root, rec, tier_dirs, a.ver, a.scan)
-                built["%s/%s" % (rec["tier"], rec["bundle_type"])] += 1
+                bundle, desc_src, desc_mismatch = build_bundle(a.root, rec, folder, a.ver, a.scan, q)
+                built["%s/%s" % (q["category"] if q else rec["tier"], rec["bundle_type"])] += 1
             else:
                 bundle = name
         rows.append({
             "seq": rec["seq"], "pipeline": rec["type"], "project": rec["project"], "vulnerability": rec["vuln"],
             "source_path": rec["path"], "tier": rec["tier"], "converted": rec["converted"],
-            "folder": os.path.basename(tier_dirs[rec["tier"]]) if rec["converted"] else "", "bundle": bundle,
+            "folder": os.path.basename(folder) if rec["converted"] else "", "bundle": bundle,
+            "quality": quality.get(bundle, {}).get("category", "") if rec["converted"] else "",
+            "quality_basis": quality.get(bundle, {}).get("basis", "") if rec["converted"] else "",
             "pov_kind": rec["bundle_type"], "reason": rec["reason"], "deep_replay": rec.get("deep_replay") or "",
             "harness": rec["fuzzer"] if rec["bundle_type"] == "harness" else "",
             "harness_found_by": rec["fuzzer_src"] if rec["bundle_type"] == "harness" else "",
@@ -618,6 +659,8 @@ def main():
             w.writeheader()
             w.writerows(rows)
     print("bundles written:", sum(built.values()), dict(sorted(built.items())))
+    if unplaced:
+        print("placed by tier (no quality.json entry): %d, e.g. %s" % (len(unplaced), unplaced[:3]))
 
 
 if __name__ == "__main__":

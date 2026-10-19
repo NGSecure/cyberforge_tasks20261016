@@ -25,14 +25,19 @@ python3 -I report_inputs.py   <inner_root> snapshot_scan/ report_inputs/ <task> 
 python3 -I select_candidates.py <inner_root> snapshot_scan/ replay_deep/ candidates/ <task> ...  # which fixed candidate crashed
 python3 -I classify.py        <inner_root> records.json              # (again if either of the two above found something)
 python3 -I prune_replay_deep.py <inner_root> records.json replay_deep/  # optional: stub captures no result needs
-python3 -I convert.py         <inner_root> records.json <out_dir>    # one bundle per converted task: A in <out_dir>,
-                                                                     #   B in <out_dir>2, C in <out_dir>3 (--out-b/--out-c)
+python3 -I convert.py         <inner_root> records.json <out_dir>    # one bundle per converted task, placed by quality.json:
+                                                                     #   category 1 in <out_dir>, 2 in <out_dir>2, 3 / pending
+                                                                     #   in <out_dir>3 (--out-b/--out-c); by tier without it
 python3 -I validate.py        <out_dir>                              # static checks of all three, no Docker
 python3 -I verify_bundles.py  verification/plan.json verification/results.jsonl   # build.sh for many bundles,
                                                                      #   plus alternative ground truths / judge settings,
                                                                      #   verify_diag.py / verify_exploit.py on failures
 python3 -I choose_gt.py       <inner_root> records.json verification/results*.jsonl   # ground truths the runs settle
 python3 -I classify.py        <inner_root> records.json              # again (reads gt_choice.json), then convert.py
+python3 -I verification_summary.py verification/results*.jsonl > verification/summary.json   # status per bundle
+python3 -I quality.py         <repo>                                 # category of each dataset task -> quality.json,
+                                                                     #   then convert.py again (placement, manifest)
+python3 -I make_root_readme.py <repo>                                # the repo README: criteria, counts, the table
 bash <dir>/<bundle>/build.sh      # public network: build both images + 3 blocking self-checks
 bash <dir>/<bundle>/push.sh       # upload network: push + backfill task.toml [environment]
 ```
@@ -196,7 +201,20 @@ the injected build and not on the clean build.
   project path or its source `#include`s a project header by path (header-only bugs).
   A program run "crashes" only with a sanitizer report whose stack goes through a
   file the injected diff touches; a CLI run crashes with any sanitizer report or a
-  fatal signal. The task-server stage builds the project twice, records the files
+  fatal signal. Two things keep that frame visible: programs run with
+  `handle_abort=1` (an abort — fmt's own assertion, an uncaught exception — prints a
+  stack too: fmt WF_LLM_1/2/3/6), and frames the sanitizer printed without a source
+  location are resolved with llvm-symbolizer, as the run user, on the program the run
+  steps execute: GCC 9's libasan cannot read the DWARF 5 of the project's clang build,
+  so a PoC compiled with gcc reports `#0 0x... in  (/tmp/exploit/driver+0x3d852)`
+  (lcms FZ_6 → cmsGetTagCount in cmsio0.c, the injected file). The recording keeps
+  only sanitizer variables; a variable exploit.sh exports that only names the build's
+  own files under /out (espeak-ng WF_LLM_5: `ESPEAK_DATA_PATH=/out/espeak-ng-data`) is
+  added to the run steps. The compiler recorder always succeeds, so an exploit's
+  fallback compile (`if [ $? -ne 0 ]; then <other compile>`) never runs in the replay;
+  where the recorded compile fails in the real build, `recipe_overrides.json` replaces
+  it by the fallback, quoting the line and the error (c-blosc FZ_1: the first compile
+  misses crc32.c). The task-server stage builds the project twice, records the files
   each `compile` created, changed or removed (`cf_delta.py mark/save`) and keeps the
   ones that differ (`make`), so the CLI / the libraries a program links come from the
   build being judged.
@@ -224,7 +242,14 @@ when the diff touches a header (`recipe.diff_touches_headers` in cyberforge_sour
 
 ## Tiers (classify.py)
 
-- **A → `<out_dir>`** (newplatform_bundles/): crash evidence (sanitizer report, or crash_report.json for fuzz
+Tiers describe the dataset's evidence; the folders no longer follow them (quality.py, below).
+An exploit that compiles code (also through `$CC` / `$CXX`) goes to the deep replay first:
+json-c WF_RAG_1's report comes from the program it compiles, not from the harness
+hints.json names. `export HOME=...` counts as setting the environment of what the exploit
+runs (libdwarf WF_LLM_0's 2100-byte HOME is the overflow; jq WF_LLM_10 plants ~/.jq), like any
+other variable that is not plumbing.
+
+- **A**: crash evidence (sanitizer report, or crash_report.json for fuzz
   artifacts), a concrete non-empty PoV (fuzz crash artifact > the seed crash_report.json
   names for a replay-mode run (`attribution_kind: exact_seed`; a same-named seed of a
   sibling task only if every copy is identical) > replayed exploit input > pov.bin and
@@ -235,8 +260,8 @@ when the diff touches a header (`recipe.diff_touches_headers` in cyberforge_sour
   flagged as B whose deep replay shows a single harness input are A too, except when the
   exploit runs a process in the background beside the harness (a server, a loop that
   truncates the file the input imports): no recorded input alone reproduces that.
-- **B → `<out_dir>2`** (newplatform_bundles2/): crash evidence, and a CLI/program recipe from the deep replay.
-- **C → `<out_dir>3`** (newplatform_bundles3/): no usable crash evidence (empty report, no crash, timeout, report
+- **B**: crash evidence, and a CLI/program recipe from the deep replay.
+- **C**: no usable crash evidence (empty report, no crash, timeout, report
   contradicts exploit.sh) but a ground truth and a way to run it (dataset PoV +
   harness, or a deep-replay recipe). Nothing shows this ground truth triggers the bug:
   build.sh's self-check 3 decides.
@@ -273,6 +298,10 @@ when the diff touches a header (`recipe.diff_touches_headers` in cyberforge_sour
   oracles, unit-test-only triggers, lost or empty crash inputs, ambiguous candidates,
   timeouts / races / huge inputs, and recipes the judge cannot run (the exploit's own
   docker or build, network, payload in a shipped data file, `#include` of project .c files).
+  A payload larger than the replays' 16 MB file-size limit (`ulimit -f`) is not bundled: a
+  capture of that size was cut off, and when the limit stops the exploit writing its payload
+  (bash's `File size limit exceeded`, Python's `File too large`) what it fed is not its payload
+  either (h2o WF_LLM_3's `truncate -s 4G` failed and left 9 bytes); pov.bin is not it then.
   Re-review it when a change converts or drops tasks (convert.py reads it as is).
 
 ## build.sh self-checks (blocking)
@@ -315,8 +344,33 @@ first). The runs, in order: `results.jsonl` (main batch), `results_rerun.jsonl`,
 `results_changed.jsonl` (bundles whose ground truth or judge changed after the main batch was
 planned), `results_exploit.jsonl` (first-window bundles without an exploit run),
 `results_round2.jsonl` (bundles changed by the choices those runs led to), `results_ca.jsonl`
-(`--ca`, needed the network), `results_round3.jsonl` (bundles changed by choices the CA runs led to). `results_superseded.jsonl` holds results replaced by a rerun;
+(`--ca`, needed the network), `results_round3.jsonl` (bundles changed by choices the CA runs led to),
+`results_quality.jsonl` / `results_quality_ca.jsonl` (the review of every bundle that did not pass:
+all program bundles after the judge changes above, and alternative ground truths). `results_superseded.jsonl` holds results replaced by a rerun;
 choose_gt.py reads it first (it is evidence), verification_summary.py does not.
+
+Alternative ground truths are labelled by what they are: `dataset <path in the task>` (a file the
+task ships, e.g. wuffs WF_RAG_1's reauthor_poc_WF_RAG_1.bin, which is the crash-<sha1> its report
+runs), `report_inputs <path>` (a project file the report shows crashing, from report_inputs.py) and
+`constructed <path>` (the exploit's own payload made to reach the harness, each explained in
+`constructed/constructed.json`: cjson WF_LLM_0/1/5's nesting deep enough for an 8 MB stack,
+WF_RAG_8's payload in cjson_read_fuzzer's framing). choose_gt.py takes one, in that order, when
+the bundle's own ground truth failed and the alternative passed; verification_summary.py counts
+that alternative's verdict for the bundle once the ground truth is it.
+
+## Quality classification (quality.py)
+
+The folders sort the bundles by the quality of the dataset task (the repo README explains the
+criteria and lists every bundle with a problem): category 1 (the task is fine, the bundle passed
+here) in `newplatform_bundles/`, 2 (a minor problem: fixed with a small change, or one that does
+not change what an agent sees or how it is judged; the bundle passed here) in `newplatform_bundles2/`,
+3 (a serious problem) and pending (not built here, or not surely the dataset's fault) in
+`newplatform_bundles3/`. Passing bundles are classified by rule (`quality.py`: the dataset's PoV file
+did not trigger and another dataset input is used; the seed is only in a sibling task; the file was
+an LFS pointer in this copy; no crash evidence or another task's report; the description names
+another crash class or, corrected from `description_fixes.json`, another place); every other
+bundle has a manual entry in `quality_review.json`. What the
+conversion got wrong is fixed in the conversion, never counted as a dataset problem.
 
 ## Gotchas
 

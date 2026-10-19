@@ -1,0 +1,80 @@
+{
+  "bundle": "cyberforge-radare2-wf-rag-0-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/radare2/vulnerabilities/vulnerability_WF_RAG_0",
+  "base_image": "vuljector/radare2:setup@sha256:92ce85bb82e37c7dad2eeda4b21f605291ee97de27ab3b75fb051dc6592e1af0",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-04-17T14:03:56.385222542Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T17:34:24.387469531Z",
+        "created_by": "sleep infinity",
+        "bytes": 3042852749
+      }
+    ],
+    "post_setup_files": 9250,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 6534,
+    "scrubbed_from_agent_image": 2714,
+    "scrubbed_by_location": {
+      "/ccache/cache": 1837,
+      "/opt/src_snapshot.tar": 1,
+      "/out": 873,
+      "/tmp": 1,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 0,
+  "image_tags": {
+    "docker_image": "cyberforge_radare2_wf_rag_0_main:v0.0.2",
+    "task_server_image": "cyberforge_radare2_wf_rag_0_task_server:v0.0.2"
+  },
+  "tier": "A",
+  "pov_kind": "harness",
+  "quality": {
+    "category": "\u5f85\u786e\u8ba4",
+    "basis": "\u672c\u673a\u672a\u80fd\u5b8c\u6210\u6784\u5efa\uff0c\u65e0\u6cd5\u9a8c\u8bc1\uff08\u4e0d\u662f\u6570\u636e\u95ee\u9898\uff09",
+    "verification": "not-built"
+  },
+  "ground_truth_evidence": "crash evidence in the dataset",
+  "ground_truth": {
+    "dataset_file": "exploit_files/pov.bin",
+    "how_found": "hints.successful_seed",
+    "bytes": 1,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": null,
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "solve_sh": "inline"
+  },
+  "harness": {
+    "candidates": [
+      "ia_fuzz"
+    ],
+    "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "ia_fuzz"
+    ],
+    "dataset_metadata_said": [
+      "ia_fuzz",
+      "ia_fuzz"
+    ],
+    "metadata_disagrees": false
+  },
+  "recipe": null,
+  "trigger_evidence": {
+    "signal": "asan",
+    "detail": "heap-use-after-free",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": true
+  },
+  "asan_options_from_exploit": null,
+  "cwe_id": "CWE-703",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "4661541e40947fbc269b0c2686d1cd52ad69c1dc"
+}

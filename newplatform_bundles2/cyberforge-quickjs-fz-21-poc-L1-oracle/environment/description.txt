@@ -1,0 +1,1 @@
+An invalid pointer dereference in QuickJS's fast array handling (add_fast_array_element in quickjs.c) causes a segmentation violation when evaluating crafted script text.

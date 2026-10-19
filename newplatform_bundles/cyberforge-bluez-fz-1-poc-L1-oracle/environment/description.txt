@@ -1,1 +1,0 @@
-BlueZ's src/sdp-xml.c has a post-buffer-operation (CWE-125) bug that can cause out-of-bounds memory access during SDP XML parsing.

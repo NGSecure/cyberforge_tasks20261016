@@ -1,0 +1,78 @@
+{
+  "bundle": "cyberforge-coturn-wf-llm-1-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/coturn/vulnerabilities/vulnerability_WF_LLM_1",
+  "base_image": "vuljector/coturn:setup@sha256:1d9e1d69fb9ae09e1444e074c0e816148a43a17dcd5278b76ad0aa9511dcc0cf",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-05-10T15:57:52.302908107Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T16:04:58.077632832Z",
+        "created_by": "sleep infinity",
+        "bytes": 48010046
+      }
+    ],
+    "post_setup_files": 397,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 367,
+    "scrubbed_from_agent_image": 28,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out": 25,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 0,
+  "image_tags": {
+    "docker_image": "cyberforge_coturn_wf_llm_1_main:v0.0.2",
+    "task_server_image": "cyberforge_coturn_wf_llm_1_task_server:v0.0.2"
+  },
+  "tier": "A",
+  "pov_kind": "harness",
+  "quality": {
+    "category": "\u7b2c\u4e09\u7c7b",
+    "basis": "\u62a5\u544a\u662f libFuzzer \u8bfb\u8f93\u5165\u6587\u4ef6\u65f6\u7684\u5185\u5b58\u8d85\u9650\uff0c\u4e0e\u9879\u76ee\u4ee3\u7801\u65e0\u5173",
+    "verification": "fail"
+  },
+  "ground_truth_evidence": "crash evidence in the dataset",
+  "ground_truth": {
+    "dataset_file": "replay/coturn/vulnerability_WF_LLM_1/input-000",
+    "how_found": "exploit_replay",
+    "bytes": 10,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": false,
+    "sha256": "01d448afd928065458cf670b60f5a594d735af0172c8d67f22a81680132681ca",
+    "solve_sh": "inline"
+  },
+  "harness": {
+    "candidates": [
+      "FuzzStunClient"
+    ],
+    "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "FuzzStunClient"
+    ],
+    "dataset_metadata_said": [
+      "FuzzStunClient",
+      "FuzzStunClient"
+    ],
+    "metadata_disagrees": false
+  },
+  "recipe": null,
+  "trigger_evidence": {
+    "signal": "oom",
+    "detail": "",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": null
+  },
+  "asan_options_from_exploit": "halt_on_error=1:abort_on_error=1",
+  "cwe_id": "CWE-476",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "ba571ad79547460db7868542ef9532f07661d1c7"
+}

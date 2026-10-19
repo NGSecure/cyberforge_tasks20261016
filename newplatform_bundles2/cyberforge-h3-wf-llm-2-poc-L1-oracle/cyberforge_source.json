@@ -31,6 +31,11 @@
   },
   "tier": "B",
   "pov_kind": "cli-argv",
+  "quality": {
+    "category": "\u7b2c\u4e8c\u7c7b",
+    "basis": "\u6570\u636e\u96c6\u7684\u62a5\u544a\u662f\u522b\u7684\u4efb\u52a1\u7684\uff1b\u9898\u9762\u63cf\u8ff0\u6307\u9519\u4e86\u4f4d\u7f6e\uff0c\u5df2\u6309\u6570\u636e\u96c6\u81ea\u5df1\u7684\u62a5\u544a\u4fee\u6b63",
+    "verification": "pass"
+  },
   "ground_truth_evidence": "crash evidence in the dataset",
   "ground_truth": {
     "dataset_file": null,
@@ -73,8 +78,10 @@
     "dataset_verification_record": null
   },
   "description": {
-    "from": "v1/concise-cve-style",
-    "names_actual_crash_class": true
+    "from": "description_fixes.json (corrected)",
+    "names_actual_crash_class": null,
+    "original": "A double-free vulnerability in H3's _parseArgsList function in args.c causes the polygon-to-cells path to free the same allocation twice, leading to memory corruption.",
+    "why_corrected": "every variant describes a double-free in _parseArgsList in args.c (the report is another task's: 4 tasks share it); the diff widens stringToInt's --cell scan format from %15s to %s in src/apps/filters/h3.c, which the exploit triggers with a 47-character cell string"
   },
   "asan_options_from_exploit": null,
   "cwe_id": "CWE-415",

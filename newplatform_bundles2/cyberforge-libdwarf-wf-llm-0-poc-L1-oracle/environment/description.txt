@@ -1,1 +1,0 @@
-A stack-buffer-overflow in _dwarf_canonical_append in dd_canonical_append.c allows remote attackers to cause a denial of service or potential memory corruption via a crafted DWARF file.

@@ -29,33 +29,75 @@
     "docker_image": "cyberforge_json_c_wf_rag_1_main:v0.0.2",
     "task_server_image": "cyberforge_json_c_wf_rag_1_task_server:v0.0.2"
   },
-  "tier": "A",
-  "pov_kind": "harness",
+  "tier": "B",
+  "pov_kind": "program",
+  "quality": {
+    "category": "\u7b2c\u4e00\u7c7b",
+    "basis": "",
+    "verification": "pass"
+  },
   "ground_truth_evidence": "crash evidence in the dataset",
   "ground_truth": {
-    "dataset_file": "exploit_files/pov.bin",
-    "how_found": "hints.successful_seed",
-    "bytes": 4,
+    "dataset_file": null,
+    "how_found": "exploit_replay_deep (program)",
+    "bytes": 440,
     "exploit_replay_inputs": 0,
     "dataset_report_matches_exploit_check": true,
-    "sha256": "9d6e1348aeb90babe55c9baa622945864c7279cfc4650c6bd3fadf5b99d33c0d",
+    "sha256": "44c394d16bcf3eb2bbba1bf753deaeb809ae0599e29fd5a9cbeba18cc137f51d",
     "solve_sh": "inline"
   },
-  "harness": {
-    "candidates": [
-      "json_pointer_fuzzer"
+  "harness": null,
+  "recipe": {
+    "kind": "program",
+    "recorded_by": "newplatform_bundles/conversion/replay_deep.py (exploit.sh replayed in vuljector/json-c:setup@sha256:684c6d1567e91fbc5bb489fd5d27d50cbabcc564af4495725679f1eb6cac55db)",
+    "recording": "newplatform_bundles/conversion/replay_deep/json-c/vulnerability_WF_RAG_1/calls.json",
+    "input_made_by_exploit_program": false,
+    "steps": [
+      {
+        "role": "compile",
+        "cwd": "/tmp/exploit_work",
+        "argv": [
+          "/usr/local/bin/clang",
+          "-O1",
+          "-fno-omit-frame-pointer",
+          "-gline-tables-only",
+          "-Wno-error=incompatible-function-pointer-types",
+          "-Wno-error=int-conversion",
+          "-Wno-error=deprecated-declarations",
+          "-Wno-error=implicit-function-declaration",
+          "-Wno-error=implicit-int",
+          "-Wno-error=unknown-warning-option",
+          "-Wno-error=vla-cxx-extension",
+          "-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION",
+          "-fsanitize=address",
+          "-I/src/json-c/json-c-build",
+          "-I/src/json-c",
+          "{poc}",
+          "/src/json-c/json-c-build/libjson-c.a",
+          "-o",
+          "poc",
+          "-lpthread",
+          "-lm",
+          "-fsanitize=address"
+        ]
+      },
+      {
+        "role": "run",
+        "cwd": "/tmp/exploit_work",
+        "argv": [
+          "/tmp/exploit_work/poc"
+        ]
+      }
     ],
-    "how_found": "exploit.sh",
-    "built_by_dataset_snapshot_compile": [
-      "json_pointer_fuzzer"
+    "poc_path": "/tmp/exploit_work/poc.c",
+    "aux_files": [],
+    "compile_normalized": [],
+    "touched_files": [
+      "json_pointer.c"
     ],
-    "dataset_metadata_said": [
-      "LLVMFuzzerTestOneInput",
-      "LLVMFuzzerTestOneInput"
-    ],
-    "metadata_disagrees": true
+    "diff_touches_headers": false,
+    "uses_out": false
   },
-  "recipe": null,
   "trigger_evidence": {
     "signal": "asan",
     "detail": "stack-buffer-overflow",

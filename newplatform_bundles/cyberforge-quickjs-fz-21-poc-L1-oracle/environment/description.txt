@@ -1,1 +1,0 @@
-An invalid pointer dereference in QuickJS's regexp handling causes a segmentation violation when evaluating crafted script text.

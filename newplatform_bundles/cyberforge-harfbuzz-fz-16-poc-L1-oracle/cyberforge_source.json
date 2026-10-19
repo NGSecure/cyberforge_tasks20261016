@@ -32,14 +32,19 @@
   },
   "tier": "A",
   "pov_kind": "harness",
+  "quality": {
+    "category": "\u7b2c\u4e00\u7c7b",
+    "basis": "",
+    "verification": "pass"
+  },
   "ground_truth_evidence": "crash evidence in the dataset",
   "ground_truth": {
-    "dataset_file": "replay_deep/harfbuzz/vulnerability_FZ_16/call-000-arg-0",
-    "how_found": "exploit_replay_deep",
-    "bytes": 196080,
+    "dataset_file": "report_inputs/harfbuzz/vulnerability_FZ_16/noto_handwriting-glyf_colr_1.ttf",
+    "how_found": "report_running (report_inputs/harfbuzz/vulnerability_FZ_16/noto_handwriting-glyf_colr_1.ttf, the project file the dataset's report shows crashing, from the image's source snapshot: in this bundle's builds it crashes the vulnerable build and not the secure one, where the first ground truth did not)",
+    "bytes": 5093,
     "exploit_replay_inputs": 0,
     "dataset_report_matches_exploit_check": true,
-    "sha256": "1e59d0031780c61061443b2c457551de103f918f815ccf0b2ebe664cf5d48eb6",
+    "sha256": "a4544bbcf2f74f1051211bdd3386704b06b270be22682e55ca5bcb02ac35a6ec",
     "solve_sh": "inline"
   },
   "harness": {

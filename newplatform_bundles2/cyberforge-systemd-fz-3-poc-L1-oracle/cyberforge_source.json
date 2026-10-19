@@ -1,0 +1,86 @@
+{
+  "bundle": "cyberforge-systemd-fz-3-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/systemd/vulnerabilities/vulnerability_FZ_3",
+  "base_image": "vuljector/systemd:setup@sha256:aefc07219de4a510b8743f2e349cf3182e3e35fdff60471952c22d75a8ede40c",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-05-10T17:05:48.305440838Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-10T17:40:44.785567634Z",
+        "created_by": "sleep infinity",
+        "bytes": 943694606
+      }
+    ],
+    "post_setup_files": 16997,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 1079,
+    "scrubbed_from_agent_image": 10885,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out": 93,
+      "/root": 12,
+      "/usr/local": 4,
+      "/work/build": 10773,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 2,
+  "image_tags": {
+    "docker_image": "cyberforge_systemd_fz_3_main:v0.0.2",
+    "task_server_image": "cyberforge_systemd_fz_3_task_server:v0.0.2"
+  },
+  "tier": "A",
+  "pov_kind": "harness",
+  "quality": {
+    "category": "\u7b2c\u4e8c\u7c7b",
+    "basis": "\u89e6\u53d1\u6587\u4ef6\u6ca1\u6709\u968f\u4efb\u52a1\u9644\u5e26\uff0c\u5df2\u4ece\u540c\u9879\u76ee\u5176\u4ed6\u4efb\u52a1\u627e\u56de",
+    "verification": "pass"
+  },
+  "ground_truth_evidence": "crash evidence in the dataset",
+  "ground_truth": {
+    "dataset_file": "exploit_files/generated_inputs/builtin_02_oss-fuzz-25353_9085e1dd7c.bin",
+    "how_found": "fuzz_exact_seed (same-named seed of a sibling task)",
+    "bytes": 45,
+    "exploit_replay_inputs": 0,
+    "dataset_report_matches_exploit_check": null,
+    "sha256": "0038b9ac007786711a849e088448360222d536cf39a838ba44becde317deb588",
+    "solve_sh": "inline"
+  },
+  "harness": {
+    "candidates": [
+      "fuzz-journal-remote"
+    ],
+    "how_found": "crash_report.json",
+    "built_by_dataset_snapshot_compile": [
+      "fuzz-journal-remote"
+    ],
+    "dataset_metadata_said": [
+      "fuzz-journal-remote",
+      "fuzz-journal-remote",
+      "fuzz-journal-remote"
+    ],
+    "metadata_disagrees": false
+  },
+  "recipe": null,
+  "trigger_evidence": {
+    "signal": "signal",
+    "detail": "deadly-signal",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": {
+      "unit_tests": "passed",
+      "exploit_on_vulnerable": "passed",
+      "exploit_on_secure": "passed"
+    }
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": null
+  },
+  "asan_options_from_exploit": null,
+  "cwe_id": "CWE-125",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "b3c3a40b35e94806c590116e50e9c49929b20efc"
+}

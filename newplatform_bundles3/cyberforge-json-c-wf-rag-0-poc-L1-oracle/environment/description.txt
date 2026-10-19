@@ -1,1 +1,0 @@
-A numeric error in json-c's printbuf_memappend function in printbuf.c can lead to incorrect buffer length handling.

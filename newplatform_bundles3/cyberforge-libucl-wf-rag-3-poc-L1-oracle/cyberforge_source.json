@@ -31,6 +31,11 @@
   },
   "tier": "C",
   "pov_kind": "program",
+  "quality": {
+    "category": "\u7b2c\u4e09\u7c7b",
+    "basis": "\u62a5\u544a\u662f\u522b\u7684\u4efb\u52a1\u7684\uff1bexploit \u7684\u7a0b\u5e8f\u53ea\u6253\u5370\u7ed3\u8bba\uff0c\u4e0d\u5d29\u6e83",
+    "verification": "fail"
+  },
   "ground_truth_evidence": "none: the dataset's report comes from another program (FuzzerMain.cpp), not the exploit's exploit.c (build.sh self-check 3 decides)",
   "ground_truth": {
     "dataset_file": null,
