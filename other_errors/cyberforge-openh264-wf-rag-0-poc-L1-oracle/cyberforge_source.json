@@ -32,7 +32,7 @@
   "tier": "C",
   "pov_kind": "harness",
   "quality": {
-    "category": "\u7b2c\u4e09\u7c7b",
+    "category": "\u7b2c\u516d\u7c7b",
     "basis": "\u6ce8\u5165\u7684\u4ee3\u7801\u4e0d\u5728 harness \u91cc\uff08\u4e24\u4e2a\u7248\u672c\u6784\u5efa\u5b8c\u5168\u76f8\u540c\uff09",
     "verification": "not-built"
   },

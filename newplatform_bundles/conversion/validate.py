@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Static checks over generated CyberForge bundles (no Docker needed).
 
-    python3 -I validate.py <out_dir> [--out-b DIR] [--out-c DIR] [--out-d DIR] [bundle ...]
+    python3 -I validate.py <out_dir> [--out-b DIR] [--out-c DIR] [--out-d DIR] [--out-e DIR] [--out-f DIR] [bundle ...]
 
 Checks per bundle: required files, no unfilled @@placeholders@@, task.toml /
 judge.json / cyberforge_source.json parse, `bash -n` on every script, in-memory
@@ -13,11 +13,14 @@ build inputs referenced by the Dockerfiles exist, every FROM is the recorded
 (digest-pinned) base image, the snapshot residue list is consistent and covers
 /opt/src_snapshot.tar, and environment/ holds only the expected non-secret files.
 Bundles of category 1 (quality.py: the dataset task is fine) live in <out_dir>, category 2
-in <out_dir>2, category 3 in <out_dir>3 and pending in <out_dir>4 (as convert.py writes them); a bundle's
+in <out_dir>2, category 3 in <out_dir>3, pending in <out_dir>4 and category 5 (the tasks judged by
+their own tests/, c5_specs.json) in <out_dir>5 (as convert.py writes them); a bundle's
 directory must match the category its cyberforge_source.json records (or, for a bundle made
 without one, its tier: A, B, C).
 CLI/program bundles (tier-B templates) also need a recorded recipe whose placeholders
-fit its kind and whose extra files exist in build/aux/.
+fit its kind and whose extra files exist in build/aux/. Category-5 bundles also need their
+rule (tests/oracle.json = judge.json "oracle", tests/cf_oracle.py as in the templates), a
+driver's source in build/driver/ and environment/driver/ alike, and their steps to fit the kind.
 Exits non-zero if any bundle fails.
 """
 import base64
@@ -36,6 +39,52 @@ REQUIRED = ["instruction.md", "task.toml", "build.sh", "push.sh", "cyberforge_so
             "build/inject_vulnerability.diff", "build/ground_truth_poc", "build/setup/Dockerfile",
             "build/snapshot_residue.txt", "build/secure_lines.txt"]
 B_KINDS = ("cli-file", "cli-stdin", "cli-argv", "program")
+E_KINDS = B_KINDS + ("harness", "archive", "driver")
+TPL = os.path.join(os.path.dirname(os.path.abspath(__file__)), "templates")
+
+
+def check_c5(bd, judge, src):
+    """A category-5 bundle: its rule, its steps, a driver's files."""
+    errs = []
+    pov = src.get("pov_kind")
+    steps = judge.get("steps") or []
+    runs = [st for st in steps if st.get("role") == "run"]
+    if pov not in E_KINDS or judge.get("pov_kind") != pov or not runs or steps[-1].get("role") != "run":
+        return ["judge.json: bad kind %r / %r or no final run step" % (pov, judge.get("pov_kind"))]
+    # (an archive may matter through its env alone, or its input on stdin; a program may read the
+    # PoC at the fixed path the judge stages it at, poc_path)
+    if pov in ("harness", "cli-file", "driver", "program") and not judge.get("poc_path") \
+            and not any("{poc}" in a for st in steps for a in st["argv"]):
+        errs.append("%s steps do not name {poc} and there is no poc_path" % pov)
+    if pov == "cli-stdin" and runs[0].get("stdin") != "poc":
+        errs.append("cli-stdin run step does not read the PoC on stdin")
+    if pov == "program" and not judge.get("touched_files"):
+        errs.append("program recipe without touched_files")
+    oracle = json.load(open(os.path.join(bd, "tests", "oracle.json")))
+    if oracle != judge.get("oracle"):
+        errs.append("tests/oracle.json != judge.json oracle")
+    if oracle.get("type") not in ("crash", "match", "output-diff", "timeout"):
+        errs.append("unknown oracle type %r" % oracle.get("type"))
+    if oracle.get("type") == "match" and not oracle.get("pattern"):
+        errs.append("match oracle without a pattern")
+    if oracle.get("type") == "timeout" and not oracle.get("limit_sec"):
+        errs.append("timeout oracle without limit_sec")
+    if pov == "program" and oracle.get("type") in ("output-diff", "match"):
+        errs.append("a program PoC judged by %s (a program can tell the builds apart by itself)" % oracle["type"])
+    for f in ("cf_oracle.py",):
+        if open(os.path.join(bd, "tests", f), "rb").read() != open(os.path.join(TPL, "tests_e", f), "rb").read():
+            errs.append("tests/%s differs from the template" % f)
+    drv = (src.get("recipe") or {}).get("driver")
+    if pov == "driver" and not drv:
+        errs.append("a driver kind without its driver")
+    for name in (drv or {}).get("files", []):
+        a, b = os.path.join(bd, "build", "driver", name), os.path.join(bd, "environment", "driver", name)
+        if not (os.path.isfile(a) and os.path.isfile(b) and open(a, "rb").read() == open(b, "rb").read()):
+            errs.append("driver file %s missing or different in build/ and environment/" % name)
+    for dst, n in (judge.get("aux_files") or {}).items():
+        if not os.path.isfile(os.path.join(bd, "build", "aux", n)):
+            errs.append("aux file missing: build/aux/" + n)
+    return errs
 
 
 def check_recipe(bd, judge):
@@ -70,7 +119,8 @@ def check_recipe(bd, judge):
     return errs
 
 
-FOLDER_CATS = {"A": ("第一类",), "B": ("第二类",), "C": ("第三类",), "D": ("待确认",)}  # <out_dir>, <out_dir>2..4
+FOLDER_CATS = {"A": ("第一类",), "B": ("第二类",), "C": ("第三类",), "D": ("待确认",), "E": ("第五类",),
+               "F": ("第六类",)}  # <out_dir>, <out_dir>2..5, other_errors next to <out_dir>
 
 
 def check(bd, tier):
@@ -80,18 +130,21 @@ def check(bd, tier):
         src = json.load(open(os.path.join(bd, "cyberforge_source.json")))
     except Exception as e:
         return ["cyberforge_source.json: %s" % e]
-    b = src.get("pov_kind") in B_KINDS
-    nogt = src.get("ground_truth") is None and bool(src.get("ground_truth_missing"))
-    env_allowed = ENV_ALLOWED
-    for f in [x for x in REQUIRED if not (nogt and x == "build/ground_truth_poc")] + ["environment/" + f for f in sorted(env_allowed)] + (["build/aux/README.txt"] if b else []):
+    e = "category5" in src
+    b = src.get("pov_kind") in B_KINDS or e
+    nogt = src.get("ground_truth") is None and (bool(src.get("ground_truth_missing")) or e)
+    env_allowed = ENV_ALLOWED | {"driver/" + n for n in ((src.get("recipe") or {}).get("driver") or {}).get("files", [])}
+    for f in [x for x in REQUIRED if not (nogt and x == "build/ground_truth_poc")] + ["environment/" + f for f in sorted(env_allowed)] + (["build/aux/README.txt"] if b else []) + (["tests/oracle.json", "tests/cf_oracle.py"] if e else []):
         if not os.path.isfile(os.path.join(bd, f)):
             errs.append("missing " + f)
     if errs:
         return errs
     q = (src.get("quality") or {}).get("category")
+    if e and tier != "E":
+        errs.append("a category-5 bundle outside the fifth directory")
     if q and q not in FOLDER_CATS[tier]:
         errs.append("bundle is in the %s directory but its category is %s" % ("/".join(FOLDER_CATS[tier]), q))
-    elif not q and src.get("tier") != tier:
+    elif not q and src.get("tier") != tier and not (e and tier == "E"):
         errs.append("bundle is in the tier-%s directory but its tier is %s" % (tier, src.get("tier")))
     env_files = set()
     for dp, _, fn in os.walk(os.path.join(bd, "environment")):
@@ -124,7 +177,9 @@ def check(bd, tier):
         judge = json.load(open(os.path.join(bd, "environment/task-server/judge.json")))
     except Exception as e:
         return errs + ["judge.json: %s" % e]
-    if b:
+    if e:
+        errs += check_c5(bd, judge, src)
+    elif b:
         errs += check_recipe(bd, judge)
     elif not judge.get("fuzzer_candidates"):
         errs.append("judge.json has no fuzzer candidates")
@@ -134,7 +189,8 @@ def check(bd, tier):
             errs.append("bash -n %s: %s" % (f, r.stderr.strip()[:200]))
         if not os.access(os.path.join(bd, f), os.X_OK):
             errs.append("not executable: " + f)
-    for f in ("environment/task-server/task_server.py", "tests/verify.py", "environment/task-server/cf_delta.py"):
+    for f in ("environment/task-server/task_server.py", "tests/verify.py", "environment/task-server/cf_delta.py") + (
+            ("tests/cf_oracle.py",) if e else ()):
         try:
             compile(open(os.path.join(bd, f), encoding="utf-8").read(), f, "exec")
         except SyntaxError as e:
@@ -154,7 +210,7 @@ def check(bd, tier):
             errs.append("a bundle without a ground truth has or copies build/ground_truth_poc")
         if "B64" in solve or "/solve" in solve or not re.search(r"(?m)^exit 1$", solve):
             errs.append("solve.sh of a bundle without a ground truth must write nothing and fail")
-        if "PASS-NO-GROUND-TRUTH" not in ts or "open(GROUND_TRUTH_POC" in ts.split("def selfcheck():")[1]:
+        if "PASS-NO-GROUND-TRUTH" not in ts or (not e and "open(GROUND_TRUTH_POC" in ts.split("def selfcheck():")[1]):
             errs.append("task_server.py's selfcheck is not the one without a ground truth")
         if not judge.get("no_ground_truth"):
             errs.append("judge.json lacks no_ground_truth")
@@ -207,7 +263,7 @@ def check(bd, tier):
 def main():
     args = sys.argv[1:]
     opts = {}
-    for flag in ("--out-b", "--out-c", "--out-d"):
+    for flag in ("--out-b", "--out-c", "--out-d", "--out-e", "--out-f"):
         if flag in args:
             i = args.index(flag)
             opts[flag] = args[i + 1]
@@ -215,7 +271,9 @@ def main():
     out = os.path.abspath(args[0])
     dirs = {"A": out, "B": os.path.abspath(opts.get("--out-b", out + "2")),
             "C": os.path.abspath(opts.get("--out-c", out + "3")),
-            "D": os.path.abspath(opts.get("--out-d", out + "4"))}
+            "D": os.path.abspath(opts.get("--out-d", out + "4")),
+            "E": os.path.abspath(opts.get("--out-e", out + "5")),
+            "F": os.path.abspath(opts.get("--out-f", os.path.join(os.path.dirname(out), "other_errors")))}
     todo = []
     for tier, d in dirs.items():
         if not os.path.isdir(d):

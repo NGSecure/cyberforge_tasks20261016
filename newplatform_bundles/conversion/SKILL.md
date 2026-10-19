@@ -28,8 +28,10 @@ python3 -I prune_replay_deep.py <inner_root> records.json replay_deep/  # option
 python3 -I convert.py         <inner_root> records.json <out_dir>    # one bundle per converted task, placed by quality.json:
                                                                      #   category 1 in <out_dir>, 2 in <out_dir>2, 3 in
                                                                      #   <out_dir>3, pending in <out_dir>4 (--out-b/-c/-d);
-                                                                     #   by tier without it
-python3 -I validate.py        <out_dir>                              # static checks of all four, no Docker
+                                                                     #   by tier without it; the tasks of c5_specs.json
+                                                                     #   (category 5) in <out_dir>5 (--out-e); category 6
+                                                                     #   in other_errors/ next to <out_dir> (--out-f)
+python3 -I validate.py        <out_dir>                              # static checks of all folders, no Docker
 python3 -I verify_bundles.py  verification/plan.json verification/results.jsonl   # build.sh for many bundles,
                                                                      #   plus alternative ground truths / judge settings,
                                                                      #   verify_diag.py / verify_exploit.py on failures
@@ -370,13 +372,37 @@ The folders sort the bundles by the quality of the dataset task (the repo README
 criteria and lists every bundle with a problem): category 1 (the task is fine, the bundle passed
 here) in `newplatform_bundles/`, 2 (a minor problem: fixed with a small change, or one that does
 not change what an agent sees or how it is judged; the bundle passed here) in `newplatform_bundles2/`,
-3 (a serious problem) in `newplatform_bundles3/`, and pending, the fourth category (not built
-here, or not surely the dataset's fault), in `newplatform_bundles4/`. Passing bundles are classified by rule (`quality.py`: the dataset's PoV file
+3 (a serious problem) in `newplatform_bundles3/`, pending, the fourth category (not built
+here, or not surely the dataset's fault), in `newplatform_bundles4/`, and category 6 (the user's
+decision of 2026-10-19: what will not build for a reason in the dataset and cannot be fixed now,
+e.g. the injected change breaks the build or both builds come out the same) in `other_errors/`, so
+that every bundle handed on builds and pushes. A bundle of categories 3 and 4 whose self-check 3 is
+known not to pass (verification "fail") gets a build.sh that says so and ends with `BUILT` instead of
+an error (convert.py `known_fail_build_sh`): its images are built and can be pushed. Passing bundles are classified by rule (`quality.py`: the dataset's PoV file
 did not trigger and another dataset input is used; the seed is only in a sibling task; the file was
 an LFS pointer (as upstream has it); no crash evidence or another task's report; the description names
 another crash class or, corrected from `description_fixes.json`, another place); every other
 bundle has a manual entry in `quality_review.json`. What the
 conversion got wrong is fixed in the conversion, never counted as a dataset problem.
+
+**Category 5** (the user's decision of 2026-10-19: the platform runs the bundle's own
+`tests/test.sh` on the PoVs the agent iterated on and decides only from it, so the judging logic
+is ours to implement there): every task no bundle was made for before (`unconverted_review.json`)
+gets one in `newplatform_bundles5/`, from its entry in `c5_specs.json` (fields: `c5.py`). Its judge
+is `templates/task_server_e.py` (tier B's, plus `archive` PoVs: a tar of `input`, `env` lines and
+files, unpacked by the run user, loader/sanitizer variables refused; gzip PoVs; `{run}` / `{dir}` /
+`{input}` placeholders) with judge.json `oracle` = `crash` | `output-diff` (exit status + normalized
+output + named files, each build run twice: the fixed build stable, no vulnerable run like it) | `match` | `timeout`. /verify
+reports one record per run; `tests/verify.py` decides with `tests/cf_oracle.py` (the same file is
+/cf_oracle.py in the task server for its self-check) and `tests/oracle.json`. A `driver` task runs
+the dataset exploit's own test program, changed only to read its hard-coded input from the PoV
+file (`c5/drivers/`), compiled in both builds after `compile` (`/cf_driver/`, its source also in the
+agent's /workspace/). Ground truths come from the dataset (`c5/gt/`, archives built
+deterministically from dataset files by `c5.ground_truth`); none where the dataset has no working
+trigger (`no_ground_truth_why`; the self-check then needs the program the PoC runs to differ
+between the builds and an empty PoC not to pass). A program PoC is never judged by
+`output-diff`/`match`: a program can tell the builds apart by itself (validate.py refuses it).
+quality.py gives every one category 5 with the texts of its spec's `zh`.
 
 **Bundles without a ground truth** (the user's decision of 2026-10-19): a task whose verified
 crashing seed (fuzz_results/vulnerable/crash_report.json) is only a Git LFS pointer, as upstream

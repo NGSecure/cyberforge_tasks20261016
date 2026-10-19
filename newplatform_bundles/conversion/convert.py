@@ -39,6 +39,7 @@ TPL = os.path.join(HERE, "templates")
 CONV = os.path.basename(os.path.dirname(HERE)) + "/conversion"  # e.g. newplatform_bundles/conversion
 sys.dont_write_bytecode = True
 sys.path.insert(0, HERE)
+import c5  # noqa: E402
 import deep_recipe  # noqa: E402
 
 DEEP_DIR = os.path.join(HERE, "replay_deep")
@@ -158,6 +159,9 @@ def jl(p):
 
 # descriptions corrected where every dataset variant names a place neither the diff nor the report is in
 DESCRIPTION_FIXES = {k: v for k, v in jl(os.path.join(HERE, "description_fixes.json")).items() if k != "_about"}
+# category 5: the tasks no bundle was made for before (why: unconverted_review.json), judged by their own tests/
+C5_SPECS = c5.specs()
+C5_REVIEW = jl(os.path.join(HERE, "unconverted_review.json")).get("tasks", {})
 
 
 def choose_description(vd, rec):
@@ -350,20 +354,181 @@ def no_ground_truth(bd):
         write(p, text, os.stat(p).st_mode & 0o777)
 
 
-def build_bundle(root, rec, out_dir, ver, scan_dir, quality=None):
+C5_BUILD_EDITS = {
+    False: [('echo "==> self-check 3/3: differential oracle (ground truth crashes vul, not fix)"',
+             'echo "==> self-check 3/3: the task\'s rule (tests/oracle.json): the ground truth passes, an empty PoC does not"')],
+    True: [('echo "==> self-check 3/3: differential oracle (ground truth crashes vul, not fix)"',
+            'echo "==> self-check 3/3: the judge without a ground truth (the dataset has no working trigger):"\n'
+            'echo "    the programs the PoC runs exist in both builds, a binary differs between them, an empty PoC does not pass"'),
+           ('echo "==> PASS: built $MAIN_TAG and $TS_TAG"\n',
+            'echo "==> PASS: built $MAIN_TAG and $TS_TAG"\n'
+            'echo "    note: no ground truth; nothing here shows that a PoC can trigger the injected bug"\n')],
+}
+
+
+def known_fail_build_sh(bd, q):
+    """A bundle whose self-check 3 is known not to pass here (quality.json verification "fail": a problem
+    of the original data, README.md section 6): build.sh says so and ends without an error, since the
+    images are built and can be pushed (the user's decision of 2026-10-19: every bundle handed on builds
+    and pushes; what it lacks is documented). Every other bundle's build.sh is unchanged."""
+    p = os.path.join(bd, "build.sh")
+    text = open(p, encoding="utf-8").read()
+    why = ("%s: %s" % (q["category"], q["basis"])).replace("'", "")
+    edits = [('docker run --rm -e AUTH_TOKEN=selfcheck --entrypoint python3 "$TS_TAG" /task_server.py --selfcheck\n',
+              'docker run --rm -e AUTH_TOKEN=selfcheck --entrypoint python3 "$TS_TAG" /task_server.py --selfcheck || {\n'
+              "  printf '    %%s\\n' 'NOTE: known not to pass for this bundle (a problem of the original data, see the repo README.md, section 6):' \\\n"
+              "    '  %s' 'The images are built and can be pushed.'\n"
+              "}\n" % why),
+             ('echo "==> PASS: built $MAIN_TAG and $TS_TAG"\n',
+              'echo "==> BUILT: $MAIN_TAG and $TS_TAG (self-check 3 does not pass, as recorded for this bundle)"\n')]
+    for old, new in edits:
+        if text.count(old) != 1:
+            raise SystemExit("%s: build.sh: no single %r" % (os.path.basename(bd), old[:60]))
+        text = text.replace(old, new)
+    write(p, text, 0o755)
+
+
+def c5_build_sh(bd, no_gt):
+    p = os.path.join(bd, "build.sh")
+    text = open(p, encoding="utf-8").read()
+    for old, new in C5_BUILD_EDITS[no_gt]:
+        if text.count(old) != 1:
+            raise SystemExit("%s: build.sh: no single %r" % (os.path.basename(bd), old[:60]))
+        text = text.replace(old, new)
+    write(p, text, 0o755)
+
+
+def c5_source(spec, rec):
+    """Where a category-5 bundle's ground truth comes from (solve.sh, cyberforge_source.json)."""
+    gt = spec.get("ground_truth")
+    if not gt:
+        return "none: " + spec["no_ground_truth_why"]
+    if "file" not in gt and gt.get("candidates"):
+        gt = dict(gt, file=gt["candidates"][0])
+    if "file" in gt:
+        where, _, rel = gt["file"].partition(":")
+        src = "%s/%s" % (rec["path"], rel) if where == "dataset" else "%s/%s" % (CONV, rel)
+    else:
+        a = gt["archive"]
+        parts = ["%s <- %s" % (m, ("%s/%s" % (rec["path"], x.partition(":")[2]) if x.startswith("dataset:") else
+                                   "%s/%s" % (CONV, x.partition(":")[2]) if x.startswith("conv:") else "text"))
+                 for m, x in ([("input", a["input"])] if a.get("input") is not None else []) + sorted((a.get("files") or {}).items())]
+        if a.get("env"):
+            parts.append("env: " + " ".join(sorted(a["env"])))
+        src = "a tar archive (%s)" % "; ".join(parts)
+    return src + ("; adapted: " + gt["adapted"] if gt.get("adapted") else "")
+
+
+def c5_readable(steps, run_exe):
+    """The build-tree programs a category-5 judge runs, which stay readable: the run step's program,
+    every /src, /out or /work path named in a run or background step (e.g. a program a shell step
+    starts) and, for a libtool wrapper script, the ELF it starts. An unreadable executable makes
+    the process non-dumpable, and the sanitizer then cannot read its own environment
+    (/proc/self/environ: no ASAN_OPTIONS, no PATH to llvm-symbolizer)."""
+    paths = {run_exe}
+    for st in steps:
+        if st["role"] != "compile":
+            for a in st["argv"]:
+                paths |= {os.path.normpath(m) for m in re.findall(r"(?<![\w/.])/(?:src|out|work)/[^\s'\";|&()<>]+", a)}
+    out = set(paths)
+    for p in paths:
+        if p.startswith(("/src/", "/work/")):  # where a libtool build leaves its wrapper scripts
+            d, n = os.path.split(p)
+            out |= {os.path.join(d, ".libs", n), os.path.join(d, ".libs", "lt-" + n)}
+    return sorted(out)
+
+
+def c5_bundle(bd, vd, rec, v, recipe, spec, diff, leak_note, cf):
+    """The category-5 judge (task_server_e.py) and the files that differ from tier B for one
+    bundle. -> (judge.json, cyberforge_source.json "recipe", aux files {name: bytes})."""
+    kind, oracle = spec["kind"], c5.oracle_of(spec)
+    steps = recipe["steps"]
+    touched = touched_files(diff)
+    aux_names, aux_files = {}, {}
+    for i, (dst, ref) in enumerate(sorted(recipe["aux"].items())):
+        aux_names[dst] = "aux-%d-%s" % (i, os.path.basename(dst))
+        aux_files[aux_names[dst]] = c5.source_bytes(ref, vd)
+    run = [st for st in steps if st["role"] == "run"][0]
+    run_exe = os.path.normpath(os.path.join(run.get("cwd") or "/", run["argv"][0]))
+    run_opts = (run.get("env") or {}).get("ASAN_OPTIONS", "")
+    if kind == "program" and "handle_abort" not in run_opts:
+        run_opts += ":handle_abort=1"
+    poc_s, target_s, crit_s, files_s = c5.texts(spec, steps, recipe.get("poc_path"), run_opts, recipe["language"])
+    uses_out = kind == "harness" or any(re.search(r'(^|[\s"=:,]|-[A-Za-z])/out(/|"|$)', json.dumps(
+        [st["argv"], st.get("cwd"), st.get("env")])) for st in steps)
+    drv = spec.get("driver")
+    what = {"harness": "the fuzz harness `/out/%s`" % spec.get("fuzzer"),
+            "program": "a C/C++ program compiled against the project",
+            "driver": "a driver program compiled against each build (build/driver/)"}.get(kind, "`%s`" % run["argv"][0])
+    gt = recipe["gt"]
+    ve = dict(v, B_KIND=kind, B_WHAT=what, E_KIND=kind, E_ORACLE=oracle.get("type", "crash"),
+              E_POC_SENTENCE=poc_s, E_TARGET=target_s, E_CRITERION=crit_s, E_FILES=files_s,
+              READABLE_EXES="" if kind == "program" else " ".join(shlex.quote(p) for p in c5_readable(steps, run_exe)),
+              B_DROP_OUT="" if uses_out else "rm -rf /out/*; ",
+              BUILT_CHECK="" if kind == "program" else "[ -e %s ] || { echo \"FAIL: the build did not make %s\"; exit 1; }; "
+              % (shlex.quote(run_exe), run_exe.replace('"', '')),
+              B_HEADER_MODE="0644" if kind == "program" else "0600",
+              E_DRIVER_COPY="COPY build/driver/ /cf_driver/\n" if drv else "",
+              # a driver over self-contained code (e.g. a header-only library) needs no project build
+              E_COMPILE=('echo "the judge runs only the driver: no project build"; ' if drv and drv.get("no_compile") else
+                         '%scompile || echo "WARN: compile exited $?"; ' % v["PRE_COMPILE"]),
+              E_DRIVER_BUILD=("( cd /cf_driver && %s ); " % drv["build"]) if drv and drv.get("build") else "",
+              E_GT_COPY="COPY build/ground_truth_poc /tests/ground_truth_poc\n" if gt is not None else "",
+              E_GT_CHMOD="/tests/ground_truth_poc " if gt is not None else "",
+              ORACLE_SUMMARY=c5.oracle_summary(oracle))
+    write(os.path.join(bd, "instruction.md"), render("instruction_e.md", ve))
+    write(os.path.join(bd, "environment", "task-server", "Dockerfile"), render("task-server-e.Dockerfile", ve))
+    write(os.path.join(bd, "environment", "task-server", "task_server.py"), render("task_server_e.py", ve), 0o755)
+    judge = {"kind": c5.judge_kind(spec), "pov_kind": kind, "steps": steps, "poc_path": recipe.get("poc_path"),
+             "aux_files": aux_names, "dirs": recipe.get("dirs") or [], "oracle": oracle,
+             "touched_files": touched, "target_dir": rec["target_dir"],
+             "leak_task": bool(spec.get("leak")), "leak_detection": "on" if spec.get("leak") else "off",
+             "timeout_sec": int(spec.get("timeout_sec") or 60), "compile_timeout_sec": 600,
+             **({"decompress": spec["decompress"]} if spec.get("decompress") else {}),
+             **({"network": spec["network"]} if spec.get("network") else {}),
+             **({"aux_modes": spec["aux_modes"]} if spec.get("aux_modes") else {}),
+             **({"fsize_limit_mb": spec["fsize_limit_mb"]} if spec.get("fsize_limit_mb") else {}),
+             **({"no_ground_truth": {"why": spec.get("no_ground_truth_why") or c5.PENDING_WHY}} if gt is None else {}),
+             "cyberforge": cf}
+    info = {"kind": kind, "judge": "task_server_e.py (category 5)", "steps": [
+                {"role": st["role"], "cwd": st.get("cwd"), "argv": st["argv"]} for st in steps],
+            "poc_path": recipe.get("poc_path"), "aux_files": sorted(aux_names), "oracle": oracle,
+            "touched_files": touched, "uses_out": uses_out, "design": spec.get("design"),
+            **({"driver": {"files": sorted(drv["files"]), "build": drv.get("build"), "binary": drv.get("binary"),
+                           "project_build": not drv.get("no_compile")}} if drv else {})}
+    if drv:  # the driver: built against each build by the task server, its source shown to the agent
+        for name, ref in sorted(drv["files"].items()):
+            data = c5.source_bytes(ref, None)
+            for rel in (os.path.join("build", "driver", name), os.path.join("environment", "driver", name)):
+                os.makedirs(os.path.dirname(os.path.join(bd, rel)), exist_ok=True)
+                with open(os.path.join(bd, rel), "wb") as f:
+                    f.write(data)
+    for name in ("test.sh", "verify.py", "cf_oracle.py"):
+        write(os.path.join(bd, "tests", name), render(os.path.join("tests_e", name), ve), 0o755)
+    write(os.path.join(bd, "tests", "oracle.json"), json.dumps(oracle, indent=2) + "\n")
+    return judge, info, aux_files
+
+
+def build_bundle(root, rec, out_dir, ver, scan_dir, quality=None, c5spec=None):
     proj = rec["project"]
     n = rec["vuln"].rsplit("_", 1)[-1]
     pipe = PIPE[rec["type"]]
     bundle = "cyberforge-%s-%s-%s-poc-L1-oracle" % (proj.lower(), pipe, n)
+    vd = os.path.join(root, "projects", rec["path"])
     tag_prefix = "cyberforge_%s_%s_%s" % (re.sub(r"[^a-z0-9]+", "_", proj.lower()).strip("_"),
                                           pipe.replace("-", "_"), n)
-    vd = os.path.join(root, "projects", rec["path"])
     bd = os.path.join(out_dir, bundle)
     if os.path.isdir(bd):
         shutil.rmtree(bd)
-    kind = rec["bundle_type"]
+    kind = c5spec["kind"] if c5spec else rec["bundle_type"]
     recipe = None
-    if kind != "harness":
+    if c5spec:  # category 5: how the PoC is run and judged comes from c5_specs.json
+        e_opts = c5spec.get("asan_options") or re.sub(r"detect_leaks=\d", "detect_leaks=%d" % bool(c5spec.get("leak")),
+                                                       judge_asan_options(rec))
+        recipe = {"kind": kind, "steps": c5.steps(c5spec, {"ASAN_OPTIONS": e_opts}), "poc_path": c5spec.get("poc_path"),
+                  "aux": c5spec.get("aux") or {}, "dirs": c5spec.get("dirs") or [],
+                  "gt": c5.ground_truth(c5spec, vd), "language": c5spec.get("language") or rec["language"]}
+    elif kind != "harness":
         es = open(os.path.join(vd, "exploit_files", "exploit.sh"), encoding="utf-8", errors="replace").read()
         names = [f for _, _, fs in os.walk(os.path.join(vd, "exploit_files")) for f in fs]
         recipe, why = deep_recipe.recipe_or_reason(os.path.join(DEEP_DIR, proj, rec["vuln"]), es, names)
@@ -443,7 +608,7 @@ def build_bundle(root, rec, out_dir, ver, scan_dir, quality=None):
         "COMMIT": rec["secure_base_commit"], "COMMIT_SHORT": rec["secure_base_commit"][:12],
         "BASE_IMAGE": base_image, "BASE_IMAGE_NAME": base_name, "HAS_HUB_IMAGE": has_hub, "VER": ver,
         "TAG_PREFIX": tag_prefix, "AUTH_TOKEN": token,
-        "POC_SRC_PATH": ("%s/%s" % (rec["path"], nogt["dataset_file"])) if nogt else
+        "POC_SRC_PATH": c5_source(c5spec, rec) if c5spec else ("%s/%s" % (rec["path"], nogt["dataset_file"])) if nogt else
                         (("%s/replay_deep/%s/%s (%s)" % (CONV, proj, rec["vuln"], kind)) if recipe else
                          ("%s/%s (replayed %s/exploit_files/exploit.sh)" % (CONV, rec["poc"], rec["path"]))
                          if rec["poc_src"].startswith("exploit_replay") else
@@ -455,7 +620,7 @@ def build_bundle(root, rec, out_dir, ver, scan_dir, quality=None):
                           "verify_exploit.py, choose_gt.py)" % (CONV, rec["poc"], rec["path"]))
                          if rec["poc"].startswith("exploit_live/") else
                          "%s/%s" % (rec["path"], rec["poc"])),
-        "POC_SIZE": nogt["bytes"] if nogt else len(gt), "POV_KIND": kind,
+        "POC_SIZE": nogt["bytes"] if nogt else len(gt) if gt is not None else 0, "POV_KIND": kind,
         # the executables the judge runs stay readable (symbolized reports); the rest are 0711
         "READABLE_EXES": " ".join("/out/" + c for c in cands) if not recipe else "",
         "HARNESS_CWD": '"/out"' if from_out else "workdir",
@@ -483,7 +648,8 @@ def build_bundle(root, rec, out_dir, ver, scan_dir, quality=None):
     }
     if recipe:  # task.toml's `fuzzer`: what the PoC is fed to
         run0 = [st for st in recipe["steps"] if st["role"] == "run"][0]["argv"][0]
-        v["FUZZER"] = "(a C/C++ program compiled against the project)" if kind == "program" else run0
+        v["FUZZER"] = ("(a C/C++ program compiled against the project)" if kind == "program" else
+                       c5spec["fuzzer"] if kind == "harness" else run0)
 
     judge_opts = judge_asan_options(rec)
     leak_note = ("on: the injected bug is a leak" if leak_task(rec) else
@@ -491,7 +657,9 @@ def build_bundle(root, rec, out_dir, ver, scan_dir, quality=None):
                  "off: the injected bug is not a leak")
     cf = {"project": proj, "vulnerability_id": rec["vuln"], "pipeline": rec["type"]}
     aux_files, b_info = {}, None
-    if recipe is None:
+    if c5spec:
+        judge, b_info, aux_files = c5_bundle(bd, vd, rec, v, recipe, c5spec, diff, leak_note, cf)
+    elif recipe is None:
         write(os.path.join(bd, "instruction.md"), render("instruction.md", v))
         write(os.path.join(bd, "environment", "task-server", "Dockerfile"), render("task-server.Dockerfile", v))
         write(os.path.join(bd, "environment", "task-server", "task_server.py"), render("task_server.py", v), 0o755)
@@ -552,15 +720,22 @@ def build_bundle(root, rec, out_dir, ver, scan_dir, quality=None):
                   "diff_touches_headers": any(t.endswith(HEADER_EXT) for t in touched),
                   "uses_out": uses_out}
     write(os.path.join(bd, "task.toml"), render("task.toml", v))
-    write(os.path.join(bd, "environment", "Dockerfile"), render("Dockerfile.main", v))
+    main_df = render("Dockerfile.main", v)
+    if c5spec and c5spec.get("driver"):  # the driver the judge runs the PoC with: the agent sees its source
+        main_df += "".join("COPY environment/driver/%s /workspace/%s\n" % (n, n) for n in sorted(c5spec["driver"]["files"]))
+    write(os.path.join(bd, "environment", "Dockerfile"), main_df)
     write(os.path.join(bd, "environment", "docker-compose.yaml"), render("docker-compose.yaml", v))
     write(os.path.join(bd, "environment", "submit.sh"), render("submit.sh", v), 0o755)
     write(os.path.join(bd, "environment", "description.txt"), description + "\n")
     write(os.path.join(bd, "environment", "task-server", "judge.json"), json.dumps(judge, indent=2) + "\n")
     write(os.path.join(bd, "environment", "task-server", "cf_delta.py"), render("cf_delta.py", v), 0o755)
-    write(os.path.join(bd, "tests", "test.sh"), render(os.path.join("tests", "test.sh"), v), 0o755)
-    write(os.path.join(bd, "tests", "verify.py"), render(os.path.join("tests", "verify.py"), v), 0o755)
-    if nogt:
+    if not c5spec:  # category 5 writes its own tests/ (c5_bundle)
+        write(os.path.join(bd, "tests", "test.sh"), render(os.path.join("tests", "test.sh"), v), 0o755)
+        write(os.path.join(bd, "tests", "verify.py"), render(os.path.join("tests", "verify.py"), v), 0o755)
+    if c5spec and gt is None:
+        write(os.path.join(bd, "solution", "solve.sh"), render("solve_none_e.sh", dict(
+            v, NOGT_WHY=c5spec.get("no_ground_truth_why") or c5.PENDING_WHY)), 0o755)
+    elif nogt:
         write(os.path.join(bd, "solution", "solve.sh"), render("solve_none.sh", dict(v, GT_SHA256=nogt["sha256"])), 0o755)
     elif len(gt) <= INLINE_MAX:
         b64 = base64.encodebytes(gt).decode("ascii").rstrip("\n")
@@ -571,12 +746,16 @@ def build_bundle(root, rec, out_dir, ver, scan_dir, quality=None):
     write(os.path.join(bd, "push.sh"), render("push.sh", v), 0o755)
     if nogt:
         no_ground_truth(bd)
+    if quality and quality.get("verification") == "fail" and quality.get("cat") in ("3", "pending"):
+        known_fail_build_sh(bd, quality)
+    if c5spec:
+        c5_build_sh(bd, gt is None)
 
     # build inputs (never copied into environment/)
     os.makedirs(os.path.join(bd, "build"), exist_ok=True)
     with open(os.path.join(bd, "build", "inject_vulnerability.diff"), "wb") as f:
         f.write(diff)
-    if not nogt:
+    if gt is not None:
         with open(os.path.join(bd, "build", "ground_truth_poc"), "wb") as f:
             f.write(gt)
     write(os.path.join(bd, "build", "snapshot_residue.txt"), "".join(p + "\n" for p in residue))
@@ -611,21 +790,29 @@ def build_bundle(root, rec, out_dir, ver, scan_dir, quality=None):
         "tier": rec["tier"], "pov_kind": kind,
         # quality.py: the category of the dataset task (1 fine / 2 minor / 3 serious / pending) and why
         "quality": ({k: quality[k] for k in ("category", "basis", "verification")} if quality else None),
-        "ground_truth_evidence": ("crash evidence in the dataset (fuzz_results/vulnerable/crash_report.json), but its "
+        "ground_truth_evidence": ("category 5: " + (("none: " + (c5spec.get("no_ground_truth_why") or c5.PENDING_WHY))
+                                                     if gt is None else
+                                                    "the dataset's own trigger (%s)" % c5_source(c5spec, rec))
+                                  if c5spec else
+                                  "crash evidence in the dataset (fuzz_results/vulnerable/crash_report.json), but its "
                                   "crashing seed is only a Git LFS pointer: no ground truth, and build.sh's self-check 3 "
                                   "checks the judge without one" if nogt else
                                   "crash evidence in the dataset" if rec["tier"] in ("A", "B") else
                                   "none: " + rec["reason"] + " (build.sh self-check 3 decides)"),
         **({"ground_truth_missing": dict(nogt, why=NOGT_WHY)} if nogt else {}),
-        "ground_truth": None if nogt else {"dataset_file": None if recipe else rec["poc"],
-                         "how_found": ("exploit_replay_deep (%s)" % kind) if recipe else rec["poc_src"],
+        "ground_truth": None if nogt or gt is None else {"dataset_file": None if recipe else rec["poc"],
+                         "how_found": ("c5_specs.json: " + c5_source(c5spec, rec)) if c5spec else
+                                      ("exploit_replay_deep (%s)" % kind) if recipe else rec["poc_src"],
                          "bytes": len(gt),
                          "exploit_replay_inputs": rec.get("replay_distinct_inputs", 0),
                          "dataset_report_matches_exploit_check": rec.get("report_matches_exploit_check"),
                          "sha256": hashlib.sha256(gt).hexdigest(),
                          "solve_sh": "inline" if len(gt) <= INLINE_MAX else "fetch /solve",
                          # the dataset's crashing input is the empty file: any empty submission passes too
-                         **({"degenerate_empty_input": True} if rec.get("degenerate_empty_input") else {})},
+                         **({"degenerate_empty_input": True} if rec.get("degenerate_empty_input") or (c5spec and gt == b"")
+                            else {})},
+        **({"category5": {"review": C5_REVIEW.get(rec["path"], {}), "design": c5spec.get("design"),
+                          "pov_kind": kind, "oracle": c5.oracle_of(c5spec)}} if c5spec else {}),
         "harness": None if recipe else {"candidates": cands, "how_found": rec["fuzzer_src"],
                                         "built_by_dataset_snapshot_compile": built,
                                         "dataset_metadata_said": rec["fuzzer_metadata"],
@@ -656,21 +843,28 @@ def main():
     ap.add_argument("--out-b", default=None, help="tier-B bundles (default: <out_dir>2)")
     ap.add_argument("--out-c", default=None, help="tier-C bundles (default: <out_dir>3)")
     ap.add_argument("--out-d", default=None, help="category-pending bundles (default: <out_dir>4)")
+    ap.add_argument("--out-e", default=None, help="category-5 bundles: the tasks judged by their own tests/ "
+                                                  "(c5_specs.json; default: <out_dir>5)")
     ap.add_argument("--scan", default=os.path.join(HERE, "snapshot_scan"),
                     help="scan_snapshots.py output (default: snapshot_scan/ next to this script)")
     ap.add_argument("--ver", default="v0.0.2")  # v0.0.2: isolated judges (see SKILL.md)
+    ap.add_argument("--out-f", default=None, help="category-6 bundles: will not build for a reason in the dataset "
+                                                  "(default: other_errors next to <out_dir>)")
     ap.add_argument("--only", nargs="*", default=None, help="bundle names or dataset paths to (re)build")
     a = ap.parse_args()
     recs = json.load(open(a.records, encoding="utf-8"))
     out = os.path.abspath(a.out_dir)  # "." must still give <name>2 / <name>3 next to it
     tier_dirs = {"A": out, "B": os.path.abspath(a.out_b or out + "2"), "C": os.path.abspath(a.out_c or out + "3")}
     pending_dir = os.path.abspath(a.out_d or out + "4")
-    for d in list(tier_dirs.values()) + [pending_dir]:
+    fifth_dir = os.path.abspath(a.out_e or out + "5")
+    sixth_dir = os.path.abspath(a.out_f or os.path.join(os.path.dirname(out), "other_errors"))
+    for d in list(tier_dirs.values()) + [pending_dir, fifth_dir, sixth_dir]:
         os.makedirs(d, exist_ok=True)
-    # quality.py's classification places the bundles: 1 -> <out_dir>, 2 -> <out_dir>2, 3 -> <out_dir>3, pending -> <out_dir>4
+    # quality.py's classification places the bundles: 1 -> <out_dir>, 2 -> <out_dir>2, 3 -> <out_dir>3, pending -> <out_dir>4,
+    # 6 -> other_errors (next to <out_dir>)
     qf = os.path.join(HERE, "quality.json")
     quality = json.load(open(qf, encoding="utf-8"))["bundles"] if os.path.isfile(qf) else {}
-    cat_dirs = {"1": tier_dirs["A"], "2": tier_dirs["B"], "3": tier_dirs["C"], "pending": pending_dir}
+    cat_dirs = {"1": tier_dirs["A"], "2": tier_dirs["B"], "3": tier_dirs["C"], "pending": pending_dir, "6": sixth_dir}
     unplaced = []
 
     # the manual review of the tasks no bundle is made for (why, by category)
@@ -681,7 +875,18 @@ def main():
     rows, built = [], collections.Counter()
     for rec in sorted(recs, key=lambda r: r["seq"]):
         bundle, desc_src, desc_mismatch = "", "", None
-        if rec["converted"]:
+        spec = None if rec["converted"] else C5_SPECS.get(rec["path"])
+        if spec:  # category 5 (the tasks without a bundle before): judged by the bundle's own tests/
+            n = rec["vuln"].rsplit("_", 1)[-1]
+            name = "cyberforge-%s-%s-%s-poc-L1-oracle" % (rec["project"].lower(), PIPE[rec["type"]], n)
+            folder = fifth_dir
+            q = quality.get(name)
+            if a.only is None or name in a.only or rec["path"] in a.only:
+                bundle, desc_src, desc_mismatch = build_bundle(a.root, rec, folder, a.ver, a.scan, q, c5spec=spec)
+                built["第五类/%s" % spec["kind"]] += 1
+            else:
+                bundle = name
+        elif rec["converted"]:
             n = rec["vuln"].rsplit("_", 1)[-1]
             name = "cyberforge-%s-%s-%s-poc-L1-oracle" % (rec["project"].lower(), PIPE[rec["type"]], n)
             q = quality.get(name)
@@ -695,17 +900,18 @@ def main():
                 bundle = name
         rows.append({
             "seq": rec["seq"], "pipeline": rec["type"], "project": rec["project"], "vulnerability": rec["vuln"],
-            "source_path": rec["path"], "tier": rec["tier"], "converted": rec["converted"],
-            "folder": os.path.basename(folder) if rec["converted"] else "", "bundle": bundle,
-            "quality": quality.get(bundle, {}).get("category", "") if rec["converted"] else "",
-            "quality_basis": quality.get(bundle, {}).get("basis", "") if rec["converted"] else "",
-            "pov_kind": rec["bundle_type"], "reason": rec["reason"], "deep_replay": rec.get("deep_replay") or "",
+            "source_path": rec["path"], "tier": rec["tier"], "converted": bool(rec["converted"] or spec),
+            "folder": os.path.basename(folder) if rec["converted"] or spec else "", "bundle": bundle,
+            "quality": quality.get(bundle, {}).get("category", "") if rec["converted"] or spec else "",
+            "quality_basis": quality.get(bundle, {}).get("basis", "") if rec["converted"] or spec else "",
+            "pov_kind": spec["kind"] if spec else rec["bundle_type"], "reason": rec["reason"],
+            "deep_replay": rec.get("deep_replay") or "",
             "harness": rec["fuzzer"] if rec["bundle_type"] == "harness" else "",
             "harness_found_by": rec["fuzzer_src"] if rec["bundle_type"] == "harness" else "",
             "harness_metadata_disagrees": rec["fuzzer_mismatch"] if rec["bundle_type"] == "harness" else "",
-            "ground_truth": rec["poc"] if rec["bundle_type"] == "harness" else
+            "ground_truth": c5_source(spec, rec) if spec else rec["poc"] if rec["bundle_type"] == "harness" else
                             ("conversion/replay_deep/%s/%s" % (rec["project"], rec["vuln"]) if rec["converted"] else ""),
-            "ground_truth_found_by": rec["poc_src"] if rec["bundle_type"] == "harness" else
+            "ground_truth_found_by": "c5_specs.json" if spec else rec["poc_src"] if rec["bundle_type"] == "harness" else
                                      ("exploit_replay_deep" if rec["converted"] else ""),
             "signal": rec["signal"], "signal_detail": rec["signal_detail"],
             "description_from": desc_src,
@@ -715,8 +921,8 @@ def main():
             "review": "" if rec["converted"] else review.get(rec["path"], {}).get("category", ""),
             "review_note": "" if rec["converted"] else review.get(rec["path"], {}).get("note", ""),
             # verification/summary.json (verification_summary.py): build.sh run on this bundle
-            "verified": verified.get(bundle, {}).get("status", "") if rec["converted"] else "",
-            "verified_note": verified.get(bundle, {}).get("note", "") if rec["converted"] else "",
+            "verified": verified.get(bundle, {}).get("status", "") if rec["converted"] or spec else "",
+            "verified_note": verified.get(bundle, {}).get("note", "") if rec["converted"] or spec else "",
         })
     if a.only is None:
         with open(os.path.join(out, "conversion_manifest.csv"), "w", newline="", encoding="utf-8") as f:

@@ -5,15 +5,16 @@ CyberForge 数据集（80 个 OSS-Fuzz C/C++ 项目上的 1034 个 LLM 注入漏
 | 路径 | 内容 |
 |---|---|
 | `cyberforge_tasks20261016/` | 原始数据（手动上传，转换只读不改）：`manifest.csv` + `projects/<项目>/vulnerabilities/<任务>/` |
-| `newplatform_bundles/` | 第一类 bundle（524 个），以及三类共用的转换工具 `conversion/`、任务去向清单 `conversion_manifest.csv`、转换报告 `CONVERSION_REPORT.md` |
+| `newplatform_bundles/` | 第一类 bundle（524 个），以及各类共用的转换工具 `conversion/`、任务去向清单 `conversion_manifest.csv`、转换报告 `CONVERSION_REPORT.md` |
 | `newplatform_bundles2/` | 第二类 bundle（127 个） |
-| `newplatform_bundles3/` | 第三类 bundle（187 个） |
-| `newplatform_bundles4/` | 第四类：待确认的 bundle（65 个） |
+| `newplatform_bundles3/` | 第三类 bundle（184 个） |
+| `newplatform_bundles4/` | 第四类：待确认的 bundle（63 个） |
+| `other_errors/` | 第六类：因原始数据的问题确定会构建失败、暂时无法修复的 bundle（5 个），**不要构建上传** |
 
 ## 1. 原始数据核对
 
 - **原始数据就在本仓库的 `cyberforge_tasks20261016/` 里**：43674 个文件，`manifest.csv` 列出 1034 个任务；转换工具只从这里读取。
-- **上传后没有被修改过**：它由提交 e997c5df 上传（当时目录名为 `cyberforge-tasks-1034/`），随后的提交 8ab575cf 只把目录改名为 `cyberforge_tasks20261016/`，内容不变（两次提交里这个目录的 git tree 都是 `65d5acafa773`，与上传时一致）；此后没有任何提交改动过这个目录，工作区也没有未提交的改动。转换产生的文件全部在三个 `newplatform_bundles*/` 目录里。
+- **上传后没有被修改过**：它由提交 e997c5df 上传（当时目录名为 `cyberforge-tasks-1034/`），随后的提交 8ab575cf 只把目录改名为 `cyberforge_tasks20261016/`，内容不变（两次提交里这个目录的 git tree 都是 `65d5acafa773`，与上传时一致）；此后没有任何提交改动过这个目录，工作区也没有未提交的改动。转换产生的文件全部在 `newplatform_bundles*/` 目录里。
 - **原始数据的来源**：提供数据的团队基于上游 [Cyb3rForge/CyberForge-projects](https://github.com/Cyb3rForge/CyberForge-projects) 的 `main`（`9e09f49`）：80 个有任务的项目、1034 个任务与上游一一对应，36621 个文件与上游完全相同；他们新增了 3687 个文件（主要是给缺元数据的任务补的 bug_report.txt、hints.json、题面描述变体、task_contract.json，以及 60 个空的 sanitizer 报告和 manifest.csv），修改了 3366 个（554 个元数据；2812 个种子文件，把 LFS 指针换成别的任务里的同一个种子，其中 16 个换成了内容不同的同名文件），没有删除文件。注入的 diff、exploit 文件和上游已有的报告都没有改。详见 `newplatform_bundles/conversion/upstream_comparison.md`。
 - **缺 Git LFS 内容（上游就缺）**：3937 个文件（1759 个不同对象）只是 Git LFS 指针（一百多字节的三行文本，记录真实内容的 SHA-256 和大小）。这些指针来自上游：上游从未启用 LFS，FZ 任务是带着 6749 个指针文件当作普通文件提交的（`af0e78d`），提供数据的团队补了其中 2812 个，剩下的就是这些。转换时按 SHA-256 从数据集其他任务里同一文件的副本、上游发布前的分支里找到内容完全一致的文件，又还原了 278 个对象（864 个文件），还原的副本放在仓库外、只供转换使用；仍缺 1481 个对象（3073 个文件，分布在 176 个任务里），在上游任何分支和提交里都没有，上游 README 链接的 Hugging Face 数据集（同一棵目录树的压缩包）里也只有同样的指针。其中 9 个任务的崩溃种子就在缺的里面：按 2026-10-19 的决定照常转成 bundle，但没有标准答案、不做标准答案自检（本机验证过的 7 个归第三类，serenity FZ_16、serenity FZ_17 本机没能构建、没有验证，暂在第四类）；其余缺的是不进入 bundle 的语料，不影响任何 bundle（agent 看不到它们，判定也不用），所以不再找回。缺失清单：`newplatform_bundles/conversion/lfs_objects/missing.json`。用到了还原文件的 bundle 在下表里标为第二类。
 
@@ -22,7 +23,7 @@ CyberForge 数据集（80 个 OSS-Fuzz C/C++ 项目上的 1034 个 LLM 注入漏
 - **数据集的一个任务**：在开源项目的一个安全版本（`secure_base_commit`）上，由 LLM 注入一个内存安全漏洞（`inject_vulnerability.diff`），并附上 exploit.sh、PoV 文件、sanitizer 报告、漏洞描述等。
 - **一个 bundle**：新平台上的一个 PoV 任务。agent 拿到注入后的源码和一句漏洞描述，提交一个 PoV（喂给 fuzz harness 的输入文件、命令行参数，或链接项目代码的 C/C++ 程序）；判定服务（task-server）把同一个 PoV 在**注入版**和**安全版**上各运行一次，注入版崩溃（sanitizer 报错或致命信号）而安全版不崩溃，才算成功。agent 可以反复提交、根据反馈修改，平台记录整个过程（轨迹）。
 - **标准答案**（`build/ground_truth_poc`）：一个已知能成功的 PoV，只用于自检，不给 agent 看。9 个 bundle 没有标准答案（数据集的崩溃种子只是 Git LFS 指针，见第 1 节）。
-- **`build.sh` 的三项自检**：构建 agent 镜像和 task-server 镜像（安全版、注入版各编一次）后检查：① agent 镜像里没有安全版源码等残留；② agent 镜像里找不到注入改动的安全版代码行；③ 标准答案让注入版崩溃、安全版不崩溃，并且空输入两个版本都不崩溃（否则输出 PASS-DEGENERATE）。没有标准答案的 bundle，③ 只检查两个版本都有 harness、两版的二进制不同、空输入两版都不崩溃（输出 PASS-NO-GROUND-TRUTH）。
+- **`build.sh` 的三项自检**：构建 agent 镜像和 task-server 镜像（安全版、注入版各编一次）后检查：① agent 镜像里没有安全版源码等残留；② agent 镜像里找不到注入改动的安全版代码行；③ 标准答案让注入版崩溃、安全版不崩溃，并且空输入两个版本都不崩溃（否则输出 PASS-DEGENERATE）。没有标准答案的 bundle，③ 只检查两个版本都有 harness、两版的二进制不同、空输入两版都不崩溃（输出 PASS-NO-GROUND-TRUTH）。自检 3 已知不通过的 bundle（第三类 97 个、第四类 1 个，都是原始数据的问题，原因见第 6 节），`build.sh` 照常构建两个镜像，自检 3 打印说明后正常结束（最后一行是 `BUILT …`，不是 `PASS …`），镜像可以推送。确定会构建失败的 bundle 放在 `other_errors/`（第六类），不要构建上传。
 - **本机验证**：在本机对每个 bundle 实际运行了 `build.sh`；没通过的再排查判定隔离、sanitizer 选项，并直接运行数据集自己的 exploit.sh （`newplatform_bundles/conversion/verification/`）。
 
 ## 3. 分类标准
@@ -37,8 +38,9 @@ CyberForge 数据集（80 个 OSS-Fuzz C/C++ 项目上的 1034 个 LLM 注入漏
 |---|---|---|
 | 第一类：原始数据正常 | `newplatform_bundles/` | 本机三项自检全部通过；数据集自己的文件直接给出了能触发的输入（崩溃种子、fuzz 崩溃样本、exploit 实际喂的输入、报告里崩溃的文件），数据集里与这个任务相关的证据彼此一致；无需修改任何原始数据，可直接用于 PoC 迭代和轨迹生成。 |
 | 第二类：原始数据有轻微问题 | `newplatform_bundles2/` | 本机三项自检全部通过，但原始数据有问题：要么做了少量修改才能用（数据集指定的 PoV 文件不触发、换成数据集里另一个能触发的输入；触发文件没随任务附带、从同项目其他任务找回；标准答案只是 LFS 指针（上游就缺）、按 SHA-256 还原；exploit 的输入格式不对、按它的意图做最小修正），要么不修改也不影响轨迹质量（数据集缺少触发证据或报告是别的任务的，但实测有效；题面描述的漏洞类型不准，但函数和文件仍指向注入位置）。修改只涉及标准答案（只用于自检、不给 agent 看），或把指错了位置的题面描述改为数据集报告里的实际崩溃位置（8 个），都不改变判定方式。 |
-| 第三类：原始数据有严重问题 | `newplatform_bundles3/` | 数据集里没有只让注入版崩溃的输入（exploit 的输入不触发、报告用的输入没保存或只剩 Git LFS 指针、报告是别的程序或别的任务的、安全版也崩溃），注入的代码不在被测程序里或让构建失败，注入的漏洞不依赖输入（空输入就触发，PASS-DEGENERATE）或实际走不到（只在内存分配失败时），漏洞版只表现为超时；修复需要重新构造 PoV 或重新设计注入，或者修复后仍会明显影响轨迹质量。 |
-| 第四类：待确认 | `newplatform_bundles4/` | 无法确定：本机没能构建（需要公网、磁盘不够），或者原因不能确定在原始数据（例如数据集有注入版的崩溃记录、但按它给的构建流程编不出注入版；判定规则本身的限制）。 |
+| 第三类：原始数据有严重问题 | `newplatform_bundles3/` | 数据集里没有只让注入版崩溃的输入（exploit 的输入不触发、报告用的输入没保存或只剩 Git LFS 指针、报告是别的程序或别的任务的、安全版也崩溃），注入的代码不在被测程序里，注入的漏洞不依赖输入（空输入就触发，PASS-DEGENERATE）或实际走不到（只在内存分配失败时），漏洞版只表现为超时；修复需要重新构造 PoV 或重新设计注入，或者修复后仍会明显影响轨迹质量。这一类都能构建、能推送（自检 3 不通过的，build.sh 打印说明后正常结束）。 |
+| 第四类：待确认 | `newplatform_bundles4/` | 无法确定：本机没能构建（需要公网、磁盘不够；在条件充足的机器上应能构建，但本机没有验证），或者原因不能确定在原始数据（判定规则本身的限制）。 |
+| 第六类：确定会构建失败 | `other_errors/` | 因原始数据的问题，`build.sh` 一定构建失败、暂时无法修复：注入的代码让构建本身崩溃、diff 改的是构建时才生成的文件、注入的代码不在被构建的程序里（两个版本的产物完全相同，task-server 镜像无法建立），或数据集有注入版的崩溃记录、但按它给的构建流程编不出注入版。**不要构建上传**；原来分别在第三类、第四类。 |
 
 ## 4. 各类数量
 
@@ -48,8 +50,9 @@ CyberForge 数据集（80 个 OSS-Fuzz C/C++ 项目上的 1034 个 LLM 注入漏
 |---|---|---|---|---|---|---|---|
 | 第一类 | `newplatform_bundles/` | 524 | 524 | 0 | 0 | 0 | 0 |
 | 第二类 | `newplatform_bundles2/` | 127 | 127 | 0 | 0 | 0 | 0 |
-| 第三类 | `newplatform_bundles3/` | 187 | 0 | 80 | 7 | 97 | 3 |
-| 第四类：待确认 | `newplatform_bundles4/` | 65 | 0 | 0 | 0 | 1 | 64 |
+| 第三类 | `newplatform_bundles3/` | 184 | 0 | 80 | 7 | 97 | 0 |
+| 第四类：待确认 | `newplatform_bundles4/` | 63 | 0 | 0 | 0 | 1 | 62 |
+| 第六类 | `other_errors/` | 5 | 0 | 0 | 0 | 0 | 5 |
 | 合计 | — | 903 | 651 | 80 | 7 | 98 | 67 |
 
 按转换时的证据分级（tier：A = 有崩溃证据、harness 型；B = 有崩溃证据、命令行 / 程序型；C = 数据集里没有触发证据）：
@@ -58,8 +61,9 @@ CyberForge 数据集（80 个 OSS-Fuzz C/C++ 项目上的 1034 个 LLM 注入漏
 |---|---|---|---|
 | 第一类 | 477 | 43 | 4 |
 | 第二类 | 102 | 7 | 18 |
-| 第三类 | 106 | 11 | 70 |
-| 第四类：待确认 | 60 | 1 | 4 |
+| 第三类 | 106 | 11 | 67 |
+| 第四类：待确认 | 58 | 1 | 4 |
+| 第六类 | 2 | 0 | 3 |
 
 ### 汇总：哪些转好了、哪些还有问题，问题出在哪里，怎么解决
 
@@ -86,15 +90,16 @@ CyberForge 数据集（80 个 OSS-Fuzz C/C++ 项目上的 1034 个 LLM 注入漏
 | 第三类 | 崩溃种子只有 Git LFS 指针，没有标准答案 | 7 | 上游数据 | 已做：照常转成 bundle，不做标准答案自检（自检 3 只检查判定）。数据侧（上游）：向上游作者要 runs/fuzz_poc/_curated/ 里的原始种子，放进 conversion/lfs_objects/ 重新转换即可补上 | 能构建、能判定；能否触发未验证 |
 | 第三类 | exploit 没有真正触发注入的代码（只打印结论、崩溃来自 exploit 自己的程序、行为差异型） | 6 | 上游数据 | 数据侧（上游）：重写 exploit；否则剔除 | 不可用 |
 | 第三类 | 安全版也崩溃：崩溃来自项目本身的 bug，不是注入的 | 5 | 上游数据 | 数据侧（上游）：换注入点或换没有这个 bug 的安全版本 | 不可用 |
-| 第三类 | 注入本身有问题：不在被测程序里、diff 坏了或让构建失败 | 5 | 上游数据 | 数据侧（上游）：重新做注入 | 不可用 |
 | 第三类 | 崩溃依赖 fuzz 过程，没有单个输入能复现 | 5 | 上游数据 | 数据侧（上游）：保存能单独复现的崩溃输入；或用定向 fuzz 补一个（新标准答案不来自原始数据，需单独标注） | 不可用 |
 | 第三类 | 证据只是很小的泄漏，或是 libFuzzer 读输入时的内存超限，与项目代码无关 | 4 | 上游数据 | 数据侧（上游）：重新设计注入或重新生成证据 | 不可用 |
 | 第三类 | 注入的漏洞只在内存分配失败时才走到 | 2 | 上游数据 | 数据侧（上游）：重新设计注入 | 不可用 |
+| 第三类 | 注入本身有问题：不在被测程序里，或 diff 坏了（注入版编译不过，构建照常完成） | 2 | 上游数据 | 数据侧（上游）：重新做注入 | 能构建、能推送；不可用于 PoC 迭代 |
 | 第三类 | 判定方向相反（安全版“崩溃”，或漏洞版只是返回值不同） | 2 | 上游数据 | 数据侧（上游）：重新设计 exploit 或注入 | 不可用 |
 | 第三类 | 漏洞版只表现为超时 | 1 | 上游数据 | 判定只认崩溃：剔除，或重新设计注入 | 不可用 |
 | 第四类：待确认 | 本机没能构建：磁盘配额不够（arrow 是本机的 GitHub 代理不放行它要下载的依赖） | 62 | 本机环境 | 在磁盘充足（100 GB 以上）、能直连公网的机器上运行 build.sh；三项自检通过后按数据集证据归第一或第二类 | 待验证 |
-| 第四类：待确认 | 数据集有注入版的崩溃记录，但按它的构建流程编不出注入版 | 2 | 上游数据 | 数据侧（上游）：修正注入或构建流程；README 表里给出了预计能解决的最小改动，需要决定是否接受 | 待决定 |
 | 第四类：待确认 | 判定规则认不出宏里的注入 | 1 | 转换侧（判定规则） | 转换侧：为这个任务单独设定判定规则 | 待处理 |
+| 第六类 | 注入让构建失败：注入的代码让构建本身崩溃、diff 改的是构建时才生成的文件，或注入的代码不在被构建的程序里（两个版本的产物完全相同，task-server 镜像无法建立） | 3 | 上游数据 | 数据侧（上游）：重新做注入 | 构建会失败，不要构建上传 |
+| 第六类 | 数据集有注入版的崩溃记录，但按它的构建流程编不出注入版 | 2 | 上游数据 | 数据侧（上游）：修正注入或构建流程；第 6 节的表里给出了预计能解决的最小改动，接受后可重新转换、验证 | 构建会失败，暂不构建上传 |
 | 未转换 | 行为差异型 oracle：两个版本输出不同，但都不崩溃 | 30 | 上游数据 | 需要支持“输出差异”判定的平台；或重新设计注入使其崩溃 | 没有生成 bundle |
 | 未转换 | exploit 自己构建程序或容器、要联网、从附带的数据文件读 payload、依赖环境变量，或 payload 是 GB 级文件，判定服务无法照做 | 30 | 上游数据 | 改写 exploit，使 PoV 是一个可提交的输入；或扩展判定，支持环境变量和附带文件 | 没有生成 bundle |
 | 未转换 | 触发靠项目自带的单元测试或测试程序，没有攻击者提供的输入 | 29 | 上游数据 | 改写 exploit，改为给 harness 或项目程序的输入；否则剔除 | 没有生成 bundle |
@@ -106,7 +111,7 @@ CyberForge 数据集（80 个 OSS-Fuzz C/C++ 项目上的 1034 个 LLM 注入漏
 | 未转换 | 报告为空，输入是随机的或有多个，没有可用的标准答案 | 3 | 上游数据 | 重跑数据集的流水线并保存输入 | 没有生成 bundle |
 | 未转换 | 数据集里触发崩溃的输入是空文件（任何空文件都能通过） | 1 | 上游数据 | 重新设计注入 | 没有生成 bundle |
 
-合计：1034 个任务里，**651 个 bundle 可用于 PoC 迭代和轨迹生成**（第一类 524、第二类 127）；第三类 187 个原始数据有严重问题（其中 7 个没有标准答案）；第四类（待确认）65 个（其中 2 个也没有标准答案）；另有 131 个任务没有生成 bundle。
+合计：1034 个任务里，**651 个 bundle 可用于 PoC 迭代和轨迹生成**（第一类 524、第二类 127）；第三类 184 个原始数据有严重问题（其中 7 个没有标准答案）；第四类（待确认）63 个（其中 2 个也没有标准答案）；第六类 5 个确定会构建失败（不要构建上传）；另有 131 个任务没有生成 bundle。除第六类外，其余 bundle 都能构建、能推送（第四类在本机没能验证构建）。
 
 ## 5. 转换侧的问题（已改正，不计入原始数据问题）
 
@@ -131,7 +136,7 @@ CyberForge 数据集（80 个 OSS-Fuzz C/C++ 项目上的 1034 个 LLM 注入漏
 
 ## 6. 原始数据有问题的 bundle
 
-第二类、第三类和第四类（待确认）的 bundle 逐个列在下面（第一类不列）。列的含义：**转换后路径**相对 repo 根目录；**原始数据路径**是转换前的任务目录；**分类**后是简短依据；**问题及影响**说明问题的前因后果、为什么归到原始数据，以及对 PoC 迭代和轨迹质量的影响，最后的“来源”说明问题出在上游数据（Cyb3rForge/CyberForge-projects 原有的文件）还是提供数据的团队（他们新增或重新生成的文件）；**必要修改**分“已做”和“建议（未实施）”；**修改后状态**说明现在能否使用、还有哪些限制。每个 bundle 的机器可读版本在 `newplatform_bundles/conversion/quality.json`。
+第二类、第三类、第四类（待确认）、第六类的 bundle 逐个列在下面（第一类不列）。列的含义：**转换后路径**相对 repo 根目录；**原始数据路径**是转换前的任务目录；**分类**后是简短依据；**问题及影响**说明问题的前因后果、为什么归到原始数据，以及对 PoC 迭代和轨迹质量的影响，最后的“来源”说明问题出在上游数据（Cyb3rForge/CyberForge-projects 原有的文件）还是提供数据的团队（他们新增或重新生成的文件）；**必要修改**分“已做”和“建议（未实施）”；**修改后状态**说明现在能否使用、还有哪些限制。每个 bundle 的机器可读版本在 `newplatform_bundles/conversion/quality.json`。
 
 ### 6.1 第二类：原始数据轻微问题（127 个）
 
@@ -265,7 +270,7 @@ CyberForge 数据集（80 个 OSS-Fuzz C/C++ 项目上的 1034 个 LLM 注入漏
 | cyberforge-xz-wf-rag-2-poc-L1-oracle | newplatform_bundles2/cyberforge-xz-wf-rag-2-poc-L1-oracle | cyberforge_tasks20261016/projects/xz/vulnerabilities/vulnerability_WF_RAG_2 | 第二类：数据集指定的 PoV 不触发，已换成能触发的数据集输入；数据集的报告是别的任务的 | 问题：数据集的 pov.bin 不是 exploit 实际喂给 harness 的输入，在重建的注入版上不触发（实测）；sanitizer_report.txt 与另外 2 个任务逐字节相同，崩溃位置不在本任务注入的文件里（报告不是本任务的）。<br>影响：标准答案只用于自检、不给 agent 看，换用不影响 agent 看到的内容和判定。报告不进入 bundle，不影响 agent 看到的内容和判定。对轨迹质量没有明显影响。<br>来源：上游数据；提供数据的团队（数据集的 PoV 文件 exploit_files/pov.bin 是上游原有的，但不是 exploit 实际喂给 harness 的输入；数据集的报告是别的任务的；这个团队生成的 hints.json 也把它记成了“成功的种子”） | 已做：标准答案改用 exploit.sh 实际喂给 harness 的输入（重放 exploit 捕获）；报告无需修改（转换不依赖它，以本机验证为准）。 | 可用：三项自检通过。未偏离原始任务（只换了自检用的标准答案）。 |
 | cyberforge-xz-wf-rag-5-poc-L1-oracle | newplatform_bundles2/cyberforge-xz-wf-rag-5-poc-L1-oracle | cyberforge_tasks20261016/projects/xz/vulnerabilities/vulnerability_WF_RAG_5 | 第二类：数据集指定的 PoV 不触发，已换成能触发的数据集输入 | 问题：数据集的 pov.bin 不是 exploit 实际喂给 harness 的输入，在重建的注入版上不触发（实测）。<br>影响：标准答案只用于自检、不给 agent 看，换用不影响 agent 看到的内容和判定。对轨迹质量没有明显影响。<br>来源：上游数据；提供数据的团队（数据集的 PoV 文件 exploit_files/pov.bin 是上游原有的，但不是 exploit 实际喂给 harness 的输入；这个团队生成的 hints.json 也把它记成了“成功的种子”） | 已做：标准答案改用 exploit.sh 实际喂给 harness 的输入（重放 exploit 捕获）。 | 可用：三项自检通过。未偏离原始任务（只换了自检用的标准答案）。 |
 
-### 6.2 第三类：原始数据严重问题（187 个）
+### 6.2 第三类：原始数据严重问题（184 个）
 
 | Bundle 名称 | 转换后路径 | 原始数据路径 | 分类 | 问题及影响 | 必要修改 | 修改后状态 |
 |---|---|---|---|---|---|---|
@@ -303,8 +308,6 @@ CyberForge 数据集（80 个 OSS-Fuzz C/C++ 项目上的 1034 个 LLM 注入漏
 | cyberforge-espeak-ng-fz-2-poc-L1-oracle | newplatform_bundles3/cyberforge-espeak-ng-fz-2-poc-L1-oracle | cyberforge_tasks20261016/projects/espeak-ng/vulnerabilities/vulnerability_FZ_2 | 第三类：空输入就能触发：任何提交都能通过 | 问题：标准答案能触发，但空输入同样只让注入版崩溃：漏洞不依赖 PoV 的内容（多在任何输入都会走到的路径上）。<br>影响：提交任意文件（包括空文件）都判为成功，判定区分不了有效 PoV；轨迹不能反映 PoC 迭代。<br>来源：上游数据 | 未做修改。<br>建议（未实施）：重新设计注入，使漏洞依赖输入内容；否则剔除（或只用于不看判定结果的用途）。 | 不可用于 PoC 迭代：自检输出 PASS-DEGENERATE（空输入也触发）。未修改，与原始任务一致。 |
 | cyberforge-exiv2-fz-0-poc-L1-oracle | newplatform_bundles3/cyberforge-exiv2-fz-0-poc-L1-oracle | cyberforge_tasks20261016/projects/exiv2/vulnerabilities/vulnerability_FZ_0 | 第三类：空输入就能触发：任何提交都能通过 | 问题：标准答案能触发，但空输入同样只让注入版崩溃：漏洞不依赖 PoV 的内容（多在任何输入都会走到的路径上）。<br>影响：提交任意文件（包括空文件）都判为成功，判定区分不了有效 PoV；轨迹不能反映 PoC 迭代。<br>来源：上游数据 | 未做修改。<br>建议（未实施）：重新设计注入，使漏洞依赖输入内容；否则剔除（或只用于不看判定结果的用途）。 | 不可用于 PoC 迭代：自检输出 PASS-DEGENERATE（空输入也触发）。未修改，与原始任务一致。 |
 | cyberforge-exiv2-fz-1-poc-L1-oracle | newplatform_bundles3/cyberforge-exiv2-fz-1-poc-L1-oracle | cyberforge_tasks20261016/projects/exiv2/vulnerabilities/vulnerability_FZ_1 | 第三类：空输入就能触发：任何提交都能通过 | 问题：标准答案能触发，但空输入同样只让注入版崩溃：漏洞不依赖 PoV 的内容（多在任何输入都会走到的路径上）。<br>影响：提交任意文件（包括空文件）都判为成功，判定区分不了有效 PoV；轨迹不能反映 PoC 迭代。<br>来源：上游数据 | 未做修改。<br>建议（未实施）：重新设计注入，使漏洞依赖输入内容；否则剔除（或只用于不看判定结果的用途）。 | 不可用于 PoC 迭代：自检输出 PASS-DEGENERATE（空输入也触发）。未修改，与原始任务一致。 |
-| cyberforge-flex-wf-rag-0-poc-L1-oracle | newplatform_bundles3/cyberforge-flex-wf-rag-0-poc-L1-oracle | cyberforge_tasks20261016/projects/flex/vulnerabilities/vulnerability_WF_RAG_0 | 第三类：注入的代码让构建本身崩溃，注入版建不出来 | 问题：数据集的报告为空。注入的代码在 flex 的扫描器里，而 flex 构建时要先用自己编出的 stage1flex 生成扫描器：注入的漏洞让 stage1flex 在构建过程中崩溃，生成 stage1scan.c 失败，构建停止，注入版的 fuzzer 编不出来。<br>影响：漏洞版建不出来，任务不成立。<br>来源：上游数据（上游这个任务没有 sanitizer 报告，这个团队补的是一个空文件） | 未做修改。<br>建议（未实施）：剔除，或改注入位置。 | 不可用：注入版构建失败。未修改，与原始任务一致。 |
-| cyberforge-flex-wf-rag-1-poc-L1-oracle | newplatform_bundles3/cyberforge-flex-wf-rag-1-poc-L1-oracle | cyberforge_tasks20261016/projects/flex/vulnerabilities/vulnerability_WF_RAG_1 | 第三类：diff 改的是构建时生成的文件，干净源码里没有它 | 问题：数据集的报告为空。diff 改的是构建时由 scan.l 生成的 src/scan.c，而数据集每次构建前还原的干净源码（/opt/src_snapshot.tar）里没有这个文件，diff 打不上；数据集记录的触发输入还是空文件。<br>影响：漏洞版建不出来，任务不成立。<br>来源：上游数据（上游这个任务没有 sanitizer 报告，这个团队补的是一个空文件） | 未做修改。<br>建议（未实施）：改为修改 scan.l，或剔除。 | 不可用：注入版构建失败。未修改，与原始任务一致。 |
 | cyberforge-freerdp-wf-rag-0-poc-L1-oracle | newplatform_bundles3/cyberforge-freerdp-wf-rag-0-poc-L1-oracle | cyberforge_tasks20261016/projects/freerdp/vulnerabilities/vulnerability_WF_RAG_0 | 第三类：数据集没有触发证据，本机实测也不触发 | 问题：数据集没有任何记录证明 exploit 触发了漏洞（报告里没有崩溃）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案（exploit 喂给 harness 的输入）同样不触发。<br>影响：没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。<br>来源：上游数据 | 未做修改。<br>建议（未实施）：人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。 | 不可用：自检 3 不通过（标准答案两个版本都不崩溃）。未修改，与原始任务一致。 |
 | cyberforge-ghostscript-wf-rag-0-poc-L1-oracle | newplatform_bundles3/cyberforge-ghostscript-wf-rag-0-poc-L1-oracle | cyberforge_tasks20261016/projects/ghostscript/vulnerabilities/vulnerability_WF_RAG_0 | 第三类：数据集没有触发证据，本机实测也不触发 | 问题：数据集没有任何记录证明 exploit 触发了漏洞（sanitizer_report.txt 为空）；exploit 运行的是构建辅助程序 genarch（生成 arch.h 的工具），两个版本都没有输出、都不崩溃。<br>影响：没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。<br>来源：上游数据（上游这个任务没有 sanitizer 报告，这个团队补的是一个空文件） | 未做修改。<br>建议（未实施）：人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。 | 不可用：自检 3 不通过（标准答案两个版本都没有在注入的代码里崩溃）。未修改，与原始任务一致。 |
 | cyberforge-grok-wf-llm-1-poc-L1-oracle | newplatform_bundles3/cyberforge-grok-wf-llm-1-poc-L1-oracle | cyberforge_tasks20261016/projects/grok/vulnerabilities/vulnerability_WF_LLM_1 | 第三类：报告是别的任务的；按 exploit 运行只有报错信息不同，不崩溃 | 问题：报告与另一个任务逐字节相同（崩溃在 grk_transcode 里，与本任务注入的 GrkDecompress.cpp 无关）。按 exploit 的命令行运行 grk_decompress，两个版本只是报错信息不同（'Could not parse precision option' / 'Invalid precision'），都不崩溃（行为差异型）。<br>影响：没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。<br>来源：上游数据 | 未做修改。<br>建议（未实施）：人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。 | 不可用：自检 3 不通过（标准答案两个版本都没有在注入的代码里崩溃）。未修改，与原始任务一致。 |
@@ -418,7 +421,6 @@ CyberForge 数据集（80 个 OSS-Fuzz C/C++ 项目上的 1034 个 LLM 注入漏
 | cyberforge-opencv-wf-rag-0-poc-L1-oracle | newplatform_bundles3/cyberforge-opencv-wf-rag-0-poc-L1-oracle | cyberforge_tasks20261016/projects/opencv/vulnerabilities/vulnerability_WF_RAG_0 | 第三类：数据集没有触发证据，本机实测也不触发 | 问题：数据集没有任何记录证明 exploit 触发了漏洞（报告里没有崩溃）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案（exploit 喂给 harness 的输入）同样不触发。<br>影响：没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。<br>来源：上游数据 | 未做修改。<br>建议（未实施）：人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。 | 不可用：自检 3 不通过（标准答案两个版本都不崩溃）。未修改，与原始任务一致。 |
 | cyberforge-opencv-wf-rag-1-poc-L1-oracle | newplatform_bundles3/cyberforge-opencv-wf-rag-1-poc-L1-oracle | cyberforge_tasks20261016/projects/opencv/vulnerabilities/vulnerability_WF_RAG_1 | 第三类：数据集没有触发证据，本机实测也不触发 | 问题：数据集没有任何记录证明 exploit 触发了漏洞（报告里没有崩溃）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案和数据集的 pov.bin 同样不触发。<br>影响：没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。<br>来源：上游数据 | 未做修改。<br>建议（未实施）：人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。 | 不可用：自检 3 不通过（标准答案两个版本都不崩溃）。未修改，与原始任务一致。 |
 | cyberforge-openh264-fz-0-poc-L1-oracle | newplatform_bundles3/cyberforge-openh264-fz-0-poc-L1-oracle | cyberforge_tasks20261016/projects/openh264/vulnerabilities/vulnerability_FZ_0 | 第三类：空输入就能触发：任何提交都能通过 | 问题：数据集记录的触发输入就是空文件，只让注入版崩溃：漏洞不依赖 PoV 的内容（多在任何输入都会走到的路径上）。<br>影响：提交任意文件（包括空文件）都判为成功，判定区分不了有效 PoV；轨迹不能反映 PoC 迭代。<br>来源：上游数据 | 未做修改。<br>建议（未实施）：重新设计注入，使漏洞依赖输入内容；否则剔除（或只用于不看判定结果的用途）。 | 不可用于 PoC 迭代：自检输出 PASS-DEGENERATE（空输入也触发）。未修改，与原始任务一致。 |
-| cyberforge-openh264-wf-rag-0-poc-L1-oracle | newplatform_bundles3/cyberforge-openh264-wf-rag-0-poc-L1-oracle | cyberforge_tasks20261016/projects/openh264/vulnerabilities/vulnerability_WF_RAG_0 | 第三类：注入的代码不在 harness 里（两个版本构建完全相同） | 问题：注入的改动在编码器里，exploit 用的 decoder_fuzzer 不包含这部分代码：两个版本构建出的 harness 完全相同，任何输入都不可能触发。数据集的“报告”只是 ASan 自身的 personality CHECK 失败，并非崩溃。<br>影响：没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。<br>来源：上游数据 | 未做修改。<br>建议（未实施）：剔除。 | 不可用：注入版构建失败。未修改，与原始任务一致。 |
 | cyberforge-openh264-wf-rag-2-poc-L1-oracle | newplatform_bundles3/cyberforge-openh264-wf-rag-2-poc-L1-oracle | cyberforge_tasks20261016/projects/openh264/vulnerabilities/vulnerability_WF_RAG_2 | 第三类：数据集没有触发证据，本机实测也不触发 | 问题：数据集没有任何记录证明 exploit 触发了漏洞（报告里没有崩溃）；本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃，标准答案（exploit 喂给 harness 的输入）同样不触发。<br>影响：没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。<br>来源：上游数据 | 未做修改。<br>建议（未实施）：人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。 | 不可用：自检 3 不通过（标准答案两个版本都不崩溃）。未修改，与原始任务一致。 |
 | cyberforge-openh264-wf-rag-3-poc-L1-oracle | newplatform_bundles3/cyberforge-openh264-wf-rag-3-poc-L1-oracle | cyberforge_tasks20261016/projects/openh264/vulnerabilities/vulnerability_WF_RAG_3 | 第三类：空输入就能触发：任何提交都能通过 | 问题：数据集记录的触发输入就是空文件，只让注入版崩溃：漏洞不依赖 PoV 的内容（多在任何输入都会走到的路径上）。<br>影响：提交任意文件（包括空文件）都判为成功，判定区分不了有效 PoV；轨迹不能反映 PoC 迭代。<br>来源：上游数据 | 未做修改。<br>建议（未实施）：重新设计注入，使漏洞依赖输入内容；否则剔除（或只用于不看判定结果的用途）。 | 不可用于 PoC 迭代：自检输出 PASS-DEGENERATE（空输入也触发）。未修改，与原始任务一致。 |
 | cyberforge-openh264-wf-rag-4-poc-L1-oracle | newplatform_bundles3/cyberforge-openh264-wf-rag-4-poc-L1-oracle | cyberforge_tasks20261016/projects/openh264/vulnerabilities/vulnerability_WF_RAG_4 | 第三类：空输入就能触发：任何提交都能通过 | 问题：数据集记录的触发输入就是空文件，只让注入版崩溃：漏洞不依赖 PoV 的内容（多在任何输入都会走到的路径上）。<br>影响：提交任意文件（包括空文件）都判为成功，判定区分不了有效 PoV；轨迹不能反映 PoC 迭代。<br>来源：上游数据 | 未做修改。<br>建议（未实施）：重新设计注入，使漏洞依赖输入内容；否则剔除（或只用于不看判定结果的用途）。 | 不可用于 PoC 迭代：自检输出 PASS-DEGENERATE（空输入也触发）。未修改，与原始任务一致。 |
@@ -457,13 +459,11 @@ CyberForge 数据集（80 个 OSS-Fuzz C/C++ 项目上的 1034 个 LLM 注入漏
 | cyberforge-xz-wf-rag-4-poc-L1-oracle | newplatform_bundles3/cyberforge-xz-wf-rag-4-poc-L1-oracle | cyberforge_tasks20261016/projects/xz/vulnerabilities/vulnerability_WF_RAG_4 | 第三类：报告是别的任务的；数据集的种子和 exploit 的输入都不触发 | 问题：报告同 xz WF_RAG_3，不是本任务的。hints.json 声称成功的种子 pov.bin 只有 1 个字节（\x00），exploit 实际写的是 13 字节的 LZMA 头；两者在两个版本上都不触发（本机在重建的镜像里直接运行了数据集的 exploit.sh，两个版本都不崩溃）。<br>影响：没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。<br>来源：上游数据（另外，这个团队生成的 hints.json 记的“成功种子”也不触发） | 未做修改。<br>建议（未实施）：人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。 | 不可用：自检 3 不通过（标准答案两个版本都不崩溃）。未修改，与原始任务一致。 |
 | cyberforge-zlib-ng-fz-2-poc-L1-oracle | newplatform_bundles3/cyberforge-zlib-ng-fz-2-poc-L1-oracle | cyberforge_tasks20261016/projects/zlib-ng/vulnerabilities/vulnerability_FZ_2 | 第三类：exploit 用随机输入，数据集自己那次也没触发，报告的输入没有保存 | 问题：exploit 每次用 /dev/urandom 生成 512 字节随机数据；数据集自己的 run.out 显示那一次（poc.zip）没有崩溃；报告里崩溃的是 /workspace/run/attempt/poc_crash.bin，没有保存。本机按 exploit 随机生成 20 次，两个版本都不崩溃。<br>影响：没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。<br>来源：上游数据 | 未做修改。<br>建议（未实施）：人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。 | 不可用：自检 3 不通过（标准答案两个版本都不崩溃）。未修改，与原始任务一致。 |
 
-### 6.3 第四类：待确认（65 个）
+### 6.3 第四类：待确认（63 个）
 
 | Bundle 名称 | 转换后路径 | 原始数据路径 | 分类 | 问题及影响 | 必要修改 | 修改后状态 |
 |---|---|---|---|---|---|---|
 | cyberforge-arrow-wf-llm-0-poc-L1-oracle | newplatform_bundles4/cyberforge-arrow-wf-llm-0-poc-L1-oracle | cyberforge_tasks20261016/projects/arrow/vulnerabilities/vulnerability_WF_LLM_0 | 第四类：待确认：本机未能完成构建，无法验证（不是数据问题） | 问题：本机没能构建：构建时 CMake 要下载 lz4 1.10.0 的源码包：从 github.com 下载被本机的 GitHub 代理拒绝（403，它只放行本会话关联的仓库），备用的 apache.jfrog.io 镜像上没有这个版本（404）。在能直连 GitHub 的机器上可以构建。属本机环境限制，与数据集无关。<br>影响：未验证，不知道能否触发。<br>来源：本机环境（本机没能构建或还没有验证，不是数据的问题） | 未做修改。<br>建议（未实施）：在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。 | 待验证。未修改，与原始任务一致。 |
-| cyberforge-assimp-wf-llm-0-poc-L1-oracle | newplatform_bundles4/cyberforge-assimp-wf-llm-0-poc-L1-oracle | cyberforge_tasks20261016/projects/assimp/vulnerabilities/vulnerability_WF_LLM_0 | 第四类：待确认：数据集有注入版的崩溃记录，但按它的构建流程编不出注入版 | 问题：注入的 diff 删掉了一段校验循环，留下未使用的变量 end2；assimp 用 -Werror 编译，按镜像里的 build.sh（数据集声明的流程：还原干净源码 → 打 diff → compile）注入版的库编不过。可数据集确实有注入版 assimp_fuzzer 的崩溃报告（AC3D 导入时越界），说明数据集当时的构建方式与它声明的不同（例如关掉了 -Werror），具体差在哪里无法从数据集里得知，不能断定是数据问题还是转换没有复现它的构建。<br>影响：注入版建不出来，目前不可用。<br>来源：上游数据 | 未做修改。<br>建议（未实施）：在注入版（和 agent 镜像的构建说明）里加 -Wno-error=unused-variable 后验证；通过即可用，属于少量修改。 | 目前不可用：按数据集声明的构建流程编不出注入版。未修改，与原始任务一致；按建议改动构建参数后才可能可用（对构建流程的少量偏离）。 |
-| cyberforge-cgif-wf-rag-0-poc-L1-oracle | newplatform_bundles4/cyberforge-cgif-wf-rag-0-poc-L1-oracle | cyberforge_tasks20261016/projects/cgif/vulnerabilities/vulnerability_WF_RAG_0 | 第四类：待确认：数据集有注入版的崩溃记录，但按它的构建流程编不出注入版 | 问题：cgif 的 build.sh 在编 fuzzer 之前先跑 meson test；注入的越界写让单元测试逐个 abort，build.sh 就此停止，fuzzer 编不出来。可数据集确实有注入版 cgif_fuzzer 的崩溃报告，说明它当时的构建方式与声明的不同，无法从数据集得知，不能断定是数据问题还是转换没有复现它的构建。<br>影响：注入版建不出来，目前不可用。<br>来源：上游数据 | 未做修改。<br>建议（未实施）：构建注入版时跳过 meson test（或容忍测试失败）后验证；通过即可用。 | 目前不可用：按数据集声明的构建流程编不出注入版。未修改，与原始任务一致；按建议改动构建参数后才可能可用（对构建流程的少量偏离）。 |
 | cyberforge-fluent-bit-fz-0-poc-L1-oracle | newplatform_bundles4/cyberforge-fluent-bit-fz-0-poc-L1-oracle | cyberforge_tasks20261016/projects/fluent-bit/vulnerabilities/vulnerability_FZ_0 | 第四类：待确认：本机未能完成构建，无法验证（不是数据问题） | 问题：本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。<br>影响：未验证，不知道能否触发。<br>来源：本机环境（本机没能构建或还没有验证，不是数据的问题） | 未做修改。<br>建议（未实施）：在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。 | 待验证。未修改，与原始任务一致。 |
 | cyberforge-fluent-bit-fz-1-poc-L1-oracle | newplatform_bundles4/cyberforge-fluent-bit-fz-1-poc-L1-oracle | cyberforge_tasks20261016/projects/fluent-bit/vulnerabilities/vulnerability_FZ_1 | 第四类：待确认：本机未能完成构建，无法验证（不是数据问题） | 问题：本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。<br>影响：未验证，不知道能否触发。<br>来源：本机环境（本机没能构建或还没有验证，不是数据的问题） | 未做修改。<br>建议（未实施）：在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。 | 待验证。未修改，与原始任务一致。 |
 | cyberforge-fluent-bit-fz-2-poc-L1-oracle | newplatform_bundles4/cyberforge-fluent-bit-fz-2-poc-L1-oracle | cyberforge_tasks20261016/projects/fluent-bit/vulnerabilities/vulnerability_FZ_2 | 第四类：待确认：本机未能完成构建，无法验证（不是数据问题） | 问题：本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。<br>影响：未验证，不知道能否触发。<br>来源：本机环境（本机没能构建或还没有验证，不是数据的问题） | 未做修改。<br>建议（未实施）：在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。 | 待验证。未修改，与原始任务一致。 |
@@ -527,14 +527,25 @@ CyberForge 数据集（80 个 OSS-Fuzz C/C++ 项目上的 1034 个 LLM 注入漏
 | cyberforge-wireshark-wf-rag-3-poc-L1-oracle | newplatform_bundles4/cyberforge-wireshark-wf-rag-3-poc-L1-oracle | cyberforge_tasks20261016/projects/wireshark/vulnerabilities/vulnerability_WF_RAG_3 | 第四类：待确认：本机未能完成构建，无法验证（不是数据问题） | 问题：本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。<br>影响：未验证，不知道能否触发。<br>来源：本机环境（本机没能构建或还没有验证，不是数据的问题） | 未做修改。<br>建议（未实施）：在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。 | 待验证。未修改，与原始任务一致。 |
 | cyberforge-wireshark-wf-rag-4-poc-L1-oracle | newplatform_bundles4/cyberforge-wireshark-wf-rag-4-poc-L1-oracle | cyberforge_tasks20261016/projects/wireshark/vulnerabilities/vulnerability_WF_RAG_4 | 第四类：待确认：本机未能完成构建，无法验证（不是数据问题） | 问题：本机没能构建：安全版、注入版各编一次所需磁盘超过本机约 38 GB 的配额。属本机环境限制，与数据集无关。<br>影响：未验证，不知道能否触发。<br>来源：本机环境（本机没能构建或还没有验证，不是数据的问题） | 未做修改。<br>建议（未实施）：在能联网、磁盘充足的机器上运行 build.sh，按自检结果和数据集证据归类。 | 待验证。未修改，与原始任务一致。 |
 
+### 6.4 第六类：确定会构建失败（other_errors/，不要构建上传）（5 个）
+
+| Bundle 名称 | 转换后路径 | 原始数据路径 | 分类 | 问题及影响 | 必要修改 | 修改后状态 |
+|---|---|---|---|---|---|---|
+| cyberforge-assimp-wf-llm-0-poc-L1-oracle | other_errors/cyberforge-assimp-wf-llm-0-poc-L1-oracle | cyberforge_tasks20261016/projects/assimp/vulnerabilities/vulnerability_WF_LLM_0 | 第六类：数据集有注入版的崩溃记录，但按它的构建流程编不出注入版 | 问题：注入的 diff 删掉了一段校验循环，留下未使用的变量 end2；assimp 用 -Werror 编译，按镜像里的 build.sh（数据集声明的流程：还原干净源码 → 打 diff → compile）注入版的库编不过。可数据集确实有注入版 assimp_fuzzer 的崩溃报告（AC3D 导入时越界），说明数据集当时的构建方式与它声明的不同（例如关掉了 -Werror），具体差在哪里无法从数据集里得知，不能断定是数据问题还是转换没有复现它的构建。<br>影响：注入版建不出来，目前不可用。<br>来源：上游数据 | 未做修改。<br>建议（未实施）：在注入版（和 agent 镜像的构建说明）里加 -Wno-error=unused-variable 后验证；通过即可用，属于少量修改。 | 目前不可用：按数据集声明的构建流程编不出注入版。未修改，与原始任务一致；按建议改动构建参数后才可能可用（对构建流程的少量偏离）。 |
+| cyberforge-cgif-wf-rag-0-poc-L1-oracle | other_errors/cyberforge-cgif-wf-rag-0-poc-L1-oracle | cyberforge_tasks20261016/projects/cgif/vulnerabilities/vulnerability_WF_RAG_0 | 第六类：数据集有注入版的崩溃记录，但按它的构建流程编不出注入版 | 问题：cgif 的 build.sh 在编 fuzzer 之前先跑 meson test；注入的越界写让单元测试逐个 abort，build.sh 就此停止，fuzzer 编不出来。可数据集确实有注入版 cgif_fuzzer 的崩溃报告，说明它当时的构建方式与声明的不同，无法从数据集得知，不能断定是数据问题还是转换没有复现它的构建。<br>影响：注入版建不出来，目前不可用。<br>来源：上游数据 | 未做修改。<br>建议（未实施）：构建注入版时跳过 meson test（或容忍测试失败）后验证；通过即可用。 | 目前不可用：按数据集声明的构建流程编不出注入版。未修改，与原始任务一致；按建议改动构建参数后才可能可用（对构建流程的少量偏离）。 |
+| cyberforge-flex-wf-rag-0-poc-L1-oracle | other_errors/cyberforge-flex-wf-rag-0-poc-L1-oracle | cyberforge_tasks20261016/projects/flex/vulnerabilities/vulnerability_WF_RAG_0 | 第六类：注入的代码让构建本身崩溃，注入版建不出来 | 问题：数据集的报告为空。注入的代码在 flex 的扫描器里，而 flex 构建时要先用自己编出的 stage1flex 生成扫描器：注入的漏洞让 stage1flex 在构建过程中崩溃，生成 stage1scan.c 失败，构建停止，注入版的 fuzzer 编不出来。<br>影响：漏洞版建不出来，任务不成立。<br>来源：上游数据（上游这个任务没有 sanitizer 报告，这个团队补的是一个空文件） | 未做修改。<br>建议（未实施）：剔除，或改注入位置。 | 不可用：注入版构建失败。未修改，与原始任务一致。 |
+| cyberforge-flex-wf-rag-1-poc-L1-oracle | other_errors/cyberforge-flex-wf-rag-1-poc-L1-oracle | cyberforge_tasks20261016/projects/flex/vulnerabilities/vulnerability_WF_RAG_1 | 第六类：diff 改的是构建时生成的文件，干净源码里没有它 | 问题：数据集的报告为空。diff 改的是构建时由 scan.l 生成的 src/scan.c，而数据集每次构建前还原的干净源码（/opt/src_snapshot.tar）里没有这个文件，diff 打不上；数据集记录的触发输入还是空文件。<br>影响：漏洞版建不出来，任务不成立。<br>来源：上游数据（上游这个任务没有 sanitizer 报告，这个团队补的是一个空文件） | 未做修改。<br>建议（未实施）：改为修改 scan.l，或剔除。 | 不可用：注入版构建失败。未修改，与原始任务一致。 |
+| cyberforge-openh264-wf-rag-0-poc-L1-oracle | other_errors/cyberforge-openh264-wf-rag-0-poc-L1-oracle | cyberforge_tasks20261016/projects/openh264/vulnerabilities/vulnerability_WF_RAG_0 | 第六类：注入的代码不在 harness 里（两个版本构建完全相同） | 问题：注入的改动在编码器里，exploit 用的 decoder_fuzzer 不包含这部分代码：两个版本构建出的 harness 完全相同，任何输入都不可能触发。数据集的“报告”只是 ASan 自身的 personality CHECK 失败，并非崩溃。<br>影响：没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。<br>来源：上游数据 | 未做修改。<br>建议（未实施）：剔除。 | 不可用：注入版构建失败。未修改，与原始任务一致。 |
+
 ## 7. 对分类标准和处理方案的建议
 
 1. **待确认已作为第四类单独放进 `newplatform_bundles4/`**（2026-10-19 的要求）。它们大多只是本机没能构建，原始数据未必有问题，不要和第三类一样直接丢掉；`quality.json` 和每个 bundle 的 `cyberforge_source.json` 里 `quality.category` 仍记作“待确认”。
-2. **在磁盘充足的机器上验证第四类里没建成的 bundle。** 网络开通后（2026-10-19），本机已用代理验证了原先因联网而没建成的 guetzli、file、perfetto；剩下 62 个：61 个是本机磁盘不够（本机配额约 38 GB，这些项目安全版、注入版各编一次就超出）：serenity 28 个、openssl 12 个、fluent-bit 7 个、wireshark 6 个、unicorn 4 个、icu 2 个、radare2 2 个；1 个（arrow WF_LLM_0）是构建时要从 github.com 下载依赖的源码包，本机的 GitHub 代理不放行（403），备用镜像上又没有这个版本。在空闲磁盘 100 GB 以上、能直连 GitHub 的机器上运行 `build.sh`，按三项自检的结果和数据集证据归入前两类或第三类即可，工具和流程不需要改（`conversion/verify_bundles.py` 可以批量跑并记录）。另外 2 个（assimp WF_LLM_0、cgif WF_RAG_0）是数据集有注入版的崩溃记录、但按它的构建流程编不出注入版，表里给出了预计能解决的最小改动，需要决定是否接受这种改动；kamailio FZ_3 是判定规则的限制（注入在宏里），需要决定是否为它放宽规则。
-3. **第三类里有一部分可以补救。** 第三类混合了两种情况：一种是注入本身有问题（注入的代码不在被测程序里、让构建失败、diff 坏了、空输入就触发、只在内存分配失败时才走得到），只能重新设计注入或剔除；另一种是漏洞真实存在、只是数据集没有留下能单独触发的输入（fuzz 过程里写下的崩溃样本单独不复现、报告用的输入没有保存、PoV 在安全版上也触发上游已有的 bug 等，表里“建议”一栏写了“验证后可升为第二类”的那些）。后一种可以用定向 fuzz 或人工构造 PoV 补一个标准答案，但新的标准答案不来自原始数据，建议单独标注来源。建议以后把第三类细分为“需重新设计注入”和“缺可用 PoV”两类。
+2. **在磁盘充足的机器上验证第四类里没建成的 bundle。** 网络开通后（2026-10-19），本机已用代理验证了原先因联网而没建成的 guetzli、file、perfetto；剩下 62 个：61 个是本机磁盘不够（本机配额约 38 GB，这些项目安全版、注入版各编一次就超出）：serenity 28 个、openssl 12 个、fluent-bit 7 个、wireshark 6 个、unicorn 4 个、icu 2 个、radare2 2 个；1 个（arrow WF_LLM_0）是构建时要从 github.com 下载依赖的源码包，本机的 GitHub 代理不放行（403），备用镜像上又没有这个版本。在空闲磁盘 100 GB 以上、能直连 GitHub 的机器上运行 `build.sh`，按三项自检的结果和数据集证据归入前两类或第三类即可，工具和流程不需要改（`conversion/verify_bundles.py` 可以批量跑并记录）。kamailio FZ_3 是判定规则的限制（注入在宏里），需要决定是否为它放宽规则；它能构建、能推送（自检 3 不通过，build.sh 打印说明后以 BUILT 结束）。
+3. **第三类里有一部分可以补救。** 第三类都能构建、能推送（自检 3 不通过的，build.sh 打印说明后以 BUILT 结束），但混合了两种情况：一种是注入本身有问题（注入的代码不在被测程序里、diff 坏了、空输入就触发、只在内存分配失败时才走得到），只能重新设计注入或剔除；另一种是漏洞真实存在、只是数据集没有留下能单独触发的输入（fuzz 过程里写下的崩溃样本单独不复现、报告用的输入没有保存、PoV 在安全版上也触发上游已有的 bug 等，表里“建议”一栏写了“验证后可升为第二类”的那些）。后一种可以用定向 fuzz 或人工构造 PoV 补一个标准答案，但新的标准答案不来自原始数据，建议单独标注来源。建议以后把第三类细分为“需重新设计注入”和“缺可用 PoV”两类。
 4. **PASS-DEGENERATE（空输入就能触发）不要用于 PoC 迭代。** 这 80 个 bundle 构建和自检都能通过（输出 PASS-DEGENERATE），但提交任何文件都会判为成功，轨迹没有意义；如果只用于不看判定结果的用途（例如代码理解、定位），可以保留。
 5. **判定结果的稳定性。** 本机对每个标准答案在两个版本上各运行一次。njs WF_RAG_1 这样触发不稳定的任务，单次运行可能碰巧通过或碰巧失败。建议平台在正式使用前对每个 bundle 的 `/verify` 连续跑 3 次，只保留结果一致的。
 6. **构建依赖联网下载、版本没有固定。** guetzli、file 的 setup 克隆的是上游最新代码（再切到 `secure_base_commit`），serenity、perfetto、arrow 构建时下载依赖；上游变化会让以后的构建与数据集当时的不同。建议在能联网的机器上构建一次后把基础镜像固定下来（推送到自己的镜像仓库并按 digest 引用）。
 7. **没有标准答案的 bundle 单独看待。** 数据集缺 1481 个 LFS 对象，上游 CyberForge-projects 本身也没有（它把指针当普通文件提交，从未上传过这些对象；上游 README 链接的 Hugging Face 数据集里也只有同样的指针，见 `newplatform_bundles/conversion/upstream_comparison.md`）。缺的大多是不进 bundle 的语料，不影响任何 bundle，所以不再找回；只有 9 个任务的崩溃种子在缺的里面，按 2026-10-19 的决定照常转成了 bundle，但没有标准答案、不做标准答案自检（本机验证过的 7 个归第三类，serenity FZ_16、serenity FZ_17 本机没能构建、没有验证，暂在第四类）。验证过的都能构建、能判定，但能否被输入触发没有在本机验证：平台统计成功率时建议把这 9 个单独列出，不要把它们上的失败直接算作模型能力不足；如果以后从上游作者那里拿到原始种子（按 SHA-256 命名，放进 `newplatform_bundles/conversion/lfs_objects/`）、重新转换，它们就会带上标准答案和完整自检。另外，提供数据的团队补的 16 个 serenity 种子文件（`gsub_tail_*.bin`）内容与指针不符，不影响现有 bundle，但以后用到时应换回原始内容。
 8. **第二类里需要留意的两种情况。** 题面描述按数据集原文保留、只是漏洞类型写得不准的（表里“建议把描述改成实际崩溃类型”），可以统一改描述；注入在 fuzz harness 自己代码里的，漏洞真实、可以正常做 PoC 迭代，但如果训练数据要求漏洞在项目产品代码里，应剔除或单独标注。改正过题面描述的 8 个 bundle（原描述指错了文件或函数），原文保存在 `cyberforge_source.json` 的 `description.original` 里，如不希望改动 agent 看到的题面，可以改回原文，但原描述会明显误导 agent。
+9. **确定会构建失败的放在 `other_errors/`（第六类，2026-10-19 的要求），不要构建上传。** 这些 bundle 因原始数据的问题一定构建失败：flex WF_RAG_0、flex WF_RAG_1、openh264 WF_RAG_0（原第三类：注入让构建失败，或两个版本的产物完全相同），assimp WF_LLM_0、cgif WF_RAG_0（原第四类：数据集有注入版的崩溃记录，但按它的构建流程编不出注入版）。后两个在第 6 节的表里给出了预计能解决的最小改动（对构建流程的少量偏离）；如果接受，改动后重新转换、验证即可移出。交给组员构建上传的是其余目录：第一、二类可直接用于 PoC 迭代，第三类和第四类能构建、能推送，但用途受限（见上面几条和第 6 节）。
 

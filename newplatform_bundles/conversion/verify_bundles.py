@@ -155,11 +155,15 @@ ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt GIT_SSL_CAINFO=/etc/ssl/cer
 # HTTPS only: this machine's proxy tunnels (CONNECT) and answers 405 to plain-HTTP requests, which reach
 # the network directly (e.g. apt's http://archive.ubuntu.com)
 PROXY_VARS = ("HTTPS_PROXY", "https_proxy")
+# --ca, per project: what a build downloads from github.com that this machine's GitHub proxy refuses
+# (it serves only the repositories linked to the session), from a mirror with the same bytes; the
+# build checks them (arrow: thirdparty/versions.txt's SHA-256 of lz4 v1.10.0, 5375129047...)
+VERIFY_ENV = {"arrow": {"ARROW_LZ4_URL": "http://deb.debian.org/debian/pool/main/l/lz4/lz4_1.10.0.orig.tar.gz"}}
 
 
-def ca_image(base, ca):
+def ca_image(base, ca, env=None):
     """A copy of image base that also trusts the CA (built once per base), or None."""
-    tag = "cf_verify_ca:" + hashlib.sha1(base.encode()).hexdigest()[:12]
+    tag = "cf_verify_ca:" + hashlib.sha1((base + json.dumps(env or {}, sort_keys=True)).encode()).hexdigest()[:12]
     if subprocess.run(["docker", "image", "inspect", tag], capture_output=True).returncode != 0:
         if subprocess.run(["docker", "image", "inspect", base], capture_output=True).returncode != 0 and \
                 subprocess.run(["docker", "pull", "-q", base], capture_output=True).returncode != 0:
@@ -169,7 +173,8 @@ def ca_image(base, ca):
             base = mirror
         with tempfile.TemporaryDirectory() as ctx:
             shutil.copyfile(ca, os.path.join(ctx, "ca.crt"))
-            open(os.path.join(ctx, "Dockerfile"), "w").write(CA_DOCKERFILE % base)
+            open(os.path.join(ctx, "Dockerfile"), "w").write(CA_DOCKERFILE % base + "".join(
+                "ENV %s=%s\n" % kv for kv in sorted((env or {}).items())))
             if subprocess.run(["docker", "build", "-q", "-t", tag, ctx], capture_output=True).returncode != 0:
                 return None
     return tag
@@ -186,11 +191,12 @@ def ca_build_script(bd, ca):
     proxy = os.environ.get("HTTPS_PROXY") or os.environ.get("https_proxy") or ""
     net = ("--network host " + "".join("--build-arg %s=%s " % (k, proxy) for k in PROXY_VARS) +
            "--build-arg NO_PROXY=localhost,127.0.0.1 --build-arg no_proxy=localhost,127.0.0.1 ") if proxy else ""
+    env = VERIFY_ENV.get(project_of(bd))
     if re.search(r"^HAS_HUB_IMAGE=0", text, re.M):
         setup = os.path.join(bd, "build", "setup")
         df = open(os.path.join(setup, "Dockerfile")).read()
         m = re.search(r"(?m)^FROM\s+(\S+)", df)
-        tag = ca_image(m.group(1), ca) if m else None
+        tag = ca_image(m.group(1), ca, env) if m else None
         old = 'docker build -t "$BASE" build/setup'
         if not tag or old not in text:
             return None
@@ -200,7 +206,7 @@ def ca_build_script(bd, ca):
         open(os.path.join(tmp, "Dockerfile"), "w").write(df[:m.start()] + "FROM " + tag + df[m.end():])
         text = text.replace(old, 'docker build %s-t "$BASE" "%s"' % (net, tmp))
     else:
-        tag = ca_image(re.search(r"^BASE=(\S+)", text, re.M).group(1), ca)
+        tag = ca_image(re.search(r"^BASE=(\S+)", text, re.M).group(1), ca, env)
         if not tag:
             return None
         text = re.sub(r"^BASE=\S+", "BASE=" + tag, text, count=1, flags=re.M)
@@ -218,6 +224,32 @@ SETUP_COPY = ".setup.verify-ca"
 def project_of(bundle):
     d = json.load(open(os.path.join(bundle, "cyberforge_source.json")))
     return d["source_task"].split("/projects/", 1)[1].split("/")[0]
+
+
+PLACE_FIX = ("python3 -c \"import importlib.util as u; s = u.spec_from_file_location('ts', '/task_server.py'); "
+             "m = u.module_from_spec(s); s.loader.exec_module(m); m._place('fix')\"")
+
+
+def generate(ts_tag, gen):
+    """Run gen["cmd"] as root in the task-server image with the fixed build in place and /cf_gt_out
+    mounted; store the file it writes there (gen["name"]) at gen["out"]."""
+    out = tempfile.mkdtemp()
+    os.chmod(out, 0o777)
+    try:
+        p = subprocess.run(["docker", "run", "--rm", "--network", "none", "-e", "AUTH_TOKEN=x", "-v", "%s:/cf_gt_out" % out,
+                            "--entrypoint", "sh", ts_tag, "-c", PLACE_FIX + " && " + gen["cmd"]],
+                           stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, errors="replace", timeout=1800)
+        src = os.path.join(out, gen["name"])
+        if p.returncode != 0 or not os.path.isfile(src):
+            return {"error": "exit %d: %s" % (p.returncode, p.stdout[-1500:])}
+        os.makedirs(os.path.dirname(gen["out"]), exist_ok=True)
+        shutil.copyfile(src, gen["out"])
+        data = open(src, "rb").read()
+        return {"file": gen["out"], "bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()}
+    except subprocess.TimeoutExpired:
+        return {"error": "timeout"}
+    finally:
+        shutil.rmtree(out, ignore_errors=True)
 
 
 def main():
@@ -309,11 +341,29 @@ def main():
         ver = re.search(r'^VER="?([^"\n]+)"?', open(os.path.join(bd, "build.sh")).read(), re.M)
         ts_tag = m.group(1).replace("${VER}", ver.group(1) if ver else "") if m else ""
         have_ts = ts_tag and subprocess.run(["docker", "image", "inspect", ts_tag], capture_output=True).returncode == 0
+        gen = item.get("generate")
+        if have_ts and gen:
+            # a category-5 ground truth made by running the project's code (c5_specs.json ground_truth.generate):
+            # in the task-server image, as root, with the fixed build in place; then self-checked like an alternative
+            rec["generated"] = generate(ts_tag, gen)
+            if "sha256" in rec["generated"]:
+                item.setdefault("alts", {})[gen["label"]] = gen["out"]
+                item.setdefault("alt_judge", {})[gen["label"]] = {"no_ground_truth": None}
         if have_ts and (item.get("alts") or item.get("judge_alts")):
             rec["alts"] = {}
-            for label, f in (item.get("alts") or {}).items():
-                rec["alts"][label] = selfcheck(ts_tag, [(os.path.abspath(f), "/tests/ground_truth_poc")])
             judge = json.load(open(os.path.join(bd, "environment", "task-server", "judge.json")))
+            for label, f in (item.get("alts") or {}).items():
+                mounts = [(os.path.abspath(f), "/tests/ground_truth_poc")]
+                over = (item.get("alt_judge") or {}).get(label)
+                if over is not None:  # e.g. a bundle built without its (still to be generated) ground truth
+                    with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as t:
+                        json.dump({k: v for k, v in dict(judge, **over).items() if v is not None}, t)
+                    mounts.append((t.name, "/judge.json"))
+                try:
+                    rec["alts"][label] = selfcheck(ts_tag, mounts)
+                finally:
+                    if over is not None:
+                        os.unlink(t.name)
             for label, over in (item.get("judge_alts") or {}).items():
                 with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as t:
                     json.dump(dict(judge, **over), t)

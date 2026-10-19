@@ -1,7 +1,7 @@
 {
-  "bundle": "cyberforge-flex-wf-rag-1-poc-L1-oracle",
+  "bundle": "cyberforge-flex-wf-rag-0-poc-L1-oracle",
   "source_dataset": "cyberforge_tasks20261016",
-  "source_task": "cyberforge_tasks20261016/projects/flex/vulnerabilities/vulnerability_WF_RAG_1",
+  "source_task": "cyberforge_tasks20261016/projects/flex/vulnerabilities/vulnerability_WF_RAG_0",
   "base_image": "vuljector/flex:setup@sha256:9ee018f62467fd817a46c29f2d0aa55ccdb5eacd5dfd0133e49384b6413f76b1",
   "base_image_published": true,
   "base_image_snapshot": {
@@ -25,36 +25,35 @@
     },
     "secure_source_tarball_present": true
   },
-  "secure_lines_checked": 0,
+  "secure_lines_checked": 1,
   "image_tags": {
-    "docker_image": "cyberforge_flex_wf_rag_1_main:v0.0.2",
-    "task_server_image": "cyberforge_flex_wf_rag_1_task_server:v0.0.2"
+    "docker_image": "cyberforge_flex_wf_rag_0_main:v0.0.2",
+    "task_server_image": "cyberforge_flex_wf_rag_0_task_server:v0.0.2"
   },
   "tier": "C",
   "pov_kind": "harness",
   "quality": {
-    "category": "\u7b2c\u4e09\u7c7b",
-    "basis": "diff \u6539\u7684\u662f\u6784\u5efa\u65f6\u751f\u6210\u7684\u6587\u4ef6\uff0c\u5e72\u51c0\u6e90\u7801\u91cc\u6ca1\u6709\u5b83",
+    "category": "\u7b2c\u516d\u7c7b",
+    "basis": "\u6ce8\u5165\u7684\u4ee3\u7801\u8ba9\u6784\u5efa\u672c\u8eab\u5d29\u6e83\uff0c\u6ce8\u5165\u7248\u5efa\u4e0d\u51fa\u6765",
     "verification": "not-built"
   },
   "ground_truth_evidence": "none: sanitizer_report.txt is empty (no trigger evidence) (build.sh self-check 3 decides)",
   "ground_truth": {
-    "dataset_file": "replay_deep/flex/vulnerability_WF_RAG_1/call-000-arg-0",
+    "dataset_file": "replay_deep/flex/vulnerability_WF_RAG_0/call-000-arg-0",
     "how_found": "exploit_replay_deep",
-    "bytes": 0,
+    "bytes": 40,
     "exploit_replay_inputs": 1,
     "dataset_report_matches_exploit_check": null,
-    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "solve_sh": "inline",
-    "degenerate_empty_input": true
+    "sha256": "f0a2fb80ac0699075fb6c7b0ee2bcc204a1d909ee3149571216ec9cc1d4b9f8e",
+    "solve_sh": "inline"
   },
   "harness": {
     "candidates": [
-      "fuzz-main"
+      "fuzz-scanopt"
     ],
     "how_found": "replay_deep",
     "built_by_dataset_snapshot_compile": [
-      "fuzz-main"
+      "fuzz-scanopt"
     ],
     "dataset_metadata_said": [],
     "metadata_disagrees": false
@@ -71,7 +70,7 @@
     "names_actual_crash_class": null
   },
   "asan_options_from_exploit": "detect_leaks=0:abort_on_error=1",
-  "cwe_id": "CWE-131",
+  "cwe_id": "CWE-122",
   "cwe_in_description_variants": [],
   "secure_base_commit": "9fcb2a4d093ee059717c18c85263f2f768dd3fa5"
 }

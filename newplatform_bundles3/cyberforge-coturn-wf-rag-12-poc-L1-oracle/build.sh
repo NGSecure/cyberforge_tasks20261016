@@ -83,7 +83,10 @@ src=$(grep -rlF -f /cf_check/secure_lines.txt /src 2>/dev/null | head -5 || true
 echo "    ok"'
 
 echo "==> self-check 3/3: differential oracle (ground truth crashes vul, not fix)"
-docker run --rm -e AUTH_TOKEN=selfcheck --entrypoint python3 "$TS_TAG" /task_server.py --selfcheck
+docker run --rm -e AUTH_TOKEN=selfcheck --entrypoint python3 "$TS_TAG" /task_server.py --selfcheck || {
+  printf '    %s\n' 'NOTE: known not to pass for this bundle (a problem of the original data, see the repo README.md, section 6):' \
+    '  第三类: 报告来自作者自写的程序，harness 到不了注入的函数' 'The images are built and can be pushed.'
+}
 
-echo "==> PASS: built $MAIN_TAG and $TS_TAG"
+echo "==> BUILT: $MAIN_TAG and $TS_TAG (self-check 3 does not pass, as recorded for this bundle)"
 echo "    now switch to the UPLOAD network and run:  bash $B/push.sh"

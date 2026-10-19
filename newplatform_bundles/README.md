@@ -1,6 +1,6 @@
 # CyberForge → 新平台 bundles（第一类）
 
-`../cyberforge_tasks20261016/`（CyberForge 数据集）转换出的新平台 bundle，与原数据集分开存放，原数据未做任何修改。bundle 按**原始数据（数据集任务本身）的质量**分在 repo 根目录下四个平级的目录里；本目录放**第一类**，以及各类共用的转换工具、清单和报告。分类标准、各类数量和每个原始数据有问题的 bundle 的说明见 repo 根目录的 `README.md`。
+`../cyberforge_tasks20261016/`（CyberForge 数据集）转换出的新平台 bundle，与原数据集分开存放，原数据未做任何修改。bundle 按**原始数据（数据集任务本身）的质量**分在 repo 根目录下几个平级的目录里；本目录放**第一类**，以及各类共用的转换工具、清单和报告。分类标准、各类数量和每个原始数据有问题的 bundle 的说明见 repo 根目录的 `README.md`。
 
 ## 目录
 
@@ -8,12 +8,13 @@
 |---|---|---|
 | `newplatform_bundles/`（本目录） | 524 | 第一类：原始数据正常，本机三项自检全部通过，可直接用于 PoC 迭代和轨迹生成 |
 | `newplatform_bundles2/` | 127 | 第二类：原始数据有轻微问题（已做少量修改，或不修改也不影响轨迹质量），本机三项自检全部通过 |
-| `newplatform_bundles3/` | 187 | 第三类：原始数据有严重问题，不应用于 PoC 迭代 |
-| `newplatform_bundles4/` | 65 | 第四类（待确认）：本机没能构建，或不能断定是原始数据的问题 |
+| `newplatform_bundles3/` | 184 | 第三类：原始数据有严重问题，不应用于 PoC 迭代 |
+| `newplatform_bundles4/` | 63 | 第四类（待确认）：本机没能构建（需要更大的磁盘或直连公网），或不能断定是原始数据的问题 |
+| `other_errors/` | 5 | 第六类：因原始数据的问题确定会构建失败、暂时无法修复，**不要构建上传** |
 
-四个目录的 bundle 结构和用法完全相同；PoV 有两种形态：harness 型（喂给 OSS-Fuzz harness 的一个输入文件，810 个）和 CLI / 程序型（交给项目自己的程序：CLI 的输入文件、标准输入或命令行参数，或者是一个链接项目代码的 C/C++ 程序，93 个）。所有 bundle 都按当前模板生成（镜像标签 `v0.0.2`，判定服务做了隔离，原因见 `CONVERSION_REPORT.md` 4.7），已推送过旧版本的请用新版本替换。
+各目录的 bundle 结构和用法完全相同；PoV 有两种形态：harness 型（喂给 OSS-Fuzz harness 的一个输入文件，810 个）和 CLI / 程序型（交给项目自己的程序：CLI 的输入文件、标准输入或命令行参数，或者是一个链接项目代码的 C/C++ 程序，93 个）。所有 bundle 都按当前模板生成（镜像标签 `v0.0.2`，判定服务做了隔离，原因见 `CONVERSION_REPORT.md` 4.7），已推送过旧版本的请用新版本替换。
 
-本目录还有（四个目录共用）：
+本目录还有（各目录共用）：
 
 - `conversion_manifest.csv`：全部 1034 个任务的去向（tier、是否转换、所在目录、分类 `quality` / `quality_basis`、bundle、PoV 类型、原因、标准答案来源、验证结果等）。另有 131 个任务没有生成 bundle，逐个人工复核过，原因记录在这里的 `review`、`review_note` 列（exploit 根本没有执行注入的代码、行为差异型 oracle、只跑单元测试、触发输入没有保存或是空文件等，见 `CONVERSION_REPORT.md` 第 5 节）
 - `CONVERSION_REPORT.md`：转换方法、统计、验证情况、发现的问题
@@ -26,7 +27,7 @@ bash newplatform_bundles/<bundle>/build.sh      # 公网：构建 main + task-se
 bash newplatform_bundles/<bundle>/push.sh       # 上传网络：推送镜像并回填 task.toml [environment]
 ```
 
-另外三个目录同样用法（`newplatform_bundles2/<bundle>/`、`newplatform_bundles3/<bundle>/`、`newplatform_bundles4/<bundle>/`）。
+`newplatform_bundles2/`、`newplatform_bundles3/`、`newplatform_bundles4/` 同样用法；`other_errors/` 里的 bundle 构建一定失败，不要构建上传。
 
 Docker Hub 匿名拉取每小时约 100 次。`build.sh` 拉不到基础镜像时，会改从 `mirror.gcr.io` 拉同一个 digest，内容完全相同；也可以先 `docker login`。
 
@@ -36,7 +37,7 @@ Docker Hub 匿名拉取每小时约 100 次。`build.sh` 拉不到基础镜像�
 2. agent 镜像里找不到注入改动的"安全版"代码行（防止通过对比源码得到答案）；
 3. 标准答案在漏洞版上触发、在安全版上不触发（差分判定成立），并且空输入两个版本都不触发（否则打印 `PASS-DEGENERATE`：任何提交都能通过）。
 
-自检 3 失败说明这个任务的标准答案在重建的镜像里无法复现，**不要推送**，记录下来即可。第一、二类在本机全部通过；第三类和待确认出现失败属于预期（原因见 repo 根目录 `README.md` 的表）。
+自检 3 失败说明这个任务的标准答案在重建的镜像里无法复现。第一、二类在本机全部通过。第三类、第四类里自检 3 已知不通过的 bundle（原始数据的问题，原因见 repo 根目录 `README.md` 第 6 节），`build.sh` 照常构建两个镜像，自检 3 打印说明后正常结束（最后一行是 `BUILT …`，不是 `PASS …`），镜像可以推送。其余情况下自检失败时 `build.sh` 以错误结束，请记录下来。
 
 ## bundle 结构
 

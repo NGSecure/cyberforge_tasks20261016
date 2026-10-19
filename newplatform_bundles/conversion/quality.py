@@ -19,6 +19,14 @@ on the conversion: what the conversion got wrong was fixed, see SKILL.md):
   pending  not decided (the fourth category, in its own directory): not built here (network,
            disk), or the cause is not the dataset's for sure (e.g. the dataset crashed a build its
            own recipe does not make).
+  6        will not build, for a reason in the dataset that cannot be fixed now (the injected change breaks
+           the build, both builds come out the same, the dataset's recipe does not make the vulnerable
+           build): other_errors/ (the user's decision of 2026-10-19: every bundle handed on must build
+           and push);
+  5        the tasks no bundle was made for before (unconverted_review.json): the plain crash judge
+           could not check what their exploit shows (a logic bug, environment variables, a hang, no
+           working trigger, ...); each is judged now by a rule in its own tests/ (c5_specs.json,
+           the user's decision of 2026-10-19), in its own directory.
 
 Passing bundles are classified by rule from what the dataset ships and what verification found;
 every other bundle needs an entry in quality_review.json (the manual review, with the texts).
@@ -30,17 +38,20 @@ import re
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+import c5  # noqa: E402
 V = os.path.join(HERE, "verification")
 DESCRIPTION_FIXES = json.load(open(os.path.join(HERE, "description_fixes.json")))
 # the files of each task that the team which prepared the dataset copy added or changed (upstream_comparison.md)
 UPDIFF = json.load(open(os.path.join(HERE, "upstream_diff.json")))["tasks"]
 ORDER = ("results", "results_rerun", "results_retry", "results_changed", "results_exploit", "results_round2",
          "results_ca", "results_round3", "results_quality", "results_quality_ca", "results_nogt", "results_net",
-         "results_disk")
-FOLDERS = ("newplatform_bundles", "newplatform_bundles2", "newplatform_bundles3", "newplatform_bundles4")
-CAT_DIR = {"1": "newplatform_bundles", "2": "newplatform_bundles2", "3": "newplatform_bundles3",
-           "pending": "newplatform_bundles4"}
-CAT_NAME = {"1": "第一类", "2": "第二类", "3": "第三类", "pending": "待确认"}
+         "results_disk", "results_c5", "results_c5_rerun")
+FOLDERS = ("newplatform_bundles", "newplatform_bundles2", "newplatform_bundles3", "newplatform_bundles4",
+           "newplatform_bundles5", "other_errors")
+CAT_DIR = {"1": "newplatform_bundles", "2": "newplatform_bundles2", "3": "newplatform_bundles3", "5": "newplatform_bundles5",
+           "pending": "newplatform_bundles4", "6": "other_errors"}
+CAT_NAME = {"1": "第一类", "2": "第二类", "3": "第三类", "pending": "待确认", "5": "第五类", "6": "第六类"}
 LFS = b"version https://git-lfs.github.com/spec/v1"
 OK_STATUS = "可用：三项自检通过。"
 BASIS = {"description-wrong": "题面描述指错了位置，已按数据集自己的报告修正",
@@ -420,9 +431,36 @@ def main():
         else:
             missing.append("%s (%s, no review entry)" % (name, status))
             e.update(cat="pending", how="none", basis="未复核", problem="", impact="", fix="", suggest="", status=status)
+        if e["cat"] in ("3", "pending") and status == "not-built" and e.get("how") == "review" and \
+                not e["basis"].startswith("本机未能完成构建"):
+            # the user's decision of 2026-10-19: what will not build for a reason in the dataset (the injected
+            # change breaks the build, both builds come out the same, ...) and cannot be fixed now goes to
+            # other_errors/, so that every bundle handed on builds and can be pushed
+            e["cat"] = "6"
         e["category"] = CAT_NAME[e["cat"]]
         e["folder"] = CAT_DIR[e["cat"]]
         e["source_of_problem"], e["source_note"], e["code_sources"] = problem_source(rec, e, src, gtc.get(rec["path"]))
+        out[name] = e
+    # category 5: the tasks no bundle was made for before, judged by their own tests/ (c5_specs.json)
+    specs = c5.specs()
+    review = json.load(open(os.path.join(HERE, "unconverted_review.json"), encoding="utf-8"))["tasks"]
+    for rec in recs:
+        if rec["converted"] or rec["path"] not in specs:
+            continue
+        name = name_of(rec)
+        src = source_of(repo, name)
+        if src is None:
+            missing.append(name + " (no bundle)")
+            continue
+        status = (summary.get(name) or {}).get("status", "unverified")
+        zh = specs[rec["path"]]["zh"]
+        e = {"bundle": name, "source": "cyberforge_tasks20261016/projects/" + rec["path"], "verification": status,
+             "cat": "5", "how": "c5", "basis": zh["basis"], "problem": zh["problem"], "impact": zh.get("impact", ""),
+             "fix": zh["fix"], "suggest": zh.get("suggest", ""), "status": c5_status(status, zh, (summary.get(name) or {})),
+             "review": review.get(rec["path"], {}).get("category", ""), "unusable": zh.get("unusable", "")}
+        e["category"] = CAT_NAME["5"]
+        e["folder"] = CAT_DIR["5"]
+        e["source_of_problem"], e["source_note"], e["code_sources"] = zh.get("source", SRC_UP), zh.get("source_note", ""), {}
         out[name] = e
     json.dump({"_about": __doc__.split("\n\n")[0] + " (quality.py)", "bundles": dict(sorted(out.items()))},
               open(os.path.join(HERE, "quality.json"), "w"), indent=1, ensure_ascii=False)
@@ -435,6 +473,23 @@ def main():
 
 
 NOFIX_TXT = "未修改。"
+
+
+def c5_status(status, zh, sm):
+    """The state of a category-5 bundle after verification here."""
+    if zh.get("unusable"):  # no PoC can pass (e.g. the injected code is not in any program the build makes)
+        return "不可用：%s" % zh["unusable"]
+    if status == "pass":
+        return "可用：按本任务的判定规则（tests/oracle.json）标准答案通过、空 PoV 不通过。" + zh.get("status_note", "")
+    if status == "pass-no-gt":
+        return "能构建、能判定；没有参考 PoV，能否触发未在本机验证（自检输出 PASS-NO-GROUND-TRUTH）。" + zh.get("status_note", "")
+    if status == "pass-degenerate":
+        return "空 PoV 也通过（PASS-DEGENERATE）：判定区分不了有效 PoV，不可用于 PoC 迭代。"
+    if status == "not-built":
+        return "本机没能构建（%s），待在条件充足的机器上验证。" % (sm.get("note") or "见 verification/")
+    if status == "fail":
+        return "本机验证没有通过：%s" % (sm.get("note") or "见 verification/")
+    return "待验证。"
 NOGT_BASIS = "崩溃种子只有 Git LFS 指针（上游就缺），没有标准答案"
 
 if __name__ == "__main__":

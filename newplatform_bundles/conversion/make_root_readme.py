@@ -13,7 +13,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(sys.argv[1])
-CATS = ("第一类", "第二类", "第三类", "待确认")
+CATS = ("第一类", "第二类", "第三类", "待确认", "第五类", "第六类")
 SHOW = {"待确认": "第四类：待确认"}  # quality.json keeps the name 待确认
 STATUS_ZH = {"pass": "通过", "pass-degenerate": "通过但空输入也触发", "pass-no-gt": "通过（无标准答案）",
              "fail": "不通过", "not-built": "本机未建成",
@@ -53,7 +53,17 @@ by_cat_tier = collections.Counter((e["category"], tier[e["source"]]) for e in Q.
 # bundles whose description was corrected (conversion/description_fixes.json)
 N_DESC_FIX = sum(1 for e in Q.values() if "题面描述指错了位置" in e.get("basis", ""))
 folder_of = {"第一类": "newplatform_bundles/", "第二类": "newplatform_bundles2/", "第三类": "newplatform_bundles3/",
-             "待确认": "newplatform_bundles4/"}
+             "待确认": "newplatform_bundles4/", "第五类": "newplatform_bundles5/", "第六类": "other_errors/"}
+# category 5: the tasks no bundle was made for before, judged by their own tests/ (c5_specs.json)
+C5 = {e["bundle"]: e for e in Q.values() if e["category"] == "第五类"}
+C5_SPECS = json.load(open(os.path.join(HERE, "c5_specs.json"), encoding="utf-8"))["tasks"] \
+    if C5 and os.path.isfile(os.path.join(HERE, "c5_specs.json")) else {}
+if not C5:  # no category-5 bundles in this version
+    CATS = tuple(c for c in CATS if c != "第五类")
+# bundles whose self-check 3 is known not to pass here: build.sh says so and ends without an error (convert.py)
+N_KNOWN_FAIL = collections.Counter(e["category"] for e in Q.values()
+                                   if e["verification"] == "fail" and e["category"] in ("第三类", "待确认"))
+C5_ORACLE_ZH = {"crash": "崩溃差分", "output-diff": "输出差分", "match": "输出匹配", "timeout": "超时差分"}
 
 # ---- the raw data: where it is, and whether it changed since it was uploaded ----------------------
 DATA = "cyberforge_tasks20261016"
@@ -72,18 +82,20 @@ md.append("CyberForge 数据集（80 个 OSS-Fuzz C/C++ 项目上的 1034 个 LL
           "本文说明原始数据的核对结果、bundle 按原始数据质量的分类（标准、数量），并逐个列出原始数据有问题的 bundle。\n")
 md.append(table(["路径", "内容"], [
     ("`%s/`" % DATA, "原始数据（手动上传，转换只读不改）：`manifest.csv` + `projects/<项目>/vulnerabilities/<任务>/`"),
-    ("`newplatform_bundles/`", "第一类 bundle（%d 个），以及三类共用的转换工具 `conversion/`、任务去向清单 `conversion_manifest.csv`、"
+    ("`newplatform_bundles/`", "第一类 bundle（%d 个），以及各类共用的转换工具 `conversion/`、任务去向清单 `conversion_manifest.csv`、"
                                "转换报告 `CONVERSION_REPORT.md`" % by_cat["第一类"]),
     ("`newplatform_bundles2/`", "第二类 bundle（%d 个）" % by_cat["第二类"]),
     ("`newplatform_bundles3/`", "第三类 bundle（%d 个）" % by_cat["第三类"]),
-    ("`newplatform_bundles4/`", "第四类：待确认的 bundle（%d 个）" % by_cat["待确认"]),
-]) + "\n")
+    ("`newplatform_bundles4/`", "第四类：待确认的 bundle（%d 个）" % by_cat["待确认"])] +
+    ([("`newplatform_bundles5/`", "第五类：原来没有生成 bundle、现在按任务在 `tests/` 里实现判定的 bundle（%d 个）" % by_cat["第五类"])]
+     if C5 else []) +
+    [("`other_errors/`", "第六类：因原始数据的问题确定会构建失败、暂时无法修复的 bundle（%d 个），**不要构建上传**" % by_cat["第六类"])]) + "\n")
 
 md.append("## 1. 原始数据核对\n")
 md.append("- **原始数据就在本仓库的 `%s/` 里**：%d 个文件，`manifest.csv` 列出 1034 个任务；转换工具只从这里读取。" % (DATA, n_files))
 md.append("- **上传后没有被修改过**：它由提交 %s 上传（当时目录名为 `cyberforge-tasks-1034/`），随后的提交 %s 只把目录改名为 `%s/`，"
           "内容不变（两次提交里这个目录的 git tree 都是 `%s`%s）；此后没有任何提交改动过这个目录，工作区也没有未提交的改动%s。"
-          "转换产生的文件全部在三个 `newplatform_bundles*/` 目录里。"
+          "转换产生的文件全部在 `newplatform_bundles*/` 目录里。"
           % (upload.split(" ", 1)[0] if upload else "?", log[-1].split(" ", 1)[0] if log else "?", DATA, tree_head[:12],
              "，与上传时一致" if tree_head == tree_upload else "，**与上传时不同**",
              "" if not dirty else "（**有未提交改动**）"))
@@ -114,7 +126,16 @@ md.append("- **标准答案**（`build/ground_truth_poc`）：一个已知能成
 md.append("- **`build.sh` 的三项自检**：构建 agent 镜像和 task-server 镜像（安全版、注入版各编一次）后检查：① agent 镜像里没有安全版源码等残留；"
           "② agent 镜像里找不到注入改动的安全版代码行；③ 标准答案让注入版崩溃、安全版不崩溃，并且空输入两个版本都不崩溃"
           "（否则输出 PASS-DEGENERATE）。没有标准答案的 bundle，③ 只检查两个版本都有 harness、两版的二进制不同、空输入两版都不崩溃"
-          "（输出 PASS-NO-GROUND-TRUTH）。")
+          "（输出 PASS-NO-GROUND-TRUTH）。自检 3 已知不通过的 bundle（第三类 %d 个、第四类 %d 个，都是原始数据的问题，原因见第 6 节），"
+          "`build.sh` 照常构建两个镜像，自检 3 打印说明后正常结束（最后一行是 `BUILT …`，不是 `PASS …`），镜像可以推送。"
+          "确定会构建失败的 bundle 放在 `other_errors/`（第六类），不要构建上传。" % (N_KNOWN_FAIL["第三类"], N_KNOWN_FAIL["待确认"]))
+if C5:
+    md.append("- **第五类的判定**：平台最终运行 bundle 自己的 `tests/test.sh` 检查 agent 迭代出的 PoV、完全依据它的结果判定，所以原来判定服务做不到的任务"
+          "（逻辑漏洞只表现为输出不同、要设置环境变量或附带文件、只表现为超时、数据集没有能用的触发输入等）改为在各自的 `tests/` 里实现判定："
+          "`tests/oracle.json` 写明规则（崩溃差分、输出差分、输出匹配或超时差分），`tests/test.sh` 把每次提交发给 task-server 的 `/verify`"
+          "（在注入版、安全版上分别运行并报告每次运行的结果），由 `tests/verify.py` 按规则判定；PoV 除了原有的形式，还可以是 tar 包"
+          "（输入 + 环境变量 + 附带文件）或交给数据集 exploit 自己的测试程序（改成从 PoV 读输入）的数据。规则和每个任务的设置见 "
+          "`newplatform_bundles/conversion/c5_specs.json`。")
 md.append("- **本机验证**：在本机对每个 bundle 实际运行了 `build.sh`；没通过的再排查判定隔离、sanitizer 选项，并直接运行数据集自己的 exploit.sh "
           "（`newplatform_bundles/conversion/verification/`）。\n")
 
@@ -138,16 +159,27 @@ md.append(table(["分类", "目录", "标准"], [
      "都不改变判定方式。" % N_DESC_FIX),
     ("第三类：原始数据有严重问题", "`newplatform_bundles3/`",
      "数据集里没有只让注入版崩溃的输入（exploit 的输入不触发、报告用的输入没保存或只剩 Git LFS 指针、报告是别的程序或别的任务的、安全版也崩溃），"
-     "注入的代码不在被测程序里或让构建失败，注入的漏洞不依赖输入（空输入就触发，PASS-DEGENERATE）或实际走不到（只在内存分配失败时），"
-     "漏洞版只表现为超时；修复需要重新构造 PoV 或重新设计注入，或者修复后仍会明显影响轨迹质量。"),
+     "注入的代码不在被测程序里，注入的漏洞不依赖输入（空输入就触发，PASS-DEGENERATE）或实际走不到（只在内存分配失败时），"
+     "漏洞版只表现为超时；修复需要重新构造 PoV 或重新设计注入，或者修复后仍会明显影响轨迹质量。这一类都能构建、能推送"
+     "（自检 3 不通过的，build.sh 打印说明后正常结束）。"),
     ("第四类：待确认", "`newplatform_bundles4/`",
-     "无法确定：本机没能构建（需要公网、磁盘不够），或者原因不能确定在原始数据（例如数据集有注入版的崩溃记录、但按它给的构建流程编不出注入版；"
-     "判定规则本身的限制）。"),
+     "无法确定：本机没能构建（需要公网、磁盘不够；在条件充足的机器上应能构建，但本机没有验证），或者原因不能确定在原始数据（判定规则本身的限制）。"),
+] + ([
+    ("第五类：按任务实现判定", "`newplatform_bundles5/`",
+     "原来没有生成 bundle 的任务（原来的判定只认崩溃差分，判定服务也不能设置环境变量、附带文件）：现在每个 bundle 在自己的 `tests/` 里实现"
+     "与它的漏洞相应的判定（见第 2 节），标准答案取自数据集自己的触发方式（必要时做最小改写），数据集没有能用的触发输入的没有标准答案。"
+     "这一类按判定方式和本机验证结果分别说明（第 4 节汇总、第 6 节逐个列出），不和前四类混在一起统计。"),
+] if C5 else []) + [
+    ("第六类：确定会构建失败", "`other_errors/`",
+     "因原始数据的问题，`build.sh` 一定构建失败、暂时无法修复：注入的代码让构建本身崩溃、diff 改的是构建时才生成的文件、"
+     "注入的代码不在被构建的程序里（两个版本的产物完全相同，task-server 镜像无法建立），或数据集有注入版的崩溃记录、但按它给的构建流程编不出注入版。"
+     "**不要构建上传**；原来分别在第三类、第四类。"),
 ]) + "\n")
 
 md.append("## 4. 各类数量\n")
-md.append("%d 个 bundle（1034 个任务中另有 %d 个没有生成 bundle，原因见 `newplatform_bundles/conversion_manifest.csv` 的 `review` 列）：\n"
-          % (len(Q), len(R) - n_conv))
+n_unc = sum(1 for r in R if not r["converted"] and r["path"] not in C5_SPECS)
+md.append(("%d 个 bundle（1034 个任务中另有 %d 个没有生成 bundle，原因见 `newplatform_bundles/conversion_manifest.csv` 的 `review` 列）：\n"
+           % (len(Q), n_unc)) if n_unc else "%d 个 bundle（1034 个任务都生成了 bundle）：\n" % len(Q))
 statuses = ("pass", "pass-degenerate", "pass-no-gt", "fail", "not-built")
 md.append(table(["分类", "目录", "数量"] + ["本机验证：" + STATUS_ZH[s] for s in statuses], [
     [SHOW.get(c, c), "`%s`" % folder_of[c], by_cat[c]] + [by_cat_status[(c, s)] for s in statuses] for c in CATS] +
@@ -189,31 +221,65 @@ for name, e in sorted(Q.items()):
 for code, cnt in sorted(code_src.items(), key=lambda kv: -sum(kv[1].values())):
     problem, fix, state = SG.CODE_ROWS[code]
     rows.append(("第二类", problem, sum(cnt.values()), who(cnt), fix, state))
-for c in ("第二类", "第三类", "待确认"):
+for c in ("第二类", "第三类", "待确认", "第六类"):
     for k, cnt in sorted(((k, v) for k, v in groups.items() if k[0] == c), key=lambda kv: -sum(kv[1].values())):
         rows.append((SHOW.get(c, c), k[1], sum(cnt.values()), who(cnt), k[2], k[3]))
-unc = collections.Counter(v["category"] for v in UNC.values())
+c5_groups = collections.OrderedDict()
+for name, e in sorted(C5.items()):
+    k = (e.get("review") or "", SG.c5_state(e["verification"], e.get("unusable")))
+    c5_groups.setdefault(k, []).append(e.get("source_of_problem") or SG.UP)
+
+
+def who_c5(sources):
+    """A task's problem may be in both parties' files: count each party."""
+    up = sum(1 for x in sources if SG.UP in x)
+    team = sum(1 for x in sources if "提供数据的团队" in x)
+    if not team:
+        return SG.UP
+    if not up:
+        return "提供数据的团队"
+    return "%s %d、提供数据的团队 %d（有的两者都有）" % (SG.UP, up, team) if up + team > len(sources) else \
+        "%s %d、提供数据的团队 %d" % (SG.UP, up, team)
+
+
+C5_ORDER = list(SG.REVIEW_ROWS)
+for (review, state), sources in sorted(c5_groups.items(), key=lambda kv: (C5_ORDER.index(kv[0][0]) if kv[0][0] in C5_ORDER
+                                                                         else len(C5_ORDER), -len(kv[1]), kv[0][1])):
+    rows.append(("第五类", SG.REVIEW_ROWS.get(review, (review, ""))[0], len(sources), who_c5(sources),
+                 SG.C5_FIX.get(review, ""), state))
+unc = collections.Counter(v["category"] for k, v in UNC.items() if k not in C5_SPECS)
 for cat, n in unc.most_common():
     problem, fix = SG.REVIEW_ROWS.get(cat, (cat, ""))
     rows.append(("未转换", problem, n, SG.UP, fix, "没有生成 bundle"))
 md.append(table(["分类", "问题", "数量", "问题出在", "解决办法（已做 / 建议）", "现状"], rows) + "\n")
 usable = by_cat["第一类"] + by_cat["第二类"]
+c5_by = collections.Counter(SG.c5_state(e["verification"], e.get("unusable")).split("（")[0] for e in C5.values())
 md.append("合计：1034 个任务里，**%d 个 bundle 可用于 PoC 迭代和轨迹生成**（第一类 %d、第二类 %d）；第三类 %d 个原始数据有严重问题"
-          "（其中 %d 个没有标准答案）；第四类（待确认）%d 个%s；另有 %d 个任务没有生成 bundle。\n"
+          "（其中 %d 个没有标准答案）；第四类（待确认）%d 个%s；%s第六类 %d 个确定会构建失败（不要构建上传）%s。"
+          "除第六类外，其余 bundle 都能构建、能推送（第四类在本机没能验证构建）。\n"
           % (usable, by_cat["第一类"], by_cat["第二类"], by_cat["第三类"], nogt_cat["第三类"], by_cat["待确认"],
-             "（其中 %d 个也没有标准答案）" % nogt_cat["待确认"] if nogt_cat["待确认"] else "", len(R) - n_conv))
+             "（其中 %d 个也没有标准答案）" % nogt_cat["待确认"] if nogt_cat["待确认"] else "",
+             "第五类 %d 个（原来没有生成 bundle，现在按任务实现判定：%s）；" % (
+                 by_cat["第五类"], "、".join("%s %d" % kv for kv in c5_by.most_common())) if C5 else "",
+             by_cat["第六类"],
+             "；另有 %d 个任务没有生成 bundle" % sum(unc.values()) if sum(unc.values()) else "；所有任务都生成了 bundle"))
 
 md.append("## 5. 转换侧的问题（已改正，不计入原始数据问题）\n")
 md.append(open(os.path.join(HERE, "conversion_fixes.md"), encoding="utf-8").read().strip() + "\n")
 
 md.append("## 6. 原始数据有问题的 bundle\n")
-md.append("第二类、第三类和第四类（待确认）的 bundle 逐个列在下面（第一类不列）。列的含义：**转换后路径**相对 repo 根目录；**原始数据路径**是转换前的任务目录；"
+md.append("第二类、第三类、第四类（待确认）、%s第六类的 bundle 逐个列在下面（第一类不列）。%s列的含义：" % (
+    "第五类和" if C5 else "", "第五类的“分类”后是判定方式，“必要修改”的“已做”是现在的判定和标准答案。" if C5 else "") +
+          "**转换后路径**相对 repo 根目录；**原始数据路径**是转换前的任务目录；"
           "**分类**后是简短依据；**问题及影响**说明问题的前因后果、为什么归到原始数据，以及对 PoC 迭代和轨迹质量的影响，"
           "最后的“来源”说明问题出在上游数据（Cyb3rForge/CyberForge-projects 原有的文件）还是提供数据的团队（他们新增或重新生成的文件）；**必要修改**分“已做”和"
           "“建议（未实施）”；**修改后状态**说明现在能否使用、还有哪些限制。每个 bundle 的机器可读版本在 "
           "`newplatform_bundles/conversion/quality.json`。\n")
 HEAD = ["Bundle 名称", "转换后路径", "原始数据路径", "分类", "问题及影响", "必要修改", "修改后状态"]
-for c, title in (("第二类", "6.1 第二类：原始数据轻微问题"), ("第三类", "6.2 第三类：原始数据严重问题"), ("待确认", "6.3 第四类：待确认")):
+SECTIONS = [("第二类", "第二类：原始数据轻微问题"), ("第三类", "第三类：原始数据严重问题"), ("待确认", "第四类：待确认")] + \
+    ([("第五类", "第五类：按任务实现判定")] if C5 else []) + [("第六类", "第六类：确定会构建失败（other_errors/，不要构建上传）")]
+for i, (c, title) in enumerate(SECTIONS):
+    title = "6.%d %s" % (i + 1, title)
     rows = []
     for name, e in sorted(Q.items()):
         if e["category"] != c:

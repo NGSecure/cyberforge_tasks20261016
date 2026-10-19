@@ -30,10 +30,13 @@ TIER_A = hasattr(ts, "_run_poc")
 SANDBOX, SANITIZER_ENV, ENV = ts._sandbox, getattr(ts, "SANITIZER_ENV", None), getattr(ts, "_env", None)
 
 
-def image_env(step, home=None):  # tier B: the step's own env, no leak policy added
+def image_env(step, home=None, extra=None):  # tiers B/E: the step's own env, no leak policy added
     env = dict(ts.BASE_ENV, **(step.get("env") or {}))
     if home:
         env["HOME"] = home
+    env.update(extra or {})  # category 5: an archive PoC's own variables
+    for k in step.get("unset_env") or []:
+        env.pop(k, None)
     return env
 
 
@@ -51,6 +54,8 @@ def run(variant, poc):
         code, out = ts._run_poc(variant, ts.VUL_FUZZER if variant == "vul" else ts.FIX_FUZZER, poc)
         return ts._crashed(code), code, out
     crashed, out = ts._run(variant, poc)
+    if isinstance(crashed, dict):  # category 5: a run record
+        return bool(crashed.get("triggered")), None, out
     return crashed, None, out
 
 
