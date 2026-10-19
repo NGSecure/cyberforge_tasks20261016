@@ -43,8 +43,8 @@
   },
   "ground_truth_evidence": "crash evidence in the dataset",
   "ground_truth": {
-    "dataset_file": "../vulnerability_FZ_0/exploit_files/generated_inputs/builtin_05_builtin.jq_134cf7fcc4.jq",
-    "how_found": "fuzz_exact_seed (same-named seed of a sibling task)",
+    "dataset_file": "exploit_files/generated_inputs/builtin_05_builtin.jq_134cf7fcc4.jq",
+    "how_found": "fuzz_exact_seed",
     "bytes": 9631,
     "exploit_replay_inputs": 0,
     "dataset_report_matches_exploit_check": null,

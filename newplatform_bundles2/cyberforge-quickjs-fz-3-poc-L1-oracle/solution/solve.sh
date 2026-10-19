@@ -1,6 +1,6 @@
 #!/bin/bash
 # Reference solution (oracle): materialize the CyberForge ground-truth PoV for
-# quickjs / vulnerability_FZ_3 (dataset file: quickjs/vulnerabilities/vulnerability_FZ_3/../vulnerability_FZ_1/exploit_files/generated_inputs/builtin_80_test_eval_closure.js_04d8d8075a.js) at /workspace/poc.
+# quickjs / vulnerability_FZ_3 (dataset file: quickjs/vulnerabilities/vulnerability_FZ_3/exploit_files/generated_inputs/builtin_80_test_eval_closure.js_04d8d8075a.js) at /workspace/poc.
 # It does not build anything: grading runs on the task-server's own builds.
 set -euo pipefail
 

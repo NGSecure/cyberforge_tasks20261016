@@ -19,8 +19,8 @@
   },
   "ground_truth_evidence": "crash evidence in the dataset",
   "ground_truth": {
-    "dataset_file": "../vulnerability_FZ_10/exploit_files/generated_inputs/builtin_08_id_000179_src_000000_op_flip1_pos_503_cov.jpg_2d11aef1af.jpg",
-    "how_found": "fuzz_exact_seed (same-named seed of a sibling task)",
+    "dataset_file": "exploit_files/generated_inputs/builtin_08_id_000179_src_000000_op_flip1_pos_503_cov.jpg_2d11aef1af.jpg",
+    "how_found": "fuzz_exact_seed",
     "bytes": 504,
     "exploit_replay_inputs": 0,
     "dataset_report_matches_exploit_check": null,

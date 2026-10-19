@@ -1,6 +1,6 @@
 #!/bin/bash
 # Reference solution (oracle): materialize the CyberForge ground-truth PoV for
-# selinux / vulnerability_FZ_2 (dataset file: selinux/vulnerabilities/vulnerability_FZ_2/../vulnerability_FZ_0/exploit_files/generated_inputs/builtin_11_policy.cil_3f979bfbc4.cil) at /workspace/poc.
+# selinux / vulnerability_FZ_2 (dataset file: selinux/vulnerabilities/vulnerability_FZ_2/exploit_files/generated_inputs/builtin_11_policy.cil_3f979bfbc4.cil) at /workspace/poc.
 # It does not build anything: grading runs on the task-server's own builds.
 set -euo pipefail
 

@@ -235,6 +235,23 @@ def snapshot_out(project):
             if x.startswith("/out/")}
 
 
+def guarded_program(es, harnesses, project):
+    """A compile product under /src that exploit.sh runs when the image has it
+    (`if [ -x /src/... ]`), with a fuzz harness only as the fallback, or ''. The stub replay
+    has no /src, so it only saw the fallback (htslib WF_LLM_0 runs test/test_expr "1 % 0",
+    else gambles on hts_open_fuzzer); the deep replay in the project's image sees the program."""
+    f = os.path.join(SCAN_DIR, project + ".json")
+    if not os.path.isfile(f):
+        return ""
+    built = set(json.load(open(f, encoding="utf-8"))["post_setup_files"])
+    for m in re.finditer(r"\[\s+-[xf]\s+[\"']?(/src/[\w./+-]+)[\"']?\s*\]", es):
+        prog = m.group(1)
+        if prog in built and os.path.basename(prog) not in harnesses and \
+                re.search(r"(?m)^\s*(?:then\s+)?[\"']?%s[\"']?\s" % re.escape(prog), es):
+            return prog
+    return ""
+
+
 LFS_PTR_RE = re.compile(rb"^version https://git-lfs\.github\.com/spec/v1\noid sha256:([0-9a-f]{64})\nsize \d+\n$")
 
 
@@ -273,9 +290,10 @@ def lfs_pointer(path):
 
 def exact_seed(vd, project, crep):
     """(path relative to vd, how) of the seed crash_report.json says crashed the vulnerable
-    build. Seeds drawn from the built-in corpus are not always shipped with the task; then
-    a file of that name in another task of the same project is used, but only when every
-    copy found has the same content."""
+    build: the task's own copy; else, for a member of the built-in corpus (fuzz_poc.py reads
+    those from the image, so tasks often do not ship them), the member report_inputs.py
+    copied from the image; else a file of that name in another task of the same project,
+    but only when every copy found has the same content."""
     sp = crep.get("seed_provenance") or {}
     rel = sp.get("relative_path") or ""
     if "exploit_files/" in rel:
@@ -285,10 +303,10 @@ def exact_seed(vd, project, crep):
     name = crep.get("seed") or sp.get("name") or ""
     if not name or "/" in name:
         return "", ""
-    hits = sorted(h for h in glob.glob(os.path.join(PROJ, project, "vulnerabilities", "*", "exploit_files",
-                                                    "generated_inputs", name)) if not lfs_pointer(h))
-    if hits and len({hashlib.sha256(open(h, "rb").read()).hexdigest() for h in hits}) == 1:
-        return os.path.relpath(hits[0], vd), "fuzz_exact_seed (same-named seed of a sibling task)"
+    # the task's own copy (the record may name no exploit_files/ path for it)
+    f = os.path.join(vd, "exploit_files", "generated_inputs", name)
+    if os.path.isfile(f) and not lfs_pointer(f):
+        return os.path.relpath(f, vd), "fuzz_exact_seed"
     # a member of the harness's built-in corpus: fuzz_poc.py read it from
     # /out/<fuzzer>_seed_corpus.zip, and report_inputs.py copies it from there
     f = os.path.join(REPORT_INPUTS, project, os.path.basename(vd), name)
@@ -296,6 +314,10 @@ def exact_seed(vd, project, crep):
         return (os.path.relpath(f, os.path.dirname(REPORT_INPUTS)),
                 "fuzz_exact_seed (built-in corpus member %s of /out/%s_seed_corpus.zip, copied from the image)"
                 % (sp.get("archive_member"), crep.get("fuzzer")))
+    hits = sorted(h for h in glob.glob(os.path.join(PROJ, project, "vulnerabilities", "*", "exploit_files",
+                                                    "generated_inputs", name)) if not lfs_pointer(h))
+    if hits and len({hashlib.sha256(open(h, "rb").read()).hexdigest() for h in hits}) == 1:
+        return os.path.relpath(hits[0], vd), "fuzz_exact_seed (same-named seed of a sibling task)"
     return "", ""
 
 
@@ -343,20 +365,23 @@ def report_harness(name, report, known):
 _sha1_cache = {}
 
 
-def dataset_file_by_sha1(project, sha1):
-    """A file of any task of the project with this SHA-1 (libFuzzer names crash files
-    crash-<sha1 of the content>), or ''. The empty file's SHA-1 always resolves, to the
-    project's own empty file or else to report_inputs/empty."""
+def dataset_file_by_sha1(project, sha1, vd=""):
+    """A file with this SHA-1 (libFuzzer names crash files crash-<sha1 of the content>):
+    the task's own (vd) when it ships one, else one of another task of the project, or ''.
+    The empty file's SHA-1 always resolves, to the project's own empty file or else to
+    report_inputs/empty."""
     if project not in _sha1_cache:
         idx = {}
         for f in sorted(glob.glob(os.path.join(PROJ, project, "vulnerabilities", "*", "exploit_files", "**"),
                                   recursive=True)):
             if os.path.isfile(f) and os.path.getsize(f) <= 16 << 20:
-                idx.setdefault(hashlib.sha1(open(f, "rb").read()).hexdigest(), f)
+                idx.setdefault(hashlib.sha1(open(f, "rb").read()).hexdigest(), []).append(f)
         _sha1_cache[project] = idx
     if sha1 == EMPTY_SHA1 and sha1 not in _sha1_cache[project]:
         return os.path.join(REPORT_INPUTS, "empty")
-    return _sha1_cache[project].get(sha1, "")
+    files = _sha1_cache[project].get(sha1, [])
+    own = [f for f in files if vd and f.startswith(os.path.join(vd, ""))]
+    return (own or files or [""])[0]
 
 
 def report_input(vd, rel, project, report, es, ef_files, known, harnesses=()):
@@ -376,7 +401,7 @@ def report_input(vd, rel, project, report, es, ef_files, known, harnesses=()):
     base = os.path.basename(inp)
     m = re.fullmatch(r"crash-([0-9a-f]{40})", base)
     if m:
-        f = dataset_file_by_sha1(project, m.group(1))
+        f = dataset_file_by_sha1(project, m.group(1), vd)
         if not f:
             return None
         return (os.path.relpath(f, os.path.dirname(REPORT_INPUTS)) if f.startswith(REPORT_INPUTS + os.sep)
@@ -548,6 +573,10 @@ for r in rows:
             if re.search(r"(\$\{?REPO\w*\}?|/src/[\w.+-]+)/%s\b" % re.escape(n), es):
                 custom.append("exploit drives a project CLI/test binary, not the fuzz harness")
                 break
+    prog = guarded_program(es, ex_h, p) if ex_h and not custom else ""
+    if prog:
+        custom.append("exploit runs the project program %s when the image has it, a fuzz harness only as "
+                      "its fallback" % prog)
     if not custom and not ex_h and not uses_renamed and "fuzz_poc.py" not in es:
         if re.search(r"(^|[\s;|&(\"'=])(/src/\S+|\./[\w.\-+]+|\$\{?\w*(BIN|BINARY)\w*\}?)", es, re.M) \
                 or (hints.get("selected_fuzzer") or "") == "main":

@@ -39,7 +39,7 @@
   "ground_truth_evidence": "crash evidence in the dataset",
   "ground_truth": {
     "dataset_file": "exploit_files/generated_inputs/builtin_10_block_test.cil_c260e54d76.cil",
-    "how_found": "fuzz_exact_seed (same-named seed of a sibling task)",
+    "how_found": "fuzz_exact_seed",
     "bytes": 2176,
     "exploit_replay_inputs": 0,
     "dataset_report_matches_exploit_check": null,

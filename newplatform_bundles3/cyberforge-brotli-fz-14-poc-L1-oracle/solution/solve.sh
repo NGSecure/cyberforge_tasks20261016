@@ -1,6 +1,6 @@
 #!/bin/bash
 # Reference solution (oracle): materialize the CyberForge ground-truth PoV for
-# brotli / vulnerability_FZ_14 (dataset file: brotli/vulnerabilities/vulnerability_FZ_14/../vulnerability_FZ_19/exploit_files/generated_inputs/builtin_06_04bdd9f35a2881027adddb039026623cd2e86664_e9d7f3aa7d.bin) at /workspace/poc.
+# brotli / vulnerability_FZ_14 (dataset file: newplatform_bundles/conversion/report_inputs/brotli/vulnerability_FZ_14/builtin_06_04bdd9f35a2881027adddb039026623cd2e86664_e9d7f3aa7d.bin (copied from the project image by report_inputs.py)) at /workspace/poc.
 # It does not build anything: grading runs on the task-server's own builds.
 set -euo pipefail
 

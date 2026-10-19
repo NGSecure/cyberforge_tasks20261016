@@ -245,14 +245,19 @@ when the diff touches a header (`recipe.diff_touches_headers` in cyberforge_sour
 Tiers describe the dataset's evidence; the folders no longer follow them (quality.py, below).
 An exploit that compiles code (also through `$CC` / `$CXX`) goes to the deep replay first:
 json-c WF_RAG_1's report comes from the program it compiles, not from the harness
-hints.json names. `export HOME=...` counts as setting the environment of what the exploit
+hints.json names. So does one that runs a compile product under /src when the image has it
+(`if [ -x /src/... ]`) and a harness only as the fallback: the stub replay has no /src and
+only sees the fallback (htslib WF_LLM_0 runs `test/test_expr "1 % 0"`). The harness-kind
+task-server keeps only the two builds' /out, so an exploit run in it (verify_exploit.py)
+does not test such a program. `export HOME=...` counts as setting the environment of what the exploit
 runs (libdwarf WF_LLM_0's 2100-byte HOME is the overflow; jq WF_LLM_10 plants ~/.jq), like any
 other variable that is not plumbing.
 
 - **A**: crash evidence (sanitizer report, or crash_report.json for fuzz
   artifacts), a concrete non-empty PoV (fuzz crash artifact > the seed crash_report.json
-  names for a replay-mode run (`attribution_kind: exact_seed`; a same-named seed of a
-  sibling task only if every copy is identical) > replayed exploit input > pov.bin and
+  names for a replay-mode run (`attribution_kind: exact_seed`: the task's own copy, else a
+  built-in corpus member from the image's zip, else a same-named seed of a sibling task
+  only if every copy is identical) > replayed exploit input > pov.bin and
   other dataset files), the harness exploit.sh really runs (and that the dataset's own
   compile put in /out), and — unless the PoV comes from a replay — the recorded
   report satisfies exploit.sh's own grep (when it greps). libFuzzer's own

@@ -38,7 +38,7 @@
   },
   "ground_truth_evidence": "crash evidence in the dataset",
   "ground_truth": {
-    "dataset_file": "../vulnerability_FZ_2/exploit_files/generated_inputs/curated_seed_e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+    "dataset_file": "exploit_files/pov.bin",
     "how_found": "report_sha1 (the crash file the report names, found by SHA-1)",
     "bytes": 0,
     "exploit_replay_inputs": 0,

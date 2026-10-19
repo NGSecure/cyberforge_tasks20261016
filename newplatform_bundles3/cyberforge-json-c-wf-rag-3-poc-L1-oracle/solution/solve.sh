@@ -1,6 +1,6 @@
 #!/bin/bash
 # Reference solution (oracle): materialize the CyberForge ground-truth PoV for
-# json-c / vulnerability_WF_RAG_3 (dataset file: json-c/vulnerabilities/vulnerability_WF_RAG_3/../vulnerability_FZ_2/exploit_files/generated_inputs/curated_seed_e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin) at /workspace/poc.
+# json-c / vulnerability_WF_RAG_3 (dataset file: json-c/vulnerabilities/vulnerability_WF_RAG_3/exploit_files/pov.bin) at /workspace/poc.
 # It does not build anything: grading runs on the task-server's own builds.
 set -euo pipefail
 

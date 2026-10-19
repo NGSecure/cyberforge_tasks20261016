@@ -170,7 +170,7 @@
    "impact": "漏洞版编不出来，任务不成立。",
    "fix": "未修改。",
    "suggest": "需要重新设计注入（修正 diff），否则剔除。",
-   "status": null
+   "status": "不可用：注入版的 cJSON_Utils.c 编译不过，PoV 程序在注入版上建不出来（自检 3 不通过）。未修改，与原始任务一致。"
   },
   "coturn-wf-llm-1": {
    "cat": "3",
@@ -220,10 +220,10 @@
   "double-conversion-fz-9": {
    "cat": "3",
    "basis": "漏洞真实，但崩溃依赖 fuzz 过程，没有单个输入能复现",
-   "problem": "crash_report.json 记录的是一次 fuzz 运行（seeded_fuzz_run），数据集只验证了“fuzz 过程会让注入版崩溃”，记录里对崩溃样本的单独重放都没有崩溃；本机单独运行这个样本也不崩溃。本机重跑数据集的 fuzz 过程，确实让注入版崩溃、安全版不崩溃：漏洞是真实的，但触发依赖 fuzz 过程中积累的状态，没有单个输入能复现。",
+   "problem": "crash_report.json 记录的是一次 fuzz 运行（seeded_fuzz_run），数据集只验证了“fuzz 过程会让注入版崩溃”，记录里对崩溃样本的单独重放都没有崩溃；本机单独运行这个样本也不崩溃。本机重跑数据集的 fuzz 过程，注入版很快崩溃（bignum 的断言 `index < kBigitCapacity` 失败）、安全版不崩溃，漏洞是真实的；但这次 fuzz 写下的崩溃样本（crash-adb7e3c6…）单独交给判定运行 3 次也都不崩溃（注入让 MultiplyByUInt32 多读一个没有用到的 bigit，读到的是之前的输入留下的值）：触发依赖 fuzz 过程中积累的状态，没有单个输入能复现。",
    "impact": "单个 PoV 无法稳定触发，agent 提交的输入也可能时灵时不灵，判定可信度低。",
    "fix": "未修改。",
-   "suggest": "对注入版做定向 fuzz（例如保存 fuzz 过程中的全部输入、用 -minimize_crash），找出能单独复现的输入；找到后可升为第二类。",
+   "suggest": "针对注入点构造不依赖之前输入的 PoV（或对注入版做定向 fuzz、逐个单独回放），找到能单独复现的输入后可升为第二类。",
    "status": null
   },
   "double-conversion-wf-llm-0": {
@@ -778,19 +778,19 @@
   "h3-fz-26": {
    "cat": "3",
    "basis": "漏洞真实，但崩溃依赖 fuzz 过程，没有单个输入能复现",
-   "problem": "crash_report.json 记录的是一次 fuzz 运行（seeded_fuzz_run），数据集只验证了“fuzz 过程会让注入版崩溃”，记录里对崩溃样本的单独重放都没有崩溃；本机单独运行这个样本也不崩溃。本机重跑数据集的 fuzz 过程，确实让注入版崩溃、安全版不崩溃：漏洞是真实的，但触发依赖 fuzz 过程中积累的状态，没有单个输入能复现。",
+   "problem": "crash_report.json 记录的是一次 fuzz 运行（seeded_fuzz_run），数据集只验证了“fuzz 过程会让注入版崩溃”，记录里对崩溃样本的单独重放都没有崩溃；本机单独运行这个样本也不崩溃。本机重跑数据集的 fuzz 过程，注入版很快崩溃（linkedGeo.c:303 的 geoLoopToLinkedGeoLoop 里 SEGV）、安全版不崩溃，漏洞是真实的；但这次 fuzz 写下的崩溃样本（crash-3dbc8561…）单独交给判定运行 3 次也都不崩溃：触发依赖 fuzz 过程中积累的状态，没有单个输入能复现。",
    "impact": "单个 PoV 无法稳定触发，agent 提交的输入也可能时灵时不灵，判定可信度低。",
    "fix": "未修改。",
-   "suggest": "对注入版做定向 fuzz（例如保存 fuzz 过程中的全部输入、用 -minimize_crash），找出能单独复现的输入；找到后可升为第二类。",
+   "suggest": "针对注入点构造不依赖之前输入的 PoV（或对注入版做定向 fuzz、逐个单独回放），找到能单独复现的输入后可升为第二类。",
    "status": null
   },
   "h3-fz-30": {
    "cat": "3",
    "basis": "漏洞真实，但崩溃依赖 fuzz 过程，没有单个输入能复现",
-   "problem": "crash_report.json 记录的是一次 fuzz 运行（seeded_fuzz_run），数据集只验证了“fuzz 过程会让注入版崩溃”，记录里对崩溃样本的单独重放都没有崩溃；本机单独运行这个样本也不崩溃。本机重跑数据集的 fuzz 过程，确实让注入版崩溃、安全版不崩溃：漏洞是真实的，但触发依赖 fuzz 过程中积累的状态，没有单个输入能复现。",
+   "problem": "crash_report.json 记录的是一次 fuzz 运行（seeded_fuzz_run），数据集只验证了“fuzz 过程会让注入版崩溃”，记录里对崩溃样本的单独重放都没有崩溃；本机单独运行这个样本也不崩溃。本机重跑数据集的 fuzz 过程，注入版很快崩溃（area.c:88 的 geoLoopAreaRads2 里栈越界）、安全版不崩溃，漏洞是真实的；但这次 fuzz 写下的崩溃样本（crash-5ac4e078…）单独交给判定运行 3 次也都不崩溃：触发依赖 fuzz 过程中积累的状态，没有单个输入能复现。",
    "impact": "单个 PoV 无法稳定触发，agent 提交的输入也可能时灵时不灵，判定可信度低。",
    "fix": "未修改。",
-   "suggest": "对注入版做定向 fuzz（例如保存 fuzz 过程中的全部输入、用 -minimize_crash），找出能单独复现的输入；找到后可升为第二类。",
+   "suggest": "针对注入点构造不依赖之前输入的 PoV（或对注入版做定向 fuzz、逐个单独回放），找到能单独复现的输入后可升为第二类。",
    "status": null
   },
   "h3-fz-40": {
@@ -854,15 +854,6 @@
    "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
    "fix": "未修改。",
    "suggest": "人工或定向 fuzz 构造 PoV，在两个版本上验证后作标准答案；做不到则剔除。",
-   "status": null
-  },
-  "htslib-wf-llm-0": {
-   "cat": "3",
-   "basis": "数据集的崩溃来自单元测试程序，harness 到不了注入的代码",
-   "problem": "数据集的崩溃来自项目的单元测试程序 test/test_expr（参数 '1 % 0' 触发 mul_expr 的除零），OSS-Fuzz 的构建不编译它；exploit 在没有它时退回 hts_open_fuzzer 赌一个输入。hints.json 声称成功的种子 pov.bin 和 exploit 退回时的输入在两个版本上都不触发，hts_open_fuzzer 很可能根本不会求值过滤表达式。",
-   "impact": "没有能触发的输入，无法证明漏洞可被 PoV 触发；agent 很可能无解，判定无从核对，轨迹没有参考价值。",
-   "fix": "未修改。",
-   "suggest": "若平台支持命令行参数型 PoV 且构建 test_expr，可改为 cli-argv 任务；否则剔除。",
    "status": null
   },
   "icu-wf-llm-0": {
@@ -1354,10 +1345,10 @@
   "pcre2-fz-10": {
    "cat": "3",
    "basis": "漏洞真实，但崩溃依赖 fuzz 过程，没有单个输入能复现",
-   "problem": "crash_report.json 记录的是一次 fuzz 运行（seeded_fuzz_run），数据集只验证了“fuzz 过程会让注入版崩溃”，记录里对崩溃样本的单独重放都没有崩溃；本机单独运行这个样本也不崩溃。本机重跑数据集的 fuzz 过程，确实让注入版崩溃、安全版不崩溃：漏洞是真实的，但触发依赖 fuzz 过程中积累的状态，没有单个输入能复现。",
+   "problem": "crash_report.json 记录的是一次 fuzz 运行（seeded_fuzz_run），数据集只验证了“fuzz 过程会让注入版崩溃”，记录里对崩溃样本的单独重放都没有崩溃；本机单独运行这个样本也不崩溃。本机重跑数据集的 fuzz 过程 4 次（每次至多 60 秒；数据集那次在第 15 秒触发），只有 1 次让注入版崩溃、安全版不崩溃，漏洞是真实的；另外 3 次都没有触发，没有得到可以单独复现的崩溃样本：触发很少见，而且依赖 fuzz 过程中积累的状态。",
    "impact": "单个 PoV 无法稳定触发，agent 提交的输入也可能时灵时不灵，判定可信度低。",
    "fix": "未修改。",
-   "suggest": "对注入版做定向 fuzz（例如保存 fuzz 过程中的全部输入、用 -minimize_crash），找出能单独复现的输入；找到后可升为第二类。",
+   "suggest": "针对注入点构造不依赖之前输入的 PoV（或对注入版做定向 fuzz、逐个单独回放），找到能单独复现的输入后可升为第二类。",
    "status": null
   },
   "perfetto-fz-0": {

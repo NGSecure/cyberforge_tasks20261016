@@ -38,8 +38,8 @@
   },
   "ground_truth_evidence": "crash evidence in the dataset",
   "ground_truth": {
-    "dataset_file": "../vulnerability_FZ_4/exploit_files/generated_inputs/builtin_17_0229869c0efca62c3809f0efc034b088f6b3c2d7_ed36350487.bin",
-    "how_found": "fuzz_exact_seed (same-named seed of a sibling task)",
+    "dataset_file": "exploit_files/generated_inputs/builtin_17_0229869c0efca62c3809f0efc034b088f6b3c2d7_ed36350487.bin",
+    "how_found": "fuzz_exact_seed",
     "bytes": 22,
     "exploit_replay_inputs": 0,
     "dataset_report_matches_exploit_check": null,

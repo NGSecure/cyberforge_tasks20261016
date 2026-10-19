@@ -1,0 +1,9 @@
+[
+ {
+  "bundle": "/home/user/cyberforge_tasks20261016/newplatform_bundles3/cyberforge-htslib-wf-llm-0-poc-L1-oracle",
+  "alts": {},
+  "judge_alts": {},
+  "priority": 1,
+  "project": "htslib"
+ }
+]
