@@ -425,6 +425,16 @@ between them, an empty input crashes neither (`PASS-NO-GROUND-TRUTH`; verificati
 `pass-no-gt`). quality.py puts them in category 3: whether an input can trigger the bug is not
 verified. Every other bundle is rendered exactly as before.
 
+**Bundles that pass with any PoC**: a PASS-DEGENERATE bundle (an empty PoC passes) need not pass with every
+PoC. `plan_anypoc.json` self-checks each one again with arbitrary PoCs in place of the ground truth
+(`verification/any_poc_inputs/`: 1 byte, 64 and 4096 random bytes, 1024 zero bytes; argument lists for
+cli-argv) into `results_anypoc.jsonl`, which is not part of summary.json and changes no bundle;
+`any_poc.py` writes `verification/any_poc.json`, and the README's section-4 table counts the bundles where
+all of them passed. Any other verified bundle has a PoC that fails (the empty PoC or its ground truth).
+`plan_anypoc_deps.json`: four bundles rebuilt with the dependency sources their image already holds
+(CMAKE_TOOLCHAIN_FILE setting FETCHCONTENT_SOURCE_DIR_* / CPM_*_SOURCE in this machine's CA copy of the
+base image), because this machine's GitHub proxy now refuses source-archive downloads.
+
 ## Gotchas
 
 - `file` and `guetzli` have no published image: build.sh builds one from

@@ -1,0 +1,46 @@
+[
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-grok-wf-llm-4-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "grok"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-simdjson-fz-1-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "simdjson"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-simdjson-fz-15-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "simdjson"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-simdjson-fz-16-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "simdjson"
+ }
+]

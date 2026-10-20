@@ -1,0 +1,2107 @@
+{
+ "_about": "Which bundles pass with any PoC: the PASS-DEGENERATE bundles (an empty PoC passes), self-checked\nagain with arbitrary PoCs in place of the ground truth (verify_bundles.py, plan_anypoc.json). (any_poc.py)",
+ "inputs": {
+  "any:1-byte A": "1 字节 `A`",
+  "any:64 random bytes": "64 字节随机数据",
+  "any:4096 random bytes": "4096 字节随机数据",
+  "any:1024 zero bytes": "1024 字节全零",
+  "any:argv A": "参数 `A`",
+  "any:argv --help": "参数 `--help`",
+  "any:argv 1": "参数 `1`",
+  "any:argv 3 random tokens": "3 个任意参数"
+ },
+ "bundles": {
+  "cyberforge-bluez-wf-llm-0-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    }
+   },
+   "any_poc_passes": false
+  },
+  "cyberforge-brotli-fz-14-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-brotli-fz-17-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-brotli-fz-8-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty PoC also passes); vul crashed True, fix crashed False"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty PoC also passes); vul crashed True, fix crashed False"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty PoC also passes); vul crashed True, fix crashed False"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty PoC also passes); vul crashed True, fix crashed False"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-brotli-wf-rag-1-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-dnsmasq-wf-llm-2-poc-L1-oracle": {
+   "category": "第五类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty PoC also passes); the vulnerable build behaves differently from the fixed build (on every run)"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty PoC also passes); the vulnerable build behaves differently from the fixed build (on every run)"
+    },
+    "any:4096 random bytes": {
+     "passes": false,
+     "why": "FAIL: the ground truth does not pass (the vulnerable build behaved like the fixed build); the vulnerable build behaved like the fixed build"
+    },
+    "any:1024 zero bytes": {
+     "passes": false,
+     "why": "FAIL: the ground truth does not pass (the vulnerable build behaved like the fixed build); the vulnerable build behaved like the fixed build"
+    }
+   },
+   "any_poc_passes": false
+  },
+  "cyberforge-espeak-ng-fz-0-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-espeak-ng-fz-2-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-exiv2-fz-0-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    }
+   },
+   "any_poc_passes": false
+  },
+  "cyberforge-exiv2-fz-1-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    }
+   },
+   "any_poc_passes": false
+  },
+  "cyberforge-grok-wf-llm-4-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "note": "built with the dependency sources the dataset's own build left in the project image (fmt): this machine's GitHub proxy refuses their download",
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty PoC also passes); vul crashed True, fix crashed False"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty PoC also passes); vul crashed True, fix crashed False"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty PoC also passes); vul crashed True, fix crashed False"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty PoC also passes); vul crashed True, fix crashed False"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-h2o-wf-llm-2-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-h3-fz-14-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    }
+   },
+   "any_poc_passes": false
+  },
+  "cyberforge-h3-fz-17-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    }
+   },
+   "any_poc_passes": false
+  },
+  "cyberforge-h3-fz-20-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    }
+   },
+   "any_poc_passes": false
+  },
+  "cyberforge-h3-fz-3-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    }
+   },
+   "any_poc_passes": false
+  },
+  "cyberforge-h3-fz-32-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    }
+   },
+   "any_poc_passes": false
+  },
+  "cyberforge-h3-fz-39-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    }
+   },
+   "any_poc_passes": false
+  },
+  "cyberforge-h3-fz-41-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    }
+   },
+   "any_poc_passes": false
+  },
+  "cyberforge-h3-fz-49-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    }
+   },
+   "any_poc_passes": false
+  },
+  "cyberforge-h3-wf-rag-0-poc-L1-oracle": {
+   "category": "第五类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:argv A": {
+     "passes": false,
+     "why": "FAIL: the ground truth does not pass (the vulnerable build behaved like the fixed build); the vulnerable build behaved like the fixed build"
+    },
+    "any:argv --help": {
+     "passes": false,
+     "why": "FAIL: the ground truth does not pass (the vulnerable build behaved like the fixed build); the vulnerable build behaved like the fixed build"
+    },
+    "any:argv 1": {
+     "passes": false,
+     "why": "FAIL: the ground truth does not pass (the vulnerable build behaved like the fixed build); the vulnerable build behaved like the fixed build"
+    },
+    "any:argv 3 random tokens": {
+     "passes": false,
+     "why": "FAIL: the ground truth does not pass (the vulnerable build behaved like the fixed build); the vulnerable build behaved like the fixed build"
+    }
+   },
+   "any_poc_passes": false
+  },
+  "cyberforge-h3-wf-rag-1-poc-L1-oracle": {
+   "category": "第五类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:argv A": {
+     "passes": false,
+     "why": "FAIL: the ground truth does not pass (the vulnerable build was not triggered); the vulnerable build was not triggered"
+    },
+    "any:argv --help": {
+     "passes": false,
+     "why": "FAIL: the ground truth does not pass (the vulnerable build was not triggered); the vulnerable build was not triggered"
+    },
+    "any:argv 1": {
+     "passes": false,
+     "why": "FAIL: the ground truth does not pass (the vulnerable build was not triggered); the vulnerable build was not triggered"
+    },
+    "any:argv 3 random tokens": {
+     "passes": false,
+     "why": "FAIL: the ground truth does not pass (the vulnerable build was not triggered); the vulnerable build was not triggered"
+    }
+   },
+   "any_poc_passes": false
+  },
+  "cyberforge-h3-wf-rag-6-poc-L1-oracle": {
+   "category": "第五类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:argv A": {
+     "passes": false,
+     "why": "FAIL: the ground truth does not pass (the vulnerable build behaved like the fixed build); the vulnerable build behaved like the fixed build"
+    },
+    "any:argv --help": {
+     "passes": false,
+     "why": "FAIL: the ground truth does not pass (the vulnerable build behaved like the fixed build); the vulnerable build behaved like the fixed build"
+    },
+    "any:argv 1": {
+     "passes": false,
+     "why": "FAIL: the ground truth does not pass (the vulnerable build behaved like the fixed build); the vulnerable build behaved like the fixed build"
+    },
+    "any:argv 3 random tokens": {
+     "passes": false,
+     "why": "FAIL: the ground truth does not pass (the vulnerable build behaved like the fixed build); the vulnerable build behaved like the fixed build"
+    }
+   },
+   "any_poc_passes": false
+  },
+  "cyberforge-harfbuzz-fz-0-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 77, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 77, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 77, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 77, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-harfbuzz-fz-1-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-harfbuzz-fz-13-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 77, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 77, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 77, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-harfbuzz-fz-15-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-harfbuzz-fz-3-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-harfbuzz-fz-4-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": false
+  },
+  "cyberforge-harfbuzz-fz-6-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-harfbuzz-wf-llm-2-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-harfbuzz-wf-rag-0-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-jq-fz-10-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-jq-fz-14-poc-L1-oracle": {
+   "category": "第五类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:argv A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty PoC also passes); the vulnerable build is triggered, the fixed build is not"
+    },
+    "any:argv --help": {
+     "passes": false,
+     "why": "FAIL: the ground truth does not pass (the vulnerable build was not triggered); the vulnerable build was not triggered"
+    },
+    "any:argv 1": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty PoC also passes); the vulnerable build is triggered, the fixed build is not"
+    },
+    "any:argv 3 random tokens": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty PoC also passes); the vulnerable build is triggered, the fixed build is not"
+    }
+   },
+   "any_poc_passes": false
+  },
+  "cyberforge-jq-fz-2-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-json-c-fz-8-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-json-c-wf-rag-3-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 77, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 77, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 77, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 77, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-jsonnet-wf-rag-0-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-libarchive-wf-rag-0-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-libarchive-wf-rag-1-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-libdwarf-wf-llm-1-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-libjxl-fz-0-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-libjxl-fz-1-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-libjxl-fz-2-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-libjxl-fz-5-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 77, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 77, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 77, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 77, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-libjxl-fz-6-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 77, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 77, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 77, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 77, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-libsass-fz-4-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-libsass-wf-rag-1-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-libsrtp-fz-0-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-libsrtp-fz-1-poc-L1-oracle": {
+   "category": "第五类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty PoC also passes); the vulnerable build is triggered, the fixed build is not"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty PoC also passes); the vulnerable build is triggered, the fixed build is not"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty PoC also passes); the vulnerable build is triggered, the fixed build is not"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty PoC also passes); the vulnerable build is triggered, the fixed build is not"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-libsrtp-fz-2-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-libsrtp-fz-4-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-libsrtp-fz-5-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-libsrtp-fz-7-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-libsrtp-fz-8-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-libsrtp-wf-rag-0-poc-L1-oracle": {
+   "category": "第五类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty PoC also passes); the vulnerable build is triggered, the fixed build is not"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty PoC also passes); the vulnerable build is triggered, the fixed build is not"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty PoC also passes); the vulnerable build is triggered, the fixed build is not"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty PoC also passes); the vulnerable build is triggered, the fixed build is not"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-libsrtp-wf-rag-1-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-libyang-fz-0-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-libyang-fz-2-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-libyang-fz-3-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 77, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 77, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 77, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 77, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-libyang-fz-4-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-libyang-wf-llm-0-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-libzip-fz-1-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-libzip-fz-13-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 77, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 77, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 77, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 77, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-libzip-fz-2-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-libzip-fz-3-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-libzip-fz-6-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-libzip-fz-7-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-libzip-wf-rag-1-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-mruby-fz-2-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    }
+   },
+   "any_poc_passes": false
+  },
+  "cyberforge-opencv-fz-1-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-opencv-fz-4-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-openh264-fz-0-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-openh264-wf-rag-3-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-openh264-wf-rag-4-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit -6, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-perfetto-fz-0-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-perfetto-fz-5-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-protobuf-c-fz-16-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-protobuf-c-fz-4-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-protobuf-c-fz-6-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-protobuf-c-fz-9-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-selinux-fz-0-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-selinux-fz-2-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-simdjson-fz-1-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "note": "built with the dependency sources the dataset's own build left in the project image (counters, cxxopts, simdjson-data): this machine's GitHub proxy refuses their download",
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    }
+   },
+   "any_poc_passes": false
+  },
+  "cyberforge-simdjson-fz-15-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "note": "built with the dependency sources the dataset's own build left in the project image (counters, cxxopts, simdjson-data): this machine's GitHub proxy refuses their download",
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": false,
+     "why": "FAIL: ground truth is not differential; vul exit 0, fix exit 0"
+    }
+   },
+   "any_poc_passes": false
+  },
+  "cyberforge-simdjson-fz-16-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "note": "built with the dependency sources the dataset's own build left in the project image (counters, cxxopts, simdjson-data): this machine's GitHub proxy refuses their download",
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 1, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  },
+  "cyberforge-xz-wf-rag-0-poc-L1-oracle": {
+   "category": "第三类",
+   "retested": true,
+   "empty_poc_passes": true,
+   "inputs": {
+    "any:1-byte A": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 77, fix exit 0"
+    },
+    "any:64 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 77, fix exit 0"
+    },
+    "any:4096 random bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 77, fix exit 0"
+    },
+    "any:1024 zero bytes": {
+     "passes": true,
+     "why": "PASS-DEGENERATE (an empty input also passes); vul exit 77, fix exit 0"
+    }
+   },
+   "any_poc_passes": true
+  }
+ }
+}

@@ -184,9 +184,96 @@ md.append(("%d 个 bundle（1034 个任务中另有 %d 个没有生成 bundle，
            % (len(Q), n_unc)) if n_unc else "%d 个 bundle（1034 个任务都生成了 bundle）：\n" % len(Q))
 statuses = ("pass", "pass-degenerate", "pass-no-gt", "fail", "not-built") + (("unverified",) if any(
     e["verification"] == "unverified" for e in Q.values()) else ())  # e.g. category-5 bundles that cannot be built here
-md.append(table(["分类", "目录", "数量"] + ["本机验证：" + STATUS_ZH[s] for s in statuses], [
-    [SHOW.get(c, c), "`%s`" % folder_of[c], by_cat[c]] + [by_cat_status[(c, s)] for s in statuses] for c in CATS] +
-    [["合计", "", len(Q)] + [sum(by_cat_status[(c, s)] for c in CATS) for s in statuses]]) + "\n")
+# the PASS-DEGENERATE bundles self-checked again with arbitrary PoCs (any_poc.py): those that pass with any PoC
+ANY_F = os.path.join(HERE, "verification", "any_poc.json")
+ANY = json.load(open(ANY_F, encoding="utf-8")) if os.path.isfile(ANY_F) else None
+ANY_COL = "其中：任意 PoC 都能通过（实测）"
+any_cat = collections.Counter(Q[n]["category"] for n, e in (ANY or {}).get("bundles", {}).items()
+                              if e.get("any_poc_passes") and Q.get(n, {}).get("verification") == "pass-degenerate")
+AB = (ANY or {}).get("bundles", {})
+
+
+def any_kind(n):
+    """For a PASS-DEGENERATE bundle retested with arbitrary PoCs: "all", "some" or "untested"; else None."""
+    if not ANY or Q[n]["verification"] != "pass-degenerate":
+        return None
+    e = AB.get(n) or {}
+    return "untested" if not e.get("retested") else "all" if e["any_poc_passes"] else "some"
+
+
+def any_group_note(names):
+    """The summary table's note on a group of bundles: how they did with arbitrary PoCs."""
+    k = collections.Counter(any_kind(n) for n in names if any_kind(n))
+    parts = [("任意 PoV 都能通过 %d 个", "all"), ("只有部分任意 PoV 能通过 %d 个", "some"), ("本机未能重测 %d 个", "untested")]
+    return "实测：" + "、".join(t % k[x] for t, x in parts if k[x]) if k else ""
+
+
+def spaced(t):
+    """t between Chinese text: a space only next to Latin letters, digits or code."""
+    lat = lambda ch: ch.isascii() and not ch.isspace()
+    return (" " if t and lat(t[0]) else "") + t + (" " if t and lat(t[-1]) else "")
+
+
+def any_bundle_note(n):
+    """The per-bundle table's note: what the arbitrary PoCs did."""
+    kind = any_kind(n)
+    if kind is None:
+        return ""
+    if kind == "untested":
+        return "实测任意 PoV：本机这次没能重新构建，未重测。"
+    ins = AB[n]["inputs"]
+    name = lambda k: ANY["inputs"].get(k, k)
+    if kind == "all":
+        return "实测任意 PoV：空 PoV、%s都通过，提交什么都能通过。" % "、".join(name(k) for k in ins)
+    ok = [name(k) for k, x in ins.items() if x["passes"]]
+    bad = [name(k) for k, x in ins.items() if not x["passes"]]
+    return "实测任意 PoV：只有空 PoV%s能通过，%s不通过，不是提交什么都能通过。" % (
+        " 和" + spaced("、".join(ok)) if ok else " ", spaced("、".join(bad)).lstrip())
+
+
+def status_cells(get):
+    out = []
+    for s in statuses:
+        out.append(get(s))
+        if s == "pass-degenerate" and ANY:
+            out.append(get(ANY_COL))
+    return out
+
+
+heads = status_cells(lambda s: s if s == ANY_COL else "本机验证：" + STATUS_ZH[s])
+md.append(table(["分类", "目录", "数量"] + heads, [
+    [SHOW.get(c, c), "`%s`" % folder_of[c], by_cat[c]] + status_cells(
+        lambda s, c=c: any_cat[c] if s == ANY_COL else by_cat_status[(c, s)]) for c in CATS] +
+    [["合计", "", len(Q)] + status_cells(
+        lambda s: sum(any_cat.values()) if s == ANY_COL else sum(by_cat_status[(c, s)] for c in CATS))]) + "\n")
+if ANY:
+    deg = [n for n, e in Q.items() if e["verification"] == "pass-degenerate"]
+    some = sorted(n for n in deg if AB.get(n, {}).get("retested") and not AB[n]["any_poc_passes"])
+    gone = sorted(n for n in deg if not AB.get(n, {}).get("retested"))
+    short = lambda n: n[len("cyberforge-"):-len("-poc-L1-oracle")]
+
+    def partial_groups(names):
+        """[(the arbitrary PoCs that passed, bundles)], the bundles grouped by which ones passed."""
+        g = collections.OrderedDict()
+        for n in names:
+            ok = tuple(ANY["inputs"].get(k, k) for k, x in AB[n]["inputs"].items() if x["passes"])
+            g.setdefault(ok, []).append(n)
+        return sorted(g.items(), key=lambda kv: (-len(kv[1]), kv[0]))
+    unknown = collections.Counter(e["category"] for e in Q.values() if e["verification"] in ("not-built", "unverified"))
+    md.append("“%s”：“通过但空输入也触发”的 %d 个 bundle 在本机重新构建，用几个任意的 PoV 代替标准答案再跑一遍自检"
+              "（%s；命令行参数型换成%s），空 PoV 和这些 PoV 全部通过的才算。%s其余验证过的 bundle 都有不能通过的 PoV"
+              "（空 PoV 或标准答案），不会出现提交什么都通过的情况；本机没建成或没验证的（%s）不知道。"
+              "逐个结果在 `newplatform_bundles/conversion/verification/any_poc.json`。\n" % (
+                  ANY_COL, len(deg),
+                  "、".join(v for k, v in ANY["inputs"].items() if not k.startswith("any:argv")),
+                  "、".join(v for k, v in ANY["inputs"].items() if k.startswith("any:argv")),
+                  ("空 PoV 能通过、但不是任何 PoV 都能通过的 %d 个：%s。" % (len(some), "；".join(
+                      "%s（%s）" % ("、".join(short(n) for n in ns), "任意 PoV 里只有%s能通过" % spaced("、".join(ok)) if ok else
+                                   "任意 PoV 都不通过，只有空 PoV 能通过")
+                      for ok, ns in partial_groups(some)))
+                   if some else "") +
+                  ("没能重新构建、未重测的 %d 个：%s。" % (len(gone), "、".join(short(n) for n in gone)) if gone else ""),
+                  "、".join("%s %d 个" % (SHOW.get(c, c), unknown[c]) for c in CATS if unknown[c])))
 md.append("按转换时的证据分级（tier：A = 有崩溃证据、harness 型；B = 有崩溃证据、命令行 / 程序型；C = 数据集里没有触发证据）：\n")
 md.append(table(["分类", "A", "B", "C"], [[SHOW.get(c, c)] + [by_cat_tier[(c, t)] for t in "ABC"] for c in CATS]) + "\n")
 
@@ -222,6 +309,7 @@ md.append("“问题出在”指原始数据里出问题的文件是谁提供的
 rows = [("第一类", "原始数据正常", by_cat["第一类"], "—", "无需处理", "可直接用于 PoC 迭代和轨迹生成")]
 code_src = collections.defaultdict(collections.Counter)
 groups = collections.OrderedDict()
+group_names = {}
 for name, e in sorted(Q.items()):
     c = e["category"]
     if c == "第一类":
@@ -233,24 +321,29 @@ for name, e in sorted(Q.items()):
     g = SG.basis_row(c, e["basis"]) or (e["basis"], e.get("suggest") or e.get("fix") or "", e.get("status") or "")
     k = (c,) + g
     groups.setdefault(k, collections.Counter())[e.get("source_of_problem") or SG.UP] += 1
+    group_names.setdefault(k, []).append(name)
 for code, cnt in sorted(code_src.items(), key=lambda kv: -sum(kv[1].values())):
     problem, fix, state = SG.CODE_ROWS[code]
     rows.append(("第二类", problem, sum(cnt.values()), who(cnt), fix, state))
 for c in ("第二类", "第三类", "待确认", "第六类"):
     for k, cnt in sorted(((k, v) for k, v in groups.items() if k[0] == c), key=lambda kv: -sum(kv[1].values())):
+        note = any_group_note(group_names[k])
         rows.append((SHOW.get(c, c), k[1], sum(cnt.values()), who_c5(list(cnt.elements())) if c == "第六类" else who(cnt),
-                     k[2], k[3]))
+                     k[2], k[3] + ("（%s）" % note if note else "")))
 c5_groups = collections.OrderedDict()
+c5_names = {}
 for name, e in sorted(C5.items()):
     k = (e.get("review") or "", SG.c5_state(e["verification"], e.get("unusable"), e.get("hardware")))
     c5_groups.setdefault(k, []).append(e.get("source_of_problem") or SG.UP)
+    c5_names.setdefault(k, []).append(name)
 
 
 C5_ORDER = list(SG.REVIEW_ROWS)
 for (review, state), sources in sorted(c5_groups.items(), key=lambda kv: (C5_ORDER.index(kv[0][0]) if kv[0][0] in C5_ORDER
                                                                          else len(C5_ORDER), -len(kv[1]), kv[0][1])):
+    note = any_group_note(c5_names[(review, state)])
     rows.append(("第五类", SG.REVIEW_ROWS.get(review, (review, ""))[0], len(sources), who_c5(sources),
-                 SG.C5_FIX.get(review, ""), state))
+                 SG.C5_FIX.get(review, ""), state + ("（%s）" % note if note else "")))
 unc = collections.Counter(v["category"] for k, v in UNC.items() if k not in C5_SPECS)
 for cat, n in unc.most_common():
     problem, fix = SG.REVIEW_ROWS.get(cat, (cat, ""))
@@ -301,7 +394,7 @@ for i, (c, title) in enumerate(SECTIONS):
         rows.append((name, "%s%s" % (folder_of[c], name), e["source"], "%s：%s" % (SHOW.get(c, c), e["basis"]),
                      "问题：%s\n影响：%s\n来源：%s%s" % (e["problem"], e["impact"], e.get("source_of_problem") or "—",
                                                        "（%s）" % e["source_note"] if e.get("source_note") else ""),
-                     fix, e["status"]))
+                     fix, e["status"] + ("\n" + any_bundle_note(name) if any_bundle_note(name) else "")))
     md.append("### %s（%d 个）\n" % (title, len(rows)))
     md.append(table(HEAD, rows) + "\n")
 
@@ -312,6 +405,10 @@ sugg = open(os.path.join(HERE, "suggestions.md"), encoding="utf-8").read().strip
 for k, v in {"N_ENV": len(env), "N_NET": sum(1 for e in env if "磁盘" not in e["problem"]),
              "N_DISK": sum(1 for e in env if "磁盘" in e["problem"]),
              "N_DEGEN": sum(1 for e in Q.values() if e["verification"] == "pass-degenerate"),
+             # the arbitrary PoCs (any_poc.json): how many of them pass with whatever is submitted
+             "ANY_SENTENCE": ("用几个任意的 PoV 实测，%d 个提交什么都能通过（第 4 节表里的“%s”一列）%s。" % (
+                 sum(any_cat.values()), ANY_COL,
+                 "，%d 个只有一部分任意 PoV 能通过" % len(some) if some else "") if ANY else ""),
              "DEGEN_SPLIT": "、".join("%s %d 个" % (SHOW.get(c, c), n) for c, n in sorted(collections.Counter(
                  e["category"] for e in Q.values() if e["verification"] == "pass-degenerate").items(),
                  key=lambda kv: CATS.index(kv[0]) if kv[0] in CATS else len(CATS))),

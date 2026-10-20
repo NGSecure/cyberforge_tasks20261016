@@ -1,0 +1,973 @@
+[
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-libsrtp-fz-0-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "libsrtp"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-libsrtp-fz-1-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "libsrtp",
+  "alt_judge": {
+   "any:1-byte A": {
+    "no_ground_truth": null
+   },
+   "any:64 random bytes": {
+    "no_ground_truth": null
+   },
+   "any:4096 random bytes": {
+    "no_ground_truth": null
+   },
+   "any:1024 zero bytes": {
+    "no_ground_truth": null
+   }
+  }
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-libsrtp-fz-2-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "libsrtp"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-libsrtp-fz-4-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "libsrtp"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-libsrtp-fz-5-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "libsrtp"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-libsrtp-fz-7-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "libsrtp"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-libsrtp-fz-8-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "libsrtp"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-libsrtp-wf-rag-0-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "libsrtp"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-libsrtp-wf-rag-1-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "libsrtp"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-h3-fz-14-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-h3-fz-17-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-h3-fz-20-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-h3-fz-3-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-h3-fz-32-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-h3-fz-39-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-h3-fz-41-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-h3-fz-49-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-h3-wf-rag-0-poc-L1-oracle",
+  "alts": {
+   "any:argv A": "/home/user/anypoc_samples/argv_a",
+   "any:argv --help": "/home/user/anypoc_samples/argv_help",
+   "any:argv 1": "/home/user/anypoc_samples/argv_num",
+   "any:argv 3 random tokens": "/home/user/anypoc_samples/argv_rand"
+  },
+  "judge_alts": {},
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-h3-wf-rag-1-poc-L1-oracle",
+  "alts": {
+   "any:argv A": "/home/user/anypoc_samples/argv_a",
+   "any:argv --help": "/home/user/anypoc_samples/argv_help",
+   "any:argv 1": "/home/user/anypoc_samples/argv_num",
+   "any:argv 3 random tokens": "/home/user/anypoc_samples/argv_rand"
+  },
+  "judge_alts": {},
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-h3-wf-rag-6-poc-L1-oracle",
+  "alts": {
+   "any:argv A": "/home/user/anypoc_samples/argv_a",
+   "any:argv --help": "/home/user/anypoc_samples/argv_help",
+   "any:argv 1": "/home/user/anypoc_samples/argv_num",
+   "any:argv 3 random tokens": "/home/user/anypoc_samples/argv_rand"
+  },
+  "judge_alts": {},
+  "project": "h3"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-bluez-wf-llm-0-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "bluez"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-brotli-fz-14-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "brotli"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-brotli-fz-17-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "brotli"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-brotli-fz-8-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "brotli"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-brotli-wf-rag-1-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "brotli"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-dnsmasq-wf-llm-2-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "dnsmasq"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-espeak-ng-fz-0-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "espeak-ng"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-espeak-ng-fz-2-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "espeak-ng"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-exiv2-fz-0-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "exiv2"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-exiv2-fz-1-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "exiv2"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-grok-wf-llm-4-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "grok"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-h2o-wf-llm-2-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "h2o"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-harfbuzz-fz-0-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "harfbuzz"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-harfbuzz-fz-1-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "harfbuzz"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-harfbuzz-fz-13-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "harfbuzz"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-harfbuzz-fz-15-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "harfbuzz"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-harfbuzz-fz-3-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "harfbuzz"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-harfbuzz-fz-4-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "harfbuzz"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-harfbuzz-fz-6-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "harfbuzz"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-harfbuzz-wf-llm-2-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "harfbuzz"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-harfbuzz-wf-rag-0-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "harfbuzz"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-jq-fz-10-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "jq"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-jq-fz-14-poc-L1-oracle",
+  "alts": {
+   "any:argv A": "/home/user/anypoc_samples/argv_a",
+   "any:argv --help": "/home/user/anypoc_samples/argv_help",
+   "any:argv 1": "/home/user/anypoc_samples/argv_num",
+   "any:argv 3 random tokens": "/home/user/anypoc_samples/argv_rand"
+  },
+  "judge_alts": {},
+  "project": "jq"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-jq-fz-2-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "jq"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-json-c-fz-8-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "json-c"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-json-c-wf-rag-3-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "json-c"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-jsonnet-wf-rag-0-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "jsonnet"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-libarchive-wf-rag-0-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "libarchive"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-libarchive-wf-rag-1-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "libarchive"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-libdwarf-wf-llm-1-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "libdwarf"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-libjxl-fz-0-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "libjxl"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-libjxl-fz-1-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "libjxl"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-libjxl-fz-2-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "libjxl"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-libjxl-fz-5-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "libjxl"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-libjxl-fz-6-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "libjxl"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-libsass-fz-4-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "libsass"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-libsass-wf-rag-1-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "libsass"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-libyang-fz-0-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "libyang"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-libyang-fz-2-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "libyang"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-libyang-fz-3-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "libyang"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-libyang-fz-4-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "libyang"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-libyang-wf-llm-0-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "libyang"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-libzip-fz-1-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "libzip"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-libzip-fz-13-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "libzip"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-libzip-fz-2-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "libzip"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-libzip-fz-3-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "libzip"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-libzip-fz-6-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "libzip"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-libzip-fz-7-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "libzip"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-libzip-wf-rag-1-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "libzip"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-mruby-fz-2-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "mruby"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-opencv-fz-1-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "opencv"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-opencv-fz-4-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "opencv"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-openh264-fz-0-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "openh264"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-openh264-wf-rag-3-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "openh264"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-openh264-wf-rag-4-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "openh264"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-perfetto-fz-0-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "perfetto"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-perfetto-fz-5-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "perfetto"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-protobuf-c-fz-16-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "protobuf-c"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-protobuf-c-fz-4-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "protobuf-c"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-protobuf-c-fz-6-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "protobuf-c"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-protobuf-c-fz-9-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "protobuf-c"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-selinux-fz-0-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "selinux"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-selinux-fz-2-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "selinux"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-simdjson-fz-1-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "simdjson"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-simdjson-fz-15-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "simdjson"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-simdjson-fz-16-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "simdjson"
+ },
+ {
+  "bundle": "/home/user/anypoc_copies/cyberforge-xz-wf-rag-0-poc-L1-oracle",
+  "alts": {
+   "any:1-byte A": "/home/user/anypoc_samples/a1",
+   "any:64 random bytes": "/home/user/anypoc_samples/r64",
+   "any:4096 random bytes": "/home/user/anypoc_samples/r4k",
+   "any:1024 zero bytes": "/home/user/anypoc_samples/z1k"
+  },
+  "judge_alts": {},
+  "project": "xz"
+ }
+]
