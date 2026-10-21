@@ -9,4 +9,4 @@ bash newplatform_bundles2/<bundle>/build.sh     # 公网：构建镜像 + 3 项�
 bash newplatform_bundles2/<bundle>/push.sh      # 上传网络：推送镜像并回填 task.toml
 ```
 
-第一类在 `../newplatform_bundles/`，第三类在 `../newplatform_bundles3/`，第四类（待确认）在 `../newplatform_bundles4/`。分类标准见 repo 根目录 `README.md`；转换方法和验证情况见 `../newplatform_bundles/README.md`、`../newplatform_bundles/CONVERSION_REPORT.md`，每个任务的去向见 `../newplatform_bundles/conversion_manifest.csv`。
+第一类在 `../newplatform_bundles/`，第三类在 `../newplatform_bundles3/`，第四类（待确认）在 `../newplatform_bundles4/`，第五类在 `../newplatform_bundles5/`，第六类在 `../other_errors/`，第七类在 `../PotentialFalsePositive/`。分类标准见 repo 根目录 `README.md`；转换方法和验证情况见 `../newplatform_bundles/README.md`、`../newplatform_bundles/CONVERSION_REPORT.md`，每个任务的去向见 `../newplatform_bundles/conversion_manifest.csv`。

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Static checks over generated CyberForge bundles (no Docker needed).
 
-    python3 -I validate.py <out_dir> [--out-b DIR] [--out-c DIR] [--out-d DIR] [--out-e DIR] [--out-f DIR] [bundle ...]
+    python3 -I validate.py <out_dir> [--out-b DIR] [--out-c DIR] [--out-d DIR] [--out-e DIR] [--out-f DIR] [--out-g DIR] [bundle ...]
 
 Checks per bundle: required files, no unfilled @@placeholders@@, task.toml /
 judge.json / cyberforge_source.json parse, `bash -n` on every script, in-memory
@@ -120,7 +120,7 @@ def check_recipe(bd, judge):
 
 
 FOLDER_CATS = {"A": ("第一类",), "B": ("第二类",), "C": ("第三类",), "D": ("待确认",), "E": ("第五类",),
-               "F": ("第六类",)}  # <out_dir>, <out_dir>2..5, other_errors next to <out_dir>
+               "F": ("第六类",), "G": ("第七类",)}  # <out_dir>, <out_dir>2..5, other_errors and PotentialFalsePositive next to it
 
 
 def check(bd, tier):
@@ -140,11 +140,11 @@ def check(bd, tier):
     if errs:
         return errs
     q = (src.get("quality") or {}).get("category")
-    if e and tier not in ("E", "F"):
-        errs.append("a category-5 bundle outside the fifth directory (or other_errors)")
+    if e and tier not in ("E", "F", "G"):
+        errs.append("a category-5 bundle outside the fifth directory (or other_errors, PotentialFalsePositive)")
     if q and q not in FOLDER_CATS[tier]:
         errs.append("bundle is in the %s directory but its category is %s" % ("/".join(FOLDER_CATS[tier]), q))
-    elif not q and src.get("tier") != tier and not (e and tier in ("E", "F")):
+    elif not q and src.get("tier") != tier and not (e and tier in ("E", "F", "G")):
         errs.append("bundle is in the tier-%s directory but its tier is %s" % (tier, src.get("tier")))
     env_files = set()
     for dp, _, fn in os.walk(os.path.join(bd, "environment")):
@@ -263,7 +263,7 @@ def check(bd, tier):
 def main():
     args = sys.argv[1:]
     opts = {}
-    for flag in ("--out-b", "--out-c", "--out-d", "--out-e", "--out-f"):
+    for flag in ("--out-b", "--out-c", "--out-d", "--out-e", "--out-f", "--out-g"):
         if flag in args:
             i = args.index(flag)
             opts[flag] = args[i + 1]
@@ -273,7 +273,8 @@ def main():
             "C": os.path.abspath(opts.get("--out-c", out + "3")),
             "D": os.path.abspath(opts.get("--out-d", out + "4")),
             "E": os.path.abspath(opts.get("--out-e", out + "5")),
-            "F": os.path.abspath(opts.get("--out-f", os.path.join(os.path.dirname(out), "other_errors")))}
+            "F": os.path.abspath(opts.get("--out-f", os.path.join(os.path.dirname(out), "other_errors"))),
+            "G": os.path.abspath(opts.get("--out-g", os.path.join(os.path.dirname(out), "PotentialFalsePositive")))}
     todo = []
     for tier, d in dirs.items():
         if not os.path.isdir(d):

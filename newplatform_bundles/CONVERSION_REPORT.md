@@ -10,10 +10,11 @@
 |---|---|---|
 | `newplatform_bundles/` | 第一类：原始数据正常，无需修复，可直接用于 PoC 迭代和轨迹生成 | 524 |
 | `newplatform_bundles2/` | 第二类：原始数据有轻微问题，已做少量修改，或不修改也不影响轨迹质量 | 127 |
-| `newplatform_bundles3/` | 第三类：原始数据有严重问题 | 184 |
+| `newplatform_bundles3/` | 第三类：原始数据有严重问题 | 104 |
 | `newplatform_bundles4/` | 第四类（待确认）：本机没能构建，或不能断定是数据的问题 | 63 |
-| `newplatform_bundles5/` | 第五类：原来的判定转换不了、改为按任务实现判定（`tests/oracle.json`）的任务 | 108 |
+| `newplatform_bundles5/` | 第五类：原来的判定转换不了、改为按任务实现判定（`tests/oracle.json`）的任务 | 101 |
 | `other_errors/` | 第六类：因原始数据的问题构建失败，或转化不成有效任务（没有 PoV 能通过判定），暂时无法修复，不要构建上传 | 28 |
+| `PotentialFalsePositive/` | 第七类：空 PoC 也能通过判定（PASS-DEGENERATE，原在第三类、第五类），潜在误报，不可用于 PoC 迭代 | 87 |
 
 下文的 A / B / C 是转换时按数据集证据定的分级（tier，`conversion_manifest.csv` 的 `tier` 列），与目录无关：A = 有崩溃证据、PoV 是喂给 OSS-Fuzz harness 的一个输入文件；B = 有崩溃证据、PoV 交给项目自己的程序（CLI 的输入 / 命令行参数，或一个链接项目代码的 C/C++ 程序）；C = 数据集里没有触发证据。
 
@@ -33,7 +34,7 @@
 
 历次版本：第一版只有 A 级 705 个 bundle；第二版（880 个）加入了 B、C 两级，并给判定服务做了隔离；第三版（920 个）从数据集自身的证据里找回了 40 个原先未转换的任务（见 4.4、第 5 节）；第四版（900 个）在本机把每个 bundle 实际构建并跑完三项自检（第 3 节），按结果改正了转换中与数据集做法不一致的地方（3.3），并移出了核实后无法可靠转换的 20 个任务；本版（903 个）逐个复核了没有通过的 bundle，区分原始数据的问题和转换的问题，又找出并改正了几处转换问题（3.3 末尾），重新验证了受影响的 bundle，并移出 6 个（触发条件在 exploit 设置的环境变量里、exploit 的程序要读它自己生成的文件，或 exploit 真正的输入是 GB 级文件），加入 9 个崩溃种子只是 Git LFS 指针的任务（没有标准答案自检），最后按原始数据的质量重新分了目录（不再按 tier 分）；之后把原判定转换不了的 131 个任务按各自的判定逻辑做成了第五类（5.1）。与第一版相比：
 
-- 目录按原始数据质量分：第一类在 `newplatform_bundles/`，第二类在 `newplatform_bundles2/`，第三类在 `newplatform_bundles3/`，第四类（待确认）在 `newplatform_bundles4/`，按任务实现判定的（第五类）在 `newplatform_bundles5/`，构建失败或转化不成有效任务的（第六类）在 `other_errors/`；
+- 目录按原始数据质量分：第一类在 `newplatform_bundles/`，第二类在 `newplatform_bundles2/`，第三类在 `newplatform_bundles3/`，第四类（待确认）在 `newplatform_bundles4/`，按任务实现判定的（第五类）在 `newplatform_bundles5/`，构建失败或转化不成有效任务的（第六类）在 `other_errors/`，空 PoC 也能通过的（第七类）在 `PotentialFalsePositive/`；
 - 23 个原先在 B / C 的任务（exploit.sh 写法看起来像别的形态，或 payload 只在脚本里生成），在真实镜像里重放后确认 exploit 实际只是给 harness 喂一个输入，并且有崩溃证据，归入 A；
 - **判定服务做了隔离（见 4.7）**：第一版的 task-server 以 root 身份运行 harness，脚本引擎类 harness（如 quickjs `fuzz_eval`）的 PoV 可以在判定容器里执行任意命令、读到标准答案，或分辨当前跑的是哪个版本后伪造崩溃。所有 bundle 都已按新模板重新生成；之后又改动过 task-server 的构建步骤和程序型判定（3.3），建议用本版整体替换之前推送的版本。
 
@@ -88,13 +89,13 @@ task-server 镜像构建两份项目后，记录每次 `compile` 新建、修改
 
 `conversion/verify_bundles.py` 在本机对每个 bundle 实际运行 `build.sh`：用固定 digest 的数据集镜像构建 agent 镜像和 task-server 镜像（安全版、注入版各编译一次），再跑三项自检，其中自检 3 用标准答案和空输入分别在两个版本上运行判定服务。结果在 `conversion/verification/`（`summary.json` 是每个 bundle 的最终状态），并写进 manifest 的 `verified`、`verified_note` 列。每条结果记录了它验证的是哪个标准答案（SHA-256），标准答案在验证之后又改动过的 bundle 都重新验证了。
 
-| 状态 | 第一类 | 第二类 | 第三类 | 待确认 | 第六类 | 合计 |
-|---|---|---|---|---|---|---|
-| 通过：标准答案让注入版崩溃、安全版不崩溃，空输入两边都不崩溃 | 524 | 127 | 0 | 0 | 0 | 651 |
-| 通过，但空输入也能让注入版崩溃、安全版不崩溃（空输入就能触发注入的漏洞） | 0 | 0 | 80 | 0 | 0 | 80 |
-| 通过（无标准答案）：两个版本都有 harness、两版的二进制不同、空输入两版都不崩溃；标准答案自检没做 | 0 | 0 | 7 | 0 | 0 | 7 |
-| 不通过：标准答案在重建的两个版本上不是差分的 | 0 | 0 | 97 | 1 | 0 | 98 |
-| 未完成构建 | 0 | 0 | 0 | 62 | 5 | 67 |
+| 状态 | 第一类 | 第二类 | 第三类 | 待确认 | 第六类 | 第七类 | 合计 |
+|---|---|---|---|---|---|---|---|
+| 通过：标准答案让注入版崩溃、安全版不崩溃，空输入两边都不崩溃 | 524 | 127 | 0 | 0 | 0 | 0 | 651 |
+| 通过，但空输入也能让注入版崩溃、安全版不崩溃（空输入就能触发注入的漏洞） | 0 | 0 | 0 | 0 | 0 | 80 | 80 |
+| 通过（无标准答案）：两个版本都有 harness、两版的二进制不同、空输入两版都不崩溃；标准答案自检没做 | 0 | 0 | 7 | 0 | 0 | 0 | 7 |
+| 不通过：标准答案在重建的两个版本上不是差分的 | 0 | 0 | 97 | 1 | 0 | 0 | 98 |
+| 未完成构建 | 0 | 0 | 0 | 62 | 5 | 0 | 67 |
 
 未完成构建的原因：
 
@@ -270,7 +271,7 @@ PoV 本身是代码的情况比想象中多：B 类的程序型 PoV 就是一个
 | cjson-wf-rag-2 | fail | exploit 把 `decode_pointer_inplace` 的源码抠出来编进自己的程序，崩溃发生在这份拷贝里（报告的栈在 `test_prog.c`），不经过项目的构建 |
 
 - fuzz 过程中写下的崩溃样本单独运行不复现（7 个：double-conversion-fz-9、h3-fz-26、h3-fz-30、leptonica-fz-1、pcre2-fz-10、perfetto-fz-7、perfetto-fz-8）：这些 FZ 任务的 `crash_report.json` 记录的是一次 fuzz 运行（`attribution_kind: seeded_fuzz_run`），数据集只验证了“fuzz 过程会让注入版崩溃”，没有单独重放过这个样本（记录里的重放都没有崩溃）。在重建的注入版上单独运行它不崩溃；其中 4 个在本机重跑数据集的 fuzz 过程（exploit.sh）确实让注入版崩溃、安全版不崩溃（double-conversion-fz-9、h3-fz-26、h3-fz-30、pcre2-fz-10），说明构建本身没问题，崩溃依赖 fuzz 过程中积累的状态；其余的在 90 秒的 fuzz 里没有复现。
-- 空输入也能让注入版崩溃、安全版不崩溃（80 个，`PASS-DEGENERATE`，任何空提交都能通过）：注入的漏洞在空输入上就会触发，例如 libyang 6 个任务中的 5 个，数据集自己的报告显示崩溃发生在 `ly_ctx_new` 里（harness 第 19 行，还没读输入）。这些 bundle 归入第三类（`newplatform_bundles3/`），不适合用于 PoC 迭代。
+- 空输入也能让注入版崩溃、安全版不崩溃（80 个，`PASS-DEGENERATE`，任何空提交都能通过）：注入的漏洞在空输入上就会触发，例如 libyang 6 个任务中的 5 个，数据集自己的报告显示崩溃发生在 `ly_ctx_new` 里（harness 第 19 行，还没读输入）。这些 bundle 归入第七类（`PotentialFalsePositive/`，潜在误报），不适合用于 PoC 迭代；用任意 PoC 实测的结果见 repo 根目录 `README.md` 第 4 节。
 - 共用的报告：102 个任务（31 组）的 `sanitizer_report.txt` 逐字节相同，最多 12 个任务共用一份（guetzli WF_LLM）。每个任务注入的改动不同，一份报告最多对得上其中一个任务；转换不依赖这些报告指明的输入时，以实际验证为准（3.3）。
 
 ## 5. tier B、C 与第五类（原判定未转换的任务）
@@ -339,21 +340,21 @@ C 类转换了，但数据集没有证明标准答案能触发漏洞，原因分
 
 平台最终运行 bundle 自己的 `tests/test.sh` 检查 agent 迭代出的 PoV，完全按它的结果判定（2026-10-19 的说明），所以这 131 个任务改为在各自的 `tests/` 里实现判定逻辑（`tests/oracle.json` 的规则：崩溃差分、输出差分、输出匹配、超时；PoV 可以是 harness / 项目程序的输入文件、标准输入、命令行参数、链接项目代码的程序、带环境变量和附加文件的 tar 包，或数据集 exploit 自己的测试程序（driver）的输入，PoV 形式的数量：harness 46、driver 41、cli-file 19、cli-argv 12、archive 10、program 3）。规格在 `conversion/c5_specs.json`（driver、标准答案等在 `conversion/c5/`），每个 bundle 都在本机按 `build.sh` 构建并跑了三项自检（结果在 `conversion/verification/results_c5*.jsonl`），判定方式和每个 bundle 的结果见 repo 根目录 `README.md` 第 6 节。按复核类别：
 
-| 类别（review） | 数量 | 第五类：可用 | 第五类：无参考 PoV | 第五类：空 PoV 也通过 | 第五类：未实测 | 第六类：构建失败 | 第六类：无法转化 |
+| 类别（review） | 数量 | 第五类：可用 | 第五类：无参考 PoV | 第五类：未实测 | 第六类：构建失败 | 第六类：无法转化 | 第七类：空 PoV 也通过 |
 |---|---|---|---|---|---|---|---|
-| `behavioral` | 30 | 20 | 1 | 1 | 2 | 4 | 2 |
-| `technical` | 30 | 25 | 0 | 1 | 4 | 0 | 0 |
-| `unit-test` | 29 | 23 | 1 | 3 | 0 | 0 | 2 |
-| `fake-exploit` | 19 | 1 | 6 | 0 | 2 | 4 | 6 |
-| `weak-oracle` | 8 | 4 | 2 | 0 | 0 | 1 | 1 |
+| `behavioral` | 30 | 20 | 1 | 2 | 4 | 2 | 1 |
+| `technical` | 30 | 25 | 0 | 4 | 0 | 0 | 1 |
+| `unit-test` | 29 | 23 | 1 | 0 | 0 | 2 | 3 |
+| `fake-exploit` | 19 | 1 | 6 | 2 | 4 | 6 | 0 |
+| `weak-oracle` | 8 | 4 | 2 | 0 | 1 | 1 | 0 |
 | `lost-input` | 5 | 5 | 0 | 0 | 0 | 0 | 0 |
-| `candidates` | 3 | 2 | 0 | 0 | 0 | 0 | 1 |
-| `race` | 3 | 2 | 0 | 0 | 0 | 0 | 1 |
-| `no-evidence` | 3 | 1 | 0 | 1 | 0 | 0 | 1 |
-| `empty-input` | 1 | 0 | 0 | 1 | 0 | 0 | 0 |
-| 合计 | 131 | 83 | 10 | 7 | 8 | 9 | 14 |
+| `candidates` | 3 | 2 | 0 | 0 | 0 | 1 | 0 |
+| `race` | 3 | 2 | 0 | 0 | 0 | 1 | 0 |
+| `no-evidence` | 3 | 1 | 0 | 0 | 0 | 1 | 1 |
+| `empty-input` | 1 | 0 | 0 | 0 | 0 | 0 | 1 |
+| 合计 | 131 | 83 | 10 | 8 | 9 | 14 | 7 |
 
-- 可用：按本任务的规则，标准答案通过、空 PoV 不通过；无参考 PoV：数据集没有能用的触发输入，自检只检查判定本身（`PASS-NO-GROUND-TRUTH`）；空 PoV 也通过：注入的效果与输入无关（`PASS-DEGENERATE`），只能当退化任务看待；未实测：已经转化，本机的磁盘、内存或网络不够，没能构建或运行，需要在条件足够的机器上运行 `build.sh` 验证；
+- 可用：按本任务的规则，标准答案通过、空 PoV 不通过；无参考 PoV：数据集没有能用的触发输入，自检只检查判定本身（`PASS-NO-GROUND-TRUTH`）；空 PoV 也通过：自检输出 `PASS-DEGENERATE`，已移到第七类（`PotentialFalsePositive/`），只能当退化任务看待；未实测：已经转化，本机的磁盘、内存或网络不够，没能构建或运行，需要在条件足够的机器上运行 `build.sh` 验证；
 - 第六类（`other_errors/`）：注入的代码不在被构建的程序里、diff 让漏洞版编译不过、项目本身构建不了（构建失败），或能构建但注入只是注释或死代码、改动没有可观察的效果、需要判定环境给不了的权限或资源（无法转化）。
 
 ## 附：tier A 涉及的项目（73 个）

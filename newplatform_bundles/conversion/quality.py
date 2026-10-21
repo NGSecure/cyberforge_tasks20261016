@@ -27,6 +27,10 @@ on the conversion: what the conversion got wrong was fixed, see SKILL.md):
            could not check what their exploit shows (a logic bug, environment variables, a hang, no
            working trigger, ...); each is judged now by a rule in its own tests/ (c5_specs.json,
            the user's decision of 2026-10-19), in its own directory.
+  7        a potential false positive (the user's decision of 2026-10-21): a bundle of category 3 or 5
+           that passes with an empty PoC (PASS-DEGENERATE), so its judge calls a submission that does
+           not exploit the injected bug a success: PotentialFalsePositive/. Its texts say whether
+           arbitrary PoCs pass too (verification/any_poc.json, any_poc.py).
 
 Passing bundles are classified by rule from what the dataset ships and what verification found;
 every other bundle needs an entry in quality_review.json (the manual review, with the texts).
@@ -48,10 +52,13 @@ ORDER = ("results", "results_rerun", "results_retry", "results_changed", "result
          "results_ca", "results_round3", "results_quality", "results_quality_ca", "results_nogt", "results_net",
          "results_disk", "results_c5", "results_c5_rerun")
 FOLDERS = ("newplatform_bundles", "newplatform_bundles2", "newplatform_bundles3", "newplatform_bundles4",
-           "newplatform_bundles5", "other_errors")
+           "newplatform_bundles5", "other_errors", "PotentialFalsePositive")
 CAT_DIR = {"1": "newplatform_bundles", "2": "newplatform_bundles2", "3": "newplatform_bundles3", "5": "newplatform_bundles5",
-           "pending": "newplatform_bundles4", "6": "other_errors"}
-CAT_NAME = {"1": "第一类", "2": "第二类", "3": "第三类", "pending": "待确认", "5": "第五类", "6": "第六类"}
+           "pending": "newplatform_bundles4", "6": "other_errors", "7": "PotentialFalsePositive"}
+CAT_NAME = {"1": "第一类", "2": "第二类", "3": "第三类", "pending": "待确认", "5": "第五类", "6": "第六类", "7": "第七类"}
+# the PASS-DEGENERATE bundles self-checked again with arbitrary PoCs (any_poc.py): category 7's texts
+_AF = os.path.join(HERE, "verification", "any_poc.json")
+ANYPOC = json.load(open(_AF, encoding="utf-8")) if os.path.isfile(_AF) else {"inputs": {}, "bundles": {}}
 LFS = b"version https://git-lfs.github.com/spec/v1"
 OK_STATUS = "可用：三项自检通过。"
 BASIS = {"description-wrong": "题面描述指错了位置，已按数据集自己的报告修正",
@@ -437,6 +444,8 @@ def main():
             # change breaks the build, both builds come out the same, ...) and cannot be fixed now goes to
             # other_errors/, so that every bundle handed on builds and can be pushed
             e["cat"] = "6"
+        if e["cat"] == "3" and status == "pass-degenerate":
+            seventh(e, name, "第三类")
         e["category"] = CAT_NAME[e["cat"]]
         e["folder"] = CAT_DIR[e["cat"]]
         e["source_of_problem"], e["source_note"], e["code_sources"] = problem_source(rec, e, src, gtc.get(rec["path"]))
@@ -469,6 +478,8 @@ def main():
         elif zh.get("unusable"):
             e.update(cat="6", basis="第五类无法转化成有效任务：" + basis,
                      status="无法转化成有效任务（没有 PoV 能通过判定）：%s。不要上传。" % zh["unusable"].rstrip("。"))
+        elif status == "pass-degenerate":
+            seventh(e, name, "第五类")
         e["category"] = CAT_NAME[e["cat"]]
         e["folder"] = CAT_DIR[e["cat"]]
         e["source_of_problem"], e["source_note"], e["code_sources"] = zh.get("source", SRC_UP), zh.get("source_note", ""), {}
@@ -484,6 +495,38 @@ def main():
 
 
 NOFIX_TXT = "未修改。"
+
+
+def seventh(e, name, origin):
+    """Category 7 (the user's decision of 2026-10-21): a bundle of category 3 or 5 that passes with an empty
+    PoC; what arbitrary PoCs did (verification/any_poc.json) goes into its texts."""
+    a = ANYPOC["bundles"].get(name) or {}
+    label = lambda k: ANYPOC["inputs"].get(k, k)
+    ins = a.get("inputs") or {}
+    ok = [label(k) for k, x in ins.items() if x["passes"]]
+    bad = [label(k) for k, x in ins.items() if not x["passes"]]
+    if a.get("retested") and a.get("any_poc_passes"):
+        measured = "实测任意 PoC 都能通过"
+        detail = "空 PoC 和 %s 都判为成功" % "、".join(ok)
+        impact = "实测提交什么都判为成功（%s），判定区分不了有效 PoV：成功的轨迹不能说明 agent 利用了注入的漏洞（潜在误报）。" % detail
+    elif a.get("retested"):
+        measured = "实测只有一部分任意 PoC 能通过"
+        detail = "空 PoC%s 能通过，%s 不通过" % (" 和 " + "、".join(ok) if ok else "", "、".join(bad))
+        impact = ("实测%s：判定不会把任何提交都判为成功，但空提交就能通过，不需要利用注入的漏洞；成功的轨迹不一定说明 agent "
+                  "利用了注入的漏洞（潜在误报）。" % detail)
+    else:
+        measured, detail = "没有用任意 PoC 实测", ""
+        impact = "空提交也判为成功，判定区分不了有效 PoV（潜在误报）。"
+    basis = e["basis"][len("不可用："):] if e["basis"].startswith("不可用：") else e["basis"]
+    e.update(cat="7", basis="空 PoC 也能通过（PASS-DEGENERATE），%s；原%s%s" % (
+                 measured, origin, "" if origin == "第三类" else "（%s）" % basis),
+             impact=impact,
+             status="潜在误报，不可用于 PoC 迭代：%s。%s" % (detail or "空 PoC 也能通过",
+                                                         SAME_TASK if origin == "第三类" else ""))
+    if origin == "第三类" and not a.get("any_poc_passes") and a.get("retested"):
+        # the rule's "the bug does not depend on the PoC" holds only when every PoC passes
+        e["problem"] = e["problem"].replace("漏洞不依赖 PoV 的内容（多在任何输入都会走到的路径上）。",
+                                            "漏洞的触发与输入关系很弱：实测任意输入里只有一部分能触发，空 PoC 就能通过。")
 
 
 def c5_status(status, zh, sm):

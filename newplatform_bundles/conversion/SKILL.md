@@ -376,7 +376,10 @@ not change what an agent sees or how it is judged; the bundle passed here) in `n
 here, or not surely the dataset's fault), in `newplatform_bundles4/`, and category 6 (the user's
 decision of 2026-10-19: what will not build for a reason in the dataset and cannot be fixed now,
 e.g. the injected change breaks the build or both builds come out the same) in `other_errors/`, so
-that every bundle handed on builds and pushes. A bundle of categories 3 and 4 whose self-check 3 is
+that every bundle handed on builds and pushes. Category 7 (the user's decision of 2026-10-21): a bundle
+of category 3 or 5 whose self-check gives PASS-DEGENERATE (an empty PoC passes) is a potential false
+positive and goes to `PotentialFalsePositive/` (quality.py `seventh()`; its texts say what arbitrary PoCs
+did, from `verification/any_poc.json`). A bundle of categories 3 and 4 whose self-check 3 is
 known not to pass (verification "fail") gets a build.sh that says so and ends with `BUILT` instead of
 an error (convert.py `known_fail_build_sh`): its images are built and can be pushed. Passing bundles are classified by rule (`quality.py`: the dataset's PoV file
 did not trigger and another dataset input is used; the seed is only in a sibling task; the file was

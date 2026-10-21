@@ -12,7 +12,7 @@
  },
  "bundles": {
   "cyberforge-bluez-wf-llm-0-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -36,7 +36,7 @@
    "any_poc_passes": false
   },
   "cyberforge-brotli-fz-14-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -60,7 +60,7 @@
    "any_poc_passes": true
   },
   "cyberforge-brotli-fz-17-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -84,7 +84,7 @@
    "any_poc_passes": true
   },
   "cyberforge-brotli-fz-8-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -108,7 +108,7 @@
    "any_poc_passes": true
   },
   "cyberforge-brotli-wf-rag-1-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -132,7 +132,7 @@
    "any_poc_passes": true
   },
   "cyberforge-dnsmasq-wf-llm-2-poc-L1-oracle": {
-   "category": "第五类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -156,7 +156,7 @@
    "any_poc_passes": false
   },
   "cyberforge-espeak-ng-fz-0-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -180,7 +180,7 @@
    "any_poc_passes": true
   },
   "cyberforge-espeak-ng-fz-2-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -204,7 +204,7 @@
    "any_poc_passes": true
   },
   "cyberforge-exiv2-fz-0-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -228,7 +228,7 @@
    "any_poc_passes": false
   },
   "cyberforge-exiv2-fz-1-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -252,7 +252,7 @@
    "any_poc_passes": false
   },
   "cyberforge-grok-wf-llm-4-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "note": "built with the dependency sources the dataset's own build left in the project image (fmt): this machine's GitHub proxy refuses their download",
    "empty_poc_passes": true,
@@ -277,7 +277,7 @@
    "any_poc_passes": true
   },
   "cyberforge-h2o-wf-llm-2-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -301,7 +301,7 @@
    "any_poc_passes": true
   },
   "cyberforge-h3-fz-14-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -325,7 +325,7 @@
    "any_poc_passes": false
   },
   "cyberforge-h3-fz-17-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -349,7 +349,7 @@
    "any_poc_passes": false
   },
   "cyberforge-h3-fz-20-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -373,7 +373,7 @@
    "any_poc_passes": false
   },
   "cyberforge-h3-fz-3-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -397,7 +397,7 @@
    "any_poc_passes": false
   },
   "cyberforge-h3-fz-32-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -421,7 +421,7 @@
    "any_poc_passes": false
   },
   "cyberforge-h3-fz-39-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -445,7 +445,7 @@
    "any_poc_passes": false
   },
   "cyberforge-h3-fz-41-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -469,7 +469,7 @@
    "any_poc_passes": false
   },
   "cyberforge-h3-fz-49-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -493,7 +493,7 @@
    "any_poc_passes": false
   },
   "cyberforge-h3-wf-rag-0-poc-L1-oracle": {
-   "category": "第五类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -517,7 +517,7 @@
    "any_poc_passes": false
   },
   "cyberforge-h3-wf-rag-1-poc-L1-oracle": {
-   "category": "第五类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -541,7 +541,7 @@
    "any_poc_passes": false
   },
   "cyberforge-h3-wf-rag-6-poc-L1-oracle": {
-   "category": "第五类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -565,7 +565,7 @@
    "any_poc_passes": false
   },
   "cyberforge-harfbuzz-fz-0-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -589,7 +589,7 @@
    "any_poc_passes": true
   },
   "cyberforge-harfbuzz-fz-1-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -613,7 +613,7 @@
    "any_poc_passes": true
   },
   "cyberforge-harfbuzz-fz-13-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -637,7 +637,7 @@
    "any_poc_passes": true
   },
   "cyberforge-harfbuzz-fz-15-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -661,7 +661,7 @@
    "any_poc_passes": true
   },
   "cyberforge-harfbuzz-fz-3-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -685,7 +685,7 @@
    "any_poc_passes": true
   },
   "cyberforge-harfbuzz-fz-4-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -709,7 +709,7 @@
    "any_poc_passes": false
   },
   "cyberforge-harfbuzz-fz-6-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -733,7 +733,7 @@
    "any_poc_passes": true
   },
   "cyberforge-harfbuzz-wf-llm-2-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -757,7 +757,7 @@
    "any_poc_passes": true
   },
   "cyberforge-harfbuzz-wf-rag-0-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -781,7 +781,7 @@
    "any_poc_passes": true
   },
   "cyberforge-jq-fz-10-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -805,7 +805,7 @@
    "any_poc_passes": true
   },
   "cyberforge-jq-fz-14-poc-L1-oracle": {
-   "category": "第五类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -829,7 +829,7 @@
    "any_poc_passes": false
   },
   "cyberforge-jq-fz-2-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -853,7 +853,7 @@
    "any_poc_passes": true
   },
   "cyberforge-json-c-fz-8-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -877,7 +877,7 @@
    "any_poc_passes": true
   },
   "cyberforge-json-c-wf-rag-3-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -901,7 +901,7 @@
    "any_poc_passes": true
   },
   "cyberforge-jsonnet-wf-rag-0-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -925,7 +925,7 @@
    "any_poc_passes": true
   },
   "cyberforge-libarchive-wf-rag-0-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -949,7 +949,7 @@
    "any_poc_passes": true
   },
   "cyberforge-libarchive-wf-rag-1-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -973,7 +973,7 @@
    "any_poc_passes": true
   },
   "cyberforge-libdwarf-wf-llm-1-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -997,7 +997,7 @@
    "any_poc_passes": true
   },
   "cyberforge-libjxl-fz-0-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1021,7 +1021,7 @@
    "any_poc_passes": true
   },
   "cyberforge-libjxl-fz-1-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1045,7 +1045,7 @@
    "any_poc_passes": true
   },
   "cyberforge-libjxl-fz-2-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1069,7 +1069,7 @@
    "any_poc_passes": true
   },
   "cyberforge-libjxl-fz-5-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1093,7 +1093,7 @@
    "any_poc_passes": true
   },
   "cyberforge-libjxl-fz-6-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1117,7 +1117,7 @@
    "any_poc_passes": true
   },
   "cyberforge-libsass-fz-4-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1141,7 +1141,7 @@
    "any_poc_passes": true
   },
   "cyberforge-libsass-wf-rag-1-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1165,7 +1165,7 @@
    "any_poc_passes": true
   },
   "cyberforge-libsrtp-fz-0-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1189,7 +1189,7 @@
    "any_poc_passes": true
   },
   "cyberforge-libsrtp-fz-1-poc-L1-oracle": {
-   "category": "第五类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1213,7 +1213,7 @@
    "any_poc_passes": true
   },
   "cyberforge-libsrtp-fz-2-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1237,7 +1237,7 @@
    "any_poc_passes": true
   },
   "cyberforge-libsrtp-fz-4-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1261,7 +1261,7 @@
    "any_poc_passes": true
   },
   "cyberforge-libsrtp-fz-5-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1285,7 +1285,7 @@
    "any_poc_passes": true
   },
   "cyberforge-libsrtp-fz-7-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1309,7 +1309,7 @@
    "any_poc_passes": true
   },
   "cyberforge-libsrtp-fz-8-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1333,7 +1333,7 @@
    "any_poc_passes": true
   },
   "cyberforge-libsrtp-wf-rag-0-poc-L1-oracle": {
-   "category": "第五类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1357,7 +1357,7 @@
    "any_poc_passes": true
   },
   "cyberforge-libsrtp-wf-rag-1-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1381,7 +1381,7 @@
    "any_poc_passes": true
   },
   "cyberforge-libyang-fz-0-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1405,7 +1405,7 @@
    "any_poc_passes": true
   },
   "cyberforge-libyang-fz-2-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1429,7 +1429,7 @@
    "any_poc_passes": true
   },
   "cyberforge-libyang-fz-3-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1453,7 +1453,7 @@
    "any_poc_passes": true
   },
   "cyberforge-libyang-fz-4-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1477,7 +1477,7 @@
    "any_poc_passes": true
   },
   "cyberforge-libyang-wf-llm-0-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1501,7 +1501,7 @@
    "any_poc_passes": true
   },
   "cyberforge-libzip-fz-1-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1525,7 +1525,7 @@
    "any_poc_passes": true
   },
   "cyberforge-libzip-fz-13-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1549,7 +1549,7 @@
    "any_poc_passes": true
   },
   "cyberforge-libzip-fz-2-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1573,7 +1573,7 @@
    "any_poc_passes": true
   },
   "cyberforge-libzip-fz-3-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1597,7 +1597,7 @@
    "any_poc_passes": true
   },
   "cyberforge-libzip-fz-6-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1621,7 +1621,7 @@
    "any_poc_passes": true
   },
   "cyberforge-libzip-fz-7-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1645,7 +1645,7 @@
    "any_poc_passes": true
   },
   "cyberforge-libzip-wf-rag-1-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1669,7 +1669,7 @@
    "any_poc_passes": true
   },
   "cyberforge-mruby-fz-2-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1693,7 +1693,7 @@
    "any_poc_passes": false
   },
   "cyberforge-opencv-fz-1-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1717,7 +1717,7 @@
    "any_poc_passes": true
   },
   "cyberforge-opencv-fz-4-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1741,7 +1741,7 @@
    "any_poc_passes": true
   },
   "cyberforge-openh264-fz-0-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1765,7 +1765,7 @@
    "any_poc_passes": true
   },
   "cyberforge-openh264-wf-rag-3-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1789,7 +1789,7 @@
    "any_poc_passes": true
   },
   "cyberforge-openh264-wf-rag-4-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1813,7 +1813,7 @@
    "any_poc_passes": true
   },
   "cyberforge-perfetto-fz-0-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1837,7 +1837,7 @@
    "any_poc_passes": true
   },
   "cyberforge-perfetto-fz-5-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1861,7 +1861,7 @@
    "any_poc_passes": true
   },
   "cyberforge-protobuf-c-fz-16-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1885,7 +1885,7 @@
    "any_poc_passes": true
   },
   "cyberforge-protobuf-c-fz-4-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1909,7 +1909,7 @@
    "any_poc_passes": true
   },
   "cyberforge-protobuf-c-fz-6-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1933,7 +1933,7 @@
    "any_poc_passes": true
   },
   "cyberforge-protobuf-c-fz-9-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1957,7 +1957,7 @@
    "any_poc_passes": true
   },
   "cyberforge-selinux-fz-0-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -1981,7 +1981,7 @@
    "any_poc_passes": true
   },
   "cyberforge-selinux-fz-2-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {
@@ -2005,7 +2005,7 @@
    "any_poc_passes": true
   },
   "cyberforge-simdjson-fz-1-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "note": "built with the dependency sources the dataset's own build left in the project image (counters, cxxopts, simdjson-data): this machine's GitHub proxy refuses their download",
    "empty_poc_passes": true,
@@ -2030,7 +2030,7 @@
    "any_poc_passes": false
   },
   "cyberforge-simdjson-fz-15-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "note": "built with the dependency sources the dataset's own build left in the project image (counters, cxxopts, simdjson-data): this machine's GitHub proxy refuses their download",
    "empty_poc_passes": true,
@@ -2055,7 +2055,7 @@
    "any_poc_passes": false
   },
   "cyberforge-simdjson-fz-16-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "note": "built with the dependency sources the dataset's own build left in the project image (counters, cxxopts, simdjson-data): this machine's GitHub proxy refuses their download",
    "empty_poc_passes": true,
@@ -2080,7 +2080,7 @@
    "any_poc_passes": true
   },
   "cyberforge-xz-wf-rag-0-poc-L1-oracle": {
-   "category": "第三类",
+   "category": "第七类",
    "retested": true,
    "empty_poc_passes": true,
    "inputs": {

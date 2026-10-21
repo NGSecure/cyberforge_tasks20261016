@@ -26,11 +26,17 @@ CODE_ROWS = {
     "artifact-not-reproduce": ("fuzz 崩溃样本单独不复现", "已做：换成重跑 exploit 得到的输入。数据侧（上游）：保存能单独复现的输入", "可用"),
 }
 
-# categories 2 (manual review), 3, 4 and 6, by basis: (category, regex, problem, what to do, state)
+# categories 2 (manual review), 3, 4, 6 and 7, by basis: (category, regex, problem, what to do, state)
 BASIS_ROWS = [
+    # 7: an empty PoC passes (PASS-DEGENERATE; from categories 3 and 5, the user's decision of 2026-10-21)
+    ("第七类", r"实测任意 PoC 都能通过", "空 PoC 也能通过，实测任意 PoC 都能通过：注入的漏洞不依赖输入，提交什么都判为成功",
+     "数据侧（上游）：重新设计注入，让漏洞依赖输入内容；否则剔除（或只用于不看判定结果的用途）", "潜在误报，不可用于 PoC 迭代"),
+    ("第七类", r"实测只有一部分任意 PoC 能通过", "空 PoC 也能通过，但实测只有一部分任意 PoC 能通过（例如只有很短的输入能触发，或只有空 PoC 能通过）",
+     "数据侧（上游）：重新设计注入，让漏洞依赖输入内容；否则剔除（或只用于不看判定结果的用途）", "潜在误报，不可用于 PoC 迭代"),
+    ("第七类", r"没有用任意 PoC 实测", "空 PoC 也能通过（没有用任意 PoC 实测）",
+     "数据侧（上游）：重新设计注入，让漏洞依赖输入内容；否则剔除", "潜在误报，不可用于 PoC 迭代"),
     ("第二类", r"不稳定", "触发偶尔不稳定", "平台正式使用前对 /verify 连续跑 3 次，只保留结果一致的；数据侧（上游）：检查注入是否引入了非确定性", "可用，需多次验证"),
     ("第二类", r"构建脚本", "项目自带的构建脚本在编完 fuzzer 后失败（与注入无关）", "已做：按数据集的做法，只要 fuzzer 编出来就继续；数据侧（上游）：修构建脚本", "可用"),
-    ("第三类", r"^空输入就能触发", "注入的漏洞不依赖输入：空输入就触发（PASS-DEGENERATE）", "数据侧（上游）：重新设计注入，让漏洞依赖输入内容；否则剔除", "不可用于 PoC 迭代"),
     ("第三类", r"^崩溃种子只有 Git LFS 指针", "崩溃种子只有 Git LFS 指针，没有标准答案",
      "已做：照常转成 bundle，不做标准答案自检（自检 3 只检查判定）。数据侧（上游）：向上游作者要 runs/fuzz_poc/_curated/ 里的原始种子，"
      "放进 conversion/lfs_objects/ 重新转换即可补上", "能构建、能判定；能否触发未验证"),

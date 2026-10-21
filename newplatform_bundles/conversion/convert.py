@@ -850,6 +850,8 @@ def main():
     ap.add_argument("--ver", default="v0.0.2")  # v0.0.2: isolated judges (see SKILL.md)
     ap.add_argument("--out-f", default=None, help="category-6 bundles: will not build for a reason in the dataset "
                                                   "(default: other_errors next to <out_dir>)")
+    ap.add_argument("--out-g", default=None, help="category-7 bundles: an empty PoC passes, a potential false positive "
+                                                  "(default: PotentialFalsePositive next to <out_dir>)")
     ap.add_argument("--only", nargs="*", default=None, help="bundle names or dataset paths to (re)build")
     a = ap.parse_args()
     recs = json.load(open(a.records, encoding="utf-8"))
@@ -858,13 +860,15 @@ def main():
     pending_dir = os.path.abspath(a.out_d or out + "4")
     fifth_dir = os.path.abspath(a.out_e or out + "5")
     sixth_dir = os.path.abspath(a.out_f or os.path.join(os.path.dirname(out), "other_errors"))
-    for d in list(tier_dirs.values()) + [pending_dir, fifth_dir, sixth_dir]:
+    seventh_dir = os.path.abspath(a.out_g or os.path.join(os.path.dirname(out), "PotentialFalsePositive"))
+    for d in list(tier_dirs.values()) + [pending_dir, fifth_dir, sixth_dir, seventh_dir]:
         os.makedirs(d, exist_ok=True)
     # quality.py's classification places the bundles: 1 -> <out_dir>, 2 -> <out_dir>2, 3 -> <out_dir>3, pending -> <out_dir>4,
-    # 6 -> other_errors (next to <out_dir>)
+    # 6 -> other_errors, 7 -> PotentialFalsePositive (both next to <out_dir>)
     qf = os.path.join(HERE, "quality.json")
     quality = json.load(open(qf, encoding="utf-8"))["bundles"] if os.path.isfile(qf) else {}
-    cat_dirs = {"1": tier_dirs["A"], "2": tier_dirs["B"], "3": tier_dirs["C"], "pending": pending_dir, "6": sixth_dir}
+    cat_dirs = {"1": tier_dirs["A"], "2": tier_dirs["B"], "3": tier_dirs["C"], "pending": pending_dir, "6": sixth_dir,
+                "7": seventh_dir}
     unplaced = []
 
     # the manual review of the tasks no bundle is made for (why, by category)
@@ -880,7 +884,8 @@ def main():
             n = rec["vuln"].rsplit("_", 1)[-1]
             name = "cyberforge-%s-%s-%s-poc-L1-oracle" % (rec["project"].lower(), PIPE[rec["type"]], n)
             q = quality.get(name)
-            folder = sixth_dir if q and q.get("cat") == "6" else fifth_dir  # 6: it will not build (quality.py)
+            # 6: it will not build or no PoC can pass, 7: an empty PoC passes (quality.py)
+            folder = {"6": sixth_dir, "7": seventh_dir}.get((q or {}).get("cat"), fifth_dir)
             if a.only is None or name in a.only or rec["path"] in a.only:
                 bundle, desc_src, desc_mismatch = build_bundle(a.root, rec, folder, a.ver, a.scan, q, c5spec=spec)
                 built["第五类/%s" % spec["kind"]] += 1

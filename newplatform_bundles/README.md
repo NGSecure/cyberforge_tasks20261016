@@ -8,10 +8,11 @@
 |---|---|---|
 | `newplatform_bundles/`（本目录） | 524 | 第一类：原始数据正常，本机三项自检全部通过，可直接用于 PoC 迭代和轨迹生成 |
 | `newplatform_bundles2/` | 127 | 第二类：原始数据有轻微问题（已做少量修改，或不修改也不影响轨迹质量），本机三项自检全部通过 |
-| `newplatform_bundles3/` | 184 | 第三类：原始数据有严重问题，不应用于 PoC 迭代 |
+| `newplatform_bundles3/` | 104 | 第三类：原始数据有严重问题，不应用于 PoC 迭代 |
 | `newplatform_bundles4/` | 63 | 第四类（待确认）：本机没能构建（需要更大的磁盘或直连公网），或不能断定是原始数据的问题 |
-| `newplatform_bundles5/` | 108 | 第五类：原来的判定（注入版崩溃、安全版不崩溃）转换不了的任务，改为在各自的 `tests/` 里实现相应的判定 |
+| `newplatform_bundles5/` | 101 | 第五类：原来的判定（注入版崩溃、安全版不崩溃）转换不了的任务，改为在各自的 `tests/` 里实现相应的判定 |
 | `other_errors/` | 28 | 第六类：因原始数据的问题构建失败，或转化不成有效任务（没有 PoV 能通过判定），暂时无法修复，**不要构建上传** |
+| `PotentialFalsePositive/` | 87 | 第七类：空 PoC 也能通过判定（`PASS-DEGENERATE`，原在第三类、第五类），潜在误报，不可用于 PoC 迭代 |
 
 各目录的 bundle 结构和用法完全相同。按原来的判定转换的 bundle，PoV 有两种形态：harness 型（喂给 OSS-Fuzz harness 的一个输入文件，810 个）和 CLI / 程序型（交给项目自己的程序：CLI 的输入文件、标准输入或命令行参数，或者是一个链接项目代码的 C/C++ 程序，93 个）；第五类的 131 个（其中 23 个移到了第六类）的判定规则写在各自的 `tests/oracle.json`，PoV 的形式更多（见 `../newplatform_bundles5/README.md`）。所有 bundle 都按当前模板生成（镜像标签 `v0.0.2`，判定服务做了隔离，原因见 `CONVERSION_REPORT.md` 4.7），已推送过旧版本的请用新版本替换。
 
@@ -28,7 +29,7 @@ bash newplatform_bundles/<bundle>/build.sh      # 公网：构建 main + task-se
 bash newplatform_bundles/<bundle>/push.sh       # 上传网络：推送镜像并回填 task.toml [environment]
 ```
 
-`newplatform_bundles2/` 到 `newplatform_bundles5/` 同样用法；`other_errors/` 里的 bundle 构建失败或转化不成有效任务，不要构建上传。
+`newplatform_bundles2/` 到 `newplatform_bundles5/`、`PotentialFalsePositive/` 同样用法；`other_errors/` 里的 bundle 构建失败或转化不成有效任务，不要构建上传；`PotentialFalsePositive/` 里的能构建、能推送，但空 PoC 也能通过判定，不可用于 PoC 迭代。
 
 Docker Hub 匿名拉取每小时约 100 次。`build.sh` 拉不到基础镜像时，会改从 `mirror.gcr.io` 拉同一个 digest，内容完全相同；也可以先 `docker login`。
 

@@ -12,4 +12,4 @@ bash newplatform_bundles4/<bundle>/build.sh     # 公网（磁盘 100 GB 以上�
 bash newplatform_bundles4/<bundle>/push.sh      # 上传网络：推送镜像并回填 task.toml
 ```
 
-第一类在 `../newplatform_bundles/`，第二类在 `../newplatform_bundles2/`，第三类在 `../newplatform_bundles3/`，第六类在 `../other_errors/`。转换方法和验证情况见 `../newplatform_bundles/README.md`、`../newplatform_bundles/CONVERSION_REPORT.md`，每个任务的去向见 `../newplatform_bundles/conversion_manifest.csv`。
+第一类在 `../newplatform_bundles/`，第二类在 `../newplatform_bundles2/`，第三类在 `../newplatform_bundles3/`，第五类在 `../newplatform_bundles5/`，第六类在 `../other_errors/`，第七类在 `../PotentialFalsePositive/`。转换方法和验证情况见 `../newplatform_bundles/README.md`、`../newplatform_bundles/CONVERSION_REPORT.md`，每个任务的去向见 `../newplatform_bundles/conversion_manifest.csv`。

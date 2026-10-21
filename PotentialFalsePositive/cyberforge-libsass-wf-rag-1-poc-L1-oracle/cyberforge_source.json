@@ -1,0 +1,98 @@
+{
+  "bundle": "cyberforge-libsass-wf-rag-1-poc-L1-oracle",
+  "source_dataset": "cyberforge_tasks20261016",
+  "source_task": "cyberforge_tasks20261016/projects/libsass/vulnerabilities/vulnerability_WF_RAG_1",
+  "base_image": "vuljector/libsass:setup@sha256:02b7a2bc478715c37a9ace90f0e02176f823832e9324b839f629d634ba81c246",
+  "base_image_published": true,
+  "base_image_snapshot": {
+    "setup_end": "2026-05-11T01:51:28.837525074Z",
+    "post_setup_layers": [
+      {
+        "created": "2026-05-11T01:52:11.779952407Z",
+        "created_by": "sleep infinity",
+        "bytes": 39951963
+      },
+      {
+        "created": "2026-05-11T01:57:37.902468899Z",
+        "created_by": "sleep infinity",
+        "bytes": 1348
+      },
+      {
+        "created": "2026-05-11T01:58:06.498614469Z",
+        "created_by": "/bin/bash",
+        "bytes": 1362
+      },
+      {
+        "created": "2026-05-11T02:50:21.616723138Z",
+        "created_by": "/bin/bash",
+        "bytes": 799
+      },
+      {
+        "created": "2026-05-11T02:53:43.089385495Z",
+        "created_by": "/bin/bash",
+        "bytes": 1035
+      }
+    ],
+    "post_setup_files": 77,
+    "src_restored_from_snapshot_tarball": true,
+    "post_setup_files_under_src": 70,
+    "scrubbed_from_agent_image": 5,
+    "scrubbed_by_location": {
+      "/opt/src_snapshot.tar": 1,
+      "/out": 2,
+      "/workspace": 2
+    },
+    "secure_source_tarball_present": true
+  },
+  "secure_lines_checked": 1,
+  "image_tags": {
+    "docker_image": "cyberforge_libsass_wf_rag_1_main:v0.0.2",
+    "task_server_image": "cyberforge_libsass_wf_rag_1_task_server:v0.0.2"
+  },
+  "tier": "A",
+  "pov_kind": "harness",
+  "quality": {
+    "category": "\u7b2c\u4e03\u7c7b",
+    "basis": "\u7a7a PoC \u4e5f\u80fd\u901a\u8fc7\uff08PASS-DEGENERATE\uff09\uff0c\u5b9e\u6d4b\u4efb\u610f PoC \u90fd\u80fd\u901a\u8fc7\uff1b\u539f\u7b2c\u4e09\u7c7b",
+    "verification": "pass-degenerate"
+  },
+  "ground_truth_evidence": "crash evidence in the dataset",
+  "ground_truth": {
+    "dataset_file": "replay/libsass/vulnerability_WF_RAG_1/input-000",
+    "how_found": "exploit_replay",
+    "bytes": 3,
+    "exploit_replay_inputs": 1,
+    "dataset_report_matches_exploit_check": null,
+    "sha256": "b5d4045c3f466fa91fe2cc6abe79232a1a57cdf104f7a26e716e0a1e2789df78",
+    "solve_sh": "inline"
+  },
+  "harness": {
+    "candidates": [
+      "data_context_fuzzer"
+    ],
+    "how_found": "exploit.sh",
+    "built_by_dataset_snapshot_compile": [
+      "data_context_fuzzer"
+    ],
+    "dataset_metadata_said": [
+      "data_context_fuzzer",
+      "data_context_fuzzer"
+    ],
+    "metadata_disagrees": false
+  },
+  "recipe": null,
+  "trigger_evidence": {
+    "signal": "asan",
+    "detail": "heap-buffer-overflow",
+    "from": "sanitizer_report.txt",
+    "dataset_verification_record": null
+  },
+  "description": {
+    "from": "v1/concise-cve-style",
+    "names_actual_crash_class": true
+  },
+  "asan_options_from_exploit": "halt_on_error=1:abort_on_error=1",
+  "cwe_id": "CWE-787",
+  "cwe_in_description_variants": [],
+  "secure_base_commit": "9bb4ebcc1484dd2f3a94a0e735464993ecbae986"
+}

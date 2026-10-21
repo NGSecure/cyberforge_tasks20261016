@@ -8,12 +8,13 @@ has a problem.
 import collections
 import json
 import os
+import re
 import subprocess
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(sys.argv[1])
-CATS = ("第一类", "第二类", "第三类", "待确认", "第五类", "第六类")
+CATS = ("第一类", "第二类", "第三类", "待确认", "第五类", "第六类", "第七类")
 SHOW = {"待确认": "第四类：待确认"}  # quality.json keeps the name 待确认
 STATUS_ZH = {"pass": "通过", "pass-degenerate": "通过但空输入也触发", "pass-no-gt": "通过（无标准答案）",
              "fail": "不通过", "not-built": "本机未建成",
@@ -53,7 +54,8 @@ by_cat_tier = collections.Counter((e["category"], tier[e["source"]]) for e in Q.
 # bundles whose description was corrected (conversion/description_fixes.json)
 N_DESC_FIX = sum(1 for e in Q.values() if "题面描述指错了位置" in e.get("basis", ""))
 folder_of = {"第一类": "newplatform_bundles/", "第二类": "newplatform_bundles2/", "第三类": "newplatform_bundles3/",
-             "待确认": "newplatform_bundles4/", "第五类": "newplatform_bundles5/", "第六类": "other_errors/"}
+             "待确认": "newplatform_bundles4/", "第五类": "newplatform_bundles5/", "第六类": "other_errors/",
+             "第七类": "PotentialFalsePositive/"}
 # category 5: the tasks no bundle was made for before, judged by their own tests/ (c5_specs.json)
 C5 = {e["bundle"]: e for e in Q.values() if e["category"] == "第五类"}
 C5_SPECS = json.load(open(os.path.join(HERE, "c5_specs.json"), encoding="utf-8"))["tasks"] \
@@ -89,7 +91,9 @@ md.append(table(["路径", "内容"], [
     ("`newplatform_bundles4/`", "第四类：待确认的 bundle（%d 个）" % by_cat["待确认"])] +
     ([("`newplatform_bundles5/`", "第五类：原来没有生成 bundle、现在按任务在 `tests/` 里实现判定的 bundle（%d 个）" % by_cat["第五类"])]
      if C5 else []) +
-    [("`other_errors/`", "第六类：因原始数据的问题确定会构建失败、或转化不成有效任务的 bundle（%d 个），**不要构建上传**" % by_cat["第六类"])]) + "\n")
+    [("`other_errors/`", "第六类：因原始数据的问题确定会构建失败、或转化不成有效任务的 bundle（%d 个），**不要构建上传**" % by_cat["第六类"]),
+     ("`PotentialFalsePositive/`", "第七类：空 PoC 也能通过判定的 bundle（%d 个，原在第三类、第五类），判定会把不利用注入漏洞的提交判为成功"
+                                   "（潜在误报），不可用于 PoC 迭代" % by_cat["第七类"])]) + "\n")
 
 md.append("## 1. 原始数据核对\n")
 md.append("- **原始数据就在本仓库的 `%s/` 里**：%d 个文件，`manifest.csv` 列出 1034 个任务；转换工具只从这里读取。" % (DATA, n_files))
@@ -128,7 +132,8 @@ md.append("- **`build.sh` 的三项自检**：构建 agent 镜像和 task-server
           "（否则输出 PASS-DEGENERATE）。没有标准答案的 bundle，③ 只检查两个版本都有 harness、两版的二进制不同、空输入两版都不崩溃"
           "（输出 PASS-NO-GROUND-TRUTH）。自检 3 已知不通过的 bundle（第三类 %d 个、第四类 %d 个，都是原始数据的问题，原因见第 6 节），"
           "`build.sh` 照常构建两个镜像，自检 3 打印说明后正常结束（最后一行是 `BUILT …`，不是 `PASS …`），镜像可以推送。"
-          "构建失败或转化不成有效任务的 bundle 放在 `other_errors/`（第六类），不要构建上传。" % (N_KNOWN_FAIL["第三类"], N_KNOWN_FAIL["待确认"]))
+          "构建失败或转化不成有效任务的 bundle 放在 `other_errors/`（第六类），不要构建上传；空 PoC 也能通过（PASS-DEGENERATE）的放在 "
+          "`PotentialFalsePositive/`（第七类）。" % (N_KNOWN_FAIL["第三类"], N_KNOWN_FAIL["待确认"]))
 if C5:
     md.append("- **第五类的判定**：平台最终运行 bundle 自己的 `tests/test.sh` 检查 agent 迭代出的 PoV、完全依据它的结果判定，所以原来判定服务做不到的任务"
           "（逻辑漏洞只表现为输出不同、要设置环境变量或附带文件、只表现为超时、数据集没有能用的触发输入等）改为在各自的 `tests/` 里实现判定："
@@ -159,16 +164,16 @@ md.append(table(["分类", "目录", "标准"], [
      "都不改变判定方式。" % N_DESC_FIX),
     ("第三类：原始数据有严重问题", "`newplatform_bundles3/`",
      "数据集里没有只让注入版崩溃的输入（exploit 的输入不触发、报告用的输入没保存或只剩 Git LFS 指针、报告是别的程序或别的任务的、安全版也崩溃），"
-     "注入的代码不在被测程序里，注入的漏洞不依赖输入（空输入就触发，PASS-DEGENERATE）或实际走不到（只在内存分配失败时），"
-     "漏洞版只表现为超时；修复需要重新构造 PoV 或重新设计注入，或者修复后仍会明显影响轨迹质量。这一类都能构建、能推送"
-     "（自检 3 不通过的，build.sh 打印说明后正常结束）。"),
+     "注入的代码不在被测程序里，注入的漏洞实际走不到（只在内存分配失败时），漏洞版只表现为超时；修复需要重新构造 PoV 或重新设计注入，"
+     "或者修复后仍会明显影响轨迹质量。这一类都能构建、能推送（自检 3 不通过的，build.sh 打印说明后正常结束）。"
+     "空输入就能通过（PASS-DEGENERATE）的原第三类 bundle 已移到第七类。"),
     ("第四类：待确认", "`newplatform_bundles4/`",
      "无法确定：本机没能构建（需要公网、磁盘不够；在条件充足的机器上应能构建，但本机没有验证），或者原因不能确定在原始数据（判定规则本身的限制）。"),
 ] + ([
     ("第五类：按任务实现判定", "`newplatform_bundles5/`",
      "原来没有生成 bundle 的任务（原来的判定只认崩溃差分，判定服务也不能设置环境变量、附带文件）：现在每个 bundle 在自己的 `tests/` 里实现"
      "与它的漏洞相应的判定（见第 2 节），标准答案取自数据集自己的触发方式（必要时做最小改写），数据集没有能用的触发输入的没有标准答案。"
-     "已经转化好、只是本机条件（磁盘、内存或网络）不够而没能实测的也在这一类，状态里写明了原因和需要的资源。"
+     "已经转化好、只是本机条件（磁盘、内存或网络）不够而没能实测的也在这一类，状态里写明了原因和需要的资源；空 PoC 也能通过的已移到第七类。"
      "这一类按判定方式和本机验证结果分别说明（第 4 节汇总、第 6 节逐个列出），不和前四类混在一起统计。"),
 ] if C5 else []) + [
     ("第六类：构建失败或无法转化", "`other_errors/`",
@@ -176,6 +181,9 @@ md.append(table(["分类", "目录", "标准"], [
      "注入的代码不在被构建的程序里（两个版本的产物完全相同，task-server 镜像无法建立），或数据集有注入版的崩溃记录、但按它给的构建流程编不出注入版"
      "（原来在第三类、第四类）；以及原来没有生成 bundle、按第五类的方案也构建不了或转化不成有效任务（能构建但没有 PoV 能通过判定）的。"
      "**不要构建上传**。已经转化好、只是本机条件（磁盘、内存或网络）不够而没能实测的，留在原来的类别。"),
+    ("第七类：潜在误报", "`PotentialFalsePositive/`",
+     "第三类、第五类里空 PoC 也能通过判定的 bundle（自检 3 输出 PASS-DEGENERATE，2026-10-21 的要求）：判定会把不利用注入漏洞的提交判为成功。"
+     "每个都用几个任意 PoC 实测过，分为“任意 PoC 都能通过”和“只有一部分任意 PoC 能通过”两种（第 4 节）。能构建、能推送，但不可用于 PoC 迭代。"),
 ]) + "\n")
 
 md.append("## 4. 各类数量\n")
@@ -203,7 +211,7 @@ def any_kind(n):
 
 def any_group_note(names):
     """The summary table's note on a group of bundles: how they did with arbitrary PoCs."""
-    k = collections.Counter(any_kind(n) for n in names if any_kind(n))
+    k = collections.Counter(any_kind(n) for n in names if any_kind(n) and Q[n]["category"] != "第七类")
     parts = [("任意 PoV 都能通过 %d 个", "all"), ("只有部分任意 PoV 能通过 %d 个", "some"), ("本机未能重测 %d 个", "untested")]
     return "实测：" + "、".join(t % k[x] for t, x in parts if k[x]) if k else ""
 
@@ -217,7 +225,7 @@ def spaced(t):
 def any_bundle_note(n):
     """The per-bundle table's note: what the arbitrary PoCs did."""
     kind = any_kind(n)
-    if kind is None:
+    if kind is None or Q[n]["category"] == "第七类":  # category 7's state says it already
         return ""
     if kind == "untested":
         return "实测任意 PoV：本机这次没能重新构建，未重测。"
@@ -260,7 +268,7 @@ if ANY:
             g.setdefault(ok, []).append(n)
         return sorted(g.items(), key=lambda kv: (-len(kv[1]), kv[0]))
     unknown = collections.Counter(e["category"] for e in Q.values() if e["verification"] in ("not-built", "unverified"))
-    md.append("“%s”：“通过但空输入也触发”的 %d 个 bundle 在本机重新构建，用几个任意的 PoV 代替标准答案再跑一遍自检"
+    md.append("“%s”：“通过但空输入也触发”的 %d 个 bundle（都在第七类）在本机重新构建，用几个任意的 PoV 代替标准答案再跑一遍自检"
               "（%s；命令行参数型换成%s），空 PoV 和这些 PoV 全部通过的才算。%s其余验证过的 bundle 都有不能通过的 PoV"
               "（空 PoV 或标准答案），不会出现提交什么都通过的情况；本机没建成或没验证的（%s）不知道。"
               "逐个结果在 `newplatform_bundles/conversion/verification/any_poc.json`。\n" % (
@@ -344,6 +352,8 @@ for (review, state), sources in sorted(c5_groups.items(), key=lambda kv: (C5_ORD
     note = any_group_note(c5_names[(review, state)])
     rows.append(("第五类", SG.REVIEW_ROWS.get(review, (review, ""))[0], len(sources), who_c5(sources),
                  SG.C5_FIX.get(review, ""), state + ("（%s）" % note if note else "")))
+for k, cnt in sorted(((k, v) for k, v in groups.items() if k[0] == "第七类"), key=lambda kv: -sum(kv[1].values())):
+    rows.append(("第七类", k[1], sum(cnt.values()), who_c5(list(cnt.elements())), k[2], k[3]))
 unc = collections.Counter(v["category"] for k, v in UNC.items() if k not in C5_SPECS)
 for cat, n in unc.most_common():
     problem, fix = SG.REVIEW_ROWS.get(cat, (cat, ""))
@@ -353,13 +363,14 @@ usable = by_cat["第一类"] + by_cat["第二类"]
 c5_by = collections.Counter(SG.C5_SHORT["hardware" if e.get("hardware") else e["verification"]] for e in C5.values())
 c5_hw = sum(1 for e in C5.values() if e.get("hardware"))
 md.append("合计：1034 个任务里，**%d 个 bundle 可用于 PoC 迭代和轨迹生成**（第一类 %d、第二类 %d）；第三类 %d 个原始数据有严重问题"
-          "（其中 %d 个没有标准答案）；第四类（待确认）%d 个%s；%s第六类 %d 个构建失败或无法转化（不要构建上传）%s。"
+          "（其中 %d 个没有标准答案）；第四类（待确认）%d 个%s；%s第六类 %d 个构建失败或无法转化（不要构建上传）；"
+          "第七类 %d 个空 PoC 也能通过判定（潜在误报，其中 %d 个实测任意 PoC 都能通过）%s。"
           "除第六类外，其余 bundle 都能构建、能推送（第四类%s在本机没能验证构建）。\n"
           % (usable, by_cat["第一类"], by_cat["第二类"], by_cat["第三类"], nogt_cat["第三类"], by_cat["待确认"],
              "（其中 %d 个也没有标准答案）" % nogt_cat["待确认"] if nogt_cat["待确认"] else "",
              "第五类 %d 个（原来没有生成 bundle，现在按任务实现判定：%s）；" % (
                  by_cat["第五类"], "，".join("%s %d 个" % kv for kv in c5_by.most_common())) if C5 else "",
-             by_cat["第六类"],
+             by_cat["第六类"], by_cat["第七类"], any_cat["第七类"],
              "；另有 %d 个任务没有生成 bundle" % sum(unc.values()) if sum(unc.values()) else "；所有任务都生成了 bundle",
              "和第五类中本机条件不够的 %d 个" % c5_hw if c5_hw else ""))
 
@@ -367,7 +378,7 @@ md.append("## 5. 转换侧的问题（已改正，不计入原始数据问题）
 md.append(open(os.path.join(HERE, "conversion_fixes.md"), encoding="utf-8").read().strip() + "\n")
 
 md.append("## 6. 原始数据有问题的 bundle\n")
-md.append("第二类、第三类、第四类（待确认）、%s第六类的 bundle 逐个列在下面（第一类不列）。%s列的含义：" % (
+md.append("第二类、第三类、第四类（待确认）、%s第六类、第七类的 bundle 逐个列在下面（第一类不列）。%s列的含义：" % (
     "第五类和" if C5 else "", "第五类的“分类”后是判定方式，“必要修改”的“已做”是现在的判定和标准答案。" if C5 else "") +
           "**转换后路径**相对 repo 根目录；**原始数据路径**是转换前的任务目录；"
           "**分类**后是简短依据；**问题及影响**说明问题的前因后果、为什么归到原始数据，以及对 PoC 迭代和轨迹质量的影响，"
@@ -376,7 +387,8 @@ md.append("第二类、第三类、第四类（待确认）、%s第六类的 bun
           "`newplatform_bundles/conversion/quality.json`。\n")
 HEAD = ["Bundle 名称", "转换后路径", "原始数据路径", "分类", "问题及影响", "必要修改", "修改后状态"]
 SECTIONS = [("第二类", "第二类：原始数据轻微问题"), ("第三类", "第三类：原始数据严重问题"), ("待确认", "第四类：待确认")] + \
-    ([("第五类", "第五类：按任务实现判定")] if C5 else []) + [("第六类", "第六类：构建失败或无法转化（other_errors/，不要构建上传）")]
+    ([("第五类", "第五类：按任务实现判定")] if C5 else []) + [("第六类", "第六类：构建失败或无法转化（other_errors/，不要构建上传）"),
+                                                       ("第七类", "第七类：空 PoC 也能通过（PotentialFalsePositive/，潜在误报）")]
 for i, (c, title) in enumerate(SECTIONS):
     title = "6.%d %s" % (i + 1, title)
     rows = []
@@ -421,6 +433,10 @@ for k, v in {"N_ENV": len(env), "N_NET": sum(1 for e in env if "磁盘" not in e
              "N_5": len(C5), "N_5P": sum(1 for e in C5.values() if e["verification"] == "pass"),
              "N_5G": sum(1 for e in C5.values() if e["verification"] == "pass-no-gt"),
              "N_5D": sum(1 for e in C5.values() if e["verification"] == "pass-degenerate"),
+             # category 7, by the category it came from (quality.py seventh(): "原第三类" / "原第五类" in its basis)
+             "N_7FROM5": sum(1 for e in Q.values() if e["category"] == "第七类" and "原第五类" in e["basis"]),
+             "DEGEN_ORIGIN": "、".join("原%s %d 个" % (c, n) for c, n in sorted(collections.Counter(
+                 re.search(r"原(第.类)", e["basis"]).group(1) for e in Q.values() if e["category"] == "第七类").items())),
              "N_5H": sum(1 for e in C5.values() if e.get("hardware")),
              "HW_TASKS": "、".join(sorted(e["source"].split("/projects/")[1].replace("/vulnerabilities/vulnerability_", " ")
                                          for e in C5.values() if e.get("hardware"))),

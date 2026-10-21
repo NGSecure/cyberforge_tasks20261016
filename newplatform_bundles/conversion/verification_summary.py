@@ -28,7 +28,7 @@ REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 def current_gt(name):
     """SHA-256 of the bundle's ground truth as it is now, "" for a bundle made without one, or None."""
     for d in ("newplatform_bundles", "newplatform_bundles2", "newplatform_bundles3", "newplatform_bundles4",
-              "newplatform_bundles5", "other_errors"):
+              "newplatform_bundles5", "other_errors", "PotentialFalsePositive"):
         f = os.path.join(REPO, d, name, "build", "ground_truth_poc")
         if os.path.isfile(f):
             return hashlib.sha256(open(f, "rb").read()).hexdigest()
@@ -43,7 +43,7 @@ def alt_verdict(name, r, cur):
     (next to this script)."""
     src = None
     for d in ("newplatform_bundles", "newplatform_bundles2", "newplatform_bundles3", "newplatform_bundles4",
-              "newplatform_bundles5", "other_errors"):
+              "newplatform_bundles5", "other_errors", "PotentialFalsePositive"):
         f = os.path.join(REPO, d, name, "cyberforge_source.json")
         if os.path.isfile(f):
             src = json.load(open(f))
@@ -87,14 +87,16 @@ def note(r):
 
 
 def main():
-    # a category-5 bundle (newplatform_bundles5) counts only the results of its own judge (results_c5*.jsonl):
+    # a category-5 bundle (newplatform_bundles5, or moved to other_errors / PotentialFalsePositive) counts only the
+    # results of its own judge (results_c5*.jsonl):
     # results of an earlier bundle of the same name tested another judge
-    d5, d6 = os.path.join(REPO, "newplatform_bundles5"), os.path.join(REPO, "other_errors")
+    d5 = os.path.join(REPO, "newplatform_bundles5")
     fifth = set(os.listdir(d5)) if os.path.isdir(d5) else set()
-    for n in (os.listdir(d6) if os.path.isdir(d6) else []):
-        f = os.path.join(d6, n, "cyberforge_source.json")
-        if os.path.isfile(f) and "category5" in json.load(open(f)):
-            fifth.add(n)
+    for d in (os.path.join(REPO, "other_errors"), os.path.join(REPO, "PotentialFalsePositive")):
+        for n in (os.listdir(d) if os.path.isdir(d) else []):
+            f = os.path.join(d, n, "cyberforge_source.json")
+            if os.path.isfile(f) and "category5" in json.load(open(f)):
+                fifth.add(n)
     res = {}
     for f in sys.argv[1:]:
         c5_file = os.path.basename(f).startswith("results_c5")
