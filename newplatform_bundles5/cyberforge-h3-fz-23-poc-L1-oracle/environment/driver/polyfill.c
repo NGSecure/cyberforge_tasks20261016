@@ -1,7 +1,7 @@
-/* Category-5 driver for h3 FZ_23.
+/* Category-5 driver for this task.
  *
  * Adapted from src/apps/fuzzers/fuzzerPolygonToCellsExperimental.c (the OSS-Fuzz harness built by
- * projects/h3/setup/build.sh), which reads the same input layout and makes the same calls but
+ * build.sh), which reads the same input layout and makes the same calls but
  * frees the result unseen. What changed: the input is read from the PoV file; the loops are copied
  * into memory the driver owns (the harness points into its input buffer); a negative vertex count
  * is refused; and every call's result is printed: the error codes, the number of cells, an FNV-1a

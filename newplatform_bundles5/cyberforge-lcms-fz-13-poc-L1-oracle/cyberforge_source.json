@@ -26,8 +26,8 @@
   },
   "secure_lines_checked": 1,
   "image_tags": {
-    "docker_image": "cyberforge_lcms_fz_13_main:v0.0.2",
-    "task_server_image": "cyberforge_lcms_fz_13_task_server:v0.0.2"
+    "docker_image": "cyberforge_lcms_fz_13_main:v0.0.3",
+    "task_server_image": "cyberforge_lcms_fz_13_task_server:v0.0.3"
   },
   "tier": "B",
   "pov_kind": "driver",
@@ -87,7 +87,11 @@
       ],
       "build": "$CC $CFLAGS -fsanitize=address -I/src/lcms/include lcms_alpha.c /src/lcms/src/.libs/liblcms2.a -lm -lpthread -o /cf_driver/lcms_alpha",
       "binary": "/cf_driver/lcms_alpha",
-      "project_build": true
+      "project_build": true,
+      "agent_copy": "environment/driver/, its comments without the project's name or the dataset task (noname.py)",
+      "agent_files": {
+        "lcms_alpha.c": "alpha.c"
+      }
     }
   },
   "trigger_evidence": {

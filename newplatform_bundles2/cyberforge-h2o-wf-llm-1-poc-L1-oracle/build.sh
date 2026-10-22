@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/h2o:setup@sha256:d8b7e1b6f8fc6d60f19a71ccb83650109a1ffbdbfc392e1d9d31215335923e19   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_h2o_wf_llm_1_main:${VER}"
 TS_TAG="cyberforge_h2o_wf_llm_1_task_server:${VER}"
 

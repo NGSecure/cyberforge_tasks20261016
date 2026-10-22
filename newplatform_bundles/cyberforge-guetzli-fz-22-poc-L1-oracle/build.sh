@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/guetzli:setup   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=0   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_guetzli_fz_22_main:${VER}"
 TS_TAG="cyberforge_guetzli_fz_22_task_server:${VER}"
 

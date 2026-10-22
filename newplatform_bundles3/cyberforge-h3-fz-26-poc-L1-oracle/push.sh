@@ -18,7 +18,7 @@ set -euo pipefail
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"   # this bundle dir (absolute)
 B="$(basename "$HERE")"
 
-VER=v0.0.2
+VER=v0.0.3
 PLATFORM_URL=http://7.244.3.60:8088
 LINE=default
 USER=platform

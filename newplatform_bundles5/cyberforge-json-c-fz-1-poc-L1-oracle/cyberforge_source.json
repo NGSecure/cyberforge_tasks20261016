@@ -26,8 +26,8 @@
   },
   "secure_lines_checked": 1,
   "image_tags": {
-    "docker_image": "cyberforge_json_c_fz_1_main:v0.0.2",
-    "task_server_image": "cyberforge_json_c_fz_1_task_server:v0.0.2"
+    "docker_image": "cyberforge_json_c_fz_1_main:v0.0.3",
+    "task_server_image": "cyberforge_json_c_fz_1_task_server:v0.0.3"
   },
   "tier": "B",
   "pov_kind": "driver",
@@ -87,7 +87,8 @@
       ],
       "build": "$CC $CFLAGS -fsanitize=address -I/src/json-c -I/src/json-c/json-c-build json_inc.c /src/json-c/json-c-build/libjson-c.a -lm -o /cf_driver/json_inc",
       "binary": "/cf_driver/json_inc",
-      "project_build": true
+      "project_build": true,
+      "agent_copy": "environment/driver/, its comments without the project's name or the dataset task (noname.py)"
     }
   },
   "trigger_evidence": {

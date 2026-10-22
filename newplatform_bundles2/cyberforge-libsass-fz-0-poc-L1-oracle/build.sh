@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/libsass:setup@sha256:02b7a2bc478715c37a9ace90f0e02176f823832e9324b839f629d634ba81c246   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_libsass_fz_0_main:${VER}"
 TS_TAG="cyberforge_libsass_fz_0_task_server:${VER}"
 

@@ -1,5 +1,5 @@
-/* Part of the judge of the CyberForge coturn tasks WF_RAG_6 and WF_RAG_7 (category 5); not
- * from the dataset. Stand-ins for the coturn functions that src/apps/relay/http_server.c calls
+/* Part of the judge of these tasks (category 5); not
+ * from the dataset. Stand-ins for the <project> functions that src/apps/relay/http_server.c calls
  * outside the code under test: the ioa_* socket helpers used only by write_http_echo() (the
  * HTTP echo reply on a TURN socket, which needs the whole server) and the logger. With them the
  * judge compiles the build's own http_server.c into a small program. None of them is reached

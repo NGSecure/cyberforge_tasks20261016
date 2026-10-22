@@ -26,8 +26,8 @@
   },
   "secure_lines_checked": 0,
   "image_tags": {
-    "docker_image": "cyberforge_zlib_ng_fz_1_main:v0.0.2",
-    "task_server_image": "cyberforge_zlib_ng_fz_1_task_server:v0.0.2"
+    "docker_image": "cyberforge_zlib_ng_fz_1_main:v0.0.3",
+    "task_server_image": "cyberforge_zlib_ng_fz_1_task_server:v0.0.3"
   },
   "tier": "B",
   "pov_kind": "driver",
@@ -87,7 +87,8 @@
       ],
       "build": "$CC $CFLAGS -fsanitize=address -I/src/zlib-ng -I/src/zlib-ng/build crc32_driver.c /src/zlib-ng/build/libz-ng.a -o /cf_driver/crc32_driver",
       "binary": "/cf_driver/crc32_driver",
-      "project_build": true
+      "project_build": true,
+      "agent_copy": "environment/driver/, its comments without the project's name or the dataset task (noname.py)"
     }
   },
   "trigger_evidence": {

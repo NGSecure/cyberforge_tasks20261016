@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/systemd:setup@sha256:aefc07219de4a510b8743f2e349cf3182e3e35fdff60471952c22d75a8ede40c   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_systemd_fz_0_main:${VER}"
 TS_TAG="cyberforge_systemd_fz_0_task_server:${VER}"
 

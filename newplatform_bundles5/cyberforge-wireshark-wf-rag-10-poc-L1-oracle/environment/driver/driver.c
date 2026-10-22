@@ -1,4 +1,4 @@
-/* Driver of the CyberForge tasks wireshark WF_RAG_6, WF_RAG_8 and WF_RAG_10 (category 5).
+/* Driver of these tasks (category 5).
  * There is no dataset program behind it: the three exploits only grep wiretap/cosine.c or
  * wiretap/file_wrappers.c and run their own copies of the code, and the OSS-Fuzz build makes only
  * the fuzzshark_* dissector fuzzers, which never open a capture file. So this driver reads the PoC

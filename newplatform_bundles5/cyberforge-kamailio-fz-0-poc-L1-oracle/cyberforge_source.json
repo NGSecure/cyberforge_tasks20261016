@@ -26,8 +26,8 @@
   },
   "secure_lines_checked": 0,
   "image_tags": {
-    "docker_image": "cyberforge_kamailio_fz_0_main:v0.0.2",
-    "task_server_image": "cyberforge_kamailio_fz_0_task_server:v0.0.2"
+    "docker_image": "cyberforge_kamailio_fz_0_main:v0.0.3",
+    "task_server_image": "cyberforge_kamailio_fz_0_task_server:v0.0.3"
   },
   "tier": "B",
   "pov_kind": "driver",
@@ -89,7 +89,8 @@
       ],
       "build": "$CC $CFLAGS -fsanitize=address driver.c /src/kamailio/src/libkamilio.a -ldl -lresolv -lm -lpthread -o /cf_driver/driver || { { printf 'typedef struct {\\n    char *s;\\n    int len;\\n} str;\\n'; sed -n '/int unescape_crlf/,/^}/p' /src/kamailio/src/core/strutils.c; } > strutils_isolated.c && $CC $CFLAGS -fsanitize=address strutils_isolated.c driver.c -o /cf_driver/driver; }",
       "binary": "/cf_driver/driver",
-      "project_build": true
+      "project_build": true,
+      "agent_copy": "environment/driver/, its comments without the project's name or the dataset task (noname.py)"
     }
   },
   "trigger_evidence": {

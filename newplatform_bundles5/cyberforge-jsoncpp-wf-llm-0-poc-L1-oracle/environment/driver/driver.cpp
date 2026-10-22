@@ -1,10 +1,10 @@
-// Driver of the CyberForge task jsoncpp WF_LLM_0 (category 5).
+// Driver of this task (category 5).
 // Adapted from poc.cpp, the program exploit_files/attack.py writes and compiles: it builds
 // "[" * depth + "0" + "]" * depth (depth 300) and parses it with the legacy Json::Reader
 // (reader.parse(s, root, false)), printing "parse ok: <0|1>" or the exception. Changes: the JSON
 // text is read from the PoC file instead of being generated from a depth argument, and the
 // reader's error messages are printed when parse() returns false. Built against each build's
-// lib/libjsoncpp.a.
+// lib/lib<project>.a.
 #include <json/reader.h>
 #include <json/value.h>
 

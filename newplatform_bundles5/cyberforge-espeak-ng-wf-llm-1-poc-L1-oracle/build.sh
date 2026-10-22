@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/espeak-ng:setup@sha256:74f4edd4cfb0558955f8ec98158e5372781f1ac91b5e8d643b9ea766e771a90f   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_espeak_ng_wf_llm_1_main:${VER}"
 TS_TAG="cyberforge_espeak_ng_wf_llm_1_task_server:${VER}"
 

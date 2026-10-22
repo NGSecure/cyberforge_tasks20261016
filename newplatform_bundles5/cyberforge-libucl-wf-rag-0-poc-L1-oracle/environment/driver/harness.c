@@ -1,11 +1,11 @@
-/* Driver of the CyberForge task libucl WF_RAG_0 (category 5).
+/* Driver of this task (category 5).
  *
  * The dataset exploit's own harness.c (written by exploit_files/exploit.sh), unchanged: it
  * reads the file named by argv[1], creates a parser with UCL_PARSER_SAVE_COMMENTS (the
  * OSS-Fuzz harness ucl_add_string_fuzzer never sets that flag, so it never reaches
  * ucl_save_comment) and parses the data with ucl_parser_add_string(). The judge passes the
  * PoC file as argv[1], as exploit.sh passes payload.bin. Built as exploit.sh builds it:
- * $CC $CFLAGS -I/src/libucl/include harness.c /src/libucl/src/.libs/libucl.a -fsanitize=address.
+ * $CC $CFLAGS -I/src/<project>/include harness.c /src/<project>/src/.libs/<project>.a -fsanitize=address.
  */
 #include <stdio.h>
 #include <stdlib.h>

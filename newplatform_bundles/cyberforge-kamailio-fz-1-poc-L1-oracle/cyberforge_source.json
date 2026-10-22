@@ -26,8 +26,8 @@
   },
   "secure_lines_checked": 1,
   "image_tags": {
-    "docker_image": "cyberforge_kamailio_fz_1_main:v0.0.2",
-    "task_server_image": "cyberforge_kamailio_fz_1_task_server:v0.0.2"
+    "docker_image": "cyberforge_kamailio_fz_1_main:v0.0.3",
+    "task_server_image": "cyberforge_kamailio_fz_1_task_server:v0.0.3"
   },
   "tier": "A",
   "pov_kind": "harness",

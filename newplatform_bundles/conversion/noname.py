@@ -14,10 +14,11 @@ prefixes (`png_`, `hb-`, `blosc2_`) are not the project's name and stay.
 
 hide() writes `<project>` for each name and says once, where the instruction lists
 repo-vul.tar.gz, that `<project>` stands for the name of the directory the source unpacks to, so
-every command, path and harness name stays exact. The source and the environment still show the
-name (/src/<directory>, the PROJECT_NAME variable the images set as OSS-Fuzz's helper.py does): the
-instruction only does not hand it over.
+every command, path and harness name stays exact. The source still shows the name (and the
+dataset's descriptions often do; neither is the conversion's to change), but nothing the conversion
+writes for the agent hands it over: see also hide_in_comments() and SKILL.md.
 """
+import os
 import re
 
 PLACEHOLDER = "<project>"
@@ -74,6 +75,88 @@ def named(text, project, target_dir):
     return [s for _, _, s in _matches(text, project, target_dir)]
 
 
+# The category-5 drivers (c5/drivers/) are shown to the agent in /workspace/. Their code calls the
+# project's own API (`cJSON_Parse`, `#include "cJSON.h"`) and stays as it is; what the conversion
+# wrote around it, the comments, names the project and the dataset task ("Driver of the CyberForge
+# task cjson WF_LLM_4", "projects/h3/setup/build.sh"). hide_in_comments() rewrites only the comments
+# of the agent's copy, line for line, so its code and line numbers are the judge's.
+TASK_ID = r"(?:FZ|WF_RAG|WF_LLM)_\d+"
+TASK_IDS = r"%s(?:(?:, | and )%s)*" % (TASK_ID, TASK_ID)
+
+
+def comment_spans(text, name):
+    """(start, end) of each comment of a C/C++, Python or Ruby source; a Python triple-quoted
+    string (the drivers' docstrings) counts as a comment. Strings and characters are skipped."""
+    ext = os.path.splitext(name)[1].lower()
+    c_like = ext in (".c", ".cc", ".cpp", ".cxx", ".h", ".hh", ".hpp")
+    if not c_like and ext not in (".py", ".rb"):
+        raise ValueError("no comment syntax known for %s" % name)
+    spans, i, n = [], 0, len(text)
+    while i < n:
+        ch = text[i]
+        if c_like and text.startswith("//", i) or not c_like and ch == "#":
+            j = text.find("\n", i)
+            j = n if j < 0 else j
+            spans.append((i, j))
+            i = j
+        elif c_like and text.startswith("/*", i):
+            j = text.find("*/", i + 2)
+            j = n if j < 0 else j + 2
+            spans.append((i, j))
+            i = j
+        elif ext == ".py" and text.startswith(('"""', "'''"), i):
+            q = text[i:i + 3]
+            j = text.find(q, i + 3)
+            j = n if j < 0 else j + 3
+            spans.append((i, j))
+            i = j
+        elif ch in "\"'":
+            j = i + 1
+            while j < n and text[j] != ch and text[j] != "\n":
+                j += 2 if text[j] == "\\" else 1
+            i = j + 1
+        else:
+            i += 1
+    return spans
+
+
+def _comment(text, project, target_dir, ids):
+    names = "|".join(re.escape(s) for s in spellings(project, target_dir))
+
+    def tasks(m):
+        return "these tasks" if len(re.findall(TASK_ID, m.group(0))) > 1 else "this task"
+    text = re.sub(r"the CyberForge (?:(?:%s) )?tasks? (?:(?:%s) )?%s" % (names, names, TASK_IDS), tasks, text, flags=re.I)
+    text = re.sub(r"(?:%s) %s" % (names, TASK_IDS), tasks, text, flags=re.I)
+    text = re.sub(r"projects/(?:%s)/setup/" % names, "", text, flags=re.I)
+    text = re.sub(TASK_ID, lambda m: ids.setdefault(m.group(0), "task %s" % chr(ord("A") + len(ids))), text)
+    if re.search("cyberforge", text, re.I):
+        raise ValueError("a comment still names the dataset: %r" % text[:200])
+    return hide_code(text, project, target_dir)
+
+
+def hide_code(text, project, target_dir):
+    """text, all of it read as code, with `<project>` for each name of the project."""
+    out, last = [], 0
+    for a, b, _ in _matches("```\n%s\n```" % text, project, target_dir):
+        out += [text[last:a - 4], PLACEHOLDER]
+        last = b - 4
+    return "".join(out + [text[last:]])
+
+
+def hide_in_comments(data, name, project, target_dir):
+    """The agent's copy of a driver file: its comments without the project's name or the dataset
+    task, its code byte for byte, every line where it was."""
+    text = data.decode("utf-8")
+    ids, out, last = {}, [], 0
+    for a, b in comment_spans(text, name):
+        out += [text[last:a], _comment(text[a:b], project, target_dir, ids)]
+        last = b
+    new = "".join(out + [text[last:]])
+    if new.count("\n") != text.count("\n"):
+        raise ValueError("%s: rewriting its comments moved its lines" % name)
+    return new.encode("utf-8")
+
+
 def hide(text, project, target_dir):
     """text with `<project>` for each name of the project; raises ValueError for a name that
     `<project>` (the source directory's name) cannot stand for."""
@@ -120,7 +203,11 @@ def hide(text, project, target_dir):
     text = "".join(out)
     if PLACEHOLDER not in text:
         return text.replace(" " + MARK, "")
-    note = "(it unpacks to one directory, written `%s` below%s)" % (PLACEHOLDER, (
+    return text.replace(MARK, unpack_note(recased))
+
+
+def unpack_note(recased=False):
+    """What the repo-vul.tar.gz line says of `<project>` once the instruction uses it."""
+    return "(it unpacks to one directory, written `%s` below%s)" % (PLACEHOLDER, (
         "; in names in its code `%s` may be capitalised differently or use `_` for `-`" % PLACEHOLDER)
         if recased else "")
-    return text.replace(MARK, note)

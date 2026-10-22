@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/simdjson:setup@sha256:8a4f854295107aab642a043e95f4f21b83841abf60d4427bfaa3c5c7b481183f   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_simdjson_fz_0_main:${VER}"
 TS_TAG="cyberforge_simdjson_fz_0_task_server:${VER}"
 

@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/uwebsockets:setup@sha256:7703d2ec31af1f30a8219d89964c56f5829f5de998ff5d7ab40584a0d8e3f340   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_uwebsockets_wf_rag_0_main:${VER}"
 TS_TAG="cyberforge_uwebsockets_wf_rag_0_task_server:${VER}"
 

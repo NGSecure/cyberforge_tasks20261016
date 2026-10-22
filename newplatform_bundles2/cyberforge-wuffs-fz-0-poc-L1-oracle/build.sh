@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/wuffs:setup@sha256:fa1ce52355cbafaf32802cc9417c2ec74efe8bc78f9a057e489b656e9398cadd   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_wuffs_fz_0_main:${VER}"
 TS_TAG="cyberforge_wuffs_fz_0_task_server:${VER}"
 

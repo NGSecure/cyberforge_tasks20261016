@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/mbedtls:setup@sha256:11adec30da570057b518e75c0a2514d25e2756401e6db341e0ade09b9033ffda   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_mbedtls_fz_0_main:${VER}"
 TS_TAG="cyberforge_mbedtls_fz_0_task_server:${VER}"
 

@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/dnsmasq:setup@sha256:659615011ee53198e1078b437073eca0a39333fa4b6922684b137fb4a7e42a21   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_dnsmasq_wf_llm_1_main:${VER}"
 TS_TAG="cyberforge_dnsmasq_wf_llm_1_task_server:${VER}"
 

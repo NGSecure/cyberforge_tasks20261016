@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/haproxy:setup@sha256:c57043d6925c4a7aba1641d7345646c3f0117ad84e88169be9189ae3da6651f8   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_haproxy_wf_llm_0_main:${VER}"
 TS_TAG="cyberforge_haproxy_wf_llm_0_task_server:${VER}"
 

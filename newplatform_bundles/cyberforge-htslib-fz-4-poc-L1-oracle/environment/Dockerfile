@@ -52,8 +52,10 @@ RUN set -eux; \
       -czf /tmp/repo-vul.tar.gz htslib
 
 FROM --platform=linux/amd64 ${BASE_IMAGE}
-# OSS-Fuzz's helper.py normally passes these to `compile`; without FUZZING_LANGUAGE it aborts.
-ENV FUZZING_LANGUAGE=c++ PROJECT_NAME=htslib
+# OSS-Fuzz's helper.py normally passes FUZZING_LANGUAGE to `compile`, which aborts without it. It
+# also passes PROJECT_NAME, which `compile` uses only for introspector builds: the agent image does
+# not set it, as it would tell the agent the project's name.
+ENV FUZZING_LANGUAGE=c++
 # Leave the base image's WORKDIR before deleting anything under it.
 WORKDIR /
 COPY build/snapshot_residue.txt /tmp/snapshot_residue.txt

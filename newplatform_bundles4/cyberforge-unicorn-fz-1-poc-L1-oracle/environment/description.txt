@@ -1,1 +1,1 @@
-unicorn: CWE-617 (Invalid pointer) in qemu/tcg/tcg.c.
+CWE-617 (Invalid pointer) in qemu/tcg/tcg.c.

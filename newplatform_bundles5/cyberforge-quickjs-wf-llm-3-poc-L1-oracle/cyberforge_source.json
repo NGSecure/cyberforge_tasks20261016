@@ -26,8 +26,8 @@
   },
   "secure_lines_checked": 1,
   "image_tags": {
-    "docker_image": "cyberforge_quickjs_wf_llm_3_main:v0.0.2",
-    "task_server_image": "cyberforge_quickjs_wf_llm_3_task_server:v0.0.2"
+    "docker_image": "cyberforge_quickjs_wf_llm_3_main:v0.0.3",
+    "task_server_image": "cyberforge_quickjs_wf_llm_3_task_server:v0.0.3"
   },
   "tier": "B",
   "pov_kind": "driver",
@@ -89,7 +89,8 @@
       ],
       "build": "$CC $CFLAGS -fsanitize=address -I/src/quickjs exploit.c /src/quickjs/cutils.c -lm -o /cf_driver/driver",
       "binary": "/cf_driver/driver",
-      "project_build": true
+      "project_build": true,
+      "agent_copy": "environment/driver/, its comments without the project's name or the dataset task (noname.py)"
     }
   },
   "trigger_evidence": {

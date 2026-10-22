@@ -27,8 +27,8 @@
   },
   "secure_lines_checked": 1,
   "image_tags": {
-    "docker_image": "cyberforge_open62541_wf_rag_3_main:v0.0.2",
-    "task_server_image": "cyberforge_open62541_wf_rag_3_task_server:v0.0.2"
+    "docker_image": "cyberforge_open62541_wf_rag_3_main:v0.0.3",
+    "task_server_image": "cyberforge_open62541_wf_rag_3_task_server:v0.0.3"
   },
   "tier": "B",
   "pov_kind": "driver",
@@ -88,7 +88,8 @@
       ],
       "build": "$CC $CFLAGS -fsanitize=address -include stdio.h -I/src/open62541/deps driver.c /src/open62541/deps/cj5.c /src/open62541/deps/parse_num.c /src/open62541/deps/utf8.c -lm -o /cf_driver/driver",
       "binary": "/cf_driver/driver",
-      "project_build": false
+      "project_build": false,
+      "agent_copy": "environment/driver/, its comments without the project's name or the dataset task (noname.py)"
     }
   },
   "trigger_evidence": {

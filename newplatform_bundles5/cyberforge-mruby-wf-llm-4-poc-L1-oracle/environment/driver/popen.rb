@@ -1,7 +1,7 @@
-# Driver of the CyberForge tasks mruby WF_LLM_1 and WF_LLM_4 (category 5), a Ruby script run by
-# the project's fuzz harness: /out/mruby_fuzzer <this file>.
-# Adapted from the dataset exploits' trigger.rb (WF_LLM_1: begin; IO._popen("-", "w"); rescue;
-# end - WF_LLM_4: IO._popen("-", "r")), which mruby_fuzzer runs; the exploits then look for the
+# Driver of these tasks (category 5), a Ruby script run by
+# the project's fuzz harness: /out/<project>_fuzzer <this file>.
+# Adapted from the dataset exploits' trigger.rb (task A: begin; IO._popen("-", "w"); rescue;
+# end - task B: IO._popen("-", "r")), which <project>_fuzzer runs; the exploits then look for the
 # shell's "-c requires an argument" message. Changes: the command string and the mode are read
 # from the PoC file (/tmp/exploit_work/pov: line 1 the command, line 2 the mode, "r" if absent)
 # instead of being written into the script, and the script prints the pid of the child that

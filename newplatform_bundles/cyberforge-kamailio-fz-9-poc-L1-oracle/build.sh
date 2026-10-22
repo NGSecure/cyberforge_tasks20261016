@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/kamailio:setup@sha256:9068c7fbb221e7d2bb3e6036d9fb9dc36758e37519db6b344ec64ef0744e6071   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_kamailio_fz_9_main:${VER}"
 TS_TAG="cyberforge_kamailio_fz_9_task_server:${VER}"
 

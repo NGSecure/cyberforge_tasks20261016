@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/perfetto:setup@sha256:70f3df926f5ee4a395c199ee380beb17480936fa9e025108e3ffe76136b8bce5   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_perfetto_fz_1_main:${VER}"
 TS_TAG="cyberforge_perfetto_fz_1_task_server:${VER}"
 

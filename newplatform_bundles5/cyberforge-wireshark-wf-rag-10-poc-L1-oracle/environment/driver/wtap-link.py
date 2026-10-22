@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build helper of the CyberForge tasks wireshark WF_RAG_6, WF_RAG_8 and WF_RAG_10 (category 5):
+"""Build helper of these tasks (category 5):
 prints the libraries the project's own fuzzshark_ip fuzzer is linked with (LINK_FLAGS and
 LINK_LIBRARIES of its link statement in /work/build/build.ninja), with relative paths made
 absolute and the fuzzing engine (-fsanitize=fuzzer, libFuzzingEngine) left out, so that the

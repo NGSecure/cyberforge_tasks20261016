@@ -1,1 +1,1 @@
-guetzli: CWE-193 (Calculation) in guetzli/jpeg_data_reader.cc.
+CWE-193 (Calculation) in jpeg_data_reader.cc.

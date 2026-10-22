@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/libxslt:setup@sha256:203a2e2922e07ffced36b6d2367e91ffc892ea1640f31cfd220c876e047cce54   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_libxslt_wf_rag_0_main:${VER}"
 TS_TAG="cyberforge_libxslt_wf_rag_0_task_server:${VER}"
 

@@ -1,4 +1,4 @@
-/* Driver of the CyberForge task xz WF_RAG_1 (category 5).
+/* Driver of this task (category 5).
  *
  * No dataset program is behind this driver. The exploit (exploit_files/exploit.sh) preloads a
  * library whose malloc() always returns NULL into /out/fuzz_decode_alone, which cannot work:

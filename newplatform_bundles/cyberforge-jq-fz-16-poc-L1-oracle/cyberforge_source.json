@@ -31,8 +31,8 @@
   },
   "secure_lines_checked": 3,
   "image_tags": {
-    "docker_image": "cyberforge_jq_fz_16_main:v0.0.2",
-    "task_server_image": "cyberforge_jq_fz_16_task_server:v0.0.2"
+    "docker_image": "cyberforge_jq_fz_16_main:v0.0.3",
+    "task_server_image": "cyberforge_jq_fz_16_task_server:v0.0.3"
   },
   "tier": "A",
   "pov_kind": "harness",

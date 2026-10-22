@@ -1,4 +1,4 @@
-// Category-5 driver for behaviortreecpp WF_RAG_0.
+// Category-5 driver for this task.
 //
 // Adapted from tests/gtest_factory.cpp, TEST(BehaviorTreeFactory, CreateTreeFromFile) (the unit test
 // the exploit runs): BehaviorTreeFactory factory; Tree tree = factory.createTreeFromFile(path);

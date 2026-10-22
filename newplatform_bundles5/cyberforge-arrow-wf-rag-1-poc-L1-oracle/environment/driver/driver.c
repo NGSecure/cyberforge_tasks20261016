@@ -1,11 +1,11 @@
-/* Driver of the CyberForge task arrow WF_RAG_1 (category 5).
+/* Driver of this task (category 5).
  * Adapted from the dataset exploit's exploit_files/exploit.c, which includes xxhash.h, calls
  * XXH_swap64(0x0102030405060708) and prints EXPLOIT_TRIGGERED when the low byte of the result
  * is 0 (the exploit itself never ran it: exploit.sh only greps the header, and exploit.c does
  * not compile without XXH_INLINE_ALL). Changes: the 64-bit value is read from the PoC file
  * (hexadecimal digits) instead of being hard-coded; the build's own
- * cpp/src/arrow/vendored/xxhash/xxhash.h is included with XXH_INLINE_ALL (as
- * arrow/util/hashing.h does), so XXH_swap64 and xxh_u64 exist; besides XXH_swap64 it prints
+ * cpp/src/<project>/vendored/xxhash/xxhash.h is included with XXH_INLINE_ALL (as
+ * <project>/util/hashing.h does), so XXH_swap64 and xxh_u64 exist; besides XXH_swap64 it prints
  * the public xxhash functions that call XXH_swap64 on a little-endian machine (canonical forms,
  * XXH3 over 9..16-byte inputs). Values are printed without a 0x prefix (the judge would mask
  * 0x-prefixed numbers as addresses). Build with clang: for GCC >= 4.3 the header defines

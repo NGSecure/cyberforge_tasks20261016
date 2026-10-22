@@ -4,7 +4,7 @@
     python3 -I classify.py       <inner_root> records.json
     python3 -I scan_snapshots.py records.json snapshot_scan/
     python3 -I convert.py        <inner_root> records.json <out_dir> [--scan snapshot_scan/]
-                                 [--out-b DIR] [--out-c DIR] [--out-d DIR] [--ver v0.0.2] [--only NAME ...]
+                                 [--out-b DIR] [--out-c DIR] [--out-d DIR] [--ver v0.0.3] [--only NAME ...]
 
 <inner_root> holds manifest.csv + projects/. One bundle is written per converted
 record (see classify.py for the tiers), placed by the quality of its dataset task
@@ -181,8 +181,13 @@ def choose_description(vd, rec):
         br = open(os.path.join(vd, "bug_report.txt"), encoding="utf-8", errors="replace").read()
         cwe = re.search(r"^CWE:\s*(.+)$", br, re.M)
         tf = re.search(r"^Target File:\s*(.+)$", br, re.M)
-        text = "%s: %s in %s." % (rec["project"], cwe.group(1).strip() if cwe else rec["cwe_meta"],
-                                  tf.group(1).strip() if tf else "the project")
+        # this sentence is the conversion's, so it names neither the project nor (in the target
+        # file's path) its directory: noname.py
+        where = "/".join(p for p in (tf.group(1).strip() if tf else "").split("/")
+                         if p and not noname.named("`%s`" % p, rec["project"], rec["target_dir"]))
+        text = "%s in %s." % (cwe.group(1).strip() if cwe else rec["cwe_meta"], where or "the project")
+        if noname.named(text, rec["project"], rec["target_dir"]) or noname.named("`%s`" % text, rec["project"], rec["target_dir"]):
+            raise ValueError("%s: the description written from bug_report.txt names the project: %s" % (rec["path"], text))
         return text, "bug_report.txt (header fields)", None
     order = sorted(variants, key=lambda v: 0 if v.get("style") == "concise-cve-style" else 1)
     cls = crash_class(rec)
@@ -501,14 +506,20 @@ def c5_bundle(bd, vd, rec, v, recipe, spec, diff, leak_note, cf):
             "poc_path": recipe.get("poc_path"), "aux_files": sorted(aux_names), "oracle": oracle,
             "touched_files": touched, "uses_out": uses_out, "design": spec.get("design"),
             **({"driver": {"files": sorted(drv["files"]), "build": drv.get("build"), "binary": drv.get("binary"),
-                           "project_build": not drv.get("no_compile")}} if drv else {})}
+                           "project_build": not drv.get("no_compile"),
+                           "agent_copy": "environment/driver/, its comments without the project's name or the "
+                                         "dataset task (noname.py)",
+                           **({"agent_files": drv["agent_files"]} if drv.get("agent_files") else {})}}
+               if drv else {})}
     if drv:  # the driver: built against each build by the task server, its source shown to the agent
         for name, ref in sorted(drv["files"].items()):
             data = c5.source_bytes(ref, None)
-            for rel in (os.path.join("build", "driver", name), os.path.join("environment", "driver", name)):
+            for rel, out in ((os.path.join("build", "driver", name), data),
+                             (os.path.join("environment", "driver", c5.agent_file(drv, name)),
+                              noname.hide_in_comments(data, name, rec["project"], rec["target_dir"]))):
                 os.makedirs(os.path.dirname(os.path.join(bd, rel)), exist_ok=True)
                 with open(os.path.join(bd, rel), "wb") as f:
-                    f.write(data)
+                    f.write(out)
     for name in ("test.sh", "verify.py", "cf_oracle.py"):
         write(os.path.join(bd, "tests", name), render(os.path.join("tests_e", name), ve), 0o755)
     write(os.path.join(bd, "tests", "oracle.json"), json.dumps(oracle, indent=2) + "\n")
@@ -656,6 +667,7 @@ def build_bundle(root, rec, out_dir, ver, scan_dir, quality=None, c5spec=None):
         run0 = [st for st in recipe["steps"] if st["role"] == "run"][0]["argv"][0]
         v["FUZZER"] = ("(a C/C++ program compiled against the project)" if kind == "program" else
                        c5spec["fuzzer"] if kind == "harness" else run0)
+    v["FUZZER"] = noname.hide_code(v["FUZZER"], proj, rec["target_dir"])  # task.toml only
 
     judge_opts = judge_asan_options(rec)
     leak_note = ("on: the injected bug is a leak" if leak_task(rec) else
@@ -728,7 +740,8 @@ def build_bundle(root, rec, out_dir, ver, scan_dir, quality=None, c5spec=None):
     write(os.path.join(bd, "task.toml"), render("task.toml", v))
     main_df = render("Dockerfile.main", v)
     if c5spec and c5spec.get("driver"):  # the driver the judge runs the PoC with: the agent sees its source
-        main_df += "".join("COPY environment/driver/%s /workspace/%s\n" % (n, n) for n in sorted(c5spec["driver"]["files"]))
+        main_df += "".join("COPY environment/driver/%s /workspace/%s\n" % (a, a) for a in sorted(
+            c5.agent_file(c5spec["driver"], n) for n in c5spec["driver"]["files"]))
     write(os.path.join(bd, "environment", "Dockerfile"), main_df)
     write(os.path.join(bd, "environment", "docker-compose.yaml"), render("docker-compose.yaml", v))
     write(os.path.join(bd, "environment", "submit.sh"), render("submit.sh", v), 0o755)
@@ -853,7 +866,7 @@ def main():
                                                   "(c5_specs.json; default: <out_dir>5)")
     ap.add_argument("--scan", default=os.path.join(HERE, "snapshot_scan"),
                     help="scan_snapshots.py output (default: snapshot_scan/ next to this script)")
-    ap.add_argument("--ver", default="v0.0.2")  # v0.0.2: isolated judges (see SKILL.md)
+    ap.add_argument("--ver", default="v0.0.3")  # v0.0.2: isolated judges; v0.0.3: no project name in the agent image (SKILL.md)
     ap.add_argument("--out-f", default=None, help="category-6 bundles: will not build for a reason in the dataset "
                                                   "(default: other_errors next to <out_dir>)")
     ap.add_argument("--out-g", default=None, help="category-7 bundles: an empty PoC passes, a potential false positive "

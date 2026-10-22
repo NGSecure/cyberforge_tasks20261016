@@ -1,4 +1,4 @@
-/* Driver of the CyberForge task coturn WF_RAG_9 (category 5).
+/* Driver of this task (category 5).
  * Adapted from the dataset exploit's exploit_files/prog.c, which includes proxy_string_field()
  * cut out of src/apps/relay/ns_ioalib_engine_impl.c (exploit_files/attack.sh does the cutting)
  * and calls proxy_string_field(field, 16, buf, 0, 40) on 40 x 'A', detecting the overflow with a

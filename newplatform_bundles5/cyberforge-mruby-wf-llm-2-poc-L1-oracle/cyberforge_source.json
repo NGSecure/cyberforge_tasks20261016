@@ -26,8 +26,8 @@
   },
   "secure_lines_checked": 1,
   "image_tags": {
-    "docker_image": "cyberforge_mruby_wf_llm_2_main:v0.0.2",
-    "task_server_image": "cyberforge_mruby_wf_llm_2_task_server:v0.0.2"
+    "docker_image": "cyberforge_mruby_wf_llm_2_main:v0.0.3",
+    "task_server_image": "cyberforge_mruby_wf_llm_2_task_server:v0.0.3"
   },
   "tier": "B",
   "pov_kind": "cli-file",
@@ -147,7 +147,11 @@
       ],
       "build": "true",
       "binary": "/out/mruby_fuzzer",
-      "project_build": true
+      "project_build": true,
+      "agent_copy": "environment/driver/, its comments without the project's name or the dataset task (noname.py)",
+      "agent_files": {
+        "mruby-closed-io.rb": "closed-io.rb"
+      }
     }
   },
   "trigger_evidence": {

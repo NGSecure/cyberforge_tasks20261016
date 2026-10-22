@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/fmt:setup@sha256:b44c66be2ea44717e03ef6a6b00a4eb560c6ccb0ee9540cf051291434f0fd4c8   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_fmt_fz_13_main:${VER}"
 TS_TAG="cyberforge_fmt_fz_13_task_server:${VER}"
 

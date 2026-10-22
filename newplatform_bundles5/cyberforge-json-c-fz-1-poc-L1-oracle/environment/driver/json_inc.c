@@ -1,4 +1,4 @@
-/* Category-5 driver for json-c FZ_1.
+/* Category-5 driver for this task.
  *
  * Adapted from tests/test_int_add.c (the unit test the exploit runs; it fails at the
  * "UINT64 ADD OVERFLOW" check: json_object_new_uint64(UINT64_MAX-50), json_object_int_inc(tmp, 100)).

@@ -1,10 +1,10 @@
-/* Driver of the CyberForge task quickjs WF_LLM_2 (category 5).
+/* Driver of this task (category 5).
  * Adapted from trigger.c, the program exploit_files/attack.py writes and compiles against
  * cutils.c: a DynBuf with allocated_size 32, size (size_t)-9 and dbuf_claim(&s, 100), printing
  * "rc=%d allocated_size=%zu size=%zu". Changes: the three numbers (size, allocated_size, len)
  * are read from the PoC file as decimal integers instead of being hard-coded; the initial buffer
  * is capped at 1 MiB. Built against each build's cutils.c (the object the fuzz targets use). No
- * QuickJS caller can bring a DynBuf to a size near SIZE_MAX, so the API is called directly. */
+ * <project> caller can bring a DynBuf to a size near SIZE_MAX, so the API is called directly. */
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>

@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/harfbuzz:setup@sha256:a45a9d626b9bfd08914071516935de686a0616d444974ceda1d669fe86ffed62   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_harfbuzz_fz_24_main:${VER}"
 TS_TAG="cyberforge_harfbuzz_fz_24_task_server:${VER}"
 

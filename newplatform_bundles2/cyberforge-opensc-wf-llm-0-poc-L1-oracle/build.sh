@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/opensc:setup@sha256:b949ca62ce93b84a9b2a86d045409400cc6b65da6faa5e3affb8e0c7df31a74b   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_opensc_wf_llm_0_main:${VER}"
 TS_TAG="cyberforge_opensc_wf_llm_0_task_server:${VER}"
 

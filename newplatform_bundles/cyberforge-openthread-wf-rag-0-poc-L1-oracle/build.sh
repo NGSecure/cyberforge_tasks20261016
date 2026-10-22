@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/openthread:setup@sha256:b8383426877707e3b966577f277161019dc0b5616ab1567ba7308a2883dcc728   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_openthread_wf_rag_0_main:${VER}"
 TS_TAG="cyberforge_openthread_wf_rag_0_task_server:${VER}"
 

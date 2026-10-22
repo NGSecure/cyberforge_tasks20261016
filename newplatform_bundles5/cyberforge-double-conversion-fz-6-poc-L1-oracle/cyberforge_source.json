@@ -27,8 +27,8 @@
   },
   "secure_lines_checked": 1,
   "image_tags": {
-    "docker_image": "cyberforge_double_conversion_fz_6_main:v0.0.2",
-    "task_server_image": "cyberforge_double_conversion_fz_6_task_server:v0.0.2"
+    "docker_image": "cyberforge_double_conversion_fz_6_main:v0.0.3",
+    "task_server_image": "cyberforge_double_conversion_fz_6_task_server:v0.0.3"
   },
   "tier": "B",
   "pov_kind": "driver",
@@ -88,7 +88,8 @@
       ],
       "build": "$CXX $CXXFLAGS -std=c++11 -fsanitize=address -I/src/double-conversion dc_driver.cc /work/double-conversion/libdouble-conversion.a -o /cf_driver/dc_driver",
       "binary": "/cf_driver/dc_driver",
-      "project_build": true
+      "project_build": true,
+      "agent_copy": "environment/driver/, its comments without the project's name or the dataset task (noname.py)"
     }
   },
   "trigger_evidence": {

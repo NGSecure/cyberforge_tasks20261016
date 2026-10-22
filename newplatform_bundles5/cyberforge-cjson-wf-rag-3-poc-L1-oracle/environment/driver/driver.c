@@ -1,11 +1,11 @@
-/* Driver of the CyberForge task cjson WF_RAG_3 (category 5).
+/* Driver of this task (category 5).
  * Adapted from the dataset exploit's exploit_files/attack.c, which calls
- * cJSON_ParseWithLength("/tmp/cjson_attack_test", strlen(...)) and then checks whether
- * "/tmp/cjson_attack_test.cache" exists and holds "cjson_cached". Changes: the string passed to
- * cJSON_ParseWithLength (and its length, the PoC's size) is read from the PoC file instead of
+ * <project>_ParseWithLength("/tmp/<project>_attack_test", strlen(...)) and then checks whether
+ * "/tmp/<project>_attack_test.cache" exists and holds "<project>_cached". Changes: the string passed to
+ * <project>_ParseWithLength (and its length, the PoC's size) is read from the PoC file instead of
  * being hard-coded; the driver reports a "<string>.cache" file only if the call itself created
  * it (it did not exist before the call), and prints its first bytes. Built against each build's
- * cJSON.c the way attack.sh builds attack.c. */
+ * <project>.c the way attack.sh builds attack.c. */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

@@ -1,8 +1,8 @@
-# Driver of the CyberForge tasks mruby WF_LLM_2 and WF_LLM_3 (category 5), a Ruby script run by
-# the project's fuzz harness: /out/mruby_fuzzer <this file>.
-# Adapted from the dataset exploits' trigger.rb (WF_LLM_2: f = File.open("test_file.txt", "w");
-# f.close; f.truncate(0) - WF_LLM_3: the same with File.open("test.txt", "w") and f.truncate(10)),
-# which mruby_fuzzer runs and which print the exception raised. Changes: the open mode, the
+# Driver of these tasks (category 5), a Ruby script run by
+# the project's fuzz harness: /out/<project>_fuzzer <this file>.
+# Adapted from the dataset exploits' trigger.rb (task A: f = File.open("test_file.txt", "w");
+# f.close; f.truncate(0) - task B: the same with File.open("test.txt", "w") and f.truncate(10)),
+# which <project>_fuzzer runs and which print the exception raised. Changes: the open mode, the
 # method called on the closed file and its arguments are read from the PoC file
 # (/tmp/exploit_work/pov: line 1 the mode, line 2 the method, one argument per further line;
 # an argument that is a decimal integer is passed as an Integer, anything else as a String);

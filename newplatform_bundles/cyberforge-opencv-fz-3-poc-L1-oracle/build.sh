@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/opencv:setup@sha256:7b8cd30490eb73903683864beaaf8a0133a5c082af91fb1d7a5606f5be4df0a7   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_opencv_fz_3_main:${VER}"
 TS_TAG="cyberforge_opencv_fz_3_task_server:${VER}"
 

@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/njs:setup@sha256:4b7d04c10ea2d413a4d729a96cea9b542f78c9a4cbe2878eb3cfbde2ca307e0c   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_njs_fz_3_main:${VER}"
 TS_TAG="cyberforge_njs_fz_3_task_server:${VER}"
 

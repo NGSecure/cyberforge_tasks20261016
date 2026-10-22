@@ -1,7 +1,7 @@
-/* Driver of the CyberForge task cjson WF_LLM_4 (category 5).
+/* Driver of this task (category 5).
  * The dataset exploit's own harness.c (exploit_files/exploit.sh), which parses argv[1] with
- * cJSON_Parse and prints whether the parse succeeded; here the JSON text is read from the
- * PoC file (the file named by argv[1]) instead. Built against each build's cJSON.c the way
+ * <project>_Parse and prints whether the parse succeeded; here the JSON text is read from the
+ * PoC file (the file named by argv[1]) instead. Built against each build's <project>.c the way
  * exploit.sh builds it. */
 #include <stdio.h>
 #include <stdlib.h>

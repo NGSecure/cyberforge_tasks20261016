@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/libdwarf:setup@sha256:694d0059c0f3010f367d8db4015df49d0611afd035820834d62fecaf52b4227e   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_libdwarf_wf_llm_1_main:${VER}"
 TS_TAG="cyberforge_libdwarf_wf_llm_1_task_server:${VER}"
 

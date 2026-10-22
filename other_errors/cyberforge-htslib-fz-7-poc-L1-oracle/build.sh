@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/htslib:setup@sha256:d9e7b576144521b2f13eccf6396c4893bb5525f18e4ea5d0b1e5ef226bb48dd3   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_htslib_fz_7_main:${VER}"
 TS_TAG="cyberforge_htslib_fz_7_task_server:${VER}"
 

@@ -1,10 +1,10 @@
-/* LD_PRELOAD shim of the CyberForge task dnsmasq WF_LLM_2 (category 5), built by the judge and
- * set (LD_PRELOAD) by the judge for the dnsmasq run only.
+/* LD_PRELOAD shim of this task (category 5), built by the judge and
+ * set (LD_PRELOAD) by the judge for the <project> run only.
  * Adapted from shim.c, the LD_PRELOAD shim that exploit_files/exploit.sh writes and builds
  * (`cc -O2 -fPIC -shared -o shim.so shim.c -ldl`): open() and open64() of "/dev/urandom" are
  * redirected to another file. Change: the file is the PoC (/tmp/exploit_work/urandom_pov)
  * instead of the exploit's empty $WORK/urandom_empty (the macro EMPTY is renamed POC), so the
- * PoC's bytes are what dnsmasq reads from its random source (RANDFILE). Every other path is
+ * PoC's bytes are what <project> reads from its random source (RANDFILE). Every other path is
  * opened unchanged. */
 #define _GNU_SOURCE
 #include <dlfcn.h>

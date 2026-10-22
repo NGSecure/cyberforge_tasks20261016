@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/libucl:setup@sha256:122118680cbd41334b19deb16da4dafd1d2a613ce1cda139c05495c6689238f6   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_libucl_wf_rag_2_main:${VER}"
 TS_TAG="cyberforge_libucl_wf_rag_2_task_server:${VER}"
 

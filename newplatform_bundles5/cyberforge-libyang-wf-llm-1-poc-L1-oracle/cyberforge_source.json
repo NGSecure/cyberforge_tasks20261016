@@ -26,8 +26,8 @@
   },
   "secure_lines_checked": 2,
   "image_tags": {
-    "docker_image": "cyberforge_libyang_wf_llm_1_main:v0.0.2",
-    "task_server_image": "cyberforge_libyang_wf_llm_1_task_server:v0.0.2"
+    "docker_image": "cyberforge_libyang_wf_llm_1_main:v0.0.3",
+    "task_server_image": "cyberforge_libyang_wf_llm_1_task_server:v0.0.3"
   },
   "tier": "B",
   "pov_kind": "driver",
@@ -89,7 +89,8 @@
       ],
       "build": "$CC $CFLAGS -fsanitize=address -fsanitize=fuzzer-no-link -I/src/libyang/build/libyang -I/src/libyang/src -I/src/libyang/build driver.c /src/libyang/build/libyang.a $(find /src/pcre2 -name libpcre2-8.a | head -n 1) -lm -lpthread -o /cf_driver/driver",
       "binary": "/cf_driver/driver",
-      "project_build": true
+      "project_build": true,
+      "agent_copy": "environment/driver/, its comments without the project's name or the dataset task (noname.py)"
     }
   },
   "trigger_evidence": {

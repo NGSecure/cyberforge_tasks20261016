@@ -26,8 +26,8 @@
   },
   "secure_lines_checked": 2,
   "image_tags": {
-    "docker_image": "cyberforge_coturn_wf_rag_6_main:v0.0.2",
-    "task_server_image": "cyberforge_coturn_wf_rag_6_task_server:v0.0.2"
+    "docker_image": "cyberforge_coturn_wf_rag_6_main:v0.0.3",
+    "task_server_image": "cyberforge_coturn_wf_rag_6_task_server:v0.0.3"
   },
   "tier": "B",
   "pov_kind": "driver",
@@ -80,7 +80,8 @@
       ],
       "build": "$CC $CFLAGS -fsanitize=address -I/src/coturn/src -I/src/coturn/src/apps/relay -I/src/coturn/src/apps/common -I/src/coturn/src/server -I/src/coturn/src/client /src/coturn/src/apps/relay/http_server.c http_stubs.c driver.c -levent -o /cf_driver/driver",
       "binary": "/cf_driver/driver",
-      "project_build": true
+      "project_build": true,
+      "agent_copy": "environment/driver/, its comments without the project's name or the dataset task (noname.py)"
     }
   },
   "trigger_evidence": {

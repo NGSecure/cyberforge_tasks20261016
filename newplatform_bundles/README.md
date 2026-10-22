@@ -14,7 +14,7 @@
 | `other_errors/` | 28 | 第六类：因原始数据的问题构建失败，或转化不成有效任务（没有 PoV 能通过判定），暂时无法修复，**不要构建上传** |
 | `PotentialFalsePositive/` | 87 | 第七类：空 PoC 也能通过判定（`PASS-DEGENERATE`，原在第三类、第五类），潜在误报，不可用于 PoC 迭代 |
 
-各目录的 bundle 结构和用法完全相同。按原来的判定转换的 bundle，PoV 有两种形态：harness 型（喂给 OSS-Fuzz harness 的一个输入文件，810 个）和 CLI / 程序型（交给项目自己的程序：CLI 的输入文件、标准输入或命令行参数，或者是一个链接项目代码的 C/C++ 程序，93 个）；第五类的 131 个（其中 23 个移到了第六类）的判定规则写在各自的 `tests/oracle.json`，PoV 的形式更多（见 `../newplatform_bundles5/README.md`）。所有 bundle 都按当前模板生成（镜像标签 `v0.0.2`，判定服务做了隔离，原因见 `CONVERSION_REPORT.md` 4.7），已推送过旧版本的请用新版本替换。
+各目录的 bundle 结构和用法完全相同。按原来的判定转换的 bundle，PoV 有两种形态：harness 型（喂给 OSS-Fuzz harness 的一个输入文件，810 个）和 CLI / 程序型（交给项目自己的程序：CLI 的输入文件、标准输入或命令行参数，或者是一个链接项目代码的 C/C++ 程序，93 个）；第五类的 131 个（其中 23 个移到了第六类）的判定规则写在各自的 `tests/oracle.json`，PoV 的形式更多（见 `../newplatform_bundles5/README.md`）。所有 bundle 都按当前模板生成（镜像标签 `v0.0.3`：v0.0.2 起判定服务做了隔离，原因见 `CONVERSION_REPORT.md` 4.7；v0.0.3 起 agent 看到的内容里不再有转换时加进去的项目名，见根目录 README 第 5 节），已推送过旧版本的请用新版本替换；已推送 v0.0.2 镜像的，不重建也能用 `conversion/salvage_noname.py` 补救大部分。
 
 本目录还有（各目录共用）：
 

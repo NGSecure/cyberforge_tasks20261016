@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/coturn:setup@sha256:1d9e1d69fb9ae09e1444e074c0e816148a43a17dcd5278b76ad0aa9511dcc0cf   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_coturn_fz_3_main:${VER}"
 TS_TAG="cyberforge_coturn_fz_3_task_server:${VER}"
 

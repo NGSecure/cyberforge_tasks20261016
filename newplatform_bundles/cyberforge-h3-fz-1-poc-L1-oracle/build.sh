@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/h3:setup@sha256:0e00ee6039a428a03437f90a40e3a6ae448c02a4214cd911cb6592bbfff022de   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_h3_fz_1_main:${VER}"
 TS_TAG="cyberforge_h3_fz_1_task_server:${VER}"
 

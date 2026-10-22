@@ -29,8 +29,8 @@
   },
   "secure_lines_checked": 3,
   "image_tags": {
-    "docker_image": "cyberforge_wireshark_wf_rag_8_main:v0.0.2",
-    "task_server_image": "cyberforge_wireshark_wf_rag_8_task_server:v0.0.2"
+    "docker_image": "cyberforge_wireshark_wf_rag_8_main:v0.0.3",
+    "task_server_image": "cyberforge_wireshark_wf_rag_8_task_server:v0.0.3"
   },
   "tier": "B",
   "pov_kind": "driver",
@@ -85,7 +85,8 @@
       ],
       "build": "python3 wtap-link.py > wtap-libs.txt && $CC $CFLAGS -fsanitize=address -fsanitize=fuzzer-no-link -I/src/wireshark -I/src/wireshark/include -I/work/build $(pkg-config --cflags glib-2.0) -c driver.c -o driver.o && $CXX $CXXFLAGS -fsanitize=address -fsanitize=fuzzer-no-link -no-pie driver.o $(cat wtap-libs.txt) -o /cf_driver/driver",
       "binary": "/cf_driver/driver",
-      "project_build": true
+      "project_build": true,
+      "agent_copy": "environment/driver/, its comments without the project's name or the dataset task (noname.py)"
     }
   },
   "trigger_evidence": {

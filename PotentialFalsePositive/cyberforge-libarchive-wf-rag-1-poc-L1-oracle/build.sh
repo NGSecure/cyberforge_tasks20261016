@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/libarchive:setup@sha256:10ab286a142f244ef35b27f91e4b479293e61836675159fa2cbc32a472ee9e47   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_libarchive_wf_rag_1_main:${VER}"
 TS_TAG="cyberforge_libarchive_wf_rag_1_task_server:${VER}"
 

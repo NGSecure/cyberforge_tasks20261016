@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/exiv2:setup@sha256:b4a8459e18275954882fc08047b4c5fd1de689c935fd9e7adec2ad5bc4f1c565   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_exiv2_fz_2_main:${VER}"
 TS_TAG="cyberforge_exiv2_fz_2_task_server:${VER}"
 

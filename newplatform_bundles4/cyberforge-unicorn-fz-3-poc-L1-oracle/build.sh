@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/unicorn:setup@sha256:5aca429a2298ea13a044033174741a7c506aca9680656ea548afbaf568203725   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_unicorn_fz_3_main:${VER}"
 TS_TAG="cyberforge_unicorn_fz_3_task_server:${VER}"
 

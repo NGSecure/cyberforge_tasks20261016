@@ -1,7 +1,7 @@
-// Category-5 driver shared by double-conversion FZ_13, FZ_22, FZ_3 and FZ_6.
+// Category-5 driver shared by these tasks.
 //
 // Adapted from two dataset files:
-//  - projects/double-conversion/setup/string_to_double_fuzzer.cc (the OSS-Fuzz harness): a
+//  - string_to_double_fuzzer.cc (the OSS-Fuzz harness): a
 //    "strtod" line goes to StringToDoubleConverter::StringToDouble with exactly the harness's
 //    flags and values;
 //  - test/cctest/test-dtoa.cc (DoubleToAscii helper of the unit tests the exploits run): a "dtoa"

@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/jsonnet:setup@sha256:09bcaea00ef6f0c61ee7db414f952a1d99ace7d2fb40afed1f269c90fe119d4e   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_jsonnet_wf_rag_0_main:${VER}"
 TS_TAG="cyberforge_jsonnet_wf_rag_0_task_server:${VER}"
 

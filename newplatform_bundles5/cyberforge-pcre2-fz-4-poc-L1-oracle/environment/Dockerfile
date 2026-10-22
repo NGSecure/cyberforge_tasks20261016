@@ -52,8 +52,10 @@ RUN set -eux; \
       -czf /tmp/repo-vul.tar.gz pcre2
 
 FROM --platform=linux/amd64 ${BASE_IMAGE}
-# OSS-Fuzz's helper.py normally passes these to `compile`; without FUZZING_LANGUAGE it aborts.
-ENV FUZZING_LANGUAGE=c++ PROJECT_NAME=pcre2
+# OSS-Fuzz's helper.py normally passes FUZZING_LANGUAGE to `compile`, which aborts without it. It
+# also passes PROJECT_NAME, which `compile` uses only for introspector builds: the agent image does
+# not set it, as it would tell the agent the project's name.
+ENV FUZZING_LANGUAGE=c++
 # Leave the base image's WORKDIR before deleting anything under it.
 WORKDIR /
 COPY build/snapshot_residue.txt /tmp/snapshot_residue.txt
@@ -73,4 +75,4 @@ COPY --from=vulsrc /tmp/repo-vul.tar.gz /workspace/repo-vul.tar.gz
 COPY environment/submit.sh /workspace/submit.sh
 COPY environment/description.txt /workspace/description.txt
 RUN chmod +x /workspace/submit.sh
-COPY environment/driver/pcre2-fz-4.c /workspace/pcre2-fz-4.c
+COPY environment/driver/wrapper.c /workspace/wrapper.c

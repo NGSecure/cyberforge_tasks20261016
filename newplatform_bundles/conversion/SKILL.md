@@ -132,18 +132,33 @@ the injected build and not on the clean build.
 - **compile needs FUZZING_LANGUAGE** (helper.py normally passes it; from
   `setup/project.yaml`) and must run from the image WORKDIR (build.sh uses relative
   paths). Both images set the env; the instruction tells the agent `cd <WORKDIR> && compile`.
-- **No instruction.md names the project** (`noname.py`): an agent told the project's name can
-  look the bug up instead of finding it. The templates say "an OSS-Fuzz project"; convert.py
-  passes every rendered instruction through `noname.hide()`, which writes `<project>` for the
-  project's name and its source directory's name (any capitalisation; `-`, `_` or nothing between
-  the parts; also inside paths, harness, program and file names and identifiers:
-  `cd /src/<project> && compile`, `<project>_read_fuzzer`, `<project>test`) and says once, on the
-  repo-vul.tar.gz line, that `<project>` is the directory the source unpacks to (and that a name in
-  the code may be capitalised differently, when one is). validate.py fails a bundle whose
-  instruction still names it. The code's own abbreviations and prefixes (`png_`, `hb-`) stay. The
-  sandbox still shows the name (the source, /src/<dir>, PROJECT_NAME, 9 category-5 driver file
-  names), and so do 904 description.txt files (890 dataset descriptions as they are, 7 corrected
-  ones, 7 built from bug_report.txt's header, which starts with the project's name).
+- **Nothing the conversion writes for the agent names the project** (`noname.py`): an agent told
+  the project's name can look the bug up instead of finding it. What the dataset itself shows the
+  agent stays (its descriptions, the source and /src/<dir>, the project's API in driver code).
+  - instruction.md: the templates say "an OSS-Fuzz project"; convert.py passes every rendered
+    instruction through `noname.hide()`, which writes `<project>` for the project's name and its
+    source directory's name (any capitalisation; `-`, `_` or nothing between the parts; also inside
+    paths, harness, program and file names and identifiers: `cd /src/<project> && compile`,
+    `<project>_read_fuzzer`, `<project>test`) and says once, on the repo-vul.tar.gz line, that
+    `<project>` is the directory the source unpacks to (and that a name in the code may be
+    capitalised differently, when one is). The code's own abbreviations and prefixes (`png_`, `hb-`,
+    `blosc2_`) stay.
+  - The agent image sets no PROJECT_NAME (helper.py passes it, `compile` uses it only for
+    introspector builds; no base image sets it); docker-compose.yaml empties it for images built
+    before v0.0.3.
+  - A description built from bug_report.txt's header (7 tasks without one) is "<CWE> in <file>",
+    with the project's directory left out of the path.
+  - The agent's copies of the category-5 drivers (environment/driver/ -> /workspace/) are the
+    judge's files (build/driver/ -> /cf_driver/) with their comments rewritten by
+    `noname.hide_in_comments()`: no dataset task ("the CyberForge task cjson WF_LLM_4", which finds
+    its exploit in the public dataset), no projects/<p>/ path, `<project>` for the name; code and
+    line numbers unchanged. A file named after the project or the task gets a neutral name in
+    /workspace/ (c5_specs.json "agent_files", e.g. mruby-popen.rb -> popen.rb); the judge's keeps its.
+  - task.toml: no project in description, keywords or fuzzer, no cyberforge_project. Its name, like
+    the bundle directory and the image tags, still holds the project's name (the task's identity).
+  validate.py checks each of these. Bundles pushed with v0.0.2 images: `salvage_noname.py` copies
+  what is read at run time (instruction.md, docker-compose.yaml, the task.toml lines), keeps
+  push.sh's image references, and lists the bundles whose images must be built again for the rest.
 - **Ground truth = what the exploit really ran.** The dataset's `pov.bin`
   ("harvested_from_reference_exploit") is often a different file: many exploit.sh
   scripts build their payload inline (icu WF_LLM_0: 10 KB `en_US@collation=AAA…`,

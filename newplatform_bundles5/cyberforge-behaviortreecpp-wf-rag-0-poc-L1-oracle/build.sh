@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/behaviortreecpp:setup@sha256:ec007be629beece9cd1113a372262f167547b648ecc65ee4c4ae67aaa5b9c86b   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_behaviortreecpp_wf_rag_0_main:${VER}"
 TS_TAG="cyberforge_behaviortreecpp_wf_rag_0_task_server:${VER}"
 

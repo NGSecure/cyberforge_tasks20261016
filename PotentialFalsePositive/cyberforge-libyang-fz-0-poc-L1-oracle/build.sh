@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/libyang:setup@sha256:e298b875e4ae40db67d4684427dccc90385f0705adaf3325466a877f1d4ab619   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_libyang_fz_0_main:${VER}"
 TS_TAG="cyberforge_libyang_fz_0_task_server:${VER}"
 

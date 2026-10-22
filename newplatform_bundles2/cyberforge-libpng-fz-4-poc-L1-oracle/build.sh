@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/libpng:setup@sha256:6a6bf2f61a63ab558357d5be5561f5abee24f07f95207f681141d935c63299fc   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_libpng_fz_4_main:${VER}"
 TS_TAG="cyberforge_libpng_fz_4_task_server:${VER}"
 

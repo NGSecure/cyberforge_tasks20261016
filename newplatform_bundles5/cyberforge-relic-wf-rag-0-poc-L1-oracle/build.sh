@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/relic:setup@sha256:70fd64d6010be212b753c3488660ebe346b9414521db0d7b7b24d6c9f3ff1f71   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_relic_wf_rag_0_main:${VER}"
 TS_TAG="cyberforge_relic_wf_rag_0_task_server:${VER}"
 

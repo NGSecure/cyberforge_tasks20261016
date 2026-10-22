@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/lcms:setup@sha256:40628d64de8891ec9d4656221c40f19857e957dd9beb28f8e195b6b7f16758ac   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_lcms_wf_rag_0_main:${VER}"
 TS_TAG="cyberforge_lcms_wf_rag_0_task_server:${VER}"
 

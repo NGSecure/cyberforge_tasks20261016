@@ -7,8 +7,8 @@
   "base_image_snapshot": null,
   "secure_lines_checked": 0,
   "image_tags": {
-    "docker_image": "cyberforge_guetzli_fz_17_main:v0.0.2",
-    "task_server_image": "cyberforge_guetzli_fz_17_task_server:v0.0.2"
+    "docker_image": "cyberforge_guetzli_fz_17_main:v0.0.3",
+    "task_server_image": "cyberforge_guetzli_fz_17_task_server:v0.0.3"
   },
   "tier": "A",
   "pov_kind": "harness",

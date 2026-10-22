@@ -1,14 +1,14 @@
-/* Driver of the CyberForge task cjson WF_LLM_9 (category 5).
+/* Driver of this task (category 5).
  *
  * Adapted from the dataset exploit's own harness.c (written by exploit_files/exploit.sh),
- * which includes /src/cjson/cJSON.c, fills a printbuffer (buffer = malloc(100),
+ * which includes /src/<project>/<project>.c, fills a printbuffer (buffer = malloc(100),
  * length 100, offset SIZE_MAX), calls the static function ensure(&p, 1) and writes one
  * byte through the pointer it returns. Changes:
  *   - length, offset and needed are read from the PoC file (argv[1]) instead of being
  *     hard-coded: text "length offset needed" (decimal); length is 1..1048576 and needed
  *     at most 1048576 (larger values are refused), so the fixed build never grows the
  *     buffer to gigabytes;
- *   - the printbuffer is zero-initialised and gets cJSON's default allocator hooks (the
+ *   - the printbuffer is zero-initialised and gets <project>'s default allocator hooks (the
  *     exploit left those fields uninitialised; they are used when ensure() grows the buffer);
  *   - the returned pointer is not printed (addresses differ between runs).
  * Built as exploit.sh builds it: $CC $CFLAGS -fsanitize=address harness.c.

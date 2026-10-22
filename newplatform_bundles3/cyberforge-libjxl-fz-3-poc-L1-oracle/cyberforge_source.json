@@ -28,8 +28,8 @@
   },
   "secure_lines_checked": 1,
   "image_tags": {
-    "docker_image": "cyberforge_libjxl_fz_3_main:v0.0.2",
-    "task_server_image": "cyberforge_libjxl_fz_3_task_server:v0.0.2"
+    "docker_image": "cyberforge_libjxl_fz_3_main:v0.0.3",
+    "task_server_image": "cyberforge_libjxl_fz_3_task_server:v0.0.3"
   },
   "tier": "C",
   "pov_kind": "harness",

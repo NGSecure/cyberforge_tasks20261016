@@ -1,4 +1,4 @@
-/* Driver of the CyberForge task quickjs WF_RAG_0 (category 5).
+/* Driver of this task (category 5).
  * Adapted from fuzz/fuzz_eval.c and fuzz/fuzz_common.c, the /out/fuzz_eval harness that
  * exploit_files/exploit.sh runs on its payload.js (JS_NewRuntime, JS_NewContext,
  * test_one_input_init, JS_Eval of the input as a global script, js_std_loop, js_std_free_handlers,
@@ -8,7 +8,7 @@
  * loader is set (no import of files), and the __loadScript helper that js_std_add_helpers adds is
  * deleted again. The memory limit (64 MiB), stack limit (64 KiB), interrupt handler, console.log
  * and print stay as in the harness. An exception thrown by the script is printed (stderr) as
- * js_std_dump_error does. Built against each build's libquickjs.fuzz.a, the library fuzz_eval
+ * js_std_dump_error does. Built against each build's lib<project>.fuzz.a, the library fuzz_eval
  * is linked with. */
 #include <stdint.h>
 #include <stdio.h>

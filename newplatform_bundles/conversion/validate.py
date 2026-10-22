@@ -6,7 +6,9 @@
 Checks per bundle: required files, no unfilled @@placeholders@@, task.toml /
 judge.json / cyberforge_source.json parse, `bash -n` on every script, in-memory
 compile of the Python files (no .pyc written), one auth token used consistently, no
-instruction.md names the project (noname.py) or the secure base commit,
+instruction.md names the project (noname.py) or the secure base commit, nor does what else the
+conversion writes for the agent (task.toml outside its name, the agent image's PROJECT_NAME, a
+description it wrote, the comments and names of the agent's copies of the drivers),
 the ground truth matches its recorded sha256 (and solve.sh decodes to it; a bundle made without
 one, cyberforge_source.json ground_truth_missing, has none anywhere and the selfcheck that does
 not need one), the
@@ -82,10 +84,18 @@ def check_c5(bd, judge, src):
     drv = (src.get("recipe") or {}).get("driver")
     if pov == "driver" and not drv:
         errs.append("a driver kind without its driver")
+    project = src["source_task"].split("/projects/")[1].split("/")[0]
     for name in (drv or {}).get("files", []):
-        a, b = os.path.join(bd, "build", "driver", name), os.path.join(bd, "environment", "driver", name)
-        if not (os.path.isfile(a) and os.path.isfile(b) and open(a, "rb").read() == open(b, "rb").read()):
-            errs.append("driver file %s missing or different in build/ and environment/" % name)
+        agent = ((drv or {}).get("agent_files") or {}).get(name, name)
+        a, b = os.path.join(bd, "build", "driver", name), os.path.join(bd, "environment", "driver", agent)
+        if not (os.path.isfile(a) and os.path.isfile(b)):
+            errs.append("driver file %s missing in build/ or (as %s) in environment/" % (name, agent))
+            continue
+        # the agent's copy: the judge's file with its comments rewritten (noname.py), nothing else
+        if open(b, "rb").read() != noname.hide_in_comments(open(a, "rb").read(), name, project, judge["target_dir"]):
+            errs.append("environment/driver/%s is not build/driver/%s with its comments rewritten" % (agent, name))
+        if noname.named("`%s`" % agent, project, judge["target_dir"]):
+            errs.append("the agent's copy of driver file %s is named after the project" % name)
     for dst, n in (judge.get("aux_files") or {}).items():
         if not os.path.isfile(os.path.join(bd, "build", "aux", n)):
             errs.append("aux file missing: build/aux/" + n)
@@ -138,7 +148,8 @@ def check(bd, tier):
     e = "category5" in src
     b = src.get("pov_kind") in B_KINDS or e
     nogt = src.get("ground_truth") is None and (bool(src.get("ground_truth_missing")) or e)
-    env_allowed = ENV_ALLOWED | {"driver/" + n for n in ((src.get("recipe") or {}).get("driver") or {}).get("files", [])}
+    drv = (src.get("recipe") or {}).get("driver") or {}
+    env_allowed = ENV_ALLOWED | {"driver/" + (drv.get("agent_files") or {}).get(n, n) for n in drv.get("files", [])}
     for f in [x for x in REQUIRED if not (nogt and x == "build/ground_truth_poc")] + ["environment/" + f for f in sorted(env_allowed)] + (["build/aux/README.txt"] if b else []) + (["tests/oracle.json", "tests/cf_oracle.py"] if e else []):
         if not os.path.isfile(os.path.join(bd, f)):
             errs.append("missing " + f)
@@ -267,9 +278,30 @@ def check(bd, tier):
     if not srcdir:
         errs.append("environment/Dockerfile does not pack repo-vul.tar.gz from one source directory")
     else:
-        left = noname.named(instruction, src["source_task"].split("/projects/")[1].split("/")[0], srcdir.group(1))
+        project, target_dir = src["source_task"].split("/projects/")[1].split("/")[0], srcdir.group(1)
+        left = noname.named(instruction, project, target_dir)
         if left:
             errs.append("instruction.md names the project: %s" % ", ".join(sorted(set(left))))
+        # the rest of what the conversion writes for the agent (or the platform) names it nowhere
+        # either: task.toml (its name is the bundle's), the agent image's environment, a description
+        # the conversion wrote, the agent's copies of the drivers
+        toml_text = "\n".join(l for l in open(os.path.join(bd, "task.toml"), encoding="utf-8").read().split("\n")
+                              if not l.startswith("name = "))
+        if noname.named(toml_text, project, target_dir):  # (as prose: `difficulty` is not `icu`)
+            errs.append("task.toml names the project outside its name")
+        if re.search(r"^ENV .*\bPROJECT_NAME=", open(os.path.join(bd, "environment/Dockerfile")).read(), re.M):
+            errs.append("the agent image sets PROJECT_NAME")
+        if "      - PROJECT_NAME=\n" not in open(os.path.join(bd, "environment/docker-compose.yaml")).read():
+            errs.append("docker-compose.yaml does not empty PROJECT_NAME for the agent")
+        if (src.get("description") or {}).get("from", "").startswith("bug_report.txt") and \
+                noname.hide_code(desc, project, target_dir) != desc:
+            errs.append("description.txt (written by the conversion) names the project")
+        for n in sorted(os.listdir(os.path.join(bd, "environment", "driver"))) if os.path.isdir(
+                os.path.join(bd, "environment", "driver")) else []:
+            t = open(os.path.join(bd, "environment", "driver", n), encoding="utf-8").read()
+            if any(noname.hide_code(t[a:b], project, target_dir) != t[a:b] or re.search(
+                    r"cyberforge|%s" % noname.TASK_ID, t[a:b], re.I) for a, b in noname.comment_spans(t, n)):
+                errs.append("a comment of environment/driver/%s names the project or the dataset task" % n)
     return errs
 
 

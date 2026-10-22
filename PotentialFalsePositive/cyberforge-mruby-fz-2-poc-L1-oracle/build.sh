@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/mruby:setup@sha256:65fa242b84cc6958beb01f26af9ad5e7774ed306c345e6cc976593f9c840fdb4   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_mruby_fz_2_main:${VER}"
 TS_TAG="cyberforge_mruby_fz_2_task_server:${VER}"
 

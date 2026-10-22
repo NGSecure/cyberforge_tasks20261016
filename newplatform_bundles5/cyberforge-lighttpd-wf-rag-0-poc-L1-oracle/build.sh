@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/lighttpd:setup@sha256:7988902205ef75f8f000913f84cbaf62e4d3479e9838145883b5318375537a72   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_lighttpd_wf_rag_0_main:${VER}"
 TS_TAG="cyberforge_lighttpd_wf_rag_0_task_server:${VER}"
 

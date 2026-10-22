@@ -29,8 +29,8 @@
   },
   "secure_lines_checked": 1,
   "image_tags": {
-    "docker_image": "cyberforge_libvips_wf_rag_0_main:v0.0.2",
-    "task_server_image": "cyberforge_libvips_wf_rag_0_task_server:v0.0.2"
+    "docker_image": "cyberforge_libvips_wf_rag_0_main:v0.0.3",
+    "task_server_image": "cyberforge_libvips_wf_rag_0_task_server:v0.0.3"
   },
   "tier": "B",
   "pov_kind": "driver",
@@ -90,7 +90,8 @@
       ],
       "build": "PC=\"env PKG_CONFIG_PATH=/work/lib/pkgconfig pkg-config\"; $CC $CFLAGS -fsanitize=address $($PC --cflags vips) -c exploit.c -o exploit.o && { $CC $CFLAGS -fsanitize=address -o /cf_driver/driver exploit.o -Wl,--start-group $($PC --static --libs vips) -Wl,--end-group -L/work/lib || $CXX $CXXFLAGS -fsanitize=address -o /cf_driver/driver exploit.o -Wl,--start-group $($PC --static --libs vips) -Wl,--end-group -L/work/lib -lm -lpthread; }",
       "binary": "/cf_driver/driver",
-      "project_build": true
+      "project_build": true,
+      "agent_copy": "environment/driver/, its comments without the project's name or the dataset task (noname.py)"
     }
   },
   "trigger_evidence": {

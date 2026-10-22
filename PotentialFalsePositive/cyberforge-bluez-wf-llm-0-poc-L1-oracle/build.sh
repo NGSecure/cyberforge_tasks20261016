@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/bluez:setup@sha256:e9edcd3afe8cce4eb4d964052ac74de880ae7838d11464771279cedfac371491   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_bluez_wf_llm_0_main:${VER}"
 TS_TAG="cyberforge_bluez_wf_llm_0_task_server:${VER}"
 

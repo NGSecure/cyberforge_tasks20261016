@@ -1,4 +1,4 @@
-/* Driver of the CyberForge task kamailio FZ_0 (category 5).
+/* Driver of this task (category 5).
  *
  * Adapted from the dataset exploit's own program, exploit_files/driver.c, which calls
  * unescape_crlf() on a 4-byte heap buffer holding "test" with a 16-byte output buffer.
@@ -7,7 +7,7 @@
  *     the PoC's size (as the exploit's malloc(4)); an empty PoC gives len 0;
  *   - the output buffer is max(16, size) bytes, so the fixed build cannot overflow it.
  * The exploit compiled a copy of unescape_crlf cut out of src/core/strutils.c with sed; the
- * judge links this driver with the build's own /src/kamailio/src/libkamilio.a instead (the
+ * judge links this driver with the build's own /src/<project>/src/libkamilio.a instead (the
  * archive build.sh makes for the fuzzers) and falls back to the exploit's sed extraction
  * from the build's strutils.c only if that link fails.
  */

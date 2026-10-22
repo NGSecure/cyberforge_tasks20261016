@@ -26,8 +26,8 @@
   },
   "secure_lines_checked": 1,
   "image_tags": {
-    "docker_image": "cyberforge_h3_fz_53_main:v0.0.2",
-    "task_server_image": "cyberforge_h3_fz_53_task_server:v0.0.2"
+    "docker_image": "cyberforge_h3_fz_53_main:v0.0.3",
+    "task_server_image": "cyberforge_h3_fz_53_task_server:v0.0.3"
   },
   "tier": "B",
   "pov_kind": "harness",

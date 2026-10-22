@@ -1,1 +1,1 @@
-file: CWE-476 (Invalid pointer) in src/apprentice.c.
+CWE-476 (Invalid pointer) in src/apprentice.c.

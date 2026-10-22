@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/protobuf-c:setup@sha256:775187453a62eeb00c6407c611de3c2835d76e3d909641eee7d8930da446119f   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_protobuf_c_fz_16_main:${VER}"
 TS_TAG="cyberforge_protobuf_c_fz_16_task_server:${VER}"
 

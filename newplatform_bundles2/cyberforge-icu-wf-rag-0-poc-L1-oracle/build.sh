@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/icu:setup@sha256:14dce99d6ef3d7abaa18b2789f4d0123300dd40da7c4b7e9adfa4ab15e48f74a   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_icu_wf_rag_0_main:${VER}"
 TS_TAG="cyberforge_icu_wf_rag_0_task_server:${VER}"
 

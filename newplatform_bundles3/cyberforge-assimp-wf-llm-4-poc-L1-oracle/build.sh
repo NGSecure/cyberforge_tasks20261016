@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/assimp:setup@sha256:5310d462d05d29d1b5922b217529cdaf38935667c93e9c0bfc57fc15cec51116   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_assimp_wf_llm_4_main:${VER}"
 TS_TAG="cyberforge_assimp_wf_llm_4_task_server:${VER}"
 

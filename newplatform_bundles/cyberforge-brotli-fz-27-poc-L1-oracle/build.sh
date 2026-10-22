@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/brotli:setup@sha256:301e19c34280da394ff4c7793d1415c0809304ddf9870650f3963c14f974c6ab   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_brotli_fz_27_main:${VER}"
 TS_TAG="cyberforge_brotli_fz_27_task_server:${VER}"
 

@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/jsoncpp:setup@sha256:20194b80cc87ac1c2d31bda4850814bcb734f1c5fd6be06d95fbfd014f2eb1c9   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_jsoncpp_wf_llm_0_main:${VER}"
 TS_TAG="cyberforge_jsoncpp_wf_llm_0_task_server:${VER}"
 

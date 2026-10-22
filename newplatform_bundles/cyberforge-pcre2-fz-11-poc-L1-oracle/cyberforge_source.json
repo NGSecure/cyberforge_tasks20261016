@@ -26,8 +26,8 @@
   },
   "secure_lines_checked": 0,
   "image_tags": {
-    "docker_image": "cyberforge_pcre2_fz_11_main:v0.0.2",
-    "task_server_image": "cyberforge_pcre2_fz_11_task_server:v0.0.2"
+    "docker_image": "cyberforge_pcre2_fz_11_main:v0.0.3",
+    "task_server_image": "cyberforge_pcre2_fz_11_task_server:v0.0.3"
   },
   "tier": "A",
   "pov_kind": "harness",

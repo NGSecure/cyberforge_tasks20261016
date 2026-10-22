@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/fluent-bit:setup@sha256:733fe75cbf798ef8612a99827e2bba5455dbd2f31b8a1fdf88edf4467e068151   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_fluent_bit_fz_3_main:${VER}"
 TS_TAG="cyberforge_fluent_bit_fz_3_task_server:${VER}"
 

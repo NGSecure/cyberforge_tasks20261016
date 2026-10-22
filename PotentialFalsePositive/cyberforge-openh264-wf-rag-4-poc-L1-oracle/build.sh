@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/openh264:setup@sha256:188942ea05c858335907c28e47f28f2d947c6236763c27311455a938719fe1bb   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_openh264_wf_rag_4_main:${VER}"
 TS_TAG="cyberforge_openh264_wf_rag_4_task_server:${VER}"
 

@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/wireshark:setup@sha256:c1f4c3b10159e0fe51f75ab03f4c046cd7480c4308a526af65e9ce3605ba825b   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_wireshark_wf_rag_1_main:${VER}"
 TS_TAG="cyberforge_wireshark_wf_rag_1_task_server:${VER}"
 

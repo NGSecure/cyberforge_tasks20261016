@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/ghostscript:setup@sha256:5c84b5eb2fa831cdf20a3993b926a82bb9964fb219fb2249ccdd0e453fea7e49   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_ghostscript_wf_rag_0_main:${VER}"
 TS_TAG="cyberforge_ghostscript_wf_rag_0_task_server:${VER}"
 

@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/c-blosc2:setup@sha256:0fb950828c56d1c0c02a1f817b397672f3b083fa28f87c8293d9c29fc23e9197   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_c_blosc2_wf_llm_4_main:${VER}"
 TS_TAG="cyberforge_c_blosc2_wf_llm_4_task_server:${VER}"
 

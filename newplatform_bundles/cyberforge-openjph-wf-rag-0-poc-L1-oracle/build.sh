@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/openjph:setup@sha256:219eee3fc1b647c0c4e1e83d587ebc26203c5bf0ac1fc1d67f745a5c1430ca29   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_openjph_wf_rag_0_main:${VER}"
 TS_TAG="cyberforge_openjph_wf_rag_0_task_server:${VER}"
 

@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/libvips:setup@sha256:efc96402a426a67e542c9128e06295d9badaf9dc9963cd93c930c6b03823525f   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_libvips_wf_rag_0_main:${VER}"
 TS_TAG="cyberforge_libvips_wf_rag_0_task_server:${VER}"
 

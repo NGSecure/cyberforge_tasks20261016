@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/double-conversion:setup@sha256:ddd1196660a974dd378ada61b1dc26dc338172a560fd2b53d45ef76bb42cd6e8   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_double_conversion_fz_21_main:${VER}"
 TS_TAG="cyberforge_double_conversion_fz_21_task_server:${VER}"
 

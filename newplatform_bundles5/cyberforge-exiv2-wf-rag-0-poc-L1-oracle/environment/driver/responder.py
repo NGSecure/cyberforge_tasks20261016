@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Responder of the CyberForge task exiv2 WF_RAG_0 (category 5).
+"""Responder of this task (category 5).
 
 Adapted from the dataset exploit's own server (the python3 -c script in
 exploit_files/exploit.sh): it listens on 127.0.0.1:8080 and answers every connection with
@@ -7,9 +7,9 @@ the same bytes, then closes it. Changes:
   - the reply is the PoC file (argv[1]) instead of the hard-coded b'HTTP/1.1\\n\\n';
   - before replying it reads the client's request (up to the blank line that ends the
     headers, 64 KB or 2 seconds, whichever comes first), so the connection is not reset
-    while exiv2 is still sending; after replying it shuts down its sending side and drains
+    while <project> is still sending; after replying it shuts down its sending side and drains
     the socket briefly before closing.
-The judge starts it (as the same unprivileged user as exiv2) before the run step and kills
+The judge starts it (as the same unprivileged user as <project>) before the run step and kills
 it after.
 """
 import socket

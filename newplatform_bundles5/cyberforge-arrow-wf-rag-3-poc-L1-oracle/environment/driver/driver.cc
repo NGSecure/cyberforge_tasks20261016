@@ -1,16 +1,16 @@
-/* Driver of the CyberForge task arrow WF_RAG_3 (category 5).
+/* Driver of this task (category 5).
  *
  * Adapted from the dataset's exploit_files/wrapper.cc (which exploit.sh never ran): it
  * #includes Gandiva's cpp/src/gandiva/precompiled/time.cc and calls castTIMESTAMP_utf8() with
  * wrapper.cc's own stub of gdv_fn_time_with_zone(), which accepts only the zone "UTC".
- * Gandiva is not part of the OSS-Fuzz build (ARROW_GANDIVA is off), so this driver compiles
+ * Gandiva is not part of the OSS-Fuzz build (<project>_GANDIVA is off), so this driver compiles
  * time.cc itself, from each build's source tree. Changes against wrapper.cc:
  *  - the input is the PoC file (argv[1]) instead of the hard-coded
  *    "2000-09-23 9:45:30.920 UTC", and it is passed with its full length in a heap buffer of
- *    exactly that size, with no terminating NUL, the way Arrow hands string values to Gandiva
+ *    exactly that size, with no terminating NUL, the way <project> hands string values to Gandiva
  *    functions (wrapper.cc passed only the length up to the zone's first letter, on a
  *    NUL-terminated stack copy);
- *  - time.cc is included through the include path (-I/src/arrow/cpp/src) instead of by its
+ *  - time.cc is included through the include path (-I/src/<project>/cpp/src) instead of by its
  *    absolute path; the two Gandiva context functions time.cc calls get no-op stubs, and four
  *    functions of other gandiva/precompiled files, used only by other functions of time.cc,
  *    get stubs so that the program links (wrapper.cc did not link);

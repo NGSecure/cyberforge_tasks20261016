@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/libsndfile:setup@sha256:967b5b96a50fcdfc105a8f21141e40ccb3609bfd02dc9f315fa7f2d76a541017   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_libsndfile_fz_0_main:${VER}"
 TS_TAG="cyberforge_libsndfile_fz_0_task_server:${VER}"
 

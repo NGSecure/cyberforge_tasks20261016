@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/pcre2:setup@sha256:9fc0ab837c45706a3e579c572fd66d642dd63010240085db0a8d7871ff3eb4d8   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_pcre2_fz_5_main:${VER}"
 TS_TAG="cyberforge_pcre2_fz_5_task_server:${VER}"
 

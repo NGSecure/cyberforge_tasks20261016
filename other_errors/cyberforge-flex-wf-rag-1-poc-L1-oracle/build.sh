@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/flex:setup@sha256:9ee018f62467fd817a46c29f2d0aa55ccdb5eacd5dfd0133e49384b6413f76b1   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_flex_wf_rag_1_main:${VER}"
 TS_TAG="cyberforge_flex_wf_rag_1_task_server:${VER}"
 

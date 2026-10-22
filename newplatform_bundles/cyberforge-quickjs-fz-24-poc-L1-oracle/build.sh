@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/quickjs:setup@sha256:50716922f4e19865a3e6a87415d6f5e9a70d7c2d5b5de6b4ed025a4ed490522a   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_quickjs_fz_24_main:${VER}"
 TS_TAG="cyberforge_quickjs_fz_24_task_server:${VER}"
 

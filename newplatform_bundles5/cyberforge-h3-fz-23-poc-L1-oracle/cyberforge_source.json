@@ -26,8 +26,8 @@
   },
   "secure_lines_checked": 1,
   "image_tags": {
-    "docker_image": "cyberforge_h3_fz_23_main:v0.0.2",
-    "task_server_image": "cyberforge_h3_fz_23_task_server:v0.0.2"
+    "docker_image": "cyberforge_h3_fz_23_main:v0.0.3",
+    "task_server_image": "cyberforge_h3_fz_23_task_server:v0.0.3"
   },
   "tier": "B",
   "pov_kind": "driver",
@@ -87,7 +87,11 @@
       ],
       "build": "$CC $CFLAGS -fsanitize=address -I/src/h3/src/h3lib/include -I/src/h3/build/src/h3lib/include h3_polyfill.c /src/h3/build/lib/libh3.a -lm -o /cf_driver/h3_polyfill",
       "binary": "/cf_driver/h3_polyfill",
-      "project_build": true
+      "project_build": true,
+      "agent_copy": "environment/driver/, its comments without the project's name or the dataset task (noname.py)",
+      "agent_files": {
+        "h3_polyfill.c": "polyfill.c"
+      }
     }
   },
   "trigger_evidence": {

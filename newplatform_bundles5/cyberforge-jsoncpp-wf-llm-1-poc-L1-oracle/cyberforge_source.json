@@ -26,8 +26,8 @@
   },
   "secure_lines_checked": 3,
   "image_tags": {
-    "docker_image": "cyberforge_jsoncpp_wf_llm_1_main:v0.0.2",
-    "task_server_image": "cyberforge_jsoncpp_wf_llm_1_task_server:v0.0.2"
+    "docker_image": "cyberforge_jsoncpp_wf_llm_1_main:v0.0.3",
+    "task_server_image": "cyberforge_jsoncpp_wf_llm_1_task_server:v0.0.3"
   },
   "tier": "B",
   "pov_kind": "driver",
@@ -88,7 +88,8 @@
       ],
       "build": "$CXX $CXXFLAGS -fsanitize=address -fsanitize=fuzzer-no-link -std=c++17 -I/src/jsoncpp/include driver.cpp /src/jsoncpp/build/lib/libjsoncpp.a -o /cf_driver/driver",
       "binary": "/cf_driver/driver",
-      "project_build": true
+      "project_build": true,
+      "agent_copy": "environment/driver/, its comments without the project's name or the dataset task (noname.py)"
     }
   },
   "trigger_evidence": {

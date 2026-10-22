@@ -1,8 +1,8 @@
-/* Category-5 driver for zlib-ng FZ_1.
+/* Category-5 driver for this task.
  *
  * No dataset program fits as it is: the exploit runs the project's unit tests (the minigzip-*
  * ctests fail with "incorrect data check" on test/data/paper-100k.pdf, lcet10.txt, fireworks.jpg),
- * and the OSS-Fuzz harness fuzzer_minigzip reaches the changed code only when zlib-ng's run-time
+ * and the OSS-Fuzz harness fuzzer_minigzip reaches the changed code only when <project>'s run-time
  * CPU dispatch picks crc32_pclmulqdq (on a CPU with AVX-512 + VPCLMULQDQ it picks
  * crc32_vpclmulqdq_avx512, which does not use fold_12). This driver therefore computes the CRC-32 of
  * the PoV with crc32_pclmulqdq itself (arch/x86/crc32_pclmulqdq.c, the function the injected change

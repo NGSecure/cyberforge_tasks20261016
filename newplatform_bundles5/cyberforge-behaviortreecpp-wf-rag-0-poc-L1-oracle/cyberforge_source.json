@@ -27,8 +27,8 @@
   },
   "secure_lines_checked": 2,
   "image_tags": {
-    "docker_image": "cyberforge_behaviortreecpp_wf_rag_0_main:v0.0.2",
-    "task_server_image": "cyberforge_behaviortreecpp_wf_rag_0_task_server:v0.0.2"
+    "docker_image": "cyberforge_behaviortreecpp_wf_rag_0_main:v0.0.3",
+    "task_server_image": "cyberforge_behaviortreecpp_wf_rag_0_task_server:v0.0.3"
   },
   "tier": "B",
   "pov_kind": "driver",
@@ -90,7 +90,8 @@
       ],
       "build": "$CXX $CXXFLAGS -std=c++17 -stdlib=libstdc++ -fsanitize=address -I/src/behaviortreecpp/include bt_load_file.cpp /src/behaviortreecpp/build/libbehaviortree_cpp.a -ldl /src/behaviortreecpp/build/3rdparty/minitrace/libminitrace.a /src/behaviortreecpp/build/3rdparty/tinyxml2/libtinyxml2.a /usr/local/lib/libzmq.a /usr/local/lib/libsqlite3.a -lpthread -lrt -lm -o /cf_driver/bt_load_file",
       "binary": "/cf_driver/bt_load_file",
-      "project_build": true
+      "project_build": true,
+      "agent_copy": "environment/driver/, its comments without the project's name or the dataset task (noname.py)"
     }
   },
   "trigger_evidence": {

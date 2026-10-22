@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/arrow:setup@sha256:bd3d1a1e7023f8e8abcdceeb8b78ea268723b6baab4cc2e13441d11f9fce9e06   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_arrow_wf_rag_7_main:${VER}"
 TS_TAG="cyberforge_arrow_wf_rag_7_task_server:${VER}"
 

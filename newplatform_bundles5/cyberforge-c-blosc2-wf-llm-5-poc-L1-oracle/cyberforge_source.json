@@ -26,8 +26,8 @@
   },
   "secure_lines_checked": 5,
   "image_tags": {
-    "docker_image": "cyberforge_c_blosc2_wf_llm_5_main:v0.0.2",
-    "task_server_image": "cyberforge_c_blosc2_wf_llm_5_task_server:v0.0.2"
+    "docker_image": "cyberforge_c_blosc2_wf_llm_5_main:v0.0.3",
+    "task_server_image": "cyberforge_c_blosc2_wf_llm_5_task_server:v0.0.3"
   },
   "tier": "B",
   "pov_kind": "archive",
@@ -89,7 +89,8 @@
       ],
       "build": "$CC $CFLAGS -fsanitize=address -I/src/c-blosc2/include blosc2_rm.c /src/c-blosc2/blosc/libblosc2.a -lpthread -ldl -lrt -lm -o /cf_driver/blosc2_rm",
       "binary": "/cf_driver/blosc2_rm",
-      "project_build": true
+      "project_build": true,
+      "agent_copy": "environment/driver/, its comments without the project's name or the dataset task (noname.py)"
     }
   },
   "trigger_evidence": {

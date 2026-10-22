@@ -1,11 +1,11 @@
-/* Driver of the CyberForge tasks libsass FZ_7 and WF_LLM_9 (category 5).
+/* Driver of these tasks (category 5).
  *
  * The dataset exploits' own program, exploit_files/driver_srcmap.c (identical in both tasks),
  * unchanged: it compiles the SCSS file named by argv[1] as a data context with source maps
  * on (source_map_file "out.css.map", source_map_contents 1) and prints the length of the
  * source map; the judge passes the PoC file as argv[1], as exploit.sh passes crash_poc.bin.
  * Built as exploit.sh builds it: clang++ $CXXFLAGS -fsanitize=address against the build's
- * /src/libsass/lib/libsass.a.
+ * /src/<project>/lib/<project>.a.
  */
 #include "sass/context.h"
 #include <stdio.h>

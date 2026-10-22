@@ -30,8 +30,8 @@
   },
   "secure_lines_checked": 3,
   "image_tags": {
-    "docker_image": "cyberforge_arrow_wf_rag_7_main:v0.0.2",
-    "task_server_image": "cyberforge_arrow_wf_rag_7_task_server:v0.0.2"
+    "docker_image": "cyberforge_arrow_wf_rag_7_main:v0.0.3",
+    "task_server_image": "cyberforge_arrow_wf_rag_7_task_server:v0.0.3"
   },
   "tier": "B",
   "pov_kind": "driver",
@@ -83,7 +83,8 @@
       ],
       "build": "$CXX $CXXFLAGS -fsanitize=address -fsanitize=fuzzer-no-link -std=c++20 -I/src/arrow/cpp/src -I/src/build-dir/src driver.cc /src/build-dir/release/libarrow.a /src/build-dir/release/libarrow_bundled_dependencies.a -lpthread -ldl -lrt -o /cf_driver/driver",
       "binary": "/cf_driver/driver",
-      "project_build": true
+      "project_build": true,
+      "agent_copy": "environment/driver/, its comments without the project's name or the dataset task (noname.py)"
     }
   },
   "trigger_evidence": {

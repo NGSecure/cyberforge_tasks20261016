@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/hunspell:setup@sha256:5a09fe7e46d9d6d2970b480babe80fa50e1a41f27d3ff6660408375eb97ee17e   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_hunspell_wf_llm_5_main:${VER}"
 TS_TAG="cyberforge_hunspell_wf_llm_5_task_server:${VER}"
 

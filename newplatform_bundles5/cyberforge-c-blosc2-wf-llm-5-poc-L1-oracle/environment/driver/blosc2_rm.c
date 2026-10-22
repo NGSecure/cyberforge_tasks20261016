@@ -1,4 +1,4 @@
-/* Category-5 driver for c-blosc2 WF_LLM_5.
+/* Category-5 driver for this task.
  *
  * Adapted from tests/b2nd/test_b2nd_delete.c (the unit test the exploit runs) and the exploit's own
  * setup: exploit.sh creates the directory test_delete.b2frame/ holding a file "file" ("some data")

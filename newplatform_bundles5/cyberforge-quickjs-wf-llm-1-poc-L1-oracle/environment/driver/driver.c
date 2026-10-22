@@ -1,6 +1,6 @@
-/* Driver of the CyberForge task quickjs WF_LLM_1 (category 5).
+/* Driver of this task (category 5).
  *
- * No dataset program is behind it: exploit_files/attack.py only checks quickjs-libc.c for the
+ * No dataset program is behind it: exploit_files/attack.py only checks <project>-libc.c for the
  * changed condition and never runs JavaScript, and no harness or CLI of the build loads a
  * module correctly (fuzz/fuzz_common.c installs js_module_loader with the three-argument
  * JS_SetModuleLoaderFunc, so the loader's attributes argument is garbage there; the qjs

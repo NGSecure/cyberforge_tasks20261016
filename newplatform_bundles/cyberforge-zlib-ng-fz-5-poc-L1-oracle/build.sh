@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/zlib-ng:setup@sha256:b755706537144c19f1902a585dd3521546dbe27f6bc74f53286e826797754b5f   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_zlib_ng_fz_5_main:${VER}"
 TS_TAG="cyberforge_zlib_ng_fz_5_task_server:${VER}"
 

@@ -26,8 +26,8 @@
   },
   "secure_lines_checked": 0,
   "image_tags": {
-    "docker_image": "cyberforge_pcre2_fz_4_main:v0.0.2",
-    "task_server_image": "cyberforge_pcre2_fz_4_task_server:v0.0.2"
+    "docker_image": "cyberforge_pcre2_fz_4_main:v0.0.3",
+    "task_server_image": "cyberforge_pcre2_fz_4_task_server:v0.0.3"
   },
   "tier": "B",
   "pov_kind": "driver",
@@ -79,7 +79,11 @@
       ],
       "build": "$CC $CFLAGS -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -DHAVE_CONFIG_H -I/src/pcre2/src -c pcre2-fz-4.c -o /tmp/pcre2-fz-4.o && $CXX $CXXFLAGS -fsanitize=address -fsanitize=fuzzer /tmp/pcre2-fz-4.o /src/pcre2/.libs/libpcre2-8.a -o /cf_driver/pcre2_diff_fuzzer",
       "binary": "/cf_driver/pcre2_diff_fuzzer",
-      "project_build": true
+      "project_build": true,
+      "agent_copy": "environment/driver/, its comments without the project's name or the dataset task (noname.py)",
+      "agent_files": {
+        "pcre2-fz-4.c": "wrapper.c"
+      }
     }
   },
   "trigger_evidence": {

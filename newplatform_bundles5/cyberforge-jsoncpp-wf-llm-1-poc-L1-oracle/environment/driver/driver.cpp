@@ -1,4 +1,4 @@
-// Driver of the CyberForge task jsoncpp WF_LLM_1 (category 5).
+// Driver of this task (category 5).
 // Adapted from exploit.cpp, the program exploit_files/attack.py writes and compiles: it looks up
 // key "pwn" through operator[](std::string_view) on a const, default-constructed (null)
 // Json::Value, binds the result to a non-const Value& and assigns 12345, then prints VULN if the
@@ -8,7 +8,7 @@
 // following line) are read from the PoC; each key is looked up through a const reference with
 // operator[](std::string_view), the result is bound to a const reference only, and the driver
 // prints what the lookups returned and the whole document afterwards. Built with C++17
-// (JSONCPP_HAS_STRING_VIEW) against each build's lib/libjsoncpp.a.
+// (<project>_HAS_STRING_VIEW) against each build's lib/lib<project>.a.
 #include <json/json.h>
 
 #include <exception>

@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/jq:setup@sha256:5588c8fe5c4762c9a2268fc5a7c52180c988629de6527c37528a648a374478e7   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_jq_wf_llm_7_main:${VER}"
 TS_TAG="cyberforge_jq_wf_llm_7_task_server:${VER}"
 

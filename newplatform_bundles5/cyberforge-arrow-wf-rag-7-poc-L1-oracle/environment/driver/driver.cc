@@ -1,13 +1,13 @@
-// Driver of the CyberForge task arrow WF_RAG_7 (category 5).
+// Driver of this task (category 5).
 // There is no dataset program behind it: the exploit (exploit_files/attack.sh) only greps
-// cpp/src/arrow/array/builder_nested.cc, and no Arrow fuzzer or tool calls
+// cpp/src/<project>/array/builder_nested.cc, and no <project> fuzzer or tool calls
 // FixedSizeListBuilder::ValidateOverflow (outside the unit tests it has no caller), so the
 // driver calls that public method directly. The PoC holds three decimal integers:
 //   list_size  the fixed list size of the builder (int32)
 //   prefill    how many null values to append to the child builder first (int64 >= 0)
 //   n          the argument of ValidateOverflow(n) (int64)
 // The child builder is a NullBuilder, so any prefill costs no memory. Output: the Status
-// strings Arrow returns, nothing else.
+// strings <project> returns, nothing else.
 #include <arrow/api.h>
 
 #include <cstdint>

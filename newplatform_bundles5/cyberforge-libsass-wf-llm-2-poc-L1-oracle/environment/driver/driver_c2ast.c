@@ -1,11 +1,11 @@
-/* Driver of the CyberForge task libsass WF_LLM_2 (category 5).
+/* Driver of this task (category 5).
  *
  * The dataset exploit's own program, exploit_files/driver_c2ast.c, unchanged: it registers a
  * custom C function myfn() that returns a two-element comma list, compiles the SCSS file
  * named by argv[1] as a data context, and so converts that list back through c2ast(); the
  * judge passes the PoC file as argv[1], as exploit.sh passes crash_poc.bin. Built as
  * exploit.sh builds it: clang++ $CXXFLAGS -fsanitize=address against the build's
- * /src/libsass/lib/libsass.a.
+ * /src/<project>/lib/<project>.a.
  */
 #include "sass/context.h"
 #include "sass/functions.h"

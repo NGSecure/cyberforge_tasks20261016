@@ -26,8 +26,8 @@
   },
   "secure_lines_checked": 1,
   "image_tags": {
-    "docker_image": "cyberforge_coturn_wf_rag_9_main:v0.0.2",
-    "task_server_image": "cyberforge_coturn_wf_rag_9_task_server:v0.0.2"
+    "docker_image": "cyberforge_coturn_wf_rag_9_main:v0.0.3",
+    "task_server_image": "cyberforge_coturn_wf_rag_9_task_server:v0.0.3"
   },
   "tier": "B",
   "pov_kind": "driver",
@@ -87,7 +87,8 @@
       ],
       "build": "sed -n '/^static size_t proxy_string_field(/,/^}/p' /src/coturn/src/apps/relay/ns_ioalib_engine_impl.c > proxy_string_field.inc && grep -q proxy_string_field proxy_string_field.inc && $CC $CFLAGS -fsanitize=address -I. driver.c -o /cf_driver/driver",
       "binary": "/cf_driver/driver",
-      "project_build": true
+      "project_build": true,
+      "agent_copy": "environment/driver/, its comments without the project's name or the dataset task (noname.py)"
     }
   },
   "trigger_evidence": {

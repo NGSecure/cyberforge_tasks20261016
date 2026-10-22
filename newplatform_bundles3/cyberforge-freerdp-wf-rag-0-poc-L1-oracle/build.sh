@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/freerdp:setup@sha256:544d13556c04412da65f14e12833cfb001258b4f50750874f9afa1b9b795572d   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_freerdp_wf_rag_0_main:${VER}"
 TS_TAG="cyberforge_freerdp_wf_rag_0_task_server:${VER}"
 

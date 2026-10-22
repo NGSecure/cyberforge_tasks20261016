@@ -1,9 +1,9 @@
-/* Driver of the CyberForge task cjson WF_LLM_7 (category 5).
- * Adapted from exploit_files/exploit.sh, which runs /out/cjson_read_fuzzer (the project's own
- * fuzzing/cjson_read_fuzzer.c) on its payload file. This program is linked with that harness
+/* Driver of this task (category 5).
+ * Adapted from exploit_files/exploit.sh, which runs /out/<project>_read_fuzzer (the project's own
+ * fuzzing/<project>_read_fuzzer.c) on its payload file. This program is linked with that harness
  * source, unchanged, and calls its LLVMFuzzerTestOneInput once on the PoC file. The only
  * change is how the file is read: it is mapped read-only (mmap) instead of being copied into
- * the heap as libFuzzer does, so that the judge's allocation limit applies to cJSON's own
+ * the heap as libFuzzer does, so that the judge's allocation limit applies to <project>'s own
  * allocations rather than to copies of the input. */
 #include <fcntl.h>
 #include <stddef.h>

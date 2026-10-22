@@ -1,4 +1,4 @@
-/* Category-5 driver for lcms FZ_13.
+/* Category-5 driver for this task.
  *
  * Adapted from testbed/testcms2.c, CheckFloatXYZ (the unit test the exploit runs; it fails at
  * cmsCreateTransform(IdentityMatrixProfile(cmsSigXYZData), TYPE_XYZA_FLT, cmsCreateXYZProfile(),
@@ -8,7 +8,7 @@
  * little-endian values, intent taken % 16 as there), followed by the bytes of the one input pixel
  * (the test uses {1.0, 1.0, 1.0, 0.5} as floats). The two profiles are the test's: an identity-matrix
  * XYZ profile built as IdentityMatrixProfile() builds it (the identity matrix is written out instead of
- * calling the internal _cmsMAT3identity) and cmsCreateXYZProfile(). The driver prints the errors lcms
+ * calling the internal _cmsMAT3identity) and cmsCreateXYZProfile(). The driver prints the errors <project>
  * reports, whether the transform was created and, if so, the bytes of the transformed pixel.
  *
  * PoV: uint32 input_format, uint32 output_format, uint32 flags, uint32 intent (% 16), then up to

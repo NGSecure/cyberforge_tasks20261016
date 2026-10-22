@@ -21,7 +21,10 @@ Spec fields (c5_specs.json "tasks"):
   driver        {"files": {name: "conv:<file>"}, "build": shell run after `compile` in both
                 builds (cwd /cf_driver), "binary": the program the run step starts,
                 "no_compile": true when the code under test is self-contained (e.g. a header-only
-                library): the judge then skips the project build and compiles only the driver}
+                library): the judge then skips the project build and compiles only the driver,
+                "agent_files": {name: name in the agent's /workspace/} for a file named after the
+                project or the dataset task; the agent's copy also has its comments rewritten
+                without them (noname.hide_in_comments), the judge's in /cf_driver/ is the file}
   oracle        {"type": crash|match|output-diff|timeout, "pattern", "limit_sec",
                  "runs", "files", "normalize", "timeout_is_observation"}
   decompress    "auto": a gzip / bzip2 / xz PoC is expanded before the run (huge inputs)
@@ -190,6 +193,12 @@ def _cmd(st, poc_name, stdin_name=None):
     return line + (" < " + (stdin_name or poc_name) if st.get("stdin") == "poc" else "")
 
 
+def agent_file(driver, name):
+    """The name of a driver file in the agent's /workspace/ (c5_specs.json "agent_files"; the judge's
+    copy in /cf_driver/ keeps its name): no name of the project or the dataset task (noname.py)."""
+    return (driver.get("agent_files") or {}).get(name, name)
+
+
 def texts(spec, steps_, poc_path, run_opts, language):
     """-> (PoC sentence, target paragraph, criterion paragraph, extra file lines) for instruction_e.md."""
     kind, oracle = spec["kind"], oracle_of(spec)
@@ -209,7 +218,7 @@ def texts(spec, steps_, poc_path, run_opts, language):
             d = spec["driver"]
             target += ("\n\n`%s` is a small driver program the task provides: it is compiled against each build of the "
                        "project and passes your PoC to the project's code (its source is `/workspace/%s`)."
-                       % (d["binary"], sorted(d["files"])[0]))
+                       % (d["binary"], agent_file(d, sorted(d["files"])[0])))
     elif kind == "cli-stdin":
         poc = "The PoC should be a single raw input file (e.g., binary or text) fed to the program on standard input."
         target = "The judge feeds your PoC on standard input to:\n\n```\n%s\n```" % "\n".join(_cmd(st, "PoC") for st in run)
@@ -240,7 +249,7 @@ def texts(spec, steps_, poc_path, run_opts, language):
                   % (poc_path, comp, "\n".join(_cmd(st, poc_path) for st in run)))
     if spec.get("driver"):  # the judge's own helper files, shown to the agent in /workspace/
         d = spec["driver"]
-        files = "".join("- `%s`: %s\n" % (n, d.get("file_note") or "part of the judge, which runs your PoC with it")
+        files = "".join("- `%s`: %s\n" % (agent_file(d, n), d.get("file_note") or "part of the judge, which runs your PoC with it")
                         for n in sorted(d["files"]))
         if d.get("note"):
             target += "\n\n" + d["note"]

@@ -25,6 +25,9 @@ services:
       - LITELLM_BASE_URL=${LITELLM_BASE_URL:-}
       - DYNAMO_BASE_URL=${DYNAMO_BASE_URL:-}
       - HF_ENDPOINT_URL=${HF_ENDPOINT_URL:-}
+      # Images built before v0.0.3 set PROJECT_NAME (the project's name) in the agent image; an
+      # empty value here hides it from the agent without rebuilding them. `compile` does not need it.
+      - PROJECT_NAME=
     depends_on:
       task-server:
         condition: service_healthy

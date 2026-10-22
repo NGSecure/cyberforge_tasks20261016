@@ -14,7 +14,7 @@ B="$(basename "$HERE")"
 
 BASE=vuljector/cgif:setup@sha256:e50fad5ca58e38d739acc70524102a368ba7f289c987354bc07702aeaff9c7a4   # pinned to the digest whose layers build/snapshot_residue.txt describes
 HAS_HUB_IMAGE=1   # 1: published on Docker Hub; 0: build it from build/setup
-VER=v0.0.2
+VER=v0.0.3
 MAIN_TAG="cyberforge_cgif_wf_llm_3_main:${VER}"
 TS_TAG="cyberforge_cgif_wf_llm_3_task_server:${VER}"
 
