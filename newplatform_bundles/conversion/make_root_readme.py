@@ -69,11 +69,11 @@ C5_ORACLE_ZH = {"crash": "崩溃差分", "output-diff": "输出差分", "match":
 
 # ---- the raw data: where it is, and whether it changed since it was uploaded ----------------------
 DATA = "cyberforge_tasks20261016"
-log = git("log", "--format=%h %ad %s", "--date=format:%Y-%m-%d %H:%M", "--", DATA).splitlines()
-upload = git("log", "--format=%h %ad %s", "--date=format:%Y-%m-%d %H:%M", "--diff-filter=A", "-1", "--",
+log = git("log", "--abbrev=8", "--format=%h %ad %s", "--date=format:%Y-%m-%d %H:%M", "--", DATA).splitlines()
+upload = git("log", "--abbrev=8", "--format=%h %ad %s", "--date=format:%Y-%m-%d %H:%M", "--diff-filter=A", "-1", "--",
              "cyberforge-tasks-1034/manifest.csv")
 tree_head = git("rev-parse", "HEAD:" + DATA)
-first = git("log", "--format=%h", "--diff-filter=A", "-1", "--", "cyberforge-tasks-1034/manifest.csv")
+first = git("log", "--abbrev=8", "--format=%h", "--diff-filter=A", "-1", "--", "cyberforge-tasks-1034/manifest.csv")
 tree_upload = git("rev-parse", "%s:cyberforge-tasks-1034" % first) if first else ""
 dirty = git("status", "--porcelain", "--", DATA)
 n_files = len(git("ls-files", DATA).splitlines())

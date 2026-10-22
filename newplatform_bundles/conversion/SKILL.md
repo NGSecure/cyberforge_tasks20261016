@@ -142,7 +142,8 @@ the injected build and not on the clean build.
   the code may be capitalised differently, when one is). validate.py fails a bundle whose
   instruction still names it. The code's own abbreviations and prefixes (`png_`, `hb-`) stay. The
   sandbox still shows the name (the source, /src/<dir>, PROJECT_NAME, 9 category-5 driver file
-  names), and so do 903 description.txt files (the dataset's descriptions, unchanged).
+  names), and so do 904 description.txt files (890 dataset descriptions as they are, 7 corrected
+  ones, 7 built from bug_report.txt's header, which starts with the project's name).
 - **Ground truth = what the exploit really ran.** The dataset's `pov.bin`
   ("harvested_from_reference_exploit") is often a different file: many exploit.sh
   scripts build their payload inline (icu WF_LLM_0: 10 KB `en_US@collation=AAA…`,

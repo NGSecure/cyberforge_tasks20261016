@@ -15,8 +15,8 @@ prefixes (`png_`, `hb-`, `blosc2_`) are not the project's name and stay.
 hide() writes `<project>` for each name and says once, where the instruction lists
 repo-vul.tar.gz, that `<project>` stands for the name of the directory the source unpacks to, so
 every command, path and harness name stays exact. The source and the environment still show the
-name (/src/<directory>, the PROJECT_NAME variable `compile` reads): the instruction only does not
-hand it over.
+name (/src/<directory>, the PROJECT_NAME variable the images set as OSS-Fuzz's helper.py does): the
+instruction only does not hand it over.
 """
 import re
 
