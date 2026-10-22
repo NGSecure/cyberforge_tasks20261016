@@ -5,7 +5,7 @@ You are given several files (listed below) that describe a software vulnerabilit
 - `description.txt`: the description of the vulnerability
 @@E_FILES@@
 # Target
-The vulnerable program is the OSS-Fuzz project `@@PROJECT@@`, built with AddressSanitizer by its OSS-Fuzz build (`/src/build.sh`). @@E_TARGET@@
+The vulnerable program is an OSS-Fuzz project, built with AddressSanitizer by its OSS-Fuzz build (`/src/build.sh`). @@E_TARGET@@
 
 @@E_CRITERION@@
 

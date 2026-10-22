@@ -41,6 +41,7 @@ sys.dont_write_bytecode = True
 sys.path.insert(0, HERE)
 import c5  # noqa: E402
 import deep_recipe  # noqa: E402
+import noname  # noqa: E402
 
 DEEP_DIR = os.path.join(HERE, "replay_deep")
 INLINE_MAX = 256 * 1024  # larger ground truths are fetched from /solve by solve.sh
@@ -212,6 +213,11 @@ def render(name, values):
     if left:
         raise ValueError("%s: unfilled placeholders %s" % (name, left))
     return text
+
+
+def instruction(name, values, rec):
+    """instruction.md: the template filled in, without the project's name (noname.py)."""
+    return noname.hide(render(name, values), rec["project"], rec["target_dir"])
 
 
 def write(path, text, mode=0o644):
@@ -476,7 +482,7 @@ def c5_bundle(bd, vd, rec, v, recipe, spec, diff, leak_note, cf):
               E_GT_COPY="COPY build/ground_truth_poc /tests/ground_truth_poc\n" if gt is not None else "",
               E_GT_CHMOD="/tests/ground_truth_poc " if gt is not None else "",
               ORACLE_SUMMARY=c5.oracle_summary(oracle))
-    write(os.path.join(bd, "instruction.md"), render("instruction_e.md", ve))
+    write(os.path.join(bd, "instruction.md"), instruction("instruction_e.md", ve, rec))
     write(os.path.join(bd, "environment", "task-server", "Dockerfile"), render("task-server-e.Dockerfile", ve))
     write(os.path.join(bd, "environment", "task-server", "task_server.py"), render("task_server_e.py", ve), 0o755)
     judge = {"kind": c5.judge_kind(spec), "pov_kind": kind, "steps": steps, "poc_path": recipe.get("poc_path"),
@@ -660,7 +666,7 @@ def build_bundle(root, rec, out_dir, ver, scan_dir, quality=None, c5spec=None):
     if c5spec:
         judge, b_info, aux_files = c5_bundle(bd, vd, rec, v, recipe, c5spec, diff, leak_note, cf)
     elif recipe is None:
-        write(os.path.join(bd, "instruction.md"), render("instruction.md", v))
+        write(os.path.join(bd, "instruction.md"), instruction("instruction.md", v, rec))
         write(os.path.join(bd, "environment", "task-server", "Dockerfile"), render("task-server.Dockerfile", v))
         write(os.path.join(bd, "environment", "task-server", "task_server.py"), render("task_server.py", v), 0o755)
         judge = {"fuzzer_candidates": cands, "asan_options": judge_opts,
@@ -701,7 +707,7 @@ def build_bundle(root, rec, out_dir, ver, scan_dir, quality=None, c5spec=None):
                   BUILT_CHECK="" if kind == "program" else "[ -e %s ] || { echo \"FAIL: compile did not make %s\"; exit 1; }; "
                   % (shlex.quote(run_exe), run_exe.replace('"', '')),
                   B_HEADER_MODE="0644" if kind == "program" else "0600")
-        write(os.path.join(bd, "instruction.md"), render("instruction_b.md", vb))
+        write(os.path.join(bd, "instruction.md"), instruction("instruction_b.md", vb, rec))
         write(os.path.join(bd, "environment", "task-server", "Dockerfile"), render("task-server-b.Dockerfile", vb))
         write(os.path.join(bd, "environment", "task-server", "task_server.py"), render("task_server_b.py", vb), 0o755)
         judge = {"kind": kind, "steps": steps, "poc_path": recipe.get("poc_path"),

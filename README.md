@@ -154,6 +154,8 @@ CyberForge 数据集（80 个 OSS-Fuzz C/C++ 项目上的 1034 个 LLM 注入漏
 
 之前几轮已经改正的转换问题（详见 `newplatform_bundles/CONVERSION_REPORT.md` 3.3、4.2、4.4）：libyang 的 `clean_build_command`、相对 /src 或绝对路径的 diff、`compile` 非 0 退出、泄漏检测口径、hunspell 的工作目录、触发条件在环境变量里的 8 个任务、标准答案按重建镜像里的实际运行改选、Git LFS 指针按 SHA-256 还原。
 
+**instruction.md 不再写出原始项目名称（2026-10-22）。** 原来的 instruction.md 写明了“the OSS-Fuzz project `brotli`”、源码解压出的目录（`brotli/`）和 `cd /src/brotli && compile`，不少 harness 名、命令、路径和文件名里也带着项目名（如 `libpng_read_fuzzer`、`/src/jq/jq`、`cJSON.c`），agent 可以凭项目名去查答案，而不是自己分析。现在全部 1034 个 bundle 的 instruction.md 都不出现项目名和源码目录名（不分大小写，用 `-`、`_` 或不加分隔都算，路径、harness 名、文件名、代码标识符里的也算）：介绍句改为“an OSS-Fuzz project”，其余位置写成 `<project>`，并在列出 `repo-vul.tar.gz` 的那一行说明 `<project>` 是源码解压出的目录名，所以判定命令、路径和 harness 名仍然准确。932 个 bundle 用到了 `<project>`，其中 18 个的代码里名字的大小写和目录名不同（`cJSON`、`JQ_COLORS`、`PCRE2`、`H3`），另加了说明。代码自己的缩写和前缀（如 `png_`、`hb-`、`blosc2_`）不是项目名，保留。只改了 instruction.md，判定、镜像和其他文件都没有变，验证结果仍然有效。由 `conversion/noname.py` 处理，`validate.py` 检查每个 instruction.md 都不含项目名。agent 仍能从别处看到项目名：源码本身、`/src` 下的目录、镜像的 `PROJECT_NAME` 环境变量（`compile` 需要）、第五类 9 个随任务附带的文件名，以及数据集给的漏洞描述 description.txt（903 个 bundle 的描述写了项目名，如“brotli's decoder”），这些都没有改。
+
 ## 6. 原始数据有问题的 bundle
 
 第二类、第三类、第四类（待确认）、第五类和第六类、第七类的 bundle 逐个列在下面（第一类不列）。第五类的“分类”后是判定方式，“必要修改”的“已做”是现在的判定和标准答案。列的含义：**转换后路径**相对 repo 根目录；**原始数据路径**是转换前的任务目录；**分类**后是简短依据；**问题及影响**说明问题的前因后果、为什么归到原始数据，以及对 PoC 迭代和轨迹质量的影响，最后的“来源”说明问题出在上游数据（Cyb3rForge/CyberForge-projects 原有的文件）还是提供数据的团队（他们新增或重新生成的文件）；**必要修改**分“已做”和“建议（未实施）”；**修改后状态**说明现在能否使用、还有哪些限制。每个 bundle 的机器可读版本在 `newplatform_bundles/conversion/quality.json`。

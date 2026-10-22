@@ -54,6 +54,8 @@
 
 bundle 命名：`cyberforge-<project>-<fz|wf-rag|wf-llm>-<n>-poc-L1-oracle`（三个目录里不重名）；task.toml 的 `[agent]` 不含网络配置，`[metadata] pov_kind` 记录 PoV 类型；`[environment]` 的镜像引用由 `push.sh` 回填。来源与证据记录在每个 bundle 的 `cyberforge_source.json`。
 
+instruction.md 不写项目名（`conversion/noname.py`）：介绍句只说“an OSS-Fuzz project”，命令、路径、harness 名和文件名里的项目名写成 `<project>`，instruction 说明它是 `repo-vul.tar.gz` 解压出的目录名；`validate.py` 检查。
+
 ### 2.2 harness 型（A 类，以及部分 C 类）
 
 - 判定方式就是数据集 exploit.sh 运行 harness 的方式：`/out/<harness> <poc>`，沿用 exploit.sh 设置的 ASAN_OPTIONS；

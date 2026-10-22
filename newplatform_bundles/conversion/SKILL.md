@@ -132,6 +132,17 @@ the injected build and not on the clean build.
 - **compile needs FUZZING_LANGUAGE** (helper.py normally passes it; from
   `setup/project.yaml`) and must run from the image WORKDIR (build.sh uses relative
   paths). Both images set the env; the instruction tells the agent `cd <WORKDIR> && compile`.
+- **No instruction.md names the project** (`noname.py`): an agent told the project's name can
+  look the bug up instead of finding it. The templates say "an OSS-Fuzz project"; convert.py
+  passes every rendered instruction through `noname.hide()`, which writes `<project>` for the
+  project's name and its source directory's name (any capitalisation; `-`, `_` or nothing between
+  the parts; also inside paths, harness, program and file names and identifiers:
+  `cd /src/<project> && compile`, `<project>_read_fuzzer`, `<project>test`) and says once, on the
+  repo-vul.tar.gz line, that `<project>` is the directory the source unpacks to (and that a name in
+  the code may be capitalised differently, when one is). validate.py fails a bundle whose
+  instruction still names it. The code's own abbreviations and prefixes (`png_`, `hb-`) stay. The
+  sandbox still shows the name (the source, /src/<dir>, PROJECT_NAME, 9 category-5 driver file
+  names), and so do 903 description.txt files (the dataset's descriptions, unchanged).
 - **Ground truth = what the exploit really ran.** The dataset's `pov.bin`
   ("harvested_from_reference_exploit") is often a different file: many exploit.sh
   scripts build their payload inline (icu WF_LLM_0: 10 KB `en_US@collation=AAA…`,

@@ -5,7 +5,8 @@
 
 Checks per bundle: required files, no unfilled @@placeholders@@, task.toml /
 judge.json / cyberforge_source.json parse, `bash -n` on every script, in-memory
-compile of the Python files (no .pyc written), one auth token used consistently,
+compile of the Python files (no .pyc written), one auth token used consistently, no
+instruction.md names the project (noname.py) or the secure base commit,
 the ground truth matches its recorded sha256 (and solve.sh decodes to it; a bundle made without
 one, cyberforge_source.json ground_truth_missing, has none anywhere and the selfcheck that does
 not need one), the
@@ -31,6 +32,10 @@ import re
 import subprocess
 import sys
 import tomllib
+
+sys.dont_write_bytecode = True
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import noname  # noqa: E402
 
 ENV_ALLOWED = {"Dockerfile", "docker-compose.yaml", "submit.sh", "description.txt", "task-server/Dockerfile",
                "task-server/task_server.py", "task-server/judge.json", "task-server/cf_delta.py"}
@@ -255,8 +260,16 @@ def check(bd, tier):
     desc = open(os.path.join(bd, "environment/description.txt")).read().strip()
     if not desc or "\n" in desc:
         errs.append("description.txt must be one non-empty line")
-    if src["secure_base_commit"] in open(os.path.join(bd, "instruction.md")).read() + desc:
+    instruction = open(os.path.join(bd, "instruction.md"), encoding="utf-8").read()
+    if src["secure_base_commit"] in instruction + desc:
         errs.append("agent-visible text leaks the secure base commit")
+    srcdir = re.search(r"-czf /tmp/repo-vul\.tar\.gz (\S+)$", open(os.path.join(bd, "environment/Dockerfile")).read(), re.M)
+    if not srcdir:
+        errs.append("environment/Dockerfile does not pack repo-vul.tar.gz from one source directory")
+    else:
+        left = noname.named(instruction, src["source_task"].split("/projects/")[1].split("/")[0], srcdir.group(1))
+        if left:
+            errs.append("instruction.md names the project: %s" % ", ".join(sorted(set(left))))
     return errs
 
 
